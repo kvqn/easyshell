@@ -107,12 +107,29 @@ async function processQueueItem(
   console.log("Output", output)
 
   const fs = await unzip(output.fs_zip_base64)
-  const passed = await problem.successLogic({
-    stdout: output.stdout,
-    stderr: output.stderr,
-    exit_code: output.exit_code,
-    fs: fs,
-  })
+
+  const testcase = problem.testcases.find((t) => t.id === item.testcaseId)
+  if (!testcase) throw new Error("Testcase not found")
+
+  let passed = true
+  if (passed && testcase.expected_stdout !== undefined)
+    passed = output.stdout === testcase.expected_stdout
+
+  if (passed && testcase.expected_stderr !== undefined)
+    passed = passed && output.stderr === testcase.expected_stderr
+
+  if (passed && testcase.expected_exit_code !== undefined)
+    passed = output.exit_code === testcase.expected_exit_code
+
+  if (passed && testcase.expected_fs !== undefined) {
+    for (const [path, expected] of Object.entries(testcase.expected_fs)) {
+      const actual = fs[path]
+      if (actual !== expected) {
+        passed = false
+        break
+      }
+    }
+  }
 
   await db.insert(submission_testcases).values({
     submissionId: item.submissionId,

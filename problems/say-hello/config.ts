@@ -10,8 +10,9 @@ const config: ProblemConfig = {
   capture_stderr: false,
   capture_exit_code: false,
   capture_fs: false,
-  successLogic: ({ stdout }) => stdout === "Hello, World!\n",
-  testcases: [{ id: 1, folder: "1", public: true }],
+  testcases: [
+    { id: 1, folder: "1", public: true, expected_stdout: "Hello, World!\n" },
+  ],
 }
 
 export default config
