@@ -24,7 +24,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="flex h-screen flex-col font-geist">
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" defaultTheme="light">
           <SessionProvider>
             <Toaster />
             <Navbar />
