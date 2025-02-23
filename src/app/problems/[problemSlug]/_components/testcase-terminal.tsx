@@ -90,11 +90,44 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
     setRunning(false)
   }
 
+  const [promptHistory, setPromptHistory] = useState<string[]>([])
+  const [promptHistoryIndex, setPromptHistoryIndex] = useState<number>(0)
+
+  function handlePromptUpArrow() {
+    if (promptHistoryIndex > 0) {
+      setPromptHistoryIndex((prev) => prev - 1)
+    }
+  }
+
+  function handlePromptDownArrow() {
+    if (promptHistoryIndex < promptHistory.length - 1) {
+      setPromptHistoryIndex((prev) => prev + 1)
+    }
+  }
+
+  useEffect(() => {
+    if (promptHistory[promptHistoryIndex] !== undefined) {
+      setInput(promptHistory[promptHistoryIndex])
+    }
+  }, [promptHistoryIndex, promptHistory])
+
+  useEffect(() => {
+    setPromptHistory((prev) => {
+      const newHistory = prev
+      newHistory[promptHistoryIndex] = input
+      return newHistory
+    })
+  }, [input, promptHistoryIndex])
+
   useEffect(() => {
     terminalRef.current?.scrollTo({
       top: terminalRef.current.scrollHeight,
       behavior: "smooth",
     })
+    if (session) {
+      setPromptHistory([...session.logs.map((log) => log.stdin), ""])
+      setPromptHistoryIndex(session.logs.length + 1)
+    }
   }, [session])
 
   useEffect(() => {
@@ -169,24 +202,33 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
           ))}
         </div>
         <div className="flex">
-          <input
-            ref={inputRef}
-            value={`>>> ${input}`}
-            onChange={(e) => setInput(e.target.value.slice(4))}
-            disabled={running}
-            className={cn(
-              "flex-grow bg-neutral-800 px-2 py-1 text-white outline-none",
-              {
-                "text-neutral-400": running,
-              },
-            )}
-            autoFocus
-            onKeyDown={async (e) => {
-              if (e.key === "Enter") {
-                await handleSubmit()
-              }
-            }}
-          />
+          <div className="flex flex-grow bg-neutral-800 text-white">
+            <p className="py-1 pl-2">{`>>>`}</p>
+            <input
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              disabled={running}
+              className={cn(
+                "flex-grow bg-neutral-800 px-2 py-1 text-white outline-none",
+                {
+                  "text-neutral-400": running,
+                },
+              )}
+              autoFocus
+              onKeyDown={async (e) => {
+                if (e.key === "Enter") {
+                  await handleSubmit()
+                }
+                if (e.key === "ArrowUp") {
+                  handlePromptUpArrow()
+                }
+                if (e.key === "ArrowDown") {
+                  handlePromptDownArrow()
+                }
+              }}
+            />
+          </div>
           <button
             onClick={handleSubmit}
             disabled={running}
