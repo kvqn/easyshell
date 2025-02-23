@@ -15,7 +15,15 @@ export async function submitTerminalSessionCommand({
 }: {
   sessionId: number
   command: string
-}): Promise<Awaited<ReturnType<typeof getTerminalSession>>["logs"][0]> {
+}): Promise<
+  | {
+      status: "success"
+      log: Awaited<ReturnType<typeof getTerminalSession>>["logs"][0]
+    }
+  | ({
+      status: "error"
+    } & Awaited<ReturnType<typeof containerManagerExec>>)
+> {
   const user = await ensureAuth()
 
   const terminalSession = await db
@@ -39,11 +47,17 @@ export async function submitTerminalSessionCommand({
   console.log("container_name", container_name)
 
   const startedAt = new Date()
-  const { stdout, stderr } = await containerManagerExec({
+  const execResponse = await containerManagerExec({
     containerName: container_name,
     command,
   })
   const finishedAt = new Date()
+
+  if (execResponse.status === "error") {
+    return execResponse
+  }
+
+  const { stdout, stderr } = execResponse
 
   const logId = await insertTerminalSessionLog({
     sessionId,
@@ -54,5 +68,8 @@ export async function submitTerminalSessionCommand({
     finishedAt,
   })
 
-  return { id: logId, stdin: command, stdout, stderr, startedAt, finishedAt }
+  return {
+    status: "success",
+    log: { id: logId, stdin: command, stdout, stderr, startedAt, finishedAt },
+  }
 }

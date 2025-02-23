@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/accordion"
 
 import { Slider } from "@/components/ui/slider"
+import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
+import { toast } from "sonner"
 
 export function TestcaseTerminal({ testcase }: { testcase: number }) {
   const { id: problemId, slug: problemSlug } = useProblem()
@@ -39,20 +41,51 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
     showTimes: false,
   })
 
+  const [restarted, setRestarted] = useState(0)
+  const [restarting, setRestarting] = useState(false)
+
+  async function handleRestartTerminal() {
+    setSession(null)
+    setRestarting(true)
+    await killTerminalSessions({ problemId, testcaseId: testcase })
+    setRestarted((prev) => prev + 1)
+    setRestarting(false)
+  }
+
   async function handleSubmit() {
     if (!session) return
     setRunning(true)
-    const log = await submitTerminalSessionCommand({
+    const submissionResponse = await submitTerminalSessionCommand({
       sessionId: session.id,
       command: input,
     })
-    setSession((prev) => {
-      if (!prev) return prev
-      return {
-        ...prev,
-        logs: [...prev.logs, log],
-      }
-    })
+    if (submissionResponse.status === "success") {
+      const log = submissionResponse.log
+      setSession((prev) => {
+        if (!prev) return prev
+        return {
+          ...prev,
+          logs: [...prev.logs, log],
+        }
+      })
+    } else {
+      if (submissionResponse.type === "took_too_long")
+        toast.error("Aborted", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "container_not_running")
+        toast.error("Failed", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "container_error")
+        toast.error("Failed", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "critical_server_error")
+        toast.error("Critical Error", {
+          description: submissionResponse.message,
+        })
+    }
     setInput("")
     setRunning(false)
   }
@@ -79,12 +112,26 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
       console.log("session", session)
       setSession(session)
     })()
-  }, [problemId, testcase])
+  }, [problemId, testcase, restarted])
 
   if (!session)
     return (
       <div className="flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
-        <div className="flex h-80 flex-col overflow-scroll whitespace-pre-line bg-black px-2 py-1"></div>
+        <div className="relative flex h-80 flex-col overflow-scroll whitespace-pre-line bg-black px-2 py-1">
+          <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
+            {problemSlug}-{testcase}
+          </p>
+          <div
+            className={cn(
+              "absolute left-1/2 top-1/2 z-20 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black",
+              {
+                "z-[-20]": !restarting,
+              },
+            )}
+          >
+            <p className="animate-spin text-white">Restarting</p>
+          </div>
+        </div>
         <div className="flex">
           <input
             className={cn(
@@ -99,7 +146,7 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="relative flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
-        <p className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white">
+        <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
           {problemSlug}-{testcase}
         </p>
         <div
@@ -185,8 +232,12 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
                 <p>Show Times</p>
               </div>
               <div>
-                <Button className="w-full bg-green-800 text-neutral-200">
-                  Restart Terminal
+                <Button
+                  className="w-full bg-green-800 text-neutral-200"
+                  onClick={handleRestartTerminal}
+                  disabled={restarting}
+                >
+                  {restarting ? "Restating ..." : "Restart Terminal"}
                 </Button>
               </div>
             </div>

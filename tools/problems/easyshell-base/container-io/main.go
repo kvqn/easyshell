@@ -1,3 +1,5 @@
+// TODO: Manage Logs
+
 package main
 
 import (
@@ -26,6 +28,12 @@ type Response struct {
 	Stderr string `json:"stderr"`
 }
 
+type ErrorResponse struct {
+	Critical bool   `json:"critical"`
+	Message  string `json:"message"`
+	Error    string `json:"error"`
+}
+
 func RandomDelimiter() string {
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
 	b := make([]byte, 128)
@@ -42,17 +50,37 @@ func WriteOrPanic(w io.Writer, data string) {
 	}
 }
 
+func closeLock() {
+	// TODO: critical log if not locked
+	locked = false
+}
+
 func run(w http.ResponseWriter, r *http.Request) {
 	if locked {
-		http.Error(w, "Locked", http.StatusLocked)
+		// http.Error(w, "Locked", http.StatusLocked)
+		w.WriteHeader(http.StatusLocked)
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: false,
+			Message:  "container locked",
+			Error:    "",
+		}) != nil {
+			panic("couldn't write error response")
+		}
 		return
 	}
 	locked = true
+	defer closeLock()
 
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
-		locked = false
+		w.WriteHeader(http.StatusInternalServerError)
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: true,
+			Message:  "couldn't read request body",
+			Error:    err.Error(),
+		}) != nil {
+			panic("couldn't write error response")
+		}
 		return
 	}
 
@@ -62,15 +90,24 @@ func run(w http.ResponseWriter, r *http.Request) {
 	var read_stdout, read_stderr string
 	stdoutReader := bufio.NewReader(stdout)
 	stderrReader := bufio.NewReader(stderr)
+	escapedInput := strings.ReplaceAll(input, "'", "'\\''")
 
-	WriteOrPanic(stdin, input+"\n")
+	WriteOrPanic(stdin, "sh -c '"+escapedInput+"'\n")
 	WriteOrPanic(stdin, "echo "+delimiter+"\n")
 	WriteOrPanic(stdin, "echo >&2 "+delimiter+"\n")
 
 	for {
 		_read_stdout, err := stdoutReader.ReadByte()
 		if err != nil {
-			panic(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			if json.NewEncoder(w).Encode(ErrorResponse{
+				Critical: true,
+				Message:  "couldn't read stdout",
+				Error:    err.Error(),
+			}) != nil {
+				panic("couldn't write error response")
+			}
+			return
 		}
 
 		if _read_stdout != 0 {
@@ -86,7 +123,15 @@ func run(w http.ResponseWriter, r *http.Request) {
 	for {
 		_read_stderr, err := stderrReader.ReadByte()
 		if err != nil {
-			panic(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			if json.NewEncoder(w).Encode(ErrorResponse{
+				Critical: true,
+				Message:  "couldn't read stderr",
+				Error:    err.Error(),
+			}) != nil {
+				panic("couldn't write error response")
+			}
+			return
 		}
 
 		if _read_stderr != 0 {
@@ -104,11 +149,19 @@ func run(w http.ResponseWriter, r *http.Request) {
 		Stderr: read_stderr,
 	}
 
+	w.WriteHeader(http.StatusOK)
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: true,
+			Message:  "couldn't form response",
+			Error:    err.Error(),
+		}) != nil {
+			panic("couldn't write error response")
+		}
+		return
 	}
-	locked = false
 }
 
 func main() {
@@ -120,13 +173,13 @@ func main() {
 	stderr, _ = cmd.StderrPipe()
 
 	if err := cmd.Start(); err != nil {
-		panic(err)
+		panic("1 " + err.Error())
 	}
 
 	go func() {
 		err := cmd.Wait()
 		if err != nil {
-			panic(err)
+			panic("2 " + err.Error())
 		}
 		panic("Subprocess Ended")
 	}()
@@ -134,6 +187,6 @@ func main() {
 	http.HandleFunc("/run", run)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
-		panic(err)
+		panic("3 " + err.Error())
 	}
 }

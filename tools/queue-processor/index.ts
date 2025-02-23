@@ -95,7 +95,7 @@ async function processQueueItem(
     ? `${process.env.DIND_HOST_PREFIX}/${outputFilePath}`
     : outputFilePath
 
-  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --entrypoint /submission-runner --net easyshell ${image}`
+  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --entrypoint /submission-runner --net easyshell -m 10m --cpus 0.1 ${image}`
   const finishedAt = new Date()
   console.log("Submission complete", containerName)
 

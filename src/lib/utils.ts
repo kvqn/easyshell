@@ -38,3 +38,6 @@ export function max(...numbers: number[]): number {
   }
   return maximum
 }
+
+export const STATUS_LOCKED = 423
+export const STATUS_INTERNAL_SERVER_ERROR = 500

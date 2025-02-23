@@ -1,4 +1,4 @@
-package create
+package kill
 
 import (
 	"encoding/json"
@@ -8,13 +8,7 @@ import (
 )
 
 type request struct {
-	Image         string `json:"image"`
 	ContainerName string `json:"container_name"`
-	VolumeMounts  []struct {
-		HostPath      string `json:"host_path"`
-		ContainerPath string `json:"container_path"`
-	} `json:"volume_mounts"`
-	EntryPoint string `json:"entry_point"`
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -30,13 +24,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var command string
-	command = fmt.Sprintf("docker run -d --rm --name %s --entrypoint %s --net easyshell -m 10m --cpus 0.1", req.ContainerName, req.EntryPoint)
-	for _, volume := range req.VolumeMounts {
-		command += fmt.Sprintf(" -v %s:%s", volume.HostPath, volume.ContainerPath)
-	}
-	command += fmt.Sprintf(" %s", req.Image)
-
+	command := fmt.Sprintf("docker container kill %s", req.ContainerName)
 	fmt.Println("Command: ", command)
 
 	cmd := exec.Command("sh", "-c", command)
@@ -46,4 +34,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed"+err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 }
