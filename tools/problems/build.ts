@@ -12,6 +12,7 @@ const WORKING_DIR = ".easyshell"
 await rm(WORKING_DIR, { recursive: true, force: true })
 
 function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
+  console.log("building", tag)
   return $`docker build -t ${tag} ${dir}`
 }
 

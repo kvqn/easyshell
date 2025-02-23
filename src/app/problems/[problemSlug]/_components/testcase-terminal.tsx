@@ -18,6 +18,7 @@ import {
 
 import { Slider } from "@/components/ui/slider"
 import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
+import { toast } from "sonner"
 
 export function TestcaseTerminal({ testcase }: { testcase: number }) {
   const { id: problemId, slug: problemSlug } = useProblem()
@@ -54,17 +55,37 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
   async function handleSubmit() {
     if (!session) return
     setRunning(true)
-    const log = await submitTerminalSessionCommand({
+    const submissionResponse = await submitTerminalSessionCommand({
       sessionId: session.id,
       command: input,
     })
-    setSession((prev) => {
-      if (!prev) return prev
-      return {
-        ...prev,
-        logs: [...prev.logs, log],
-      }
-    })
+    if (submissionResponse.status === "success") {
+      const log = submissionResponse.log
+      setSession((prev) => {
+        if (!prev) return prev
+        return {
+          ...prev,
+          logs: [...prev.logs, log],
+        }
+      })
+    } else {
+      if (submissionResponse.type === "took_too_long")
+        toast.error("Aborted", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "container_not_running")
+        toast.error("Failed", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "container_error")
+        toast.error("Failed", {
+          description: submissionResponse.message,
+        })
+      else if (submissionResponse.type === "critical_server_error")
+        toast.error("Critical Error", {
+          description: submissionResponse.message,
+        })
+    }
     setInput("")
     setRunning(false)
   }
@@ -97,7 +118,7 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
     return (
       <div className="flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
         <div className="relative flex h-80 flex-col overflow-scroll whitespace-pre-line bg-black px-2 py-1">
-          <p className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white">
+          <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
             {problemSlug}-{testcase}
           </p>
           <div
@@ -125,7 +146,7 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
   return (
     <div className="flex flex-col gap-4">
       <div className="relative flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
-        <p className="absolute left-1/2 top-0 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white">
+        <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
           {problemSlug}-{testcase}
         </p>
         <div

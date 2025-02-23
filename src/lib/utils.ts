@@ -38,3 +38,7 @@ export function max(...numbers: number[]): number {
   }
   return maximum
 }
+
+export type Prettify<T> = {
+  [K in keyof T]: T[K]
+} & {}

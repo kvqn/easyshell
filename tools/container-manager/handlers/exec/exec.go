@@ -1,3 +1,5 @@
+// TODO: Manage logs
+
 package exec
 
 import (
@@ -14,12 +16,11 @@ type requestBody struct {
 	Command       string `json:"command"`
 }
 
-// type responseBody struct {
-// 	Stdout string `json:"stdout"`
-// 	Stderr string `json:"stderr"`
-// }
-
-// responseBody is not required because we are not doing any processing on the response
+type ErrorResponse struct {
+	Critical bool   `json:"critical"`
+	Message  string `json:"message"`
+	Error    string `json:"error"`
+}
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 
@@ -31,7 +32,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var reqBody requestBody
 	err := json.NewDecoder(r.Body).Decode(&reqBody)
 	if err != nil {
-		http.Error(w, "Bad Request", http.StatusBadRequest)
+		http.Error(w, "Critical Failure (couldn't parse request body) : ", http.StatusBadRequest)
+		// This should never happen.
 		return
 	}
 	//TODO: input validation
@@ -42,25 +44,76 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	req, err := http.NewRequest("POST", endpoint, strings.NewReader(reqBody.Command))
 	if err != nil {
-		http.Error(w, "Failed 1 "+err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Failed (couldn't construct request) : "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	resp, err := utils.HttpClient.Do(req)
 	if err != nil {
-		http.Error(w, "Failed 2 "+err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: true,
+			Message:  "request failed, container might be down",
+			Error:    err.Error(),
+		}) != nil {
+			panic("couldn't write error response")
+		}
+		return
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode == http.StatusLocked {
+			w.WriteHeader(http.StatusLocked)
+			if json.NewEncoder(w).Encode(ErrorResponse{
+				Critical: false,
+				Message:  "container locked",
+				Error:    "",
+			}) != nil {
+				panic("couldn't write error response")
+			}
+			return
+		}
+
+		w.WriteHeader(http.StatusInternalServerError)
+		containerError, err := io.ReadAll(resp.Body)
+		if err != nil {
+			if json.NewEncoder(w).Encode(ErrorResponse{
+				Critical: true,
+				Message:  "container error",
+				Error:    "couldn't read response body",
+			}) != nil {
+				panic("couldn't write error response")
+			}
+			return
+		}
+
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: true,
+			Message:  "container error",
+			Error:    string(containerError),
+		}) != nil {
+			panic("couldn't write error response")
+		}
+
 		return
 	}
 
 	resp_body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		http.Error(w, "Failed 3 "+err.Error(), http.StatusInternalServerError)
-		return
-	}
-	_, err = w.Write(resp_body)
-	if err != nil {
-		http.Error(w, "Failed 4 "+err.Error(), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		if json.NewEncoder(w).Encode(ErrorResponse{
+			Critical: true,
+			Message:  "couldn't read response body",
+			Error:    err.Error(),
+		}) != nil {
+			panic("couldn't write error response")
+		}
 		return
 	}
 
+	w.WriteHeader(http.StatusOK)
+	_, err = w.Write(resp_body)
+	if err != nil {
+		panic("couldn't write error response")
+	}
 }
