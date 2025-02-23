@@ -126,12 +126,13 @@ async function processQueueItem(
   if (passed && testcase.expected_fs !== undefined) {
     if (fs === undefined) {
       passed = false
-    }
-    for (const [path, expected] of Object.entries(testcase.expected_fs)) {
-      const actual = fs[path]
-      if (actual !== expected) {
-        passed = false
-        break
+    } else {
+      for (const [path, expected] of Object.entries(testcase.expected_fs)) {
+        const actual = fs[path]
+        if (actual !== expected) {
+          passed = false
+          break
+        }
       }
     }
   }
