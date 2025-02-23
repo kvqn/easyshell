@@ -1,6 +1,6 @@
 import { env } from "@/env"
+import { STATUS_INTERNAL_SERVER_ERROR, STATUS_LOCKED } from "@/lib/utils"
 import { z } from "zod"
-import { StatusCodes } from "http-status-codes"
 
 const ContainerManagerExecResponseSchema = z.object({
   stdout: z.string(),
@@ -75,7 +75,7 @@ export async function containerManagerExec({
     }
   }
 
-  let json: any
+  let json: unknown
   try {
     json = await resp.json()
     console.log("resp_json", json)
@@ -87,21 +87,21 @@ export async function containerManagerExec({
     }
   }
 
-  if (resp.status === StatusCodes.LOCKED)
+  if (resp.status === STATUS_LOCKED)
     return {
       status: "error",
       type: "container_error",
       message: "The container is locked because it is running another command",
     }
 
-  if (resp.status === StatusCodes.INTERNAL_SERVER_ERROR)
+  if (resp.status === STATUS_INTERNAL_SERVER_ERROR)
     return {
       status: "error",
       type: "container_error",
       message: "The container encountered an error",
     }
 
-  let parsing_result = ContainerManagerExecResponseSchema.safeParse(json)
+  const parsing_result = ContainerManagerExecResponseSchema.safeParse(json)
 
   if (!parsing_result.success)
     return {
