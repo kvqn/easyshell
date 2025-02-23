@@ -64,3 +64,15 @@ export async function containerManagerCreate(args: {
     throw new Error(await resp.text())
   }
 }
+
+export async function containerManagerKill(containerName: string) {
+  const resp = await fetch(`${env.CONTAINER_MANAGER_URL}/kill`, {
+    method: "POST",
+    body: JSON.stringify({
+      container_name: containerName,
+    }),
+  })
+  if (!resp.ok) {
+    throw new Error(await resp.text())
+  }
+}

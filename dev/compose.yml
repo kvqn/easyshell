@@ -15,6 +15,7 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgres://postgres:password@easyshell-postgres:5432/easyshell
+      CONTAINER_MANAGER_URL: http://easyshell-container-manager:4000
     depends_on:
       - postgres
 
@@ -53,6 +54,7 @@ services:
     environment:
       DIND_HOST_PREFIX: ${PWD}
       DATABASE_URL: postgres://postgres:password@easyshell-postgres:5432/easyshell
+      CONTAINER_MANAGER_URL: http://easyshell-container-manager:4000
     restart: always
     depends_on:
       - postgres
