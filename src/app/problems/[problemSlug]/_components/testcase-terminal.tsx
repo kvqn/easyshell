@@ -113,7 +113,7 @@ export function TestcaseTerminal({ testcase }: { testcase: number }) {
 
   useEffect(() => {
     setPromptHistory((prev) => {
-      const newHistory = prev
+      const newHistory = [...prev]
       newHistory[promptHistoryIndex] = input
       return newHistory
     })
