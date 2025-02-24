@@ -27,8 +27,8 @@ export function ProblemNotFound() {
       <h2 className="text-xl">
         {`I don't think a problem like that exists here`}
       </h2>
-      <Link 
-        href="/browse" 
+      <Link
+        href="/browse"
         className="transition-transform hover:scale-105"
         aria-label="Go back to browse problems"
       >
