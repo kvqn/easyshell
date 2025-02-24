@@ -1,6 +1,6 @@
 export default function Page() {
   return (
-    <table className="w-1/2 table-auto divide-y rounded-xl border">
+    <table className="w-full table-auto divide-y rounded-xl border">
       <thead>
         <tr className="divide-x *:p-2">
           <th>#</th>
