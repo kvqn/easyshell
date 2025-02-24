@@ -30,10 +30,10 @@ export function PastSubmissions() {
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="relative top-14 flex flex-col">
-          <p className="text-center text-2xl font-semibold text-gray-600">
+          <p className="text-center text-xl font-semibold text-gray-600 lg:text-2xl">
             No submissions yet
           </p>
-          <p className="text-center text-gray-400">
+          <p className="text-md text-center text-gray-400 lg:text-lg">
             Create a submission using the the prompt above
           </p>
           <Image
@@ -42,7 +42,7 @@ export function PastSubmissions() {
             height={50}
             alt="arrow-pointing-to-prompt"
             unoptimized
-            className="absolute left-0 top-8 z-[-1] -translate-x-1/2 -translate-y-full"
+            className="absolute left-0 top-8 z-[-1] -translate-x-[30%] -translate-y-full scale-75 lg:-translate-x-1/2 lg:scale-100"
           />
         </div>
       </div>
