@@ -11,7 +11,7 @@ import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 
 function Logo() {
   return (
-    <Link className="text-2xl" href="/">
+    <Link className="text-xl lg:text-2xl" href="/">
       <span className="font-bold">easy</span>
       <span className="font-bold text-green-500">shell</span>
     </Link>
@@ -24,7 +24,7 @@ export function Navbar() {
       <Logo />
       <Link
         href="/problems"
-        className="mt-1 text-gray-500 transition-colors hover:text-black"
+        className="mt-1 hidden text-gray-500 transition-colors hover:text-black lg:block"
       >
         Problems
       </Link>

@@ -20,7 +20,7 @@ export default function HomePage() {
         )}
       >
         <Tagline />
-        <div className="flex gap-4">
+        <div className="flex flex-col items-center gap-4 lg:flex-row">
           <Link href="/browse">
             <Button>Explore Problems</Button>
           </Link>
@@ -99,8 +99,8 @@ function Heading({
   }, [setAnimationDone])
 
   return (
-    <h1 className="flex text-8xl font-bold">
-      <p ref={text1} className="mr-6" />
+    <h1 className="flex text-3xl font-bold lg:text-7xl">
+      <p ref={text1} className="mr-2 lg:mr-6" />
       <p ref={text2} className="text-black" />
       <p ref={text3} className="text-emerald-500" />
       <p ref={blinker}>_</p>
@@ -141,7 +141,7 @@ function Tagline() {
   return (
     <p
       ref={ref}
-      className="text-4xl font-thin text-gray-600 transition-opacity"
+      className="text-2xl font-thin text-gray-600 transition-opacity lg:text-4xl"
     />
   )
 }
