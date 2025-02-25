@@ -1,20 +1,22 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { getSubmissionInfo } from "@/server/actions/get-submission-info"
 import { useEffect, useState } from "react"
-import { useSubmissionsContext } from "./submissions-context"
-import { IoIosArrowBack } from "react-icons/io"
-import { cn, sleep } from "@/lib/utils"
-import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
 import ReactDiffViewer from "react-diff-viewer-continued"
+import { IoIosArrowBack } from "react-icons/io"
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { Button } from "@/components/ui/button"
+import { cn, sleep } from "@/lib/utils"
+import { getSubmissionInfo } from "@/server/actions/get-submission-info"
+import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
 import type { FsType } from "@/server/utils/problem"
+
+import { useSubmissionsContext } from "./submissions-context"
 
 export function Submission({ submissionId }: { submissionId: number }) {
   const [info, setInfo] = useState<Awaited<

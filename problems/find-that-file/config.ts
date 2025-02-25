@@ -1,5 +1,6 @@
-import type { ProblemConfig } from "@/server/utils/problem"
 import { readdir } from "fs/promises"
+
+import type { ProblemConfig } from "@/server/utils/problem"
 
 const SLUG = "find-that-file"
 

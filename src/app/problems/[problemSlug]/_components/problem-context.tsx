@@ -1,7 +1,8 @@
 "use client"
 
-import { getProblemInfo } from "@/server/actions/get-problem-info"
 import { createContext, useContext, useEffect, useState } from "react"
+
+import { getProblemInfo } from "@/server/actions/get-problem-info"
 
 export const ProblemContext = createContext<Awaited<
   ReturnType<typeof getProblemInfo>

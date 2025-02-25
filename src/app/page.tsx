@@ -1,10 +1,11 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { cn, min, max, sleep } from "@/lib/utils"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 import { PiGithubLogo, PiGithubLogoDuotone } from "react-icons/pi"
+
+import { Button } from "@/components/ui/button"
+import { cn, max, min, sleep } from "@/lib/utils"
 
 export default function HomePage() {
   const [animationDone, setAnimationDone] = useState(false)

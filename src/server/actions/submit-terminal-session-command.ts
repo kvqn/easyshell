@@ -1,13 +1,15 @@
 "use server"
 
 import { and, eq, isNull } from "drizzle-orm"
-import { db } from "../db"
-import { terminalSessions } from "../db/schema"
-import { ensureAuth } from "../auth"
-import { getProblemSlugFromId } from "../utils/problem"
-import { insertTerminalSessionLog } from "../db/queries"
+
+import { ensureAuth } from "@/server/auth"
+import { db } from "@/server/db"
+import { insertTerminalSessionLog } from "@/server/db/queries"
+import { terminalSessions } from "@/server/db/schema"
+import { containerManagerExec } from "@/server/utils/container-manager"
+import { getProblemSlugFromId } from "@/server/utils/problem"
+
 import type { getTerminalSession } from "./get-terminal-session"
-import { containerManagerExec } from "../utils/container-manager"
 
 export async function submitTerminalSessionCommand({
   sessionId,

@@ -1,11 +1,13 @@
 import { readdir } from "fs/promises"
 import z from "zod"
-import { dockerRun } from "./docker"
+
 import {
   getActiveTerminalSession,
   getTerminalSessionLogs,
   insertTerminalSession,
-} from "../db/queries"
+} from "@/server/db/queries"
+
+import { dockerRun } from "./docker"
 
 const FsSchema = z.record(z.union([z.string(), z.null()]))
 export type FsType = z.infer<typeof FsSchema>

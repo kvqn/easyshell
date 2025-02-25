@@ -47,6 +47,12 @@ const config = {
         drizzleObjectName: ["db", "ctx.db"],
       },
     ],
+    "no-restricted-imports": [
+      "warn",
+      {
+        patterns: ["../*", "../**/*"],
+      },
+    ],
   },
 }
 module.exports = config

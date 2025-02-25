@@ -1,11 +1,13 @@
 "use server"
 
-import { db } from "@/server/db"
-import { submissionTestcases } from "../db/schema"
 import { and, eq } from "drizzle-orm"
+
+import { db } from "@/server/db"
+import { submissionTestcases } from "@/server/db/schema"
+import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
+import { unzip } from "@/server/utils/unzip"
+
 import { getSubmissionInfo } from "./get-submission-info"
-import { getProblemInfo, getProblemSlugFromId } from "../utils/problem"
-import { unzip } from "../utils/unzip"
 
 export async function getTestcaseInfo({
   submissionId,

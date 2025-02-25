@@ -1,9 +1,10 @@
-import { getProblemInfo, getProblems } from "@/server/utils/problem"
+import { $ } from "execa"
 import { writeFile } from "fs/promises"
 import { cp } from "fs/promises"
 import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
-import { $ } from "execa"
+
+import { getProblemInfo, getProblems } from "@/server/utils/problem"
 
 import "./lint"
 

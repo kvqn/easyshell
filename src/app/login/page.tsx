@@ -1,15 +1,16 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { signIn } from "next-auth/react"
 import {
-  PiGithubLogo,
-  PiGithubLogoDuotone,
   PiDiscordLogo,
   PiDiscordLogoDuotone,
+  PiGithubLogo,
+  PiGithubLogoDuotone,
   PiGoogleLogo,
   PiGoogleLogoDuotone,
 } from "react-icons/pi"
+
+import { Button } from "@/components/ui/button"
 
 export default function Page() {
   return (

@@ -1,11 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { useProblem } from "./problem-context"
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { TestcaseTerminal } from "./testcase-terminal"
+
+import { useProblem } from "./problem-context"
 import { TestcaseFilebrowser } from "./testcase-filebrowser"
+import { TestcaseTerminal } from "./testcase-terminal"
 
 export function Testcases() {
   const { testcases } = useProblem()

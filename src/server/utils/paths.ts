@@ -1,8 +1,9 @@
 import { readdir } from "fs/promises"
-import type { FsType } from "./problem"
 import { readFile } from "fs/promises"
-import { join } from "path"
 import { stat } from "fs/promises"
+import { join } from "path"
+
+import type { FsType } from "./problem"
 
 export const PROBLEMS_DIR = "./src/app/problems/(problems)/"
 

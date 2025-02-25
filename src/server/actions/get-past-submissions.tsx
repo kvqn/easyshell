@@ -1,13 +1,14 @@
 "use server"
 
 import { and, desc, eq } from "drizzle-orm"
-import { db } from "../db"
-import { ensureAuth } from "../auth"
+
+import { ensureAuth } from "@/server/auth"
+import { db } from "@/server/db"
 import {
+  submissionTestcaseQueue,
   submissionTestcases,
   submissions,
-  submissionTestcaseQueue,
-} from "../db/schema"
+} from "@/server/db/schema"
 
 export async function getPastSubmissions({ problemId }: { problemId: number }) {
   const { id: userId } = await ensureAuth()

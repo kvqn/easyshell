@@ -1,13 +1,8 @@
 "use client"
 
-import { getTerminalSession } from "@/server/actions/get-terminal-session"
 import { useEffect, useRef, useState } from "react"
-import { useProblem } from "./problem-context"
-import { submitTerminalSessionCommand } from "@/server/actions/submit-terminal-session-command"
 import { ImSpinner3 } from "react-icons/im"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { toast } from "sonner"
 
 import {
   Accordion,
@@ -15,10 +10,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
+import { cn } from "@/lib/utils"
+import { getTerminalSession } from "@/server/actions/get-terminal-session"
 import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
-import { toast } from "sonner"
+import { submitTerminalSessionCommand } from "@/server/actions/submit-terminal-session-command"
+
+import { useProblem } from "./problem-context"
 
 export function TestcaseTerminal({ testcase }: { testcase: number }) {
   const { id: problemId, slug: problemSlug } = useProblem()

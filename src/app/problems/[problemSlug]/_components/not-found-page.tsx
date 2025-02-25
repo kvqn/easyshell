@@ -1,5 +1,5 @@
-import { AiTwotoneQuestionCircle } from "react-icons/ai"
 import Link from "next/link"
+import { AiTwotoneQuestionCircle } from "react-icons/ai"
 
 export function ProblemNotFound() {
   return (
