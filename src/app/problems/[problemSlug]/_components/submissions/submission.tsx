@@ -1,5 +1,7 @@
 "use client"
 
+import Link from "next/link"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import ReactDiffViewer from "react-diff-viewer-continued"
 import { IoIosArrowBack } from "react-icons/io"
@@ -10,23 +12,31 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Button } from "@/components/ui/button"
 import { cn, sleep } from "@/lib/utils"
 import { getSubmissionInfo } from "@/server/actions/get-submission-info"
 import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
 import type { FsType } from "@/server/utils/problem"
 
-import { useSubmissionsContext } from "./submissions-context"
-
 export function Submission({ submissionId }: { submissionId: number }) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const _testcase = searchParams.get("testcase")
+  const selectedTestcaseId = _testcase ? parseInt(_testcase) : null
+
+  function setSelectedTestcaseId(tc: number | null) {
+    if (tc === null)
+      router.replace(`${pathname}?tab=submissions&submission=${submissionId}`)
+    else
+      router.replace(
+        `${pathname}?tab=submissions&submission=${submissionId}&testcase=${tc}`,
+      )
+  }
+
   const [info, setInfo] = useState<Awaited<
     ReturnType<typeof getSubmissionInfo>
   > | null>(null)
-
-  const { setSelectedSubmissionId } = useSubmissionsContext()
-  const [selectedTestcaseId, setSelectedTestcaseId] = useState<number | null>(
-    null,
-  )
 
   useEffect(() => {
     void (async () => {
@@ -52,14 +62,13 @@ export function Submission({ submissionId }: { submissionId: number }) {
   if (selectedTestcaseId)
     return (
       <div className="h-full">
-        <Button
-          variant="secondary"
-          onClick={() => setSelectedTestcaseId(null)}
+        <Link
+          href={`${pathname}?tab=submissions&submission=${submissionId}`}
           className="flex items-center gap-2 pl-2"
         >
           <IoIosArrowBack className="m-0 p-0 text-xl" />
           <p>Back</p>
-        </Button>
+        </Link>
         <Testcase submissionId={submissionId} testcaseId={selectedTestcaseId} />
       </div>
     )
@@ -69,14 +78,13 @@ export function Submission({ submissionId }: { submissionId: number }) {
       <h2 className="mt-4 text-center text-xl font-bold">
         Attempt #{info.submission.attempt}
       </h2>
-      <Button
-        variant="secondary"
-        onClick={() => setSelectedSubmissionId(null)}
+      <Link
+        href={`${pathname}?tab=submissions`}
         className="flex items-center gap-2 pl-2"
       >
         <IoIosArrowBack className="m-0 p-0 text-xl" />
         <p>Back</p>
-      </Button>
+      </Link>
       <div className="flex flex-wrap justify-center gap-4 p-8">
         {info.testcases.map((testcase) => (
           <div

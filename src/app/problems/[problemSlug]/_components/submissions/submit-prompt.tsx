@@ -1,19 +1,18 @@
 "use client"
 
+import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { newSubmission } from "@/server/actions/new-submission"
 
-import { useSubmissionsContext } from "./submissions-context"
+export function SubmitPrompt({ problemId }: { problemId: number }) {
+  const pathname = usePathname()
+  const router = useRouter()
 
-export function SubmitPrompt() {
   const [input, setInput] = useState("")
   const [submitting, setSubmitting] = useState(false)
-  const { id: problemId } = useProblem()
-  const { setSelectedSubmissionId } = useSubmissionsContext()
 
   async function handleSubmit() {
     setSubmitting(true)
@@ -21,7 +20,9 @@ export function SubmitPrompt() {
       problemId,
       input,
     })
-    setSelectedSubmissionId(resp.submissionId)
+    router.replace(
+      `${pathname}?tab=submissions&submission=${resp.submissionId}`,
+    )
     setSubmitting(false)
   }
 
