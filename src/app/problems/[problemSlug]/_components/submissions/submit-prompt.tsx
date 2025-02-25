@@ -1,10 +1,12 @@
 "use client"
 
+import { useState } from "react"
+
+import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { newSubmission } from "@/server/actions/new-submission"
-import { useState } from "react"
-import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
+
 import { useSubmissionsContext } from "./submissions-context"
 
 export function SubmitPrompt() {

@@ -1,6 +1,7 @@
+import Link from "next/link"
+
 import { getProblemInfo } from "@/server/actions/get-problem-info"
 import { getProblems } from "@/server/utils/problem"
-import Link from "next/link"
 
 export const metadata = {
   title: "easyshell - browse",

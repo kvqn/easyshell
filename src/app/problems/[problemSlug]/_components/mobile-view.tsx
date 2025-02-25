@@ -1,10 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Testcases } from "./testcases"
-import { Submissions } from "./submissions"
-import { SubmissionsContextProvider } from "./submissions/submissions-context"
+
 import { ProblemHeading } from "./heading"
 import { ProblemMarkdown } from "./markdown"
 import { ProblemHints } from "./problem-hints"
+import { Submissions } from "./submissions"
+import { SubmissionsContextProvider } from "./submissions/submissions-context"
+import { Testcases } from "./testcases"
 
 export function MobileView({ problemSlug }: { problemSlug: string }) {
   return (

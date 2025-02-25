@@ -1,13 +1,16 @@
 "use client"
-import { useEffect, useState } from "react"
-import { getPastSubmissions } from "@/server/actions/get-past-submissions"
-import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
-import { useSubmissionsContext } from "./submissions-context"
-import { cn } from "@/lib/utils"
-import { FaXmark, FaCheck } from "react-icons/fa6"
-import { ImSpinner3 } from "react-icons/im"
+
 import moment from "moment"
 import Image from "next/image"
+import { useEffect, useState } from "react"
+import { FaCheck, FaXmark } from "react-icons/fa6"
+import { ImSpinner3 } from "react-icons/im"
+
+import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
+import { cn } from "@/lib/utils"
+import { getPastSubmissions } from "@/server/actions/get-past-submissions"
+
+import { useSubmissionsContext } from "./submissions-context"
 
 export function PastSubmissions() {
   const { id: problemId } = useProblem()

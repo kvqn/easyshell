@@ -1,13 +1,14 @@
-import { Button } from "@/components/ui/button"
-import { getServerUser } from "@/server/auth"
+import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { HamburgerMenuIcon } from "@radix-ui/react-icons"
+import { getServerUser } from "@/server/auth"
 
 function Logo() {
   return (
@@ -51,7 +52,6 @@ function Options() {
     </Popover>
   )
 }
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 async function User() {
   const user = await getServerUser()

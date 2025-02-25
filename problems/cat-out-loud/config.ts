@@ -1,5 +1,6 @@
-import type { ProblemConfig } from "@/server/utils/problem"
 import { readFile } from "fs/promises"
+
+import type { ProblemConfig } from "@/server/utils/problem"
 
 const SLUG = "cat-out-loud"
 

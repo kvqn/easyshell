@@ -1,11 +1,12 @@
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
+import { type Metadata } from "next"
+import { ThemeProvider } from "next-themes"
+
+import { Toaster } from "@/components/ui/sonner"
 import "@/styles/globals.css"
 
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { type Metadata } from "next"
 import { Navbar } from "./_components/navbar"
-import { ThemeProvider } from "next-themes"
-import { Toaster } from "@/components/ui/sonner"
 import { SessionProvider } from "./_components/session-provider"
 
 export const metadata: Metadata = {
