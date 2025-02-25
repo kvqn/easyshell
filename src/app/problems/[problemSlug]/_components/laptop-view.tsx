@@ -1,5 +1,3 @@
-"use client"
-
 import {
   ResizableHandle,
   ResizablePanel,
@@ -10,14 +8,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ProblemHeading } from "./heading"
 import { ProblemMarkdown } from "./markdown"
 import { ProblemHints } from "./problem-hints"
-import { useQueryParams } from "./query-params-context"
 import { Submissions } from "./submissions"
 import { SubmissionsContextProvider } from "./submissions/submissions-context"
 import { Testcases } from "./testcases"
 
-export function LaptopView({ problemSlug }: { problemSlug: string }) {
-  const { tab, setTab } = useQueryParams()
-  function _setTab(tab: string) {
+export function LaptopView({
+  problemSlug,
+  tab,
+}: {
+  problemSlug: string
+  tab: string
+}) {
+  function setTab(tab: string) {
     if (tab === "testcases") setTab("testcase")
     if (tab === "submissions") setTab("submission")
     else setTab("problem")
@@ -37,7 +39,7 @@ export function LaptopView({ problemSlug }: { problemSlug: string }) {
           defaultValue="submissions"
           className="h-full"
           value={tab}
-          onValueChange={_setTab}
+          onValueChange={setTab}
         >
           <TabsList className="w-full">
             <TabsTrigger value="testcases" className="text-md flex-grow">

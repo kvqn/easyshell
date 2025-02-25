@@ -7,7 +7,7 @@ import { LaptopView } from "./_components/laptop-view"
 import { MobileView } from "./_components/mobile-view"
 import { ProblemNotFound } from "./_components/not-found-page"
 import { ProblemProvider } from "./_components/problem-context"
-import { QueryParamsProvider } from "./_components/query-params-context"
+import { z } from "zod"
 
 export async function generateMetadata({
   params,
@@ -27,27 +27,31 @@ export async function generateStaticParams() {
   }))
 }
 
+const TabSchema = z.enum(["problem", "testcases", "submissions"])
+
 export default async function Page({
   params,
 }: {
   params: Promise<{ problemSlug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
   const { problemSlug } = await params
   const valid = (await getProblems()).includes(problemSlug)
+
+  const ta
+
   if (!valid) {
     return <ProblemNotFound />
   }
 
   return (
     <ProblemProvider slug={problemSlug}>
-      <QueryParamsProvider>
-        <DesktopContainer>
-          <LaptopView problemSlug={problemSlug} />
-        </DesktopContainer>
-        <MobileContainer>
-          <MobileView problemSlug={problemSlug} />
-        </MobileContainer>
-      </QueryParamsProvider>
+      <DesktopContainer>
+        <LaptopView problemSlug={problemSlug} />
+      </DesktopContainer>
+      <MobileContainer>
+        <MobileView problemSlug={problemSlug} />
+      </MobileContainer>
     </ProblemProvider>
   )
 }
