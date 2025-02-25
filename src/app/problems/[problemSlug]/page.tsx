@@ -29,9 +29,9 @@ export async function generateStaticParams() {
 export default async function Page({
   params,
 }: {
-  params: { problemSlug: string }
+  params: Promise<{ problemSlug: string }>
 }) {
-  const { problemSlug } = params
+  const { problemSlug } = await params
   const valid = (await getProblems()).includes(problemSlug)
   if (!valid) {
     return <ProblemNotFound />

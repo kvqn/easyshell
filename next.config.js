@@ -10,6 +10,12 @@ await import("./src/env.js")
 const config = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   reactStrictMode: false,
+  experimental: {
+    mdxRs: true,
+    turbo: {
+      // ...
+    },
+  },
 }
 
 const withMDX = createMDX({})
