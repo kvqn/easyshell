@@ -1,12 +1,12 @@
 "use server"
 
 import { and, count, eq, lte } from "drizzle-orm"
-import { db } from "../db"
+import { db } from "@/server/db"
 import {
   submissionTestcases,
   submissions,
   submissionTestcaseQueue,
-} from "../db/schema"
+} from "@/server/db/schema"
 
 export async function getSubmissionInfo({
   submissionId,

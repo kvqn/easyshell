@@ -1,9 +1,9 @@
 "use server"
 
-import { ensureAuth } from "../auth"
-import { db } from "../db"
-import { submissions, submissionTestcaseQueue } from "../db/schema"
-import { getProblemInfo, getProblemSlugFromId } from "../utils/problem"
+import { ensureAuth } from "@/server/auth"
+import { db } from "@/server/db"
+import { submissions, submissionTestcaseQueue } from "@/server/db/schema"
+import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
 
 export async function newSubmission({
   problemId,

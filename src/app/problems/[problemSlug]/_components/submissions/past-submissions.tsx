@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
 import { getPastSubmissions } from "@/server/actions/get-past-submissions"
-import { useProblem } from "../problem-context"
+import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
 import { useSubmissionsContext } from "./submissions-context"
 import { cn } from "@/lib/utils"
 import { FaXmark, FaCheck } from "react-icons/fa6"

@@ -1,8 +1,8 @@
 import { and, asc, eq, isNull } from "drizzle-orm"
 import { db } from "."
 import { terminalSessionLogs, terminalSessions } from "./schema"
-import { isContainerRunning } from "../utils/docker"
-import { getProblemSlugFromId } from "../utils/problem"
+import { isContainerRunning } from "@/server/utils/docker"
+import { getProblemSlugFromId } from "@/server/utils/problem"
 
 export async function getActiveTerminalSession({
   userId,

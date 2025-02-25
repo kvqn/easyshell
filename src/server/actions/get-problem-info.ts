@@ -1,6 +1,6 @@
 "use server"
 
-import { getProblemInfo as _getProblemInfo } from "../utils/problem"
+import { getProblemInfo as _getProblemInfo } from "@/server/utils/problem"
 
 export async function getProblemInfo(slug: string) {
   const info = await _getProblemInfo(slug)

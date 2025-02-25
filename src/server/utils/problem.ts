@@ -5,7 +5,7 @@ import {
   getActiveTerminalSession,
   getTerminalSessionLogs,
   insertTerminalSession,
-} from "../db/queries"
+} from "@/server/db/queries"
 
 const FsSchema = z.record(z.union([z.string(), z.null()]))
 export type FsType = z.infer<typeof FsSchema>
