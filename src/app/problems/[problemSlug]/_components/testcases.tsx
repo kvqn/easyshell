@@ -5,14 +5,21 @@ import { useState } from "react"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { useProblem } from "./problem-context"
+import { useQueryParams } from "./query-params-context"
 import { TestcaseFilebrowser } from "./testcase-filebrowser"
 import { TestcaseTerminal } from "./testcase-terminal"
 
 export function Testcases() {
   const { testcases } = useProblem()
-  const [tab, setTab] = useState("1")
+  //const [tab, setTab] = useState("1")
+  const { testcase, setTestcase } = useQueryParams()
 
   const [mode] = useState<"filebrowser" | "terminal">("terminal")
+
+  const tab = testcase?.toString() ?? "1"
+  function setTab(tab: string) {
+    setTestcase(parseInt(tab))
+  }
 
   return (
     <div>

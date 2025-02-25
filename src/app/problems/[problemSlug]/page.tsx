@@ -7,6 +7,7 @@ import { LaptopView } from "./_components/laptop-view"
 import { MobileView } from "./_components/mobile-view"
 import { ProblemNotFound } from "./_components/not-found-page"
 import { ProblemProvider } from "./_components/problem-context"
+import { QueryParamsProvider } from "./_components/query-params-context"
 
 export async function generateMetadata({
   params,
@@ -26,11 +27,12 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { problemSlug: string }
-}) {
+export default async function Page(
+  props: {
+    params: Promise<{ problemSlug: string }>
+  }
+) {
+  const params = await props.params;
   const { problemSlug } = params
   const valid = (await getProblems()).includes(problemSlug)
   if (!valid) {
@@ -39,12 +41,14 @@ export default async function Page({
 
   return (
     <ProblemProvider slug={problemSlug}>
-      <DesktopContainer>
-        <LaptopView problemSlug={problemSlug} />
-      </DesktopContainer>
-      <MobileContainer>
-        <MobileView problemSlug={problemSlug} />
-      </MobileContainer>
+      <QueryParamsProvider>
+        <DesktopContainer>
+          <LaptopView problemSlug={problemSlug} />
+        </DesktopContainer>
+        <MobileContainer>
+          <MobileView problemSlug={problemSlug} />
+        </MobileContainer>
+      </QueryParamsProvider>
     </ProblemProvider>
   )
 }
