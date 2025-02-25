@@ -27,13 +27,12 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function Page(
-  props: {
-    params: Promise<{ problemSlug: string }>
-  }
-) {
-  const params = await props.params;
-  const { problemSlug } = params
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ problemSlug: string }>
+}) {
+  const { problemSlug } = await params
   const valid = (await getProblems()).includes(problemSlug)
   if (!valid) {
     return <ProblemNotFound />
