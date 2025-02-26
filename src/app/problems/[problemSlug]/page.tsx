@@ -1,12 +1,11 @@
 import type { Metadata } from "next"
 
 import { DesktopContainer, MobileContainer } from "@/components/media"
-import { getProblems } from "@/server/utils/problem"
+import { getProblemInfo, getProblems } from "@/server/utils/problem"
 
 import { LaptopView } from "./_components/laptop-view"
 import { MobileView } from "./_components/mobile-view"
 import { ProblemNotFound } from "./_components/not-found-page"
-import { ProblemProvider } from "./_components/problem-context"
 
 export async function generateMetadata({
   params,
@@ -32,19 +31,23 @@ export default async function Page({
   params: Promise<{ problemSlug: string }>
 }) {
   const { problemSlug } = await params
+
   const valid = (await getProblems()).includes(problemSlug)
+
   if (!valid) {
     return <ProblemNotFound />
   }
 
+  const { id: problemId } = await getProblemInfo(problemSlug)
+
   return (
-    <ProblemProvider slug={problemSlug}>
+    <>
       <DesktopContainer>
-        <LaptopView problemSlug={problemSlug} />
+        <LaptopView problemSlug={problemSlug} problemId={problemId} />
       </DesktopContainer>
       <MobileContainer>
-        <MobileView problemSlug={problemSlug} />
+        <MobileView problemSlug={problemSlug} problemId={problemId} />
       </MobileContainer>
-    </ProblemProvider>
+    </>
   )
 }

@@ -1,9 +1,7 @@
-"use client"
+import { getProblemInfo } from "@/server/utils/problem"
 
-import { useProblem } from "./problem-context"
-
-export function ProblemHeading() {
-  const { id, slug, title, description } = useProblem()
+export async function ProblemHeading({ slug }: { slug: string }) {
+  const { id, title, description } = await getProblemInfo(slug)
   return (
     <div>
       <div className="flex items-center gap-4">

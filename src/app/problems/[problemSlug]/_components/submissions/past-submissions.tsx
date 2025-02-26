@@ -1,34 +1,19 @@
-"use client"
-
 import moment from "moment"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import Link from "next/link"
 import { FaCheck, FaXmark } from "react-icons/fa6"
 import { ImSpinner3 } from "react-icons/im"
 
-import { useProblem } from "@/app/problems/[problemSlug]/_components/problem-context"
 import { cn } from "@/lib/utils"
-import { getPastSubmissions } from "@/server/actions/get-past-submissions"
+import type { getUserSubmissions } from "@/server/db/queries"
 
-import { useSubmissionsContext } from "./submissions-context"
-
-export function PastSubmissions() {
-  const { id: problemId } = useProblem()
-  const [pastSubmissions, setPastSubmissions] = useState<Awaited<
-    ReturnType<typeof getPastSubmissions>
-  > | null>(null)
-  const { setSelectedSubmissionId } = useSubmissionsContext()
-
-  useEffect(() => {
-    void (async () => {
-      const past_submissions = await getPastSubmissions({ problemId })
-      console.log(past_submissions)
-      setPastSubmissions(past_submissions)
-    })()
-  }, [problemId])
-
-  if (!pastSubmissions) return <div>loading</div>
-
+export function PastSubmissions({
+  problemSlug,
+  pastSubmissions,
+}: {
+  problemSlug: string
+  pastSubmissions: Awaited<ReturnType<typeof getUserSubmissions>>
+}) {
   if (pastSubmissions.length === 0)
     return (
       <div className="flex flex-col items-center justify-center">
@@ -37,7 +22,7 @@ export function PastSubmissions() {
             No submissions yet
           </p>
           <p className="text-md text-center text-gray-400 lg:text-lg">
-            Create a submission using the the prompt above
+            Create a submission using the prompt above
           </p>
           <Image
             src="/images/arrow.svg"
@@ -55,9 +40,9 @@ export function PastSubmissions() {
     <div className="flex flex-col gap-4 border-t p-4">
       <h3 className="text-center font-semibold">Past Submissions</h3>
       {pastSubmissions.map((submission, idx) => (
-        <button
+        <Link
           key={submission.id}
-          onClick={() => setSelectedSubmissionId(submission.id)}
+          href={`/problems/${problemSlug}?tab=submissions&submission=${submission.id}`}
           className={cn(
             "flex items-center gap-2 rounded border p-2 transition-colors",
             {
@@ -81,7 +66,7 @@ export function PastSubmissions() {
           <p className="flex-grow text-right">
             {moment(submission.submittedAt).fromNow()}
           </p>
-        </button>
+        </Link>
       ))}
     </div>
   )

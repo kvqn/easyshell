@@ -1,7 +1,6 @@
 import Link from "next/link"
 
-import { getProblemInfo } from "@/server/actions/get-problem-info"
-import { getProblems } from "@/server/utils/problem"
+import { getProblems, getPublicProblemInfo } from "@/server/utils/problem"
 
 export const metadata = {
   title: "easyshell - browse",
@@ -11,7 +10,7 @@ export default async function Page() {
   const problems = (
     await Promise.all(
       (await getProblems()).map(async (problem) => {
-        const info = await getProblemInfo(problem)
+        const info = await getPublicProblemInfo(problem)
         return info
       }),
     )
@@ -38,7 +37,7 @@ export default async function Page() {
 async function Problem({
   info,
 }: {
-  info: Awaited<ReturnType<typeof getProblemInfo>>
+  info: Awaited<ReturnType<typeof getPublicProblemInfo>>
 }) {
   return (
     <Link

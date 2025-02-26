@@ -1,10 +1,16 @@
-import { and, asc, eq, isNull } from "drizzle-orm"
+import { and, asc, desc, eq, isNull } from "drizzle-orm"
 
 import { isContainerRunning } from "@/server/utils/docker"
 import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import { db } from "."
-import { terminalSessionLogs, terminalSessions } from "./schema"
+import {
+  submissionTestcaseQueue,
+  submissionTestcases,
+  submissions,
+  terminalSessionLogs,
+  terminalSessions,
+} from "./schema"
 
 export async function getActiveTerminalSession({
   userId,
@@ -121,4 +127,68 @@ export async function insertTerminalSessionLog({
     throw new Error("Failed to insert terminal session log")
   }
   return log[0].id
+}
+
+export async function getUserSubmissions({
+  problemId,
+  userId,
+}: {
+  problemId: number
+  userId: string
+}) {
+  const past_submissions = await Promise.all(
+    (
+      await db
+        .select({
+          id: submissions.id,
+          submittedAt: submissions.submittedAt,
+        })
+        .from(submissions)
+        .where(
+          and(
+            eq(submissions.problemId, problemId),
+            eq(submissions.userId, userId),
+          ),
+        )
+        .orderBy(desc(submissions.submittedAt))
+    ).map(async (submission) => {
+      const testcases = await db
+        .select({
+          id: submissionTestcaseQueue.testcaseId,
+          status: submissionTestcaseQueue.status,
+          passed: submissionTestcases.passed,
+        })
+        .from(submissionTestcaseQueue)
+        .leftJoin(
+          submissionTestcases,
+          and(
+            eq(
+              submissionTestcaseQueue.submissionId,
+              submissionTestcases.submissionId,
+            ),
+            eq(
+              submissionTestcaseQueue.testcaseId,
+              submissionTestcases.testcaseId,
+            ),
+          ),
+        )
+        .where(eq(submissionTestcaseQueue.submissionId, submission.id))
+
+      const running = testcases.some((testcase) => testcase.passed === null)
+      const passed = !running && testcases.every((testcase) => testcase.passed)
+
+      const resp = {
+        ...submission,
+        status: running
+          ? ("running" as const)
+          : passed
+            ? ("passed" as const)
+            : ("failed" as const),
+      }
+
+      return resp
+    }),
+  )
+
+  return past_submissions
 }

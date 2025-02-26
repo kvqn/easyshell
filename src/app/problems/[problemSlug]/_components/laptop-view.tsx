@@ -3,45 +3,61 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ensureAuth } from "@/server/auth"
+import { getUserSubmissions } from "@/server/db/queries"
+import { getPublicTestcaseInfo } from "@/server/utils/problem"
 
-import { ProblemHeading } from "./heading"
-import { ProblemMarkdown } from "./markdown"
-import { ProblemHints } from "./problem-hints"
+import { Problem } from "./problem"
 import { Submissions } from "./submissions"
-import { SubmissionsContextProvider } from "./submissions/submissions-context"
-import { Testcases } from "./testcases"
+import { ProblemPageTabs } from "./tabs"
+import { TestcaseTabs } from "./testcases/tabs"
 
-export function LaptopView({ problemSlug }: { problemSlug: string }) {
+export async function LaptopView({
+  problemId,
+  problemSlug,
+}: {
+  problemId: number
+  problemSlug: string
+}) {
+  const testcases = await getPublicTestcaseInfo(problemSlug)
+  const testcaseIds = testcases.map((testcase) => testcase.id)
+  const { id: userId } = await ensureAuth()
+  const submissions = await getUserSubmissions({ problemId, userId })
+
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel className="p-4">
-        <div>
-          <ProblemHeading />
-          <ProblemMarkdown slug={problemSlug} />
-          <ProblemHints slug={problemSlug} />
-        </div>
+        <Problem slug={problemSlug} />
       </ResizablePanel>
       <ResizableHandle />
       <ResizablePanel className="flex w-full flex-col p-4">
-        <Tabs defaultValue="submissions" className="h-full">
-          <TabsList className="w-full">
-            <TabsTrigger value="testcases" className="text-md flex-grow">
-              Testcases
-            </TabsTrigger>
-            <TabsTrigger value="submissions" className="text-md flex-grow">
-              Submissions
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="testcases">
-            <Testcases />
-          </TabsContent>
-          <TabsContent value="submissions" className="h-full">
-            <SubmissionsContextProvider>
-              <Submissions />
-            </SubmissionsContextProvider>
-          </TabsContent>
-        </Tabs>
+        <ProblemPageTabs
+          tabs={[
+            {
+              title: "Testcases",
+              value: "testcases",
+              content: (
+                <TestcaseTabs
+                  problemId={problemId}
+                  problemSlug={problemSlug}
+                  testcases={testcaseIds}
+                />
+              ),
+            },
+            {
+              title: "Submissions",
+              value: "submissions",
+              content: (
+                <Submissions
+                  problemId={problemId}
+                  problemSlug={problemSlug}
+                  pastSubmissions={submissions}
+                />
+              ),
+            },
+          ]}
+          defaultValue="submissions"
+        />
       </ResizablePanel>
     </ResizablePanelGroup>
   )

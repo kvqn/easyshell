@@ -1,39 +1,57 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ensureAuth } from "@/server/auth"
+import { getUserSubmissions } from "@/server/db/queries"
+import { getPublicTestcaseInfo } from "@/server/utils/problem"
 
-import { ProblemHeading } from "./heading"
-import { ProblemMarkdown } from "./markdown"
-import { ProblemHints } from "./problem-hints"
+import { Problem } from "./problem"
 import { Submissions } from "./submissions"
-import { SubmissionsContextProvider } from "./submissions/submissions-context"
-import { Testcases } from "./testcases"
+import { ProblemPageTabs } from "./tabs"
+import { TestcaseTabs } from "./testcases/tabs"
 
-export function MobileView({ problemSlug }: { problemSlug: string }) {
+export async function MobileView({
+  problemId,
+  problemSlug,
+}: {
+  problemId: number
+  problemSlug: string
+}) {
+  const testcases = await getPublicTestcaseInfo(problemSlug)
+  const testcaseIds = testcases.map((testcase) => testcase.id)
+  const { id: userId } = await ensureAuth()
+  const submissions = await getUserSubmissions({ problemId, userId })
   return (
-    <Tabs defaultValue="problem" className="h-full px-4">
-      <TabsList className="w-full">
-        <TabsTrigger value="problem" className="text-md flex-grow">
-          Problem
-        </TabsTrigger>
-        <TabsTrigger value="testcases" className="text-md flex-grow">
-          Testcases
-        </TabsTrigger>
-        <TabsTrigger value="submissions" className="text-md flex-grow">
-          Submissions
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="problem">
-        <ProblemHeading />
-        <ProblemMarkdown slug={problemSlug} />
-        <ProblemHints slug={problemSlug} />
-      </TabsContent>
-      <TabsContent value="testcases">
-        <Testcases />
-      </TabsContent>
-      <TabsContent value="submissions" className="h-full">
-        <SubmissionsContextProvider>
-          <Submissions />
-        </SubmissionsContextProvider>
-      </TabsContent>
-    </Tabs>
+    <div className="p-2">
+      <ProblemPageTabs
+        tabs={[
+          {
+            title: "Problem",
+            value: "problem",
+            content: <Problem slug={problemSlug} />,
+          },
+          {
+            title: "Testcases",
+            value: "testcases",
+            content: (
+              <TestcaseTabs
+                problemId={problemId}
+                problemSlug={problemSlug}
+                testcases={testcaseIds}
+              />
+            ),
+          },
+          {
+            title: "Submissions",
+            value: "submissions",
+            content: (
+              <Submissions
+                problemId={problemId}
+                problemSlug={problemSlug}
+                pastSubmissions={submissions}
+              />
+            ),
+          },
+        ]}
+        defaultValue="problem"
+      />
+    </div>
   )
 }

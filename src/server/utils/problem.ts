@@ -186,3 +186,27 @@ export async function getProblemSlugFromId(problemId: number) {
   }
   throw new Error("Problem not found")
 }
+
+export async function getPublicProblemInfo(slug: string) {
+  const info = await getProblemInfo(slug)
+  return {
+    id: info.id,
+    slug: info.slug,
+    title: info.title,
+    description: info.description,
+    tags: info.tags,
+  }
+}
+
+export async function getPublicTestcaseInfo(slug: string) {
+  const info = await getProblemInfo(slug)
+  return info.testcases
+    .filter((tc) => tc.public)
+    .map((tc) => ({
+      id: tc.id,
+      expected_stdout: tc.expected_stdout,
+      expected_stderr: tc.expected_stderr,
+      expected_fs: tc.expected_fs,
+      expected_exit_code: tc.expected_exit_code,
+    }))
+}

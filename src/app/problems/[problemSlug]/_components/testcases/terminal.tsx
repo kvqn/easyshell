@@ -18,11 +18,15 @@ import { getTerminalSession } from "@/server/actions/get-terminal-session"
 import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
 import { submitTerminalSessionCommand } from "@/server/actions/submit-terminal-session-command"
 
-import { useProblem } from "./problem-context"
-
-export function TestcaseTerminal({ testcase }: { testcase: number }) {
-  const { id: problemId, slug: problemSlug } = useProblem()
-
+export function TestcaseTerminal({
+  problemId,
+  problemSlug,
+  testcase,
+}: {
+  problemId: number
+  problemSlug: string
+  testcase: number
+}) {
   const [session, setSession] = useState<Awaited<
     ReturnType<typeof getTerminalSession>
   > | null>(null)
