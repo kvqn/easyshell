@@ -172,7 +172,7 @@ export function TestcaseTerminal({
         <div className="flex">
           <input
             className={cn(
-              "flex-grow bg-neutral-800 px-2 py-1 text-white outline-none",
+              "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
             )}
           />
           <button className="w-20 select-none bg-green-800 px-2 text-neutral-200 hover:bg-green-700"></button>
@@ -206,7 +206,7 @@ export function TestcaseTerminal({
           ))}
         </div>
         <div className="flex">
-          <div className="flex flex-grow bg-neutral-800 text-white">
+          <div className="flex grow bg-neutral-800 text-white">
             <p className="py-1 pl-2">{`>>>`}</p>
             <input
               ref={inputRef}
@@ -214,7 +214,7 @@ export function TestcaseTerminal({
               onChange={(e) => setInput(e.target.value)}
               disabled={running}
               className={cn(
-                "flex-grow bg-neutral-800 px-2 py-1 text-white outline-none",
+                "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
                 {
                   "text-neutral-400": running,
                 },
@@ -249,13 +249,13 @@ export function TestcaseTerminal({
       <Accordion type="single" collapsible className="space-y-4">
         <AccordionItem
           value={`options`}
-          className="border-top-0 rounded-lg border bg-neutral-100 shadow"
+          className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm"
         >
-          <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow hover:bg-neutral-50">
-            <p className="flex-grow text-center">Terminal Options</p>
+          <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50">
+            <p className="grow text-center">Terminal Options</p>
           </AccordionTrigger>
           <AccordionContent className="px-4 py-2">
-            <div className="flex flex-col gap-4 p-4 *:rounded-md *:bg-white *:p-4 *:shadow">
+            <div className="flex flex-col gap-4 p-4 *:rounded-md *:bg-white *:p-4 *:shadow-sm">
               <div className="space-y-2">
                 <label htmlFor="font-size" className="font-semibold">
                   Font Size
