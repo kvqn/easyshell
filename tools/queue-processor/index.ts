@@ -88,13 +88,8 @@ async function processQueueItem(
   console.log("Running submission", containerName)
   const startedAt = new Date()
 
-  const inputFilePathForDocker = process.env.DIND_HOST_PREFIX
-    ? `${process.env.DIND_HOST_PREFIX}/${inputFilePath}`
-    : inputFilePath
-
-  const outputFilePathForDocker = process.env.DIND_HOST_PREFIX
-    ? `${process.env.DIND_HOST_PREFIX}/${outputFilePath}`
-    : outputFilePath
+  const inputFilePathForDocker = `${process.env.DIND_HOST_PREFIX ?? "."}/${inputFilePath}`
+  const outputFilePathForDocker = `${process.env.DIND_HOST_PREFIX ?? "."}/${outputFilePath}`
 
   await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --entrypoint /submission-runner --net easyshell -m 10m --cpus 0.1 ${image}`
   const finishedAt = new Date()
@@ -107,7 +102,7 @@ async function processQueueItem(
   console.log("Output", output)
 
   const fs =
-    output.fs_zip_base64.length === 0
+    output.fs_zip_base64.length !== 0
       ? await unzip(output.fs_zip_base64)
       : undefined
 
