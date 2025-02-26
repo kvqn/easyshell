@@ -63,7 +63,7 @@ export function PastSubmissions({
             <ImSpinner3 className="animate-spin" />
           )}
           <p>Attempt #{pastSubmissions.length - idx}</p>
-          <p className="flex-grow text-right">
+          <p className="grow text-right">
             {moment(submission.submittedAt).fromNow()}
           </p>
         </Link>

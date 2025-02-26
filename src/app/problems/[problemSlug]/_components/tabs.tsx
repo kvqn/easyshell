@@ -30,7 +30,7 @@ export function ProblemPageTabs({
     >
       <TabsList className="w-full">
         {tabs.map(({ title, value }) => (
-          <TabsTrigger key={value} value={value} className="text-md flex-grow">
+          <TabsTrigger key={value} value={value} className="text-md grow">
             {title}
           </TabsTrigger>
         ))}

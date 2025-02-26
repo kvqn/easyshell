@@ -31,7 +31,7 @@ export function TestcaseTabs({
       <Tabs value={testcase.toString()} onValueChange={setTestcase}>
         <TabsList className="w-full">
           {testcases.map((tc) => (
-            <TabsTrigger key={tc} value={tc.toString()} className="flex-grow">
+            <TabsTrigger key={tc} value={tc.toString()} className="grow">
               Test Case {tc}
             </TabsTrigger>
           ))}

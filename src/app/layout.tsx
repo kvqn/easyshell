@@ -29,7 +29,7 @@ export default function RootLayout({
           <SessionProvider>
             <Toaster />
             <Navbar />
-            <div className="flex-grow">{children}</div>
+            <div className="grow">{children}</div>
           </SessionProvider>
         </ThemeProvider>
       </body>
