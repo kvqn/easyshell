@@ -222,3 +222,10 @@ export const submissionTestcaseQueue = createTable(
     }),
   ],
 )
+
+export const bookmarks = createTable("bookmark", {
+  userId: varchar("user_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  problemId: integer("problem_id").notNull(),
+})

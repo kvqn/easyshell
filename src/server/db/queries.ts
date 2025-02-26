@@ -5,6 +5,7 @@ import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import { db } from "."
 import {
+  bookmarks,
   submissionTestcaseQueue,
   submissionTestcases,
   submissions,
@@ -191,4 +192,21 @@ export async function getUserSubmissions({
   )
 
   return past_submissions
+}
+
+export async function isProblemBookmarked({
+  problemId,
+  userId,
+}: {
+  problemId: number
+  userId: string
+}) {
+  const result = await db
+    .select()
+    .from(bookmarks)
+    .where(
+      and(eq(bookmarks.problemId, problemId), eq(bookmarks.userId, userId)),
+    )
+    .limit(1)
+  return result.length > 0
 }
