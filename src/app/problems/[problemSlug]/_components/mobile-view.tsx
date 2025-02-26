@@ -50,7 +50,7 @@ export async function MobileView({
             ),
           },
         ]}
-        defaultValue="submissions"
+        defaultValue="problem"
       />
     </div>
   )

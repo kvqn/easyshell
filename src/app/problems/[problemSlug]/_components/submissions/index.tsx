@@ -19,8 +19,8 @@ export function Submissions({
 }) {
   const searchParams = useSearchParams()
 
-  const _submission = searchParams.get("submission")
-  const submission = _submission ? parseInt(_submission) : null
+  const _submission = parseInt(searchParams.get("submission") ?? "")
+  const submission = isNaN(_submission) ? null : _submission
 
   if (submission === null)
     return (

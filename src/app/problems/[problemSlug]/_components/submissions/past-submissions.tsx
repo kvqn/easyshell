@@ -22,7 +22,7 @@ export function PastSubmissions({
             No submissions yet
           </p>
           <p className="text-md text-center text-gray-400 lg:text-lg">
-            Create a submission using the the prompt above
+            Create a submission using the prompt above
           </p>
           <Image
             src="/images/arrow.svg"

@@ -174,25 +174,8 @@ export async function getUserSubmissions({
         )
         .where(eq(submissionTestcaseQueue.submissionId, submission.id))
 
-      let running = false
-      for (const testcase of testcases) {
-        if (testcase.passed === null) {
-          running = true
-          break
-        }
-      }
-
-      let passed
-
-      if (!running) {
-        passed = true
-        for (const testcase of testcases) {
-          if (!testcase.passed) {
-            passed = false
-            break
-          }
-        }
-      }
+      const running = testcases.some((testcase) => testcase.passed === null)
+      const passed = !running && testcases.every((testcase) => testcase.passed)
 
       const resp = {
         ...submission,
@@ -207,13 +190,5 @@ export async function getUserSubmissions({
     }),
   )
 
-  /*
-{
-  id: number,
-  status: "passed" | "failed" | "pending",
-  }
-  */
-
-  console.log("past_submissions", past_submissions)
   return past_submissions
 }
