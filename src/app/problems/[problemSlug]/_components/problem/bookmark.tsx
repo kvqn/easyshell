@@ -18,12 +18,18 @@ export function ProblemBookmark({
   const [inBetween, setInBetween] = useState(false)
 
   async function handle() {
+    if (inBetween) return
     setInBetween(true)
-    const { newBookmarkState } = await toggleBookmark(problemId)
-    if (newBookmarkState) toast.success("Problem Bookmarked")
-    else toast.success("Bookmark Removed")
-    setInBetween(false)
-    setBookmarked(newBookmarkState)
+    try {
+      const { newBookmarkState } = await toggleBookmark(problemId)
+      if (newBookmarkState) toast.success("Problem Bookmarked")
+      else toast.success("Bookmark Removed")
+      setInBetween(false)
+      setBookmarked(newBookmarkState)
+    } catch {
+      toast.error("Failed to toggle bookmark")
+      setInBetween(false)
+    }
   }
 
   return (
