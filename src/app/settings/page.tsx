@@ -1,10 +1,14 @@
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
 import { ensureAuth } from "@/server/auth"
 import { getUserProviders } from "@/server/db/queries"
 
 import { SettingsNameImage } from "./_components/name-image"
+import {
+  DiscordCard,
+  GithubCard,
+  GoogleCard,
+} from "./_components/provider-cards"
+import { ThemeToggle } from "./_components/theme-toggle"
 
 export const metadata = {
   title: "easyshell - account settings",
@@ -29,7 +33,7 @@ export default async function Page() {
                 <p className="text-sm font-medium text-gray-700">Dark Mode</p>
                 <p className="text-sm text-gray-500">Toggle dark theme.</p>
               </div>
-              <Switch />
+              <ThemeToggle />
             </div>
           </CardContent>
         </Card>
@@ -39,53 +43,10 @@ export default async function Page() {
             <h2 className="text-xl font-bold">Integrations</h2>
             <p className="text-sm text-gray-500">Connect your accounts.</p>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">Discord</p>
-                <p className="text-sm text-gray-500">
-                  {providers.discord
-                    ? "Connected as @profile"
-                    : "Not connected"}
-                </p>
-              </div>
-              <Button
-                variant={providers.discord ? "destructive" : "default"}
-                //onClick={() => setDiscordConnected(!discordConnected)}
-              >
-                {true ? "Disconnect" : "Connect"}
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">GitHub</p>
-                <p className="text-sm text-gray-500">
-                  {true ? "Connected as @profile" : "Not connected"}
-                </p>
-              </div>
-              <Button
-                variant={true ? "destructive" : "default"}
-                //onClick={() => setGithubConnected(!githubConnected)}
-              >
-                {true ? "Disconnect" : "Connect"}
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">Google</p>
-                <p className="text-sm text-gray-500">
-                  {true ? "Connected as @profile" : "Not connected"}
-                </p>
-              </div>
-              <Button
-                variant={true ? "destructive" : "default"}
-                //onClick={() => setGoogleConnected(!googleConnected)}
-              >
-                {true ? "Disconnect" : "Connect"}
-              </Button>
-            </div>
+          <CardContent className="flex items-center justify-center pb-8 gap-8">
+            <DiscordCard connected={providers.discord} />
+            <GithubCard connected={providers.github} />
+            <GoogleCard connected={providers.google} />
           </CardContent>
         </Card>
       </div>
