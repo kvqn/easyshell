@@ -116,7 +116,7 @@ export async function ensureAuth() {
       })
       .from(users)
 
-    user.name = `User ${userCount[0]!.count + 1}`
+    user.name = `user-${userCount[0]!.count + 1}`
     await db
       .update(users)
       .set({

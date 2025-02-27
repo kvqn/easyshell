@@ -1,14 +1,20 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { PiCheck, PiX } from "react-icons/pi"
+import { PiCheck, PiUploadBold, PiX } from "react-icons/pi"
 import { toast } from "sonner"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { checkValidUsername, sleep } from "@/lib/utils"
+import { setUserImage } from "@/server/actions/set-image"
 import { setUsername } from "@/server/actions/set-username"
 
 export function SettingsNameImage({
@@ -19,26 +25,51 @@ export function SettingsNameImage({
   name: string
 }) {
   const [name, setName] = useState(_name)
-  const [image, setImage] = useState(_image)
+  const [image, setImage] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
 
   const [changes, setChanges] = useState(false)
 
   useEffect(() => {
-    setChanges(name !== _name || image !== _image)
+    setChanges(name !== _name || image !== null)
   }, [name, image, _name, _image])
 
   async function handleSubmit() {
     setSubmitting(true)
-    const resp = await setUsername(name)
-    if (resp.success) {
-      toast.success("Updated username", {
-        description: "Refreshing the window to apply changes.",
-      })
+    let reload = true
+    if (name !== _name) {
+      const respName = await setUsername(name)
+      if (respName.success) {
+        toast.success("Updated username")
+      } else {
+        toast.error("Failed to update username", {
+          description: respName.message,
+        })
+        reload = false
+      }
+    }
+
+    if (image) {
+      if (image.size > 1024 * 1024) {
+        toast.error("Image too large. Must be less than 1MB.")
+        reload = false
+      } else {
+        const respImage = await setUserImage(image)
+        if (respImage.success) {
+          toast.success("Updated avatar")
+        } else {
+          toast.error("Failed to update avatar", {
+            description: respImage.message,
+          })
+          reload = false
+        }
+      }
+    }
+
+    if (reload) {
+      toast.info("Reloading page to apply changes")
       await sleep(1000)
       window.location.reload()
-    } else {
-      toast.error(resp.message)
     }
     setSubmitting(false)
   }
@@ -51,10 +82,32 @@ export function SettingsNameImage({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-4">
-          <Avatar className="h-20 w-20">
-            <AvatarImage src={image} />
-            <AvatarFallback>{name[0]}</AvatarFallback>
-          </Avatar>
+          <div className="relative h-20 w-20 group cursor-pointer overflow-hidden rounded-full">
+            <Avatar className="h-full w-full absolute group-hover:blur-xs transition-all">
+              <AvatarImage src={image ? URL.createObjectURL(image) : _image} />
+              <AvatarFallback>{name[0]}</AvatarFallback>
+            </Avatar>
+            <label htmlFor="avatar-upload">
+              <div className="h-full w-full flex items-center justify-center top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity absolute cursor-pointer">
+                <PiUploadBold className="text-xl text-white" />
+              </div>
+            </label>
+            <input
+              type="file"
+              className="hidden"
+              id="avatar-upload"
+              accept="image/*"
+              onChange={(e) => {
+                if (!e.target.files?.[0]) return
+                const _file = e.target.files[0]
+                if (_file.size > 1024 * 1024) {
+                  toast.error("Image too large. Must be less than 1MB.")
+                  return
+                }
+                setImage(e.target.files[0])
+              }}
+            />
+          </div>
           <div className="relative grow">
             <Input
               value={name}
@@ -70,14 +123,41 @@ export function SettingsNameImage({
         </div>
       </CardContent>
       <CardFooter className="flex justify-end gap-4">
-        <div className="text-gray-500 hover:underline cursor-pointer text-sm">
-          Need Help?
-        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <div className="text-gray-500 hover:underline cursor-pointer text-sm">
+              Need Help?
+            </div>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div>
+              <h3 className="font-semibold text-sm">Username</h3>
+              <p className="text-neutral-400 text-xs">
+                The username must satisfy the following criteria
+              </p>
+              <ul className="list-disc ml-4 text-xs mt-2">
+                <li>Must be at least 3 and at most 20 characters.</li>
+                <li>
+                  Must contain only alphanumerics, underscores and dashes.
+                </li>
+              </ul>
+              <h3 className="font-semibold text-sm mt-4">Avatar Image</h3>
+              <p className="text-neutral-400 text-xs">
+                The avatar image must satisfy the following criteria
+              </p>
+              <ul className="list-disc ml-4 text-xs mt-2">
+                <li>Size be under 1MB.</li>
+                <li>(Recommended) at least 400 x 400 pixels.</li>
+              </ul>
+            </div>
+          </PopoverContent>
+        </Popover>
+
         <Button
           variant="secondary"
           onClick={() => {
             setName(_name)
-            setImage(_image)
+            setImage(null)
           }}
         >
           Undo Changes

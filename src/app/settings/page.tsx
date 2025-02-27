@@ -6,6 +6,10 @@ import { getUserProviders } from "@/server/db/queries"
 
 import { SettingsNameImage } from "./_components/name-image"
 
+export const metadata = {
+  title: "easyshell - account settings",
+}
+
 export default async function Page() {
   const user = await ensureAuth()
   const providers = await getUserProviders(user.id)
@@ -81,26 +85,6 @@ export default async function Page() {
               >
                 {true ? "Disconnect" : "Connect"}
               </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-red-500">
-          <CardHeader>
-            <h2 className="text-xl font-bold text-red-500">Danger Zone</h2>
-            <p className="text-sm text-gray-500">Irreversible actions.</p>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">
-                  Delete Account
-                </p>
-                <p className="text-sm text-gray-500">
-                  Permanently delete your account.
-                </p>
-              </div>
-              <Button variant="destructive">Delete</Button>
             </div>
           </CardContent>
         </Card>
