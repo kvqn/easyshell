@@ -122,10 +122,10 @@ export function SettingsNameImage({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end gap-4">
+      <CardFooter className="flex justify-end gap-4 items-center">
         <Popover>
           <PopoverTrigger asChild>
-            <div className="text-gray-500 hover:underline cursor-pointer text-sm">
+            <div className="text-gray-500 hover:underline cursor-pointer text-xs lg:text-sm mr-auto lg:mr-0">
               Need Help?
             </div>
           </PopoverTrigger>
@@ -160,10 +160,12 @@ export function SettingsNameImage({
             setImage(null)
           }}
         >
-          Undo Changes
+          <p className="text-xs lg:text-base">Undo Changes</p>
         </Button>
         <Button disabled={!changes || submitting} onClick={handleSubmit}>
-          {changes ? (submitting ? "Saving" : "Save Changes") : "No changes"}
+          <p className="text-xs lg:text-base">
+            {changes ? (submitting ? "Saving" : "Save Changes") : "No changes"}
+          </p>
         </Button>
       </CardFooter>
     </Card>

@@ -43,7 +43,7 @@ export default async function Page() {
             <h2 className="text-xl font-bold">Integrations</h2>
             <p className="text-sm text-gray-500">Connect your accounts.</p>
           </CardHeader>
-          <CardContent className="flex items-center justify-center pb-8 gap-8">
+          <CardContent className="flex items-center justify-center pb-8 gap-4 lg:gap-8 flex-wrap">
             <DiscordCard connected={providers.discord} />
             <GithubCard connected={providers.github} />
             <GoogleCard connected={providers.google} />
