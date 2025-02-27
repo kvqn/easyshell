@@ -27,6 +27,15 @@ export async function setUsername(name: string): Promise<{
       message: "Invalid username.",
     }
 
+  const existing =
+    (await db.select({}).from(users).where(eq(users.name, name)).limit(1))
+      .length > 0
+  if (existing)
+    return {
+      success: false,
+      message: "Username already taken.",
+    }
+
   await db
     .update(users)
     .set({

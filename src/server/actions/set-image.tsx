@@ -5,6 +5,7 @@ import { randomUUID } from "crypto"
 import { eq } from "drizzle-orm"
 import sharp from "sharp"
 
+import { neverThrow } from "@/lib/utils"
 import { ensureAuth } from "@/server/auth"
 import { db } from "@/server/db"
 import { images, users } from "@/server/db/schema"
@@ -14,39 +15,63 @@ export async function setUserImage(file: File): Promise<{
   message: string
 }> {
   try {
+    if (file.size > 1024 * 1024) {
+      return {
+        success: false,
+        message: "Image size must be less than 1MB",
+      }
+    }
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"]
+    if (!allowedTypes.includes(file.type)) {
+      return {
+        success: false,
+        message: "Invalid file type.",
+      }
+    }
+
     const { id: userId } = await ensureAuth()
 
-    const processedImageBlob: Buffer = await sharp(await file.arrayBuffer())
-      .resize(400, 400)
-      .toFormat("jpeg")
-      .toBuffer()
+    const { data: processedImageBlob, error: processingError } =
+      await neverThrow(
+        sharp(await file.arrayBuffer())
+          .resize(400, 400)
+          .toFormat("jpeg")
+          .toBuffer(),
+      )
+
+    if (processingError)
+      return {
+        success: false,
+        message: "Could not process the image.",
+      }
 
     const base64 = encode(processedImageBlob.buffer as ArrayBuffer)
-
     const name = `${randomUUID()}.jpg`
 
-    await db.insert(images).values({
-      name,
-      base64,
-      uploadedBy: userId,
-    })
-
-    await db
-      .update(users)
-      .set({
-        image: `/images/${name}`,
+    await db.transaction(async (tx) => {
+      await tx.insert(images).values({
+        name,
+        base64,
+        uploadedBy: userId,
       })
-      .where(eq(users.id, userId))
+
+      await tx
+        .update(users)
+        .set({
+          image: `/images/${name}`,
+        })
+        .where(eq(users.id, userId))
+    })
 
     return {
       success: true,
-      message: "Image uploaded successfully",
+      message: "Image uploaded successfully.",
     }
-  } catch (e) {
-    console.error(e)
+  } catch {
     return {
       success: false,
-      message: "Failed to upload image",
+      message: "An unknown error occured.",
     }
   }
 }

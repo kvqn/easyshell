@@ -13,27 +13,51 @@ import { toast } from "sonner"
 
 import { cn } from "@/lib/utils"
 
-export function DiscordCard({ connected }: { connected: boolean }) {
+type ProviderType = "discord" | "github" | "google"
+
+interface ProviderCardProps {
+  provider: ProviderType
+  connected: boolean
+}
+
+export function ProviderCard({ provider, connected }: ProviderCardProps) {
+  const icons = {
+    discord: {
+      connected: <PiDiscordLogoDuotone className="w-6 h-6" />,
+      disconnected: <PiDiscordLogo className="w-6 h-6" />,
+    },
+    github: {
+      connected: <PiGithubLogoDuotone className="w-6 h-6" />,
+      disconnected: <PiGithubLogo className="w-6 h-6" />,
+    },
+    google: {
+      connected: <PiGoogleLogoDuotone className="w-6 h-6" />,
+      disconnected: <PiGoogleLogo className="w-6 h-6" />,
+    },
+  }
+
+  const providerNames = {
+    discord: "Discord",
+    github: "GitHub",
+    google: "Google",
+  }
+
   return (
     <div
       className="pl-4 pr-6 py-2 flex items-center border rounded-full shadow bg-neutral-50 gap-2 cursor-pointer hover:bg-neutral-100 transition-colors"
       onClick={async () => {
         if (connected) {
-          toast.success("Yoo Hoo!", {
-            description: "You're already connected to Discord.",
+          toast.success("Already Connected", {
+            description: `You're already connected to ${providerNames[provider]}.`,
           })
           return
         }
-        await signIn("discord")
+        await signIn(provider)
       }}
     >
-      {connected ? (
-        <PiDiscordLogoDuotone className="w-6 h-6" />
-      ) : (
-        <PiDiscordLogo className="w-6 h-6" />
-      )}
+      {connected ? icons[provider].connected : icons[provider].disconnected}
       <div className="flex flex-col items-center">
-        <p className="font-semibold">Discord</p>
+        <p className="font-semibold">{providerNames[provider]}</p>
         <p
           className={cn("text-xs text-neutral-400", {
             "text-emerald-600": connected,
@@ -44,70 +68,16 @@ export function DiscordCard({ connected }: { connected: boolean }) {
       </div>
     </div>
   )
+}
+
+export function DiscordCard({ connected }: { connected: boolean }) {
+  return <ProviderCard provider="discord" connected={connected} />
 }
 
 export function GithubCard({ connected }: { connected: boolean }) {
-  return (
-    <div
-      className="pl-4 pr-6 py-2 flex items-center border rounded-full shadow bg-neutral-50 gap-2 cursor-pointer hover:bg-neutral-100 transition-colors"
-      onClick={async () => {
-        if (connected) {
-          toast.success("Yoo Hoo!", {
-            description: "You're already connected to GitHub.",
-          })
-          return
-        }
-        await signIn("github")
-      }}
-    >
-      {connected ? (
-        <PiGithubLogoDuotone className="w-6 h-6" />
-      ) : (
-        <PiGithubLogo className="w-6 h-6" />
-      )}
-      <div className="flex flex-col items-center">
-        <p className="font-semibold">GitHub</p>
-        <p
-          className={cn("text-xs text-neutral-400", {
-            "text-emerald-600": connected,
-          })}
-        >
-          {connected ? "Connected" : "Not connected"}
-        </p>
-      </div>
-    </div>
-  )
+  return <ProviderCard provider="github" connected={connected} />
 }
 
 export function GoogleCard({ connected }: { connected: boolean }) {
-  return (
-    <div
-      className="pl-4 pr-6 py-2 flex items-center border rounded-full shadow bg-neutral-50 gap-2 cursor-pointer hover:bg-neutral-100 transition-colors"
-      onClick={async () => {
-        if (connected) {
-          toast.success("Yoo Hoo!", {
-            description: "You're already connected to Google.",
-          })
-          return
-        }
-        await signIn("google")
-      }}
-    >
-      {connected ? (
-        <PiGoogleLogoDuotone className="w-6 h-6" />
-      ) : (
-        <PiGoogleLogo className="w-6 h-6" />
-      )}
-      <div className="flex flex-col items-center">
-        <p className="font-semibold">Google</p>
-        <p
-          className={cn("text-xs text-neutral-400", {
-            "text-emerald-600": connected,
-          })}
-        >
-          {connected ? "Connected" : "Not connected"}
-        </p>
-      </div>
-    </div>
-  )
+  return <ProviderCard provider="google" connected={connected} />
 }
