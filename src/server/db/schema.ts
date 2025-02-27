@@ -238,3 +238,13 @@ export const bookmarks = createTable(
     }),
   ],
 )
+
+export const images = createTable("images", {
+  id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
+  name: varchar("name", { length: 255 }).notNull().unique(),
+  base64: text("base64").notNull(),
+  uploadedBy: varchar("uploaded_by", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+})

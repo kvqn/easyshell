@@ -81,8 +81,10 @@ async function User() {
     )
 
   return (
-    <div className="flex w-full flex-col">
-      <p>Not logged in</p>
+    <div className="flex w-full flex-col gap-2">
+      <p className="py-2 px-4 border border-neutral-200 rounded-md text-neutral-500">
+        Not logged in
+      </p>
       <Link href="/login" className="w-full">
         <Button className="w-full">Login</Button>
       </Link>
