@@ -5,6 +5,7 @@ import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import { db } from "."
 import {
+  accounts,
   bookmarks,
   submissionTestcaseQueue,
   submissionTestcases,
@@ -209,4 +210,21 @@ export async function isProblemBookmarked({
     )
     .limit(1)
   return result.length > 0
+}
+
+export async function getUserProviders(userId: string) {
+  const results = await db
+    .select({
+      provider: accounts.provider,
+    })
+    .from(accounts)
+    .where(eq(accounts.userId, userId))
+
+  const providers = {
+    github: results.some((result) => result.provider === "github"),
+    discord: results.some((result) => result.provider === "discord"),
+    google: results.some((result) => result.provider === "google"),
+  }
+
+  return providers
 }

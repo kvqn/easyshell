@@ -1,4 +1,5 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
+import { count, eq } from "drizzle-orm"
 import {
   type DefaultSession,
   type NextAuthOptions,
@@ -65,14 +66,17 @@ export const authOptions: NextAuthOptions = {
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     GoogleProvider({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
     /**
      * ...add more providers here.
@@ -99,7 +103,31 @@ export async function getServerUser() {
 }
 
 export async function ensureAuth() {
-  const user = await getServerUser()
+  const _user = await getServerUser()
+  if (!_user) redirect("/login")
+  const user = (
+    await db.select().from(users).where(eq(users.id, _user.id)).limit(1)
+  )[0]
   if (!user) redirect("/login")
-  return user
+  if (!user.name) {
+    const userCount = await db
+      .select({
+        count: count(),
+      })
+      .from(users)
+
+    user.name = `User ${userCount[0]!.count + 1}`
+    await db
+      .update(users)
+      .set({
+        name: user.name,
+      })
+      .where(eq(users.id, user.id))
+  }
+  return {
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    image: user.image ?? undefined,
+  }
 }
