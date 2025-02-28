@@ -1,7 +1,7 @@
 FROM oven/bun:alpine
 
 
-RUN apk add docker
+RUN apk add docker gcompat build-base
 
 WORKDIR /app
 
