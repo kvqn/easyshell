@@ -54,12 +54,12 @@ async function User() {
       <div className="flex w-full flex-col">
         <div className="flex w-fit gap-2 rounded-md border px-4 py-2">
           <Button>
-            <Avatar className="mr-1.5 h-6 w-6">
+            <Avatar className="h-6 w-6 mr-1.5">
               <AvatarImage src={user.image ?? ""} />
               <AvatarFallback>{user.name![0]}</AvatarFallback>
             </Avatar>
             <p>{user.name}</p>
-          </Button>
+          </Button>  
         </div>
 
         <Link href="/settings" className="w-full">

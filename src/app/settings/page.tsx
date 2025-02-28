@@ -6,10 +6,10 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ensureAuth } from "@/server/auth"
 
 export default function AccountSettingsPage() {
   const [image, setImage] = useState<string | null>(null)
-
   const [discordConnected, setDiscordConnected] = useState(true)
   const [githubConnected, setGithubConnected] = useState(true)
   const [googleConnected, setGoogleConnected] = useState(false)
@@ -41,7 +41,7 @@ export default function AccountSettingsPage() {
             <div className="flex items-center space-x-4">
               <Avatar>
                 <AvatarImage />
-                <AvatarFallback>PP</AvatarFallback>
+                <AvatarFallback>{user.name}</AvatarFallback>
               </Avatar>
 
               <input
