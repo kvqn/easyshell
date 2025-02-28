@@ -4,6 +4,7 @@ import { isContainerRunning } from "@/server/utils/docker"
 import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import { db } from "."
+import { containerManagerIsRunning } from "../utils/container-manager"
 import {
   accounts,
   bookmarks,
@@ -41,7 +42,7 @@ export async function getActiveTerminalSession({
   if (!session[0]) return null
 
   const container_name = `easyshell-${problemSlug}-${testcaseId}-session-${session[0].id}`
-  const isRunning = await isContainerRunning(container_name)
+  const isRunning = await containerManagerIsRunning(container_name)
 
   if (isRunning) return session[0]
   await db
