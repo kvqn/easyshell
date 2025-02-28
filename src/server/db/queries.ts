@@ -1,10 +1,9 @@
 import { and, asc, desc, eq, isNull } from "drizzle-orm"
 
-import { isContainerRunning } from "@/server/utils/docker"
+import { containerManagerIsRunning } from "@/server/utils/container-manager"
 import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import { db } from "."
-import { containerManagerIsRunning } from "../utils/container-manager"
 import {
   accounts,
   bookmarks,

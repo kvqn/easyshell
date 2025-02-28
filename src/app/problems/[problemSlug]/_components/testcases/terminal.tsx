@@ -60,7 +60,7 @@ export function TestcaseTerminal({
     setRunning(true)
     const submissionResponse = await submitTerminalSessionCommand({
       sessionId: session.id,
-      command: promptHistory[promptHistoryIndex]!,
+      command: promptHistory[promptHistoryIndex],
     })
     if (submissionResponse.status === "success") {
       const log = submissionResponse.log
