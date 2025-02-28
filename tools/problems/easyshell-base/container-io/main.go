@@ -92,7 +92,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 	stderrReader := bufio.NewReader(stderr)
 	escapedInput := strings.ReplaceAll(input, "'", "'\\''")
 
-	WriteOrPanic(stdin, "sh -c '"+escapedInput+"'\n")
+	WriteOrPanic(stdin, escapedInput+"\n")
 	WriteOrPanic(stdin, "echo "+delimiter+"\n")
 	WriteOrPanic(stdin, "echo >&2 "+delimiter+"\n")
 

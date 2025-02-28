@@ -31,11 +31,9 @@ export function TestcaseTerminal({
     ReturnType<typeof getTerminalSession>
   > | null>(null)
 
-  const [input, setInput] = useState("")
   const [running, setRunning] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
-  //const [showOptions, setShowOptions] = useState(false)
 
   const [options, setOptions] = useState<{
     fontSize: number
@@ -58,10 +56,11 @@ export function TestcaseTerminal({
 
   async function handleSubmit() {
     if (!session) return
+    if (!promptHistory[promptHistoryIndex]) return
     setRunning(true)
     const submissionResponse = await submitTerminalSessionCommand({
       sessionId: session.id,
-      command: input,
+      command: promptHistory[promptHistoryIndex],
     })
     if (submissionResponse.status === "success") {
       const log = submissionResponse.log
@@ -90,7 +89,6 @@ export function TestcaseTerminal({
           description: submissionResponse.message,
         })
     }
-    setInput("")
     setRunning(false)
   }
 
@@ -108,20 +106,6 @@ export function TestcaseTerminal({
       setPromptHistoryIndex((prev) => prev + 1)
     }
   }
-
-  useEffect(() => {
-    if (promptHistory[promptHistoryIndex] !== undefined) {
-      setInput(promptHistory[promptHistoryIndex])
-    }
-  }, [promptHistoryIndex, promptHistory])
-
-  useEffect(() => {
-    setPromptHistory((prev) => {
-      const newHistory = [...prev]
-      newHistory[promptHistoryIndex] = input
-      return newHistory
-    })
-  }, [input, promptHistoryIndex])
 
   useEffect(() => {
     terminalRef.current?.scrollTo({
@@ -210,8 +194,14 @@ export function TestcaseTerminal({
             <p className="py-1 pl-2">{`>>>`}</p>
             <input
               ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={promptHistory[promptHistoryIndex] ?? ""}
+              onChange={(e) => {
+                setPromptHistory((prev) => {
+                  const newPromptHistory = [...prev]
+                  newPromptHistory[promptHistoryIndex] = e.target.value
+                  return newPromptHistory
+                })
+              }}
               disabled={running}
               className={cn(
                 "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
