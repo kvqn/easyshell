@@ -140,11 +140,6 @@ export async function containerManagerIsRunning(containerName: string) {
 export async function containerManagerCreate(args: {
   container_name: string
   image: string
-  volume_mounts: Array<{
-    host_path: string
-    container_path: string
-  }>
-  entry_point: string
 }) {
   const resp = await fetch(`${env.CONTAINER_MANAGER_URL}/create`, {
     method: "POST",
