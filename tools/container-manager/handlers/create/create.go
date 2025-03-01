@@ -10,11 +10,6 @@ import (
 type request struct {
 	Image         string `json:"image"`
 	ContainerName string `json:"container_name"`
-	VolumeMounts  []struct {
-		HostPath      string `json:"host_path"`
-		ContainerPath string `json:"container_path"`
-	} `json:"volume_mounts"`
-	EntryPoint string `json:"entry_point"`
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
@@ -31,11 +26,8 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var command string
-	command = fmt.Sprintf("docker run -d --rm --name %s --entrypoint %s --net easyshell -m 10m --cpus 0.1", req.ContainerName, req.EntryPoint)
-	for _, volume := range req.VolumeMounts {
-		command += fmt.Sprintf(" -v %s:%s", volume.HostPath, volume.ContainerPath)
-	}
-	command += fmt.Sprintf(" %s", req.Image)
+	command = fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1", req.ContainerName)
+	command += fmt.Sprintf(" %s -mode session", req.Image)
 
 	fmt.Println("Command: ", command)
 

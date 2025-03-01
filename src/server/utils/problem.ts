@@ -117,7 +117,6 @@ export async function runTerminalSession({
 
   await dockerRun({
     image: `easyshell-${problemSlug}-${testcaseId}`,
-    entrypoint: "/container-io",
     name: `easyshell-${problemSlug}-${testcaseId}-session-${sessionId}`,
   })
 }

@@ -1,4 +1,4 @@
-package main
+package submission
 
 import (
 	"bytes"
@@ -7,14 +7,14 @@ import (
 	"os/exec"
 )
 
-type Output struct {
+type outputResponse struct {
 	Stdout      string `json:"stdout"`
 	Stderr      string `json:"stderr"`
 	ExitCode    int    `json:"exit_code"`
 	FsZipBase64 string `json:"fs_zip_base64"`
 }
 
-func FsZipBase64() string {
+func fsZipBase64() string {
 	out, err := exec.Command("sh", "-c", "cd /home && zip -r - . | base64").Output()
 	if err != nil {
 		panic(err)
@@ -22,7 +22,7 @@ func FsZipBase64() string {
 	return string(out)
 }
 
-func main() {
+func Main() {
 	cmd := exec.Command("sh", "/input.sh")
 	cmd.Dir = "/home"
 
@@ -37,9 +37,9 @@ func main() {
 	stdout := stdoutBytes.String()
 	stderr := stderrBytes.String()
 
-	fs := FsZipBase64()
+	fs := fsZipBase64()
 
-	output := Output{
+	output := outputResponse{
 		Stdout:      stdout,
 		Stderr:      stderr,
 		ExitCode:    exitCode,

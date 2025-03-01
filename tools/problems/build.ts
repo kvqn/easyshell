@@ -46,7 +46,7 @@ for (const problem of problems) {
 FROM easyshell-base
 COPY home /home
 
-ENTRYPOINT ["/input.sh"]
+ENTRYPOINT ["/entrypoint"]
 `,
     )
 

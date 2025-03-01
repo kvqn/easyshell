@@ -1,6 +1,4 @@
-// TODO: Manage Logs
-
-package main
+package session
 
 import (
 	"bufio"
@@ -23,18 +21,18 @@ var (
 	locked bool
 )
 
-type Response struct {
+type response struct {
 	Stdout string `json:"stdout"`
 	Stderr string `json:"stderr"`
 }
 
-type ErrorResponse struct {
+type errorResponse struct {
 	Critical bool   `json:"critical"`
 	Message  string `json:"message"`
 	Error    string `json:"error"`
 }
 
-func RandomDelimiter() string {
+func randomDelimiter() string {
 	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
 	b := make([]byte, 128)
 	for i := range b {
@@ -43,7 +41,7 @@ func RandomDelimiter() string {
 	return string(b)
 }
 
-func WriteOrPanic(w io.Writer, data string) {
+func writeOrPanic(w io.Writer, data string) {
 	_, err := w.Write([]byte(data))
 	if err != nil {
 		panic(err)
@@ -59,7 +57,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 	if locked {
 		// http.Error(w, "Locked", http.StatusLocked)
 		w.WriteHeader(http.StatusLocked)
-		if json.NewEncoder(w).Encode(ErrorResponse{
+		if json.NewEncoder(w).Encode(errorResponse{
 			Critical: false,
 			Message:  "container locked",
 			Error:    "",
@@ -74,7 +72,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		if json.NewEncoder(w).Encode(ErrorResponse{
+		if json.NewEncoder(w).Encode(errorResponse{
 			Critical: true,
 			Message:  "couldn't read request body",
 			Error:    err.Error(),
@@ -85,22 +83,22 @@ func run(w http.ResponseWriter, r *http.Request) {
 	}
 
 	input := string(body)
-	delimiter := RandomDelimiter()
+	delimiter := randomDelimiter()
 
 	var read_stdout, read_stderr string
 	stdoutReader := bufio.NewReader(stdout)
 	stderrReader := bufio.NewReader(stderr)
 	escapedInput := strings.ReplaceAll(input, "'", "'\\''")
 
-	WriteOrPanic(stdin, escapedInput+"\n")
-	WriteOrPanic(stdin, "echo "+delimiter+"\n")
-	WriteOrPanic(stdin, "echo >&2 "+delimiter+"\n")
+	writeOrPanic(stdin, escapedInput+"\n")
+	writeOrPanic(stdin, "echo "+delimiter+"\n")
+	writeOrPanic(stdin, "echo >&2 "+delimiter+"\n")
 
 	for {
 		_read_stdout, err := stdoutReader.ReadByte()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			if json.NewEncoder(w).Encode(ErrorResponse{
+			if json.NewEncoder(w).Encode(errorResponse{
 				Critical: true,
 				Message:  "couldn't read stdout",
 				Error:    err.Error(),
@@ -124,7 +122,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 		_read_stderr, err := stderrReader.ReadByte()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			if json.NewEncoder(w).Encode(ErrorResponse{
+			if json.NewEncoder(w).Encode(errorResponse{
 				Critical: true,
 				Message:  "couldn't read stderr",
 				Error:    err.Error(),
@@ -144,7 +142,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	response := Response{
+	response := response{
 		Stdout: read_stdout,
 		Stderr: read_stderr,
 	}
@@ -153,7 +151,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 	err = json.NewEncoder(w).Encode(response)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		if json.NewEncoder(w).Encode(ErrorResponse{
+		if json.NewEncoder(w).Encode(errorResponse{
 			Critical: true,
 			Message:  "couldn't form response",
 			Error:    err.Error(),
@@ -164,7 +162,7 @@ func run(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func main() {
+func Main() {
 	cmd = exec.Command("sh")
 	cmd.Dir = "/home"
 
