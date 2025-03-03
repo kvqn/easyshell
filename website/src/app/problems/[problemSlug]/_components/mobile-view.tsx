@@ -1,6 +1,7 @@
+import { getPublicTestcaseInfo } from "@easyshell/problems"
+
 import { ensureAuth } from "@/server/auth"
-import { getUserSubmissions } from "@/server/db/queries"
-import { getPublicTestcaseInfo } from "@/server/utils/problem"
+import { getUserSubmissions } from "@/server/queries"
 
 import { Problem } from "./problem"
 import { Submissions } from "./submissions"

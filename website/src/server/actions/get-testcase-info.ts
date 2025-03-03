@@ -1,10 +1,10 @@
 "use server"
 
+import { db } from "@easyshell/db"
+import { submissionTestcases } from "@easyshell/db/schema"
+import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
 import { and, eq } from "drizzle-orm"
 
-import { db } from "@/server/db"
-import { submissionTestcases } from "@/server/db/schema"
-import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
 import { unzip } from "@/server/utils/unzip"
 
 import { getSubmissionInfo } from "./get-submission-info"

@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation"
 
-import type { getUserSubmissions } from "@/server/db/queries"
+import type { getUserSubmissions } from "@/server/queries"
 
 import { PastSubmissions } from "./past-submissions"
 import { Submission } from "./submission"

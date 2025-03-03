@@ -1,9 +1,10 @@
 "use server"
 
+import { db } from "@easyshell/db"
+import { submissionTestcaseQueue, submissions } from "@easyshell/db/schema"
+import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
+
 import { ensureAuth } from "@/server/auth"
-import { db } from "@/server/db"
-import { submissionTestcaseQueue, submissions } from "@/server/db/schema"
-import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
 
 export async function newSubmission({
   problemId,

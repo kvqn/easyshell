@@ -1,0 +1,17 @@
+{
+  "name": "@easyshell",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/db",
+    "packages/problems",
+    "website"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.2.4",
+    "@typescript-eslint/typescript-estree": "^8.25.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}

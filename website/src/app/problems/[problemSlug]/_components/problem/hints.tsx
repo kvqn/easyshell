@@ -1,4 +1,5 @@
-import { readdir } from "fs/promises"
+import { getProblemHintBody, getProblemHintCount } from "@easyshell/problems"
+import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 import {
   Accordion,
@@ -6,30 +7,32 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { customComponents } from "@/mdx-components"
 
 export async function ProblemHints({ slug }: { slug: string }) {
-  const files = await readdir(`./problems/${slug}/hints`)
-  console.log(files)
+  const hintCount = await getProblemHintCount(slug)
   const hints = await Promise.all(
-    files.map(async (file) => {
-      const { default: Markdown } = (await import(
-        `~/problems/${slug}/hints/${file}`
-      )) as { default: React.ComponentType }
+    Array.from({ length: hintCount }).map(async (_, hint) => {
       return {
-        file: file,
-        node: <Markdown />,
+        hint: hint + 1,
+        node: (
+          <MDXRemote
+            source={await getProblemHintBody(slug, hint + 1)}
+            components={customComponents}
+          />
+        ),
       }
     }),
   )
 
-  hints.sort((a, b) => a.file.localeCompare(b.file))
+  hints.sort((a, b) => a.hint - b.hint)
 
   return (
     <div className="mt-6 border-t">
       <h2 className="mb-2 mt-6 text-xl font-bold">Hints</h2>
 
       <Accordion type="single" collapsible className="space-y-4">
-        {hints.map(({ file: _, node }, i) => (
+        {hints.map(({ node }, i) => (
           <AccordionItem
             value={`${i + 1}`}
             key={i + 1}

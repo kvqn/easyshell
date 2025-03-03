@@ -1,8 +1,8 @@
 import { decode } from "base64-arraybuffer"
 import { eq } from "drizzle-orm"
 
-import { db } from "@/server/db"
-import { images } from "@/server/db/schema"
+import { db } from "@easyshell/db"
+import { images } from "@easyshell/db/schema"
 
 export async function GET(
   _request: Request,

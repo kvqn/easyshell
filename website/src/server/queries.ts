@@ -1,9 +1,4 @@
-import { and, asc, desc, eq, isNull } from "drizzle-orm"
-
-import { containerManagerIsRunning } from "@/server/utils/container-manager"
-import { getProblemSlugFromId } from "@/server/utils/problem"
-
-import { db } from "."
+import { db } from "@easyshell/db"
 import {
   accounts,
   bookmarks,
@@ -12,7 +7,11 @@ import {
   submissions,
   terminalSessionLogs,
   terminalSessions,
-} from "./schema"
+} from "@easyshell/db/schema"
+import { getProblemSlugFromId } from "@easyshell/problems"
+import { and, asc, desc, eq, isNull } from "drizzle-orm"
+
+import { containerManagerIsRunning } from "@/server/utils/container-manager"
 
 export async function getActiveTerminalSession({
   userId,

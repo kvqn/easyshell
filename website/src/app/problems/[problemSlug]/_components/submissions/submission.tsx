@@ -1,5 +1,6 @@
 "use client"
 
+import type { FsType } from "@easyshell/problems"
 import Link from "next/link"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -15,7 +16,6 @@ import {
 import { cn, sleep } from "@/lib/utils"
 import { getSubmissionInfo } from "@/server/actions/get-submission-info"
 import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
-import type { FsType } from "@/server/utils/problem"
 
 export function Submission({ submissionId }: { submissionId: number }) {
   const pathname = usePathname()

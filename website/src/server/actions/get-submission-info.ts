@@ -2,12 +2,12 @@
 
 import { and, count, eq, lte } from "drizzle-orm"
 
-import { db } from "@/server/db"
+import { db } from "@easyshell/db"
 import {
   submissionTestcaseQueue,
   submissionTestcases,
   submissions,
-} from "@/server/db/schema"
+} from "@easyshell/db/schema"
 
 export async function getSubmissionInfo({
   submissionId,

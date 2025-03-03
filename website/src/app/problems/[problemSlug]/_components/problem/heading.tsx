@@ -1,12 +1,14 @@
+import { getProblemInfo } from "@easyshell/problems"
+
 import { ensureAuth } from "@/server/auth"
-import { isProblemBookmarked } from "@/server/db/queries"
-import { getProblemInfo } from "@/server/utils/problem"
+import { isProblemBookmarked } from "@/server/queries"
 
 import { ProblemBookmark } from "./bookmark"
 
 export async function ProblemHeading({ slug }: { slug: string }) {
   const { id: userId } = await ensureAuth()
   const { id, title, description } = await getProblemInfo(slug)
+  console.log(id, title, description)
   const isBookmarked = await isProblemBookmarked({ userId, problemId: id })
   return (
     <div>

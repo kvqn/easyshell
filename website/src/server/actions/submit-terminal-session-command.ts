@@ -1,13 +1,13 @@
 "use server"
 
+import { db } from "@easyshell/db"
+import { terminalSessions } from "@easyshell/db/schema"
+import { getProblemSlugFromId } from "@easyshell/problems"
 import { and, eq, isNull } from "drizzle-orm"
 
 import { ensureAuth } from "@/server/auth"
-import { db } from "@/server/db"
-import { insertTerminalSessionLog } from "@/server/db/queries"
-import { terminalSessions } from "@/server/db/schema"
+import { insertTerminalSessionLog } from "@/server/queries"
 import { containerManagerExec } from "@/server/utils/container-manager"
-import { getProblemSlugFromId } from "@/server/utils/problem"
 
 import type { getTerminalSession } from "./get-terminal-session"
 

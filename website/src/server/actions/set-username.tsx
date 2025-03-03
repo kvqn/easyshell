@@ -4,8 +4,8 @@ import { eq } from "drizzle-orm"
 
 import { checkValidUsername } from "@/lib/utils"
 import { ensureAuth } from "@/server/auth"
-import { db } from "@/server/db"
-import { users } from "@/server/db/schema"
+import { db } from "@easyshell/db"
+import { users } from "@easyshell/db/schema"
 
 export async function setUsername(name: string): Promise<{
   success: boolean

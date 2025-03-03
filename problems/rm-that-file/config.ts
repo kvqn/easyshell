@@ -1,7 +1,7 @@
-import { getFs } from "@/server/utils/paths"
-import type { FsType, ProblemConfig } from "@/server/utils/problem"
+import type { FsType, ProblemConfig } from "@easyshell/problems"
+import { getFs } from "@easyshell/problems/utils"
 
-const SLUG = "bulk-move"
+const SLUG = "rm-that-file"
 
 async function testcaseConfig({
   id,
@@ -13,10 +13,7 @@ async function testcaseConfig({
   const originalFs = await getFs(`./problems/${SLUG}/testcases/${id}`)
   const newFs: FsType = {}
   for (const file in originalFs) {
-    if (file.endsWith(".log")) {
-      const basename = file.split("/").pop()!
-      newFs[`logs/${basename}`] = originalFs[file]!
-    } else {
+    if (file !== "secrets/portal.txt") {
       newFs[file] = originalFs[file]!
     }
   }
@@ -30,15 +27,14 @@ async function testcaseConfig({
 }
 
 const config: ProblemConfig = {
-  id: 6,
+  id: 7,
   slug: SLUG,
-  title: "Bulk Move",
-  description: `A scattered mess of log files? Gather them all into one place while leaving everything else untouched! 📂`,
+  title: "Remove That File",
+  description: `A single file is standing in the way—time to delete it and clear the clutter! 🗑️`,
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: true }),
-    await testcaseConfig({ id: 3, isPublic: false }),
   ],
 }
 

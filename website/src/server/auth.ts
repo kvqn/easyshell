@@ -1,4 +1,11 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
+import { db } from "@easyshell/db"
+import {
+  accounts,
+  sessions,
+  users,
+  verificationTokens,
+} from "@easyshell/db/schema"
 import { count, eq } from "drizzle-orm"
 import {
   type DefaultSession,
@@ -12,13 +19,6 @@ import GoogleProvider from "next-auth/providers/google"
 import { redirect } from "next/navigation"
 
 import { env } from "@/env"
-import { db } from "@/server/db"
-import {
-  accounts,
-  sessions,
-  users,
-  verificationTokens,
-} from "@/server/db/schema"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

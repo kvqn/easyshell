@@ -5,12 +5,12 @@ import { readFile } from "fs/promises"
 import { writeFile } from "fs/promises"
 import { z } from "zod"
 
-import { db } from "@/server/db"
+import { db } from "@easyshell/db"
 import {
   submissionTestcaseQueue,
   submissionTestcases,
   submissions,
-} from "@/server/db/schema"
+} from "@easyshell/db/schema"
 import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
 import { unzip } from "@/server/utils/unzip"
 

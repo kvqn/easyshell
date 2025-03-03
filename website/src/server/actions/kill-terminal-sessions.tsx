@@ -3,8 +3,8 @@
 import { and, eq, isNull } from "drizzle-orm"
 
 import { ensureAuth } from "@/server/auth"
-import { db } from "@/server/db"
-import { terminalSessions } from "@/server/db/schema"
+import { db } from "@easyshell/db"
+import { terminalSessions } from "@easyshell/db/schema"
 
 export async function killTerminalSessions({
   problemId,

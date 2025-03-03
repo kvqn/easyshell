@@ -7,8 +7,8 @@ import sharp from "sharp"
 
 import { neverThrow } from "@/lib/utils"
 import { ensureAuth } from "@/server/auth"
-import { db } from "@/server/db"
-import { images, users } from "@/server/db/schema"
+import { db } from "@easyshell/db"
+import { images, users } from "@easyshell/db/schema"
 
 export async function setUserImage(file: File): Promise<{
   success: boolean

@@ -1,7 +1,7 @@
-import { getFs } from "@/server/utils/paths"
-import type { FsType, ProblemConfig } from "@/server/utils/problem"
+import type { FsType, ProblemConfig } from "@easyshell/problems"
+import { getFs } from "@easyshell/problems/utils"
 
-const SLUG = "wipe-that-folder"
+const SLUG = "nuke-all-matches"
 
 async function testcaseConfig({
   id,
@@ -13,7 +13,7 @@ async function testcaseConfig({
   const originalFs = await getFs(`./problems/${SLUG}/testcases/${id}`)
   const newFs: FsType = {}
   for (const file in originalFs) {
-    if (!file.startsWith("logs/")) {
+    if (!file.endsWith(".log")) {
       newFs[file] = originalFs[file]!
     }
   }
@@ -27,10 +27,10 @@ async function testcaseConfig({
 }
 
 const config: ProblemConfig = {
-  id: 8,
+  id: 9,
   slug: SLUG,
-  title: "Wipe That Folder",
-  description: `A whole folder needs to be erased. Make sure it’s gone—completely! 🚮`,
+  title: "Nuke All Matches",
+  description: `Some files are just junk, and they’re everywhere! Find them all and wipe them out. 💥`,
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
