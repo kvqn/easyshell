@@ -1,11 +1,10 @@
+import { env } from "@easyshell/env"
 import { readFile } from "fs/promises"
-import { stat } from "fs/promises"
 import { readdir } from "fs/promises"
-import { join } from "path"
 import { z } from "zod"
 
 //if (!process.env.PROBLEMS_DIR) throw "PROBLEMS_DIR is required"
-const PROBLEMS_DIR = `./problems`
+const PROBLEMS_DIR = env.PROBLEMS_DIR ?? `./problems`
 //const PROBLEMS_DIR = join(import.meta.dir, "../../problems")
 const PROBLEMS_IMPORT_DIR = "./problems"
 

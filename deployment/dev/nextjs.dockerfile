@@ -3,7 +3,7 @@ FROM oven/bun:alpine
 
 RUN apk add docker gcompat build-base
 
-WORKDIR /app
+WORKDIR /app/apps/website
 
 EXPOSE 3000
-ENTRYPOINT ["bun", "next:dev"]
+ENTRYPOINT ["bun", "run", "dev"]

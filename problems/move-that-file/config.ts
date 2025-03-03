@@ -1,6 +1,6 @@
+import { env } from "@easyshell/env"
+import type { ProblemConfig } from "@easyshell/problems"
 import { readFile } from "fs/promises"
-
-import type { ProblemConfig } from "@/server/utils/problem"
 
 const SLUG = "move-that-file"
 
@@ -17,7 +17,9 @@ async function testcaseConfig({
     public: isPublic,
     expected_fs: {
       "datadir/payload.json": (
-        await readFile(`./problems/${SLUG}/testcases/${id}/payload.json`)
+        await readFile(
+          `${env.PROBLEMS_DIR}/${SLUG}/testcases/${id}/payload.json`,
+        )
       ).toString(),
     },
   }

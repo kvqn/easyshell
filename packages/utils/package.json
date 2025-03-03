@@ -1,11 +1,10 @@
 {
-  "name": "@easyshell/problems",
+  "name": "@easyshell/utils",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "dependencies": {
-    "@easyshell/env": "workspace:*",
-    "zod": "^3.24.1"
+    "yauzl": "^3.2.0"
   },
   "devDependencies": {
     "@types/node": "^20.17.16"

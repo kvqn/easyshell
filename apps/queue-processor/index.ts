@@ -1,3 +1,12 @@
+import { db } from "@easyshell/db"
+import {
+  submissionTestcaseQueue,
+  submissionTestcases,
+  submissions,
+} from "@easyshell/db/schema"
+import { env } from "@easyshell/env"
+import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
+import { unzip } from "@easyshell/utils"
 import { and, eq, sql } from "drizzle-orm"
 import { $ } from "execa"
 import { mkdir } from "fs/promises"
@@ -5,14 +14,10 @@ import { readFile } from "fs/promises"
 import { writeFile } from "fs/promises"
 import { z } from "zod"
 
-import { db } from "@easyshell/db"
-import {
-  submissionTestcaseQueue,
-  submissionTestcases,
-  submissions,
-} from "@easyshell/db/schema"
-import { getProblemInfo, getProblemSlugFromId } from "@/server/utils/problem"
-import { unzip } from "@/server/utils/unzip"
+if (env.APP !== "queue-processor")
+  throw new Error(
+    "The APP environment variable must be set to 'queue-processor'",
+  )
 
 async function getQueueItem() {
   const item = db.$with("item").as(
@@ -78,8 +83,13 @@ async function processQueueItem(
   const problem = await getProblemInfo(problemSlug)
 
   const containerName = `easyshell-${problemSlug}-${item.testcaseId}-submission-${item.submissionId}`
-  const inputFilePath = `.easyshell/inputs/${containerName}.sh`
-  const outputFilePath = `.easyshell/outputs/${containerName}.json`
+
+  const inputFileName = `${containerName}.sh`
+  const outputFileName = `${containerName}.json`
+
+  const inputFilePath = `${env.WORKING_DIR_DOCKER}/inputs/${containerName}.sh`
+  const outputFilePath = `${env.WORKING_DIR_DOCKER}/outputs/${containerName}.json`
+
   const image = `easyshell-${problemSlug}-${item.testcaseId}`
 
   await writeFile(inputFilePath, item.input)
@@ -88,8 +98,10 @@ async function processQueueItem(
   console.log("Running submission", containerName)
   const startedAt = new Date()
 
-  const inputFilePathForDocker = `${process.env.DIND_HOST_PREFIX ?? "."}/${inputFilePath}`
-  const outputFilePathForDocker = `${process.env.DIND_HOST_PREFIX ?? "."}/${outputFilePath}`
+  const inputFilePathForDocker = `${env.WORKING_DIR_HOST}/inputs/${inputFileName}`
+  console.log("inputFilePathForDocker", inputFilePathForDocker)
+  const outputFilePathForDocker = `${env.WORKING_DIR_HOST}/outputs/${outputFileName}`
+  console.log("outputFilePathForDocker", outputFilePathForDocker)
 
   await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 ${image} -mode submission`
   const finishedAt = new Date()
@@ -162,8 +174,8 @@ async function sleep(ms: number) {
 }
 
 async function init() {
-  await mkdir(".easyshell/inputs", { recursive: true })
-  await mkdir(".easyshell/outputs", { recursive: true })
+  await mkdir(`${env.WORKING_DIR_DOCKER}/inputs`, { recursive: true })
+  await mkdir(`${env.WORKING_DIR_DOCKER}/outputs`, { recursive: true })
 }
 
 async function loop() {

@@ -1,0 +1,97 @@
+name: easyshell-dev
+services:
+  nextjs:
+    container_name: easyshell-dev-nextjs
+    ports:
+      - 3000:3000
+    build:
+      context: .
+      dockerfile: nextjs.dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./../../:/app
+    networks:
+      - easyshell
+    restart: always
+    environment:
+      APP: website
+      DATABASE_URL: postgres://postgres:password@easyshell-dev-postgres:5432/easyshell
+      CONTAINER_MANAGER_URL: http://easyshell-dev-container-manager:4000
+      PROBLEMS_DIR: ../../problems
+      NEXTAUTH_URL: http://localhost:3000
+      # Secrets
+      NEXTAUTH_SECRET: 
+      DISCORD_CLIENT_ID: 
+      DISCORD_CLIENT_SECRET: 
+      GITHUB_CLIENT_ID: 
+      GITHUB_CLIENT_SECRET: 
+      GOOGLE_CLIENT_ID: 
+      GOOGLE_CLIENT_SECRET: 
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      queue-processor:
+        condition: service_started
+      container-manager:
+        condition: service_started
+
+
+  postgres:
+    container_name: easyshell-dev-postgres
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - easyshell
+    restart: always
+    user: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "postgres", "-d", "easyshell"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  container-manager:
+    container_name: easyshell-dev-container-manager
+    build:
+      context: ../../apps/container-manager
+      dockerfile: ../../deployment/dev/container-manager.dockerfile
+    networks:
+      - easyshell
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+
+  queue-processor:
+    container_name: easyshell-dev-queue-processor
+    build:
+      context: .
+      dockerfile: ./queue-processor.dockerfile
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./../../:/app
+    networks:
+      - easyshell
+    environment:
+      DATABASE_URL: postgres://postgres:password@easyshell-dev-postgres:5432/easyshell
+      CONTAINER_MANAGER_URL: http://easyshell-dev-container-manager:4000
+      APP: queue-processor
+      PROBLEMS_DIR: ../../problems
+      WORKING_DIR_HOST: ${PWD}/.easyshell
+      WORKING_DIR_DOCKER: ../../.easyshell
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+networks:
+  easyshell:
+    name: easyshell
+    external: true
+
+volumes:
+  postgres-data:

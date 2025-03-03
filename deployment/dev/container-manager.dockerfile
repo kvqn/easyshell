@@ -2,7 +2,7 @@ FROM alpine:3.21 AS build
 
 RUN apk add go
 
-COPY ../tools/container-manager .
+COPY . .
 
 RUN go build
 

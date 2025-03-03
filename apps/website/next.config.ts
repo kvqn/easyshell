@@ -1,14 +1,10 @@
+import { env } from "@easyshell/env"
 import createMDX from "@next/mdx"
-import path from "path"
+import { NextConfig } from "next"
 
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
-//await import("./src/env.js")
+if (env.APP !== "website") throw new Error("Invalid APP variable")
 
-/** @type {import("next").NextConfig} */
-const config = {
+const config: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   reactStrictMode: false,
   experimental: {
