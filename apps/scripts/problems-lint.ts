@@ -1,4 +1,4 @@
-import { getProblemInfo, getProblems } from "@/server/utils/problem"
+import { getProblemInfo, getProblems } from "@easyshell/problems"
 
 export async function checkProblems() {
   const problemSlugs = await getProblems()

@@ -1,12 +1,11 @@
+import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { $ } from "execa"
 import { writeFile } from "fs/promises"
 import { cp } from "fs/promises"
 import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 
-import { getProblemInfo, getProblems } from "@/server/utils/problem"
-
-import "./lint"
+import "./problems-lint"
 
 const WORKING_DIR = ".easyshell"
 

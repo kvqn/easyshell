@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "scripts/index.ts",
   "workspaces": [
     "packages/db",
     "packages/problems",
@@ -18,7 +19,6 @@
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
   "scripts": {
-    "queue-processor": "bun run --workspace=apps/queue-processor start",
     "deploy:dev": "docker compose -f ./deployment/dev/compose.yml up"
   }
 }
