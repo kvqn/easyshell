@@ -48,6 +48,15 @@ const ProblemConfigSchema = z
         expected_fs: FsSchema.optional(),
       }),
     ),
+    tests: z
+      .array(
+        z.object({
+          testcase: z.number().positive().or(z.literal("all")),
+          input: z.string(),
+          pass: z.boolean(),
+        }),
+      )
+      .optional(),
   })
   .strict()
 

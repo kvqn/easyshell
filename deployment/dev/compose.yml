@@ -14,6 +14,7 @@ services:
       - easyshell
     restart: always
     environment:
+      PROJECT_ROOT: ${PWD}
       APP: website
       DATABASE_URL: postgres://postgres:password@easyshell-dev-postgres:5432/easyshell
       CONTAINER_MANAGER_URL: http://easyshell-dev-container-manager:4000
@@ -48,6 +49,8 @@ services:
       - easyshell
     restart: always
     user: postgres
+    ports:
+      - 5432:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-U", "postgres", "-d", "easyshell"]
       interval: 10s
@@ -77,6 +80,7 @@ services:
     networks:
       - easyshell
     environment:
+      PROJECT_ROOT: ${PWD}
       DATABASE_URL: postgres://postgres:password@easyshell-dev-postgres:5432/easyshell
       CONTAINER_MANAGER_URL: http://easyshell-dev-container-manager:4000
       APP: queue-processor

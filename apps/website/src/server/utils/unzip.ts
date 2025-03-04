@@ -35,7 +35,6 @@ export async function unzip(
         }
       })
       zipfile.on("end", () => {
-        console.log("fs", fs)
         resolve(fs)
       })
     })

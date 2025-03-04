@@ -1,4 +1,4 @@
-import type { ProblemConfig } from "@/server/utils/problem"
+import type { ProblemConfig } from "@easyshell/problems"
 
 const config: ProblemConfig = {
   id: 1,
@@ -8,6 +8,12 @@ const config: ProblemConfig = {
   tags: ["Basics"],
   testcases: [
     { id: 1, folder: "1", public: true, expected_stdout: "Hello, World!\n" },
+  ],
+  tests: [
+    { testcase: 1, pass: true, input: `echo "Hello, World!"` },
+    { testcase: 1, pass: false, input: `echo "Hello, World!!"` },
+    { testcase: 1, pass: false, input: `echo ""` },
+    { testcase: 1, pass: false, input: `gibberish` },
   ],
 }
 

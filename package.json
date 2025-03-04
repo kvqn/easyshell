@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "scripts/index.ts",
   "workspaces": [
     "packages/db",
     "packages/problems",
     "packages/utils",
     "packages/env",
     "apps/website",
-    "apps/queue-processor"
+    "apps/queue-processor",
+    "scripts/"
   ],
   "devDependencies": {
     "@types/bun": "^1.2.4",
@@ -18,7 +20,11 @@
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
   "scripts": {
-    "queue-processor": "bun run --workspace=apps/queue-processor start",
-    "deploy:dev": "docker compose -f ./deployment/dev/compose.yml up"
+    "deploy:dev": "docker compose -f ./deployment/dev/compose.yml up",
+    "problems:build": "APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-build.ts",
+    "problems:lint": "APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-lint.ts",
+    "problems:test": "APP=queue-processor PROBLEMS_DIR=./problems WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
+    "dev:queue-processor": "bun ./apps/queue-processor/index.ts",
+    "dev:website": "bunx next dev website"
   }
 }

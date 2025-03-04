@@ -41,6 +41,7 @@ const config: ProblemConfig = {
     await testcaseConfig({ id: 2, isPublic: true }),
     await testcaseConfig({ id: 3, isPublic: false }),
   ],
+  tests: [],
 }
 
 export default config
