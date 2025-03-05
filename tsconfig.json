@@ -12,11 +12,7 @@
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
     /* Bundled projects */
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2022"
-    ],
+    "lib": ["dom", "dom.iterable", "ES2022"],
     "noEmit": true,
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -29,15 +25,8 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./apps/website/src/*"
-      ]
+      "@/*": ["./apps/website/src/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js",
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.js"]
 }
