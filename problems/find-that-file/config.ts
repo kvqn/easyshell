@@ -44,6 +44,10 @@ const config: ProblemConfig = {
     await testcaseConfig({ id: 4, isPublic: false }),
     await testcaseConfig({ id: 5, isPublic: false }),
   ],
+  tests: [
+    { testcase: "all", pass: false, input: "find -name target.txt" },
+    { testcase: "all", pass: true, input: "find * -name target.txt" },
+  ],
 }
 
 export default config

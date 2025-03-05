@@ -1,5 +1,5 @@
-import type { ProblemConfig } from "@easyshell/problems"
-import { PROBLEMS_DIR } from "@easyshell/utils"
+import type { FsType, ProblemConfig } from "@easyshell/problems"
+import { PROBLEMS_DIR, getFs } from "@easyshell/utils"
 import { readFile } from "fs/promises"
 
 const SLUG = "move-that-file"
@@ -11,15 +11,21 @@ async function testcaseConfig({
   id: number
   isPublic: boolean
 }) {
+  const originalFs = await getFs(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}`)
+  const newFs: FsType = {}
+
+  for (const [path, content] of Object.entries(originalFs)) {
+    if (path !== "payload.json") {
+      newFs[path] = content
+    }
+  }
+  newFs["datadir/payload.json"] = originalFs["payload.json"]!
+
   return {
     id: id,
     folder: `${id}`,
     public: isPublic,
-    expected_fs: {
-      "datadir/payload.json": (
-        await readFile(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}/payload.json`)
-      ).toString(),
-    },
+    expected_fs: newFs,
   }
 }
 
@@ -32,6 +38,15 @@ const config: ProblemConfig = {
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: false }),
+  ],
+  tests: [
+    { testcase: 1, pass: true, input: "mv payload.json datadir" },
+    { testcase: 2, pass: false, input: "mv payload.json datadir" },
+    {
+      testcase: "all",
+      pass: true,
+      input: "mkdir -p datadir && mv payload.json datadir",
+    },
   ],
 }
 

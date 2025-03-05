@@ -3,20 +3,11 @@ import { readFile } from "fs/promises"
 import { readdir } from "fs/promises"
 import { z } from "zod"
 
-//if (!process.env.PROBLEMS_DIR) throw "PROBLEMS_DIR is required"
 const PROBLEMS_DIR = env.PROBLEMS_DIR
-//const PROBLEMS_DIR = join(import.meta.dir, "../../problems")
 const PROBLEMS_IMPORT_DIR = "./problems"
 
 const FsSchema = z.record(z.union([z.string(), z.null()]))
 export type FsType = z.infer<typeof FsSchema>
-
-//const ProblemOutputSchema = z.object({ // TODO: remove this
-//  stdout: z.string().optional(),
-//  stderr: z.string().optional(),
-//  exit_code: z.number().optional(),
-//  fs: FsSchema.optional(),
-//})
 
 const ProblemConfigSchema = z
   .object({
@@ -51,7 +42,11 @@ const ProblemConfigSchema = z
     tests: z
       .array(
         z.object({
-          testcase: z.number().positive().or(z.literal("all")),
+          testcase: z.union([
+            z.number().positive(),
+            z.literal("all"),
+            z.array(z.number().positive()),
+          ]),
           input: z.string(),
           pass: z.boolean(),
         }),
@@ -61,7 +56,6 @@ const ProblemConfigSchema = z
   .strict()
 
 export type ProblemConfig = z.infer<typeof ProblemConfigSchema>
-//export type ProblemOutput = z.infer<typeof ProblemOutputSchema> // TODO: remove this
 
 /**
  * Read and return the problem config, making sure it is valid.

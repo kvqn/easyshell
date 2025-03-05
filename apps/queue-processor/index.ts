@@ -6,6 +6,7 @@ import {
 } from "@easyshell/db/schema"
 import { env } from "@easyshell/env"
 import { getProblemSlugFromId } from "@easyshell/problems"
+import { sleep } from "@easyshell/utils"
 import { and, eq, sql } from "drizzle-orm"
 import { mkdir } from "fs/promises"
 
@@ -100,9 +101,6 @@ async function processQueueItem(
         eq(submissionTestcaseQueue.testcaseId, item.testcaseId),
       ),
     )
-}
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 async function init() {

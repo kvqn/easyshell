@@ -13,7 +13,7 @@ async function testcaseConfig({
   const originalFs = await getFs(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}`)
   const newFs: FsType = {}
   for (const file in originalFs) {
-    if (file !== "secrets/portal.txt") {
+    if (file !== "logs.txt") {
       newFs[file] = originalFs[file]!
     }
   }
@@ -36,6 +36,7 @@ const config: ProblemConfig = {
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: true }),
   ],
+  tests: [{ testcase: "all", pass: true, input: "rm logs.txt" }],
 }
 
 export default config
