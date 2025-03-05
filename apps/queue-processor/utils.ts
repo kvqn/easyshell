@@ -77,6 +77,9 @@ export async function runSubmissionAndGetOutput({
     if (fs === undefined) {
       passed = false
     } else {
+      if (Object.keys(fs).length !== Object.keys(testcase.expected_fs).length) {
+        passed = false
+      }
       for (const [path, expected] of Object.entries(testcase.expected_fs)) {
         const actual = fs[path]
         if (actual !== expected) {
