@@ -1,6 +1,6 @@
+import type { ProblemConfig } from "@easyshell/problems"
+import { PROBLEMS_DIR } from "@easyshell/utils"
 import { readFile } from "fs/promises"
-
-import type { ProblemConfig } from "@/server/utils/problem"
 
 const SLUG = "move-and-rename"
 
@@ -17,7 +17,7 @@ async function testcaseConfig({
     public: isPublic,
     expected_fs: {
       "index.html": (
-        await readFile(`./problems/${SLUG}/testcases/${id}/index.htlm`)
+        await readFile(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}/index.htlm`)
       ).toString(),
     },
   }

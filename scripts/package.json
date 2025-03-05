@@ -1,0 +1,14 @@
+{
+  "name": "@easyshell/scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "module": "nodenext",
+  "target": "es2022",
+  "dependencies": {
+    "arg": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9"
+  }
+}

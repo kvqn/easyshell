@@ -1,0 +1,132 @@
+import { db } from "@easyshell/db"
+import {
+  submissionTestcaseQueue,
+  submissionTestcases,
+  submissions,
+} from "@easyshell/db/schema"
+import { env } from "@easyshell/env"
+import { getProblemSlugFromId } from "@easyshell/problems"
+import { and, eq, sql } from "drizzle-orm"
+import { mkdir } from "fs/promises"
+
+import { runSubmissionAndGetOutput } from "./utils"
+
+if (env.APP !== "queue-processor")
+  throw new Error(
+    "The APP environment variable must be set to 'queue-processor'",
+  )
+
+async function getQueueItem() {
+  const item = db.$with("item").as(
+    db
+      .select({
+        submissionId: submissionTestcaseQueue.submissionId,
+        testcaseId: submissionTestcaseQueue.testcaseId,
+      })
+      .from(submissionTestcaseQueue)
+      .where(eq(submissionTestcaseQueue.status, "pending"))
+      .limit(1),
+  )
+
+  const updated_item = await db
+    .with(item)
+    .update(submissionTestcaseQueue)
+    .set({ status: "running" })
+    .where(
+      and(
+        eq(
+          submissionTestcaseQueue.submissionId,
+          sql`(select ${item.submissionId} from ${item})`,
+        ),
+        eq(
+          submissionTestcaseQueue.testcaseId,
+          sql`(select ${item.testcaseId} from ${item})`,
+        ),
+      ),
+    )
+    .returning({
+      submissionId: submissionTestcaseQueue.submissionId,
+      testcaseId: submissionTestcaseQueue.testcaseId,
+      input: submissionTestcaseQueue.input,
+    })
+
+  if (updated_item.length === 0) return null
+
+  return updated_item[0]
+}
+
+async function processQueueItem(
+  item: NonNullable<Awaited<ReturnType<typeof getQueueItem>>>,
+) {
+  console.log("Processing queue item", item)
+  const problemId = (
+    await db
+      .select({ problemId: submissions.problemId })
+      .from(submissions)
+      .where(eq(submissions.id, item.submissionId))
+      .limit(1)
+  )[0]?.problemId
+  if (!problemId) throw new Error("Submission not found")
+
+  const problemSlug = await getProblemSlugFromId(problemId)
+
+  const { startedAt, finishedAt, output, passed } =
+    await runSubmissionAndGetOutput({
+      problemSlug,
+      testcaseId: item.testcaseId,
+      input: item.input,
+      suffix: `submission-${item.submissionId}`,
+    })
+
+  await db.insert(submissionTestcases).values({
+    submissionId: item.submissionId,
+    testcaseId: item.testcaseId,
+    input: item.input,
+    stdout: output.stdout,
+    stderr: output.stderr,
+    exitCode: output.exit_code,
+    fsZipBase64: output.fs_zip_base64,
+    startedAt,
+    finishedAt,
+    passed,
+  })
+
+  await db
+    .update(submissionTestcaseQueue)
+    .set({ status: "finished" })
+    .where(
+      and(
+        eq(submissionTestcaseQueue.submissionId, item.submissionId),
+        eq(submissionTestcaseQueue.testcaseId, item.testcaseId),
+      ),
+    )
+}
+async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function init() {
+  await mkdir(`${env.WORKING_DIR_DOCKER}/inputs`, { recursive: true })
+  await mkdir(`${env.WORKING_DIR_DOCKER}/outputs`, { recursive: true })
+}
+
+async function loop() {
+  while (true) {
+    const item = await getQueueItem()
+    if (!item) {
+      await sleep(5000)
+      continue
+    }
+    await processQueueItem(item)
+  }
+}
+
+async function main() {
+  await init()
+  await loop()
+}
+
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})

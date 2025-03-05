@@ -1,5 +1,5 @@
-import { getFs } from "@/server/utils/paths"
-import type { FsType, ProblemConfig } from "@/server/utils/problem"
+import type { FsType, ProblemConfig } from "@easyshell/problems"
+import { PROBLEMS_DIR, getFs } from "@easyshell/utils"
 
 const SLUG = "wipe-that-folder"
 
@@ -10,7 +10,7 @@ async function testcaseConfig({
   id: number
   isPublic: boolean
 }) {
-  const originalFs = await getFs(`./problems/${SLUG}/testcases/${id}`)
+  const originalFs = await getFs(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}`)
   const newFs: FsType = {}
   for (const file in originalFs) {
     if (!file.startsWith("logs/")) {

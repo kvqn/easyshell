@@ -1,6 +1,6 @@
+import type { ProblemConfig } from "@easyshell/problems"
+import { PROBLEMS_DIR } from "@easyshell/utils"
 import { readFile } from "fs/promises"
-
-import type { ProblemConfig } from "@/server/utils/problem"
 
 const SLUG = "cat-out-loud"
 
@@ -16,7 +16,7 @@ async function testcaseConfig({
     folder: `${id}`,
     public: isPublic,
     expected_stdout: (
-      await readFile(`./problems/${SLUG}/testcases/${id}/notes.txt`)
+      await readFile(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}/notes.txt`)
     ).toString(),
   }
 }
