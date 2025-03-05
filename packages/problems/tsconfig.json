@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "include": [
-      "../../problems/**/*.ts",
-    ],
+    "include": ["../../problems/**/*.ts"]
   }
 }

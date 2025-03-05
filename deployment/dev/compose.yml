@@ -21,13 +21,13 @@ services:
       PROBLEMS_DIR: ../../problems
       NEXTAUTH_URL: http://localhost:3000
       # Secrets
-      NEXTAUTH_SECRET: 
-      DISCORD_CLIENT_ID: 
-      DISCORD_CLIENT_SECRET: 
-      GITHUB_CLIENT_ID: 
-      GITHUB_CLIENT_SECRET: 
-      GOOGLE_CLIENT_ID: 
-      GOOGLE_CLIENT_SECRET: 
+      NEXTAUTH_SECRET:
+      DISCORD_CLIENT_ID:
+      DISCORD_CLIENT_SECRET:
+      GITHUB_CLIENT_ID:
+      GITHUB_CLIENT_SECRET:
+      GOOGLE_CLIENT_ID:
+      GOOGLE_CLIENT_SECRET:
 
     depends_on:
       postgres:
@@ -36,7 +36,6 @@ services:
         condition: service_started
       container-manager:
         condition: service_started
-
 
   postgres:
     container_name: easyshell-dev-postgres
