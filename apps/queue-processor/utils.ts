@@ -56,9 +56,7 @@ export async function runSubmissionAndGetOutput({
   )
 
   const fs =
-    output.fs_zip_base64.length !== 0
-      ? await unzip(output.fs_zip_base64)
-      : undefined
+    output.fs_zip_base64.length !== 0 ? await unzip(output.fs_zip_base64) : {}
 
   const testcase = problem.testcases.find((t) => t.id === testcaseId)
   if (!testcase) throw new Error("Testcase not found")
@@ -79,16 +77,22 @@ export async function runSubmissionAndGetOutput({
     } else {
       if (Object.keys(fs).length !== Object.keys(testcase.expected_fs).length) {
         passed = false
-      }
-      for (const [path, expected] of Object.entries(testcase.expected_fs)) {
-        const actual = fs[path]
-        if (actual !== expected) {
-          passed = false
-          break
+      } else {
+        for (const [path, expected] of Object.entries(testcase.expected_fs)) {
+          const actual = fs[path]
+          if (actual !== expected) {
+            passed = false
+            break
+          }
         }
       }
     }
   }
+
+  // console.log("passed", passed)
+  // console.log("expected_fs", testcase.expected_fs)
+  // console.log("fs", fs)
+  // console.log("---")
 
   return {
     startedAt,

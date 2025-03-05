@@ -30,6 +30,7 @@ const config: ProblemConfig = {
   description: `Sometimes, files end up in the wrong place with the wrong name.`,
   tags: ["Basics"],
   testcases: [await testcaseConfig({ id: 1, isPublic: true })],
+  tests: [{ testcase: 1, pass: true, input: "mv index.htlm index.html" }],
 }
 
 export default config
