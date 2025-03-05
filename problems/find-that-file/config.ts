@@ -1,5 +1,5 @@
-import { env } from "@easyshell/env"
 import type { ProblemConfig } from "@easyshell/problems"
+import { PROBLEMS_DIR } from "@easyshell/utils"
 import { readdir } from "fs/promises"
 
 const SLUG = "find-that-file"
@@ -11,7 +11,7 @@ async function testcaseConfig({
   id: number
   isPublic: boolean
 }) {
-  const dir = await readdir(`${env.PROBLEMS_DIR}/${SLUG}/testcases/${id}`, {
+  const dir = await readdir(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}`, {
     recursive: true,
   })
   const paths = new Array<string>()

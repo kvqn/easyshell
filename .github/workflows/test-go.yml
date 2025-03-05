@@ -4,12 +4,12 @@ on:
     branches:
       - main
     paths:
-      - apps/container-manager
-      - apps/entrypoint
+      - apps/container-manager/**
+      - apps/entrypoint/**
   pull_request:
     paths:
-      - apps/container-manager
-      - apps/entrypoint
+      - apps/container-manager/**
+      - apps/entrypoint/**
 
 jobs:
   container-manager:

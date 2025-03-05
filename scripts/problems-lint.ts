@@ -25,7 +25,7 @@ export async function checkProblems() {
       throw new Error(`Problem slug mismatch: ${info.slug} !== ${problemSlug}`)
     }
 
-    if (info.id in existingProblemIds) {
+    if (existingProblemIds.has(info.id)) {
       throw new Error(`Duplicate problem ID: ${info.id}`)
     }
 

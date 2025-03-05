@@ -70,7 +70,6 @@ export async function getTerminalSessionLogs(sessionId: number) {
     stdout: Buffer.from(log.stdout, "latin1").toString("utf-8"),
     stderr: Buffer.from(log.stderr, "latin1").toString("utf-8"),
   }))
-  console.log("logs", logs)
   return logs
 }
 

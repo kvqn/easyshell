@@ -1,6 +1,5 @@
-import { env } from "@easyshell/env"
 import type { FsType, ProblemConfig } from "@easyshell/problems"
-import { getFs } from "@easyshell/utils"
+import { PROBLEMS_DIR, getFs } from "@easyshell/utils"
 
 const SLUG = "nuke-all-matches"
 
@@ -11,7 +10,7 @@ async function testcaseConfig({
   id: number
   isPublic: boolean
 }) {
-  const originalFs = await getFs(`${env.PROBLEMS_DIR}/${SLUG}/testcases/${id}`)
+  const originalFs = await getFs(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}`)
   const newFs: FsType = {}
   for (const file in originalFs) {
     if (!file.endsWith(".log")) {

@@ -130,7 +130,6 @@ export function TestcaseTerminal({
         problemId: problemId,
         testcaseId: testcase,
       })
-      console.log("session", session)
       setSession(session)
     })()
   }, [problemId, testcase, restarted])

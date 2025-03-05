@@ -8,7 +8,6 @@ import { ProblemBookmark } from "./bookmark"
 export async function ProblemHeading({ slug }: { slug: string }) {
   const { id: userId } = await ensureAuth()
   const { id, title, description } = await getProblemInfo(slug)
-  console.log(id, title, description)
   const isBookmarked = await isProblemBookmarked({ userId, problemId: id })
   return (
     <div>

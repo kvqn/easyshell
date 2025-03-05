@@ -94,3 +94,4 @@ if (!_PROJECT_ROOT) {
 }
 
 export const PROJECT_ROOT = _PROJECT_ROOT
+export const PROBLEMS_DIR = `${PROJECT_ROOT}/problems`

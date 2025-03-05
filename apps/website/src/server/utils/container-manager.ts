@@ -54,7 +54,6 @@ export async function containerManagerExec({
       }),
       signal: AbortSignal.timeout(1000),
     })
-    console.log("resp", resp)
   } catch (e) {
     if (e instanceof Error && e.name === "TimeoutError")
       return {
@@ -79,7 +78,6 @@ export async function containerManagerExec({
   let json: unknown
   try {
     json = await resp.json()
-    console.log("resp_json", json)
   } catch {
     return {
       status: "error",
