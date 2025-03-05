@@ -2,7 +2,8 @@ import { env } from "@easyshell/env"
 import createMDX from "@next/mdx"
 import { NextConfig } from "next"
 
-if (env.APP !== "website") throw new Error("Invalid APP variable")
+if (!process.env.SKIP_ENV_VALIDATION && env.APP !== "website")
+  throw new Error("Invalid APP variable")
 
 const config: NextConfig = {
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],

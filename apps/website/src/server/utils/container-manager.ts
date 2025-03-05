@@ -1,6 +1,5 @@
 import { env } from "@easyshell/env"
 import { z } from "zod"
-
 import { STATUS_INTERNAL_SERVER_ERROR, STATUS_LOCKED } from "@/lib/utils"
 
 const ContainerManagerExecResponseSchema = z.object({
@@ -111,9 +110,12 @@ export async function containerManagerExec({
       message: "Failed to parse response from container manager",
     }
 
+  const data = parsing_result.data
+
   return {
     status: "success",
-    ...parsing_result.data,
+    stdout: data.stdout,
+    stderr: data.stderr,
   }
 }
 

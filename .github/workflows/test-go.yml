@@ -4,20 +4,12 @@ on:
     branches:
       - main
     paths:
-      - tools/container-manager/go.mod
-      - tools/container-manager/main.go
-      - tools/problems/easyshell-base/container-io/go.mod
-      - tools/problems/easyshell-base/container-io/main.go
-      - tools/problems/easyshell-base/submission-runner/go.mod
-      - tools/problems/easyshell-base/submission-runner/main.go
+      - apps/container-manager
+      - apps/entrypoint
   pull_request:
     paths:
-      - tools/container-manager/go.mod
-      - tools/container-manager/main.go
-      - tools/problems/easyshell-base/container-io/go.mod
-      - tools/problems/easyshell-base/container-io/main.go
-      - tools/problems/easyshell-base/submission-runner/go.mod
-      - tools/problems/easyshell-base/submission-runner/main.go
+      - apps/container-manager
+      - apps/entrypoint
 
 jobs:
   container-manager:
@@ -31,8 +23,8 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.64.2
-          working-directory: tools/container-manager
-  container-io:
+          working-directory: apps/container-manager
+  entrypoint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -43,16 +35,4 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.64.2
-          working-directory: tools/problems/easyshell-base/container-io
-  submission-runner:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: 1.24.0
-      - name: check linting
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: v1.64.2
-          working-directory: tools/problems/easyshell-base/submission-runner
+          working-directory: apps/entrypoint

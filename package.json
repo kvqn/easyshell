@@ -25,6 +25,8 @@
     "problems:lint": "APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-lint.ts",
     "problems:test": "APP=queue-processor PROBLEMS_DIR=./problems WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
     "dev:queue-processor": "bun ./apps/queue-processor/index.ts",
-    "dev:website": "bunx next dev website"
+    "dev:website": "bunx next dev apps/website",
+    "lint:tsc": "bunx tsc --noEmit",
+    "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 bunx next lint"
   }
 }

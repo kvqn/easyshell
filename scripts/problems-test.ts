@@ -65,7 +65,7 @@ if (args.length > 1) {
   process.exit(1)
 }
 
-const arg = args[0]
+const arg = args[0]!
 
 if (arg === "all") {
   const problems = await getProblems()

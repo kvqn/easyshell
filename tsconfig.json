@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
     "target": "es2022",
@@ -28,26 +27,17 @@
       }
     ],
     "incremental": true,
-    /* Path Aliases */
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./apps/website/src/*"
       ]
     }
   },
   "include": [
-    ".eslintrc.cjs",
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts",
-    "../problems/**/*.ts"
   ],
-  "exclude": [
-    "node_modules",
-    ".next"
-  ]
 }
