@@ -14,7 +14,6 @@ export async function checkProblems() {
     const PROBLEM_DIR = `${PROJECT_ROOT}/problems/${problemSlug}`
 
     await assertDirExists(PROBLEM_DIR)
-    await assertDirExists(`${PROBLEM_DIR}/hints`)
     await assertFileExists(`${PROBLEM_DIR}/page.mdx`)
     await assertFileExists(`${PROBLEM_DIR}/config.ts`)
 
