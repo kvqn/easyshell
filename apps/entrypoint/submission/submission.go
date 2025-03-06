@@ -6,6 +6,7 @@ import (
 	"entrypoint/daemon"
 	"os"
 	"os/exec"
+	"time"
 )
 
 type outputResponse struct {
@@ -26,6 +27,8 @@ func fsZipBase64() string {
 func Main() {
 
 	go daemon.Run()
+
+	time.Sleep(2 * time.Second)
 
 	cmd := exec.Command("sh", "/input.sh")
 	cmd.Dir = "/home"

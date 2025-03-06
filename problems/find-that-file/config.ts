@@ -25,7 +25,6 @@ async function testcaseConfig({
 
   return {
     id: id,
-    folder: `${id}`,
     public: isPublic,
     expected_stdout: paths.join("\n") + "\n",
   }
