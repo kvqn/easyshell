@@ -5,6 +5,7 @@ import { writeFile } from "fs/promises"
 import { cp } from "fs/promises"
 import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
+import { stat } from "fs/promises"
 
 import "./problems-lint"
 
@@ -17,19 +18,20 @@ function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
   return $`docker build -t ${tag} ${dir}`
 }
 
-await mkdir(`${WORKING_DIR}/images/easyshell-base`, {
-  recursive: true,
-})
+async function init() {
+  await mkdir(`${WORKING_DIR}/images/easyshell-base`, {
+    recursive: true,
+  })
 
-await cp(
-  `${PROJECT_ROOT}/apps/entrypoint`,
-  `${WORKING_DIR}/images/easyshell-base/entrypoint`,
-  { recursive: true },
-)
+  await cp(
+    `${PROJECT_ROOT}/apps/entrypoint`,
+    `${WORKING_DIR}/images/easyshell-base/entrypoint`,
+    { recursive: true },
+  )
 
-await writeFile(
-  `${WORKING_DIR}/images/easyshell-base/Dockerfile`,
-  `
+  await writeFile(
+    `${WORKING_DIR}/images/easyshell-base/Dockerfile`,
+    `
 FROM alpine:3.21 AS build
 
 RUN apk add go
@@ -40,42 +42,95 @@ RUN go build -C /src/entrypoint -o /bin/entrypoint
 
 FROM alpine:3.21 AS base
 
-RUN apk add zip
+RUN apk add zip jq curl
 
 EXPOSE 8080
 
 COPY --from=build /bin/entrypoint /entrypoint
 `,
-)
+  )
 
-await dockerBuild({
-  tag: "easyshell-base",
-  dir: `${WORKING_DIR}/images/easyshell-base`,
-})
+  await dockerBuild({
+    tag: "easyshell-base",
+    dir: `${WORKING_DIR}/images/easyshell-base`,
+  })
+}
 
-const problems = await getProblems()
+async function _existsAndIsDir(path: string) {
+  try {
+    return (await stat(path)).isDirectory()
+  } catch {
+    return false
+  }
+}
 
-for (const problem of problems) {
+async function handleProblem(problem: string) {
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
     const tag = `easyshell-${problem}-${testcase.id}`
-    await mkdir(`${WORKING_DIR}/images/${tag}`, {
+
+    const IMAGE_DIR = `${WORKING_DIR}/images/${tag}`
+    await mkdir(IMAGE_DIR, {
       recursive: true,
     })
 
-    await cp(
-      `./problems/${problem}/testcases/${testcase.folder}`,
-      `${WORKING_DIR}/images/${tag}/home`,
-      {
+    const TESTCASE_DIR = `${PROJECT_ROOT}/problems/${problem}/testcases/${testcase.folder}`
+
+    let copyRoot = false
+
+    if (await _existsAndIsDir(TESTCASE_DIR)) {
+      if (
+        (await _existsAndIsDir(`${TESTCASE_DIR}/home`)) ||
+        (await _existsAndIsDir(`${TESTCASE_DIR}/root`))
+      ) {
+        if (await _existsAndIsDir(`${TESTCASE_DIR}/home`)) {
+          await cp(`${TESTCASE_DIR}/home`, `${IMAGE_DIR}/home`, {
+            recursive: true,
+          })
+        }
+
+        if (await _existsAndIsDir(`${TESTCASE_DIR}/root`)) {
+          copyRoot = true
+          await cp(`${TESTCASE_DIR}/root`, `${IMAGE_DIR}/root`, {
+            recursive: true,
+          })
+        }
+      } else {
+        await cp(TESTCASE_DIR, `${IMAGE_DIR}/home`, { recursive: true })
+      }
+    }
+    if (!(await _existsAndIsDir(`${IMAGE_DIR}/home`))) {
+      await mkdir(`${IMAGE_DIR}/home`, {
         recursive: true,
-      },
-    )
+      })
+    }
+
+    let daemon_build_steps: string | undefined
+
+    if (testcase.daemonSetup !== undefined) {
+      daemon_build_steps = await testcase.daemonSetup({
+        image_dir: IMAGE_DIR,
+        testcase_dir: TESTCASE_DIR,
+        problem_dir: `${PROJECT_ROOT}/problems/${problem}`,
+      })
+    }
 
     await writeFile(
       `${WORKING_DIR}/images/${tag}/Dockerfile`,
       `
+${
+  daemon_build_steps
+    ? `
+FROM alpine:3.21 AS build
+${daemon_build_steps}
+`
+    : ""
+}
+
 FROM easyshell-base
 COPY home /home
+${copyRoot ? "COPY root/* ." : ""}
+${daemon_build_steps ? "COPY --from=build /daemon /daemon" : ""}
 
 ENTRYPOINT ["/entrypoint"]
 `,
@@ -83,7 +138,37 @@ ENTRYPOINT ["/entrypoint"]
 
     await dockerBuild({
       tag: tag,
-      dir: `${WORKING_DIR}/images/${tag}`,
+      dir: IMAGE_DIR,
     })
   }
 }
+
+async function main() {
+  const args = process.argv.slice(2)
+  if (args.length === 0) {
+    console.error(
+      "Provide a problem slug to build. Provide 'all' to build all problems.",
+    )
+    process.exit(1)
+  }
+  if (args.length > 1) {
+    console.error("Too many arguments")
+    process.exit(1)
+  }
+  const arg = args[0]!
+
+  const problems = await getProblems()
+  if (arg === "all") {
+    await init()
+    for (const problem of problems) await handleProblem(problem)
+  } else {
+    if (!problems.includes(arg)) {
+      console.error(`Problem not found: ${arg}`)
+      process.exit(1)
+    }
+    await init()
+    await handleProblem(arg)
+  }
+}
+
+await main()

@@ -1,0 +1,20 @@
+You can use the `jq` tool to parse JSON. Here's an example
+
+```bash
+echo '
+{
+  "name": "John Doe",
+  "age": 30
+}
+' | jq '.name'
+```
+
+This command will output the following
+
+```stdout
+"John Doe"
+```
+
+You can remove the quotes by using the `-r` option to get the raw output.
+
+There is also the `-j` option which removes the quotes as well as the trailing newline character. This is useful while scripting.

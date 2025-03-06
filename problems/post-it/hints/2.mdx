@@ -1,0 +1,18 @@
+You can make use of `jq` to parse the JSON response by piping the output to `jq`. Here's an example of how you can do that:
+
+```bash
+echo '
+{
+  "name": "John Doe",
+  "age": 30
+}
+' | jq '.age'
+```
+
+This command will output the following
+
+```stdout
+30
+```
+
+Since there are no quotes around the output of numbers, you don't need to pass flags for raw output.

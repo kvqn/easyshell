@@ -3,6 +3,7 @@ package submission
 import (
 	"bytes"
 	"encoding/json"
+	"entrypoint/daemon"
 	"os"
 	"os/exec"
 )
@@ -23,6 +24,9 @@ func fsZipBase64() string {
 }
 
 func Main() {
+
+	go daemon.Run()
+
 	cmd := exec.Command("sh", "/input.sh")
 	cmd.Dir = "/home"
 

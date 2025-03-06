@@ -3,6 +3,7 @@ package session
 import (
 	"bufio"
 	"encoding/json"
+	"entrypoint/daemon"
 	"io"
 	"math/rand"
 	"net/http"
@@ -88,9 +89,9 @@ func run(w http.ResponseWriter, r *http.Request) {
 	var read_stdout, read_stderr string
 	stdoutReader := bufio.NewReader(stdout)
 	stderrReader := bufio.NewReader(stderr)
-	escapedInput := strings.ReplaceAll(input, "'", "'\\''")
+	// escapedInput := strings.ReplaceAll(input, "'", "'\\''")
 
-	writeOrPanic(stdin, escapedInput+"\n")
+	writeOrPanic(stdin, input+"\n")
 	writeOrPanic(stdin, "echo "+delimiter+"\n")
 	writeOrPanic(stdin, "echo >&2 "+delimiter+"\n")
 
@@ -163,6 +164,9 @@ func run(w http.ResponseWriter, r *http.Request) {
 }
 
 func Main() {
+
+	go daemon.Run()
+
 	cmd = exec.Command("sh")
 	cmd.Dir = "/home"
 

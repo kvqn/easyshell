@@ -63,7 +63,10 @@ export async function runSubmissionAndGetOutput({
 
   let passed = true
   if (passed && testcase.expected_stdout !== undefined)
-    passed = output.stdout === testcase.expected_stdout
+    passed =
+      output.stdout === testcase.expected_stdout ||
+      output.stdout + "\n" === testcase.expected_stdout ||
+      output.stdout === testcase.expected_stdout + "\n"
 
   if (passed && testcase.expected_stderr !== undefined)
     passed = passed && output.stderr === testcase.expected_stderr
