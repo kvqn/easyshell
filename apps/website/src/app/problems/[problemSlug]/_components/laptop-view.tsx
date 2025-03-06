@@ -27,7 +27,7 @@ export async function LaptopView({
 
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel className="p-4">
+      <ResizablePanel>
         <Problem slug={problemSlug} />
       </ResizablePanel>
       <ResizableHandle />
