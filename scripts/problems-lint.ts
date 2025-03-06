@@ -14,7 +14,6 @@ export async function checkProblems() {
     const PROBLEM_DIR = `${PROJECT_ROOT}/problems/${problemSlug}`
 
     await assertDirExists(PROBLEM_DIR)
-    await assertDirExists(`${PROBLEM_DIR}/testcases`)
     await assertDirExists(`${PROBLEM_DIR}/hints`)
     await assertFileExists(`${PROBLEM_DIR}/page.mdx`)
     await assertFileExists(`${PROBLEM_DIR}/config.ts`)
@@ -27,6 +26,14 @@ export async function checkProblems() {
 
     if (existingProblemIds.has(info.id)) {
       throw new Error(`Duplicate problem ID: ${info.id}`)
+    }
+
+    const existingTestcases = new Set<number>()
+    for (const testcase of info.testcases) {
+      if (existingTestcases.has(testcase.id)) {
+        throw new Error(`Duplicate testcase ID: ${testcase.id}`)
+      }
+      existingTestcases.add(testcase.id)
     }
 
     existingProblemIds.add(info.id)

@@ -52,7 +52,7 @@ export async function containerManagerExec({
         container_name: containerName,
         command,
       }),
-      signal: AbortSignal.timeout(1000),
+      signal: AbortSignal.timeout(5000),
     })
   } catch (e) {
     if (e instanceof Error && e.name === "TimeoutError")

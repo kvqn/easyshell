@@ -37,6 +37,17 @@ const ProblemConfigSchema = z
         expected_stderr: z.string().optional(),
         expected_exit_code: z.number().optional(),
         expected_fs: FsSchema.optional(),
+        daemonSetup: z
+          .function()
+          .args(
+            z.object({
+              image_dir: z.string(),
+              testcase_dir: z.string(),
+              problem_dir: z.string(),
+            }),
+          )
+          .returns(z.promise(z.string()))
+          .optional(),
       }),
     ),
     tests: z

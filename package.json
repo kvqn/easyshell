@@ -23,7 +23,7 @@
     "deploy:dev": "docker compose -f ./deployment/dev/compose.yml up",
     "problems:build": "SKIP_ENV_VALIDATION=1 APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-build.ts",
     "problems:lint": "APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-lint.ts",
-    "problems:test": "APP=queue-processor PROBLEMS_DIR=./problems WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
+    "problems:test": "SKIP_ENV_VALIDATION=1 APP=queue-processor PROBLEMS_DIR=./problems WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
     "dev:queue-processor": "bun ./apps/queue-processor/index.ts",
     "dev:website": "bunx next dev apps/website",
     "lint:tsc": "bunx tsc --noEmit",

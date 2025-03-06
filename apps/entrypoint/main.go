@@ -5,6 +5,7 @@ import (
 	"entrypoint/submission"
 	"flag"
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -25,4 +26,6 @@ func main() {
 	default:
 		panic("-mode: provide a valid value ('session' or 'submission')")
 	}
+
+	os.Exit(0)
 }
