@@ -26,7 +26,7 @@
     "problems:test": "SKIP_ENV_VALIDATION=1 APP=queue-processor PROBLEMS_DIR=./problems WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
     "problems:new": "APP=script PROBLEMS_DIR=./problems bun ./scripts/problems-new.ts",
     "dev:queue-processor": "bun ./apps/queue-processor/index.ts",
-    "dev:website": "bunx next dev apps/website",
+    "dev:website": "cd apps/website && APP=website PROBLEMS_DIR=${PWD}/problems bunx next dev",
     "lint:tsc": "bunx tsc --noEmit",
     "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 bunx next lint",
     "start:queue-processor": "cd apps/queue-processor && APP=queue-processor PROJECT_ROOT=../../ PROBLEMS_DIR=../../problems bun start",

@@ -106,9 +106,6 @@ async function main() {
   await writeFile(`${PROBLEM_DIR}/config.ts`, config)
   await writeFile(`${PROBLEM_DIR}/page.mdx`, PAGE_TEMPLATE)
 
-  await mkdir(`${PROBLEM_DIR}/hints`, { recursive: true })
-  await writeFile(`${PROBLEM_DIR}/hints/1.mdx`, "Sample Hint")
-
   console.log(`Created Problem : ${slug}`)
 }
 

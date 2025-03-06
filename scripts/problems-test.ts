@@ -12,7 +12,6 @@ async function baseAsserts(
 
   try {
     await assertDirExists(PROBLEM_DIR)
-    await assertDirExists(`${PROBLEM_DIR}/hints`)
     await assertFileExists(`${PROBLEM_DIR}/page.mdx`)
     await assertFileExists(`${PROBLEM_DIR}/config.ts`)
   } catch (error) {

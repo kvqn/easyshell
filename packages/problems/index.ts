@@ -1,4 +1,5 @@
 import { env } from "@easyshell/env"
+import { stat } from "fs/promises"
 import { readFile } from "fs/promises"
 import { readdir } from "fs/promises"
 import { z } from "zod"
@@ -157,5 +158,10 @@ export async function getProblemHintBody(
 }
 
 export async function getProblemHintCount(slug: string): Promise<number> {
+  try {
+    if (!(await stat(`${PROBLEMS_DIR}/${slug}/hints`)).isDirectory()) return 0
+  } catch {
+    return 0
+  }
   return (await readdir(`${PROBLEMS_DIR}/${slug}/hints`)).length
 }

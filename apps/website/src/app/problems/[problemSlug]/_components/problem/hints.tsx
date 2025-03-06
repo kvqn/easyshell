@@ -1,6 +1,7 @@
 import { getProblemHintBody, getProblemHintCount } from "@easyshell/problems"
 import { MDXRemote } from "next-mdx-remote-client/rsc"
 
+import { BackgroundHeroTexture } from "@/components/backgrounds/hero-texture"
 import {
   Accordion,
   AccordionContent,
@@ -9,8 +10,25 @@ import {
 } from "@/components/ui/accordion"
 import { customComponents } from "@/mdx-components"
 
+export function Wrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="mt-6 border-t">
+      <h2 className="mb-2 mt-6 text-xl font-bold">Hints</h2>
+      {children}
+    </div>
+  )
+}
+
 export async function ProblemHints({ slug }: { slug: string }) {
   const hintCount = await getProblemHintCount(slug)
+  if (hintCount === 0)
+    return (
+      <Wrapper>
+        <BackgroundHeroTexture className="text-center text-neutral-400 border rounded-md py-4 heropattern-texture-neutral-200 bg-neutral-50 border-neutral-300">
+          No hints for this one. Good luck!
+        </BackgroundHeroTexture>
+      </Wrapper>
+    )
   const hints = await Promise.all(
     Array.from({ length: hintCount }).map(async (_, hint) => {
       return {
@@ -28,9 +46,7 @@ export async function ProblemHints({ slug }: { slug: string }) {
   hints.sort((a, b) => a.hint - b.hint)
 
   return (
-    <div className="mt-6 border-t">
-      <h2 className="mb-2 mt-6 text-xl font-bold">Hints</h2>
-
+    <Wrapper>
       <Accordion type="single" collapsible className="space-y-4">
         {hints.map(({ node }, i) => (
           <AccordionItem
@@ -43,6 +59,6 @@ export async function ProblemHints({ slug }: { slug: string }) {
           </AccordionItem>
         ))}
       </Accordion>
-    </div>
+    </Wrapper>
   )
 }
