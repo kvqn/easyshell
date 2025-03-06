@@ -16,7 +16,6 @@ async function testcaseConfig({
 }): Promise<ProblemConfig["testcases"][number]> {
   return {
     id: id,
-    folder: `${id}`,
     public: isPublic,
     expected_stdout: replace.content,
     daemonSetup: async ({ image_dir, problem_dir }) => {

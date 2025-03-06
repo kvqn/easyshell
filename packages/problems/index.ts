@@ -31,7 +31,6 @@ const ProblemConfigSchema = z
     testcases: z.array(
       z.object({
         id: z.number().positive(),
-        folder: z.string(),
         public: z.boolean().default(false),
         expected_stdout: z.string().optional(),
         expected_stderr: z.string().optional(),

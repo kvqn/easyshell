@@ -74,7 +74,7 @@ async function handleProblem(problem: string) {
       recursive: true,
     })
 
-    const TESTCASE_DIR = `${PROJECT_ROOT}/problems/${problem}/testcases/${testcase.folder}`
+    const TESTCASE_DIR = `${PROJECT_ROOT}/problems/${problem}/testcases/${testcase.id}`
 
     let copyRoot = false
 

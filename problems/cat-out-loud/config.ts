@@ -13,7 +13,6 @@ async function testcaseConfig({
 }) {
   return {
     id: id,
-    folder: `${id}`,
     public: isPublic,
     expected_stdout: (
       await readFile(`${PROBLEMS_DIR}/${SLUG}/testcases/${id}/notes.txt`)
