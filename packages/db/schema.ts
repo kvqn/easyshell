@@ -170,6 +170,7 @@ export const submissions = createTable("submissions", {
     .notNull()
     .references(() => users.id),
   problemId: integer("problem_id").notNull(),
+  input: text("input").notNull(),
   submittedAt: timestamp("submitted_at", { mode: "date" })
     .notNull()
     .defaultNow(),
@@ -180,7 +181,6 @@ export const submissionTestcases = createTable(
   {
     submissionId: integer("submission_id").notNull(),
     testcaseId: integer("testcase_id").notNull(),
-    input: text("stdin").notNull(),
     stdout: text("stdout").notNull(),
     stderr: text("stderr").notNull(),
     exitCode: integer("exit_code").notNull(),
@@ -211,7 +211,6 @@ export const submissionTestcaseQueue = createTable(
   {
     submissionId: integer("submission_id").notNull(),
     testcaseId: integer("testcase_id").notNull(),
-    input: text("input").notNull(),
     status: queueItemStatus("status").notNull(),
   },
   (item) => [

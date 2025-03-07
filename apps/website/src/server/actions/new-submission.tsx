@@ -22,6 +22,7 @@ export async function newSubmission({
       .values({
         problemId: problemId,
         userId: user.id,
+        input: input,
       })
       .returning({ id: submissions.id })
   )[0]?.id
@@ -36,7 +37,6 @@ export async function newSubmission({
     await db.insert(submissionTestcaseQueue).values({
       submissionId: submissionId,
       testcaseId: testcase.id,
-      input: input,
       status: "pending",
     })
   }

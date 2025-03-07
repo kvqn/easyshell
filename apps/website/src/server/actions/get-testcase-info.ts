@@ -1,7 +1,7 @@
 "use server"
 
 import { db } from "@easyshell/db"
-import { submissionTestcases } from "@easyshell/db/schema"
+import { submissionTestcases, submissions } from "@easyshell/db/schema"
 import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
 import { and, eq } from "drizzle-orm"
 
@@ -18,7 +18,7 @@ export async function getTestcaseInfo({
 }) {
   const _dataFromDb = await db
     .select({
-      input: submissionTestcases.input,
+      input: submissions.input,
       stdout: submissionTestcases.stdout,
       stderr: submissionTestcases.stderr,
       exitCode: submissionTestcases.exitCode,
@@ -35,6 +35,10 @@ export async function getTestcaseInfo({
       ),
     )
     .limit(1)
+    .innerJoin(
+      submissions,
+      eq(submissions.id, submissionTestcases.submissionId),
+    )
 
   if (_dataFromDb.length === 0) {
     throw new Error("Testcase not found")

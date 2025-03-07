@@ -29,31 +29,45 @@ async function getQueueItem() {
       .limit(1),
   )
 
-  const updated_item = await db
-    .with(item)
-    .update(submissionTestcaseQueue)
-    .set({ status: "running" })
-    .where(
-      and(
-        eq(
-          submissionTestcaseQueue.submissionId,
-          sql`(select ${item.submissionId} from ${item})`,
+  const updated_item = (
+    await db
+      .with(item)
+      .update(submissionTestcaseQueue)
+      .set({ status: "running" })
+      .where(
+        and(
+          eq(
+            submissionTestcaseQueue.submissionId,
+            sql`(select ${item.submissionId} from ${item})`,
+          ),
+          eq(
+            submissionTestcaseQueue.testcaseId,
+            sql`(select ${item.testcaseId} from ${item})`,
+          ),
         ),
-        eq(
-          submissionTestcaseQueue.testcaseId,
-          sql`(select ${item.testcaseId} from ${item})`,
-        ),
-      ),
-    )
-    .returning({
-      submissionId: submissionTestcaseQueue.submissionId,
-      testcaseId: submissionTestcaseQueue.testcaseId,
-      input: submissionTestcaseQueue.input,
-    })
+      )
+      .returning({
+        submissionId: submissionTestcaseQueue.submissionId,
+        testcaseId: submissionTestcaseQueue.testcaseId,
+      })
+  )[0]
 
-  if (updated_item.length === 0) return null
+  if (!updated_item) return null
 
-  return updated_item[0]
+  const input = (
+    await db
+      .select({ input: submissions.input })
+      .from(submissions)
+      .where(eq(submissions.id, updated_item.submissionId))
+      .limit(1)
+  )[0]?.input
+
+  if (!input) throw new Error("Submission not found")
+
+  return {
+    ...updated_item,
+    input,
+  }
 }
 
 async function processQueueItem(
@@ -82,7 +96,6 @@ async function processQueueItem(
   await db.insert(submissionTestcases).values({
     submissionId: item.submissionId,
     testcaseId: item.testcaseId,
-    input: item.input,
     stdout: output.stdout,
     stderr: output.stderr,
     exitCode: output.exit_code,
