@@ -24,8 +24,15 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex h-screen flex-col font-geist">
+      <body className="flex h-screen flex-col font-geist relative">
         <ThemeProvider attribute="class" defaultTheme="light">
+          <div className="h-full w-full absolute top-0 left-0 -z-10">
+            <div className="relative h-full w-full overflow-hidden">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[20s] "></div>
+              <div className="absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[30s] "></div>
+            </div>
+          </div>
+
           <SessionProvider>
             <Toaster />
             <Navbar />

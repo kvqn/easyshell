@@ -10,10 +10,7 @@ import { cn, max, min, sleep } from "@/lib/utils"
 export default function HomePage() {
   const [animationDone, setAnimationDone] = useState(false)
   return (
-    <div className="flex h-full flex-col items-center justify-center gap-4 relative">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[20s] -z-10"></div>
-      <div className="absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[30s] -z-10"></div>
-
+    <div className="flex h-full flex-col items-center justify-center gap-4">
       <Heading setAnimationDone={setAnimationDone} />
       <div
         className={cn(
