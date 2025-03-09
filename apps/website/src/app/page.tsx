@@ -11,6 +11,12 @@ export default function HomePage() {
   const [animationDone, setAnimationDone] = useState(false)
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4">
+      <div className="h-full w-full fixed top-0 left-0 -z-10">
+        <div className="relative h-full w-full overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[20s] "></div>
+          <div className="absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[30s] "></div>
+        </div>
+      </div>
       <Heading setAnimationDone={setAnimationDone} />
       <div
         className={cn(
