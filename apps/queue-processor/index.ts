@@ -7,10 +7,11 @@ import {
 import { env } from "@easyshell/env"
 import { getProblemSlugFromId } from "@easyshell/problems"
 import { sleep } from "@easyshell/utils"
-import { and, eq, sql } from "drizzle-orm"
-import { mkdir } from "fs/promises"
 
 import { runSubmissionAndGetOutput } from "./utils"
+
+import { and, eq, sql } from "drizzle-orm"
+import { mkdir } from "fs/promises"
 
 if (env.APP !== "queue-processor")
   throw new Error(

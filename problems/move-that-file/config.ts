@@ -1,5 +1,6 @@
 import type { FsType, ProblemConfig } from "@easyshell/problems"
 import { PROBLEMS_DIR, getFs } from "@easyshell/utils"
+
 import { readFile } from "fs/promises"
 
 const SLUG = "move-that-file"

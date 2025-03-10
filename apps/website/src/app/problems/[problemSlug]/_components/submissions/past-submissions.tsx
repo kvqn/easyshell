@@ -1,11 +1,11 @@
+import { cn } from "@/lib/utils"
+import type { getUserSubmissions } from "@/server/queries"
+
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
 import { FaCheck, FaXmark } from "react-icons/fa6"
 import { ImSpinner3 } from "react-icons/im"
-
-import { cn } from "@/lib/utils"
-import type { getUserSubmissions } from "@/server/queries"
 
 export function PastSubmissions({
   problemSlug,

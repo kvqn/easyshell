@@ -3,11 +3,12 @@
 import { db } from "@easyshell/db"
 import { submissionTestcases, submissions } from "@easyshell/db/schema"
 import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
-import { and, eq } from "drizzle-orm"
 
 import { unzip } from "@/server/utils/unzip"
 
 import { getSubmissionInfo } from "./get-submission-info"
+
+import { and, eq } from "drizzle-orm"
 
 export async function getTestcaseInfo({
   submissionId,

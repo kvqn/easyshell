@@ -1,5 +1,6 @@
 import type { ProblemConfig } from "@easyshell/problems"
 import { PROBLEMS_DIR } from "@easyshell/utils"
+
 import { readFile } from "fs/promises"
 
 const SLUG = "move-and-rename"

@@ -1,4 +1,5 @@
 import { getProblems, getPublicProblemInfo } from "@easyshell/problems"
+
 import Link from "next/link"
 
 export const metadata = {

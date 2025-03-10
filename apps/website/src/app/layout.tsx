@@ -1,13 +1,13 @@
-import { GeistMono } from "geist/font/mono"
-import { GeistSans } from "geist/font/sans"
-import { type Metadata } from "next"
-import { ThemeProvider } from "next-themes"
-
 import { Toaster } from "@/components/ui/sonner"
 import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"
 import { SessionProvider } from "./_components/session-provider"
+
+import { GeistMono } from "geist/font/mono"
+import { GeistSans } from "geist/font/sans"
+import { type Metadata } from "next"
+import { ThemeProvider } from "next-themes"
 
 export const metadata: Metadata = {
   title: "easyshell - practice your shell",

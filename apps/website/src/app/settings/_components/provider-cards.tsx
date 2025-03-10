@@ -1,5 +1,7 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+
 import { signIn } from "next-auth/react"
 import {
   PiDiscordLogo,
@@ -10,8 +12,6 @@ import {
   PiGoogleLogoDuotone,
 } from "react-icons/pi"
 import { toast } from "sonner"
-
-import { cn } from "@/lib/utils"
 
 type ProviderType = "discord" | "github" | "google"
 

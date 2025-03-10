@@ -3,13 +3,14 @@
 import { db } from "@easyshell/db"
 import { terminalSessions } from "@easyshell/db/schema"
 import { getProblemSlugFromId } from "@easyshell/problems"
-import { and, eq, isNull } from "drizzle-orm"
 
 import { ensureAuth } from "@/server/auth"
 import { insertTerminalSessionLog } from "@/server/queries"
 import { containerManagerExec } from "@/server/utils/container-manager"
 
 import type { getTerminalSession } from "./get-terminal-session"
+
+import { and, eq, isNull } from "drizzle-orm"
 
 export async function submitTerminalSessionCommand({
   sessionId,

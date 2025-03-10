@@ -2,10 +2,11 @@
 
 import { db } from "@easyshell/db"
 import { users } from "@easyshell/db/schema"
-import { eq } from "drizzle-orm"
 
 import { checkValidUsername } from "@/lib/utils"
 import { ensureAuth } from "@/server/auth"
+
+import { eq } from "drizzle-orm"
 
 export async function setUsername(name: string): Promise<{
   success: boolean

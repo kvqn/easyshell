@@ -1,9 +1,10 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
 import { PROJECT_ROOT, sleep } from "@easyshell/utils"
-import { randomBytes } from "crypto"
 
 import { assertDirExists, assertFileExists } from "./_utils"
+
+import { randomBytes } from "crypto"
 
 async function baseAsserts(
   slug: string,

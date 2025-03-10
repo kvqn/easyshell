@@ -2,10 +2,11 @@
 
 import { db } from "@easyshell/db"
 import { bookmarks } from "@easyshell/db/schema"
-import { and, eq } from "drizzle-orm"
 
 import { ensureAuth } from "@/server/auth"
 import { isProblemBookmarked } from "@/server/queries"
+
+import { and, eq } from "drizzle-orm"
 
 export async function toggleBookmark(problemId: number): Promise<{
   newBookmarkState: boolean

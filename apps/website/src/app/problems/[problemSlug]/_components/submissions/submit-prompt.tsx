@@ -1,11 +1,11 @@
 "use client"
 
-import { usePathname, useRouter } from "next/navigation"
-import { useState } from "react"
-
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { newSubmission } from "@/server/actions/new-submission"
+
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 
 export function SubmitPrompt({ problemId }: { problemId: number }) {
   const pathname = usePathname()

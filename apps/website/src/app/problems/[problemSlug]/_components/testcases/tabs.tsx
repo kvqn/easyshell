@@ -1,10 +1,11 @@
 "use client"
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { TestcaseTerminal } from "./terminal"
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
 export function TestcaseTabs({
   problemId,
@@ -38,11 +39,13 @@ export function TestcaseTabs({
         </TabsList>
       </Tabs>
       <div className="p-2">
-        <TestcaseTerminal
-          problemId={problemId}
-          problemSlug={problemSlug}
-          testcase={testcase}
-        />
+        <Suspense fallback={<div>Loading</div>}>
+          <TestcaseTerminal
+            problemId={problemId}
+            problemSlug={problemSlug}
+            testcase={testcase}
+          />
+        </Suspense>
       </div>
     </div>
   )

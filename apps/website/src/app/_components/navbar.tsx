@@ -1,6 +1,3 @@
-import { HamburgerMenuIcon } from "@radix-ui/react-icons"
-import Link from "next/link"
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,6 +6,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { getServerUser } from "@/server/auth"
+
+import { HamburgerMenuIcon } from "@radix-ui/react-icons"
+import Link from "next/link"
 
 function Logo() {
   return (
