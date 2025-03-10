@@ -1,7 +1,7 @@
 import { env } from "@easyshell/env"
 
 import createMDX from "@next/mdx"
-import { NextConfig } from "next"
+import type { NextConfig } from "next"
 
 if (!process.env.SKIP_ENV_VALIDATION && env.APP !== "website")
   throw new Error("Invalid APP variable")

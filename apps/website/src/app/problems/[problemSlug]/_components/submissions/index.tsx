@@ -7,6 +7,7 @@ import { Submission } from "./submission"
 import { SubmitPrompt } from "./submit-prompt"
 
 import { useSearchParams } from "next/navigation"
+import { Suspense } from "react"
 
 export function Submissions({
   problemId,
@@ -24,14 +25,20 @@ export function Submissions({
 
   if (submission === null)
     return (
-      <div className="flex h-full flex-col gap-4">
-        <SubmitPrompt problemId={problemId} />
-        <PastSubmissions
-          problemSlug={problemSlug}
-          pastSubmissions={pastSubmissions}
-        />
-      </div>
+      <Suspense fallback={<div>Loading</div>}>
+        <div className="flex h-full flex-col gap-4">
+          <SubmitPrompt problemId={problemId} />
+          <PastSubmissions
+            problemSlug={problemSlug}
+            pastSubmissions={pastSubmissions}
+          />
+        </div>
+      </Suspense>
     )
 
-  return <Submission submissionId={submission} />
+  return (
+    <Suspense fallback={<div>Loading</div>}>
+      <Submission submissionId={submission} />
+    </Suspense>
+  )
 }
