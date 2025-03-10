@@ -4,9 +4,9 @@ import {
   getActiveTerminalSession,
   getTerminalSessionLogs,
   insertTerminalSession,
-} from "@/server/queries"
+} from "@/lib/server/queries"
 
-import { dockerRun } from "./docker"
+import { containerManagerCreate } from "./container-manager"
 
 export async function runTerminalSession({
   problemId,
@@ -20,9 +20,9 @@ export async function runTerminalSession({
   const problemSlug = await getProblemSlugFromId(parseInt(problemId))
   if (!problemSlug) throw new Error("Problem not found")
 
-  await dockerRun({
+  await containerManagerCreate({
     image: `easyshell-${problemSlug}-${testcaseId}`,
-    name: `easyshell-${problemSlug}-${testcaseId}-session-${sessionId}`,
+    container_name: `easyshell-${problemSlug}-${testcaseId}-session-${sessionId}`,
   })
 }
 

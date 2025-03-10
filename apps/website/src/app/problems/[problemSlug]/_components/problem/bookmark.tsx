@@ -1,7 +1,7 @@
 "use client"
 
+import { toggleBookmark } from "@/lib/server/actions/toggle-bookmark"
 import { cn } from "@/lib/utils"
-import { toggleBookmark } from "@/server/actions/toggle-bookmark"
 
 import { useState } from "react"
 import { PiBookmarkSimple, PiBookmarkSimpleDuotone } from "react-icons/pi"

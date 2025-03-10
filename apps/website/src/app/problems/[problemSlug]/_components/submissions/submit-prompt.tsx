@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { newSubmission } from "@/server/actions/new-submission"
+import { newSubmission } from "@/lib/server/actions/new-submission"
 
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"

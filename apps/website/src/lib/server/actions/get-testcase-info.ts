@@ -4,7 +4,7 @@ import { db } from "@easyshell/db"
 import { submissionTestcases, submissions } from "@easyshell/db/schema"
 import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
 
-import { unzip } from "@/server/utils/unzip"
+import { unzip } from "@/lib/server/unzip"
 
 import { getSubmissionInfo } from "./get-submission-info"
 

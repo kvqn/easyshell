@@ -9,9 +9,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { setUserImage } from "@/lib/server/actions/set-image"
+import { setUsername } from "@/lib/server/actions/set-username"
 import { checkValidUsername, sleep } from "@/lib/utils"
-import { setUserImage } from "@/server/actions/set-image"
-import { setUsername } from "@/server/actions/set-username"
 
 import { useEffect, useState } from "react"
 import { PiCheck, PiUploadBold, PiX } from "react-icons/pi"

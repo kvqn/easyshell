@@ -3,9 +3,9 @@
 import type { FsType } from "@easyshell/problems"
 
 import { Back } from "@/components/back"
+import { getSubmissionInfo } from "@/lib/server/actions/get-submission-info"
+import { getTestcaseInfo } from "@/lib/server/actions/get-testcase-info"
 import { cn, sleep } from "@/lib/utils"
-import { getSubmissionInfo } from "@/server/actions/get-submission-info"
-import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
 
 import moment from "moment"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"

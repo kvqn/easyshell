@@ -3,8 +3,8 @@
 import { db } from "@easyshell/db"
 import { users } from "@easyshell/db/schema"
 
+import { ensureAuth } from "@/lib/server/auth"
 import { checkValidUsername } from "@/lib/utils"
-import { ensureAuth } from "@/server/auth"
 
 import { eq } from "drizzle-orm"
 

@@ -3,7 +3,7 @@
 import { db } from "@easyshell/db"
 import { terminalSessions } from "@easyshell/db/schema"
 
-import { ensureAuth } from "@/server/auth"
+import { ensureAuth } from "@/lib/server/auth"
 
 import { and, eq, isNull } from "drizzle-orm"
 

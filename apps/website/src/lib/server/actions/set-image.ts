@@ -3,8 +3,8 @@
 import { db } from "@easyshell/db"
 import { images, users } from "@easyshell/db/schema"
 
+import { ensureAuth } from "@/lib/server/auth"
 import { neverThrow } from "@/lib/utils"
-import { ensureAuth } from "@/server/auth"
 
 import { encode } from "base64-arraybuffer"
 import { randomUUID } from "crypto"

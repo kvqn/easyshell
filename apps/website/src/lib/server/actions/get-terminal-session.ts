@@ -1,7 +1,7 @@
 "use server"
 
-import { ensureAuth } from "@/server/auth"
-import { getTerminalSession as _getTerminalSession } from "@/server/utils/problem"
+import { ensureAuth } from "@/lib/server/auth"
+import { getTerminalSession as _getTerminalSession } from "@/lib/server/terminal-session"
 
 export async function getTerminalSession({
   problemId,
