@@ -1,6 +1,5 @@
-import { getProblemInfo, getProblems } from "@easyshell/problems"
-
 import { DesktopContainer, MobileContainer } from "@/components/media"
+import { getProblemInfo, getProblems } from "@/lib/server/problems"
 
 import { LaptopView } from "./_components/laptop-view"
 import { MobileView } from "./_components/mobile-view"

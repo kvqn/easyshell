@@ -2,10 +2,10 @@
 
 import { db } from "@easyshell/db"
 import { terminalSessions } from "@easyshell/db/schema"
-import { getProblemSlugFromId } from "@easyshell/problems"
 
 import { ensureAuth } from "@/lib/server/auth"
 import { containerManagerExec } from "@/lib/server/container-manager"
+import { getProblemSlugFromId } from "@/lib/server/problems"
 import { insertTerminalSessionLog } from "@/lib/server/queries"
 
 import type { getTerminalSession } from "./get-terminal-session"

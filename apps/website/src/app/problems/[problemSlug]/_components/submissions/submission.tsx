@@ -1,6 +1,6 @@
 "use client"
 
-import type { FsType } from "@easyshell/problems"
+import type { FsType } from "@easyshell/problems/schema"
 
 import { Back } from "@/components/back"
 import { getSubmissionInfo } from "@/lib/server/actions/get-submission-info"

@@ -1,5 +1,3 @@
-import { getProblemHintBody, getProblemHintCount } from "@easyshell/problems"
-
 import { BackgroundHeroTexture } from "@/components/backgrounds/hero-texture"
 import {
   Accordion,
@@ -7,6 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { getProblemHintBody, getProblemHintCount } from "@/lib/server/problems"
 import { customComponents } from "@/mdx-components"
 
 import { MDXRemote } from "next-mdx-remote-client/rsc"

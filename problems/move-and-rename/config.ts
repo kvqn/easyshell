@@ -1,4 +1,4 @@
-import type { ProblemConfig } from "@easyshell/problems"
+import type { ProblemConfig } from "@easyshell/problems/schema"
 import { PROBLEMS_DIR } from "@easyshell/utils"
 
 import { readFile } from "fs/promises"

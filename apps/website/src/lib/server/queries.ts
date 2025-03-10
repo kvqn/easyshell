@@ -8,9 +8,9 @@ import {
   terminalSessionLogs,
   terminalSessions,
 } from "@easyshell/db/schema"
-import { getProblemSlugFromId } from "@easyshell/problems"
 
 import { containerManagerIsRunning } from "@/lib/server/container-manager"
+import { getProblemSlugFromId } from "@/lib/server/problems"
 
 import { and, asc, desc, eq, isNull } from "drizzle-orm"
 

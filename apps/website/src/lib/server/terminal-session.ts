@@ -1,5 +1,4 @@
-import { getProblemSlugFromId } from "@easyshell/problems"
-
+import { getProblemSlugFromId } from "@/lib/server/problems"
 import {
   getActiveTerminalSession,
   getTerminalSessionLogs,

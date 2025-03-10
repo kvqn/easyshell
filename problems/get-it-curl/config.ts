@@ -1,4 +1,4 @@
-import type { ProblemConfig } from "@easyshell/problems"
+import type { ProblemConfig } from "@easyshell/problems/schema"
 
 import { writeFile } from "fs/promises"
 import { cp } from "fs/promises"

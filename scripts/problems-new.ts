@@ -7,7 +7,7 @@ import { mkdir } from "fs/promises"
 import { writeFile } from "fs/promises"
 
 const CONFIG_TEMPLATE = `
-import type { ProblemConfig } from "@easyshell/problems"
+import type { ProblemConfig } from "@easyshell/problems/schema"
 
 async function testcaseConfig({
   id,
