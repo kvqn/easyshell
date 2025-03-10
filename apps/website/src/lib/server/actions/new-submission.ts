@@ -4,7 +4,7 @@ import { db } from "@easyshell/db"
 import { submissionTestcaseQueue, submissions } from "@easyshell/db/schema"
 import { getProblemInfo, getProblemSlugFromId } from "@easyshell/problems"
 
-import { ensureAuth } from "@/server/auth"
+import { ensureAuth } from "@/lib/server/auth"
 
 export async function newSubmission({
   problemId,

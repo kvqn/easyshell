@@ -3,8 +3,8 @@
 import { db } from "@easyshell/db"
 import { bookmarks } from "@easyshell/db/schema"
 
-import { ensureAuth } from "@/server/auth"
-import { isProblemBookmarked } from "@/server/queries"
+import { ensureAuth } from "@/lib/server/auth"
+import { isProblemBookmarked } from "@/lib/server/queries"
 
 import { and, eq } from "drizzle-orm"
 

@@ -9,10 +9,10 @@ import {
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
+import { getTerminalSession } from "@/lib/server/actions/get-terminal-session"
+import { killTerminalSessions } from "@/lib/server/actions/kill-terminal-sessions"
+import { submitTerminalSessionCommand } from "@/lib/server/actions/submit-terminal-session-command"
 import { cn } from "@/lib/utils"
-import { getTerminalSession } from "@/server/actions/get-terminal-session"
-import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
-import { submitTerminalSessionCommand } from "@/server/actions/submit-terminal-session-command"
 
 import { useEffect, useRef, useState } from "react"
 import { ImSpinner3 } from "react-icons/im"

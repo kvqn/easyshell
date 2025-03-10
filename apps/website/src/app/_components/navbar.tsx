@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { getServerUser } from "@/server/auth"
+import { getServerUser } from "@/lib/server/auth"
 
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 import Link from "next/link"

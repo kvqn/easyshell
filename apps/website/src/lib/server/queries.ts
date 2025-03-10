@@ -10,7 +10,7 @@ import {
 } from "@easyshell/db/schema"
 import { getProblemSlugFromId } from "@easyshell/problems"
 
-import { containerManagerIsRunning } from "@/server/utils/container-manager"
+import { containerManagerIsRunning } from "@/lib/server/container-manager"
 
 import { and, asc, desc, eq, isNull } from "drizzle-orm"
 

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { ensureAuth } from "@/server/auth"
-import { getUserProviders } from "@/server/queries"
+import { ensureAuth } from "@/lib/server/auth"
+import { getUserProviders } from "@/lib/server/queries"
 
 import { SettingsNameImage } from "./_components/name-image"
 import {

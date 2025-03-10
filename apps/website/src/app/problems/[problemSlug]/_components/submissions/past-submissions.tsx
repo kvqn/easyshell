@@ -1,5 +1,5 @@
+import type { getUserSubmissions } from "@/lib/server/queries"
 import { cn } from "@/lib/utils"
-import type { getUserSubmissions } from "@/server/queries"
 
 import moment from "moment"
 import Image from "next/image"

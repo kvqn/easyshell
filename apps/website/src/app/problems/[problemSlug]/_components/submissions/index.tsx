@@ -1,6 +1,6 @@
 "use client"
 
-import type { getUserSubmissions } from "@/server/queries"
+import type { getUserSubmissions } from "@/lib/server/queries"
 
 import { PastSubmissions } from "./past-submissions"
 import { Submission } from "./submission"

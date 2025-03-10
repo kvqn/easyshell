@@ -5,8 +5,8 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { ensureAuth } from "@/server/auth"
-import { getUserSubmissions } from "@/server/queries"
+import { ensureAuth } from "@/lib/server/auth"
+import { getUserSubmissions } from "@/lib/server/queries"
 
 import { Problem } from "./problem"
 import { Submissions } from "./submissions"
