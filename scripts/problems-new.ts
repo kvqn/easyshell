@@ -1,9 +1,10 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { PROBLEMS_DIR } from "@easyshell/utils"
-import { mkdir } from "fs/promises"
-import { writeFile } from "fs/promises"
 
 import { max } from "@/lib/utils"
+
+import { mkdir } from "fs/promises"
+import { writeFile } from "fs/promises"
 
 const CONFIG_TEMPLATE = `
 import type { ProblemConfig } from "@easyshell/problems"

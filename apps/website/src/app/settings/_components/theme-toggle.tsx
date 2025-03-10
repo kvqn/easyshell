@@ -1,8 +1,8 @@
 "use client"
 
-import { toast } from "sonner"
-
 import { Switch } from "@/components/ui/switch"
+
+import { toast } from "sonner"
 
 export function ThemeToggle() {
   return (

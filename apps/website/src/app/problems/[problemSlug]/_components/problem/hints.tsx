@@ -1,5 +1,4 @@
 import { getProblemHintBody, getProblemHintCount } from "@easyshell/problems"
-import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 import { BackgroundHeroTexture } from "@/components/backgrounds/hero-texture"
 import {
@@ -9,6 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { customComponents } from "@/mdx-components"
+
+import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 export function Wrapper({ children }: { children: React.ReactNode }) {
   return (

@@ -1,4 +1,5 @@
 import { env } from "@easyshell/env"
+
 import createMDX from "@next/mdx"
 import { NextConfig } from "next"
 

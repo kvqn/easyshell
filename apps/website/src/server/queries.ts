@@ -9,9 +9,10 @@ import {
   terminalSessions,
 } from "@easyshell/db/schema"
 import { getProblemSlugFromId } from "@easyshell/problems"
-import { and, asc, desc, eq, isNull } from "drizzle-orm"
 
 import { containerManagerIsRunning } from "@/server/utils/container-manager"
+
+import { and, asc, desc, eq, isNull } from "drizzle-orm"
 
 export async function getActiveTerminalSession({
   userId,

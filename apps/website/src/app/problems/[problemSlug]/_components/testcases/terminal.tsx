@@ -1,9 +1,5 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { ImSpinner3 } from "react-icons/im"
-import { toast } from "sonner"
-
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +13,10 @@ import { cn } from "@/lib/utils"
 import { getTerminalSession } from "@/server/actions/get-terminal-session"
 import { killTerminalSessions } from "@/server/actions/kill-terminal-sessions"
 import { submitTerminalSessionCommand } from "@/server/actions/submit-terminal-session-command"
+
+import { useEffect, useRef, useState } from "react"
+import { ImSpinner3 } from "react-icons/im"
+import { toast } from "sonner"
 
 export function TestcaseTerminal({
   problemId,

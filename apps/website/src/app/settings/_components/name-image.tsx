@@ -1,9 +1,5 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { PiCheck, PiUploadBold, PiX } from "react-icons/pi"
-import { toast } from "sonner"
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
@@ -16,6 +12,10 @@ import {
 import { checkValidUsername, sleep } from "@/lib/utils"
 import { setUserImage } from "@/server/actions/set-image"
 import { setUsername } from "@/server/actions/set-username"
+
+import { useEffect, useState } from "react"
+import { PiCheck, PiUploadBold, PiX } from "react-icons/pi"
+import { toast } from "sonner"
 
 export function SettingsNameImage({
   image: _image,

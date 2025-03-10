@@ -1,4 +1,3 @@
-import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@easyshell/db"
 import {
   accounts,
@@ -7,6 +6,8 @@ import {
   verificationTokens,
 } from "@easyshell/db/schema"
 import { env } from "@easyshell/env"
+
+import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { count, eq } from "drizzle-orm"
 import {
   type DefaultSession,

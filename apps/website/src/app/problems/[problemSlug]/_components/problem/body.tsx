@@ -1,7 +1,8 @@
 import { getProblemBody } from "@easyshell/problems"
-import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 import { customComponents } from "@/mdx-components"
+
+import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 export async function ProblemBody({ slug }: { slug: string }) {
   const text = await getProblemBody(slug)

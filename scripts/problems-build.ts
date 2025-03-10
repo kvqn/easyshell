@@ -1,13 +1,14 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { PROJECT_ROOT } from "@easyshell/utils"
+
+import "./problems-lint"
+
 import { $ } from "execa"
 import { writeFile } from "fs/promises"
 import { cp } from "fs/promises"
 import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 import { stat } from "fs/promises"
-
-import "./problems-lint"
 
 const WORKING_DIR = `${PROJECT_ROOT}/.easyshell`
 

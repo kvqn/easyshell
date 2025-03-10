@@ -1,17 +1,18 @@
 "use client"
 
 import type { FsType } from "@easyshell/problems"
+
+import { Back } from "@/components/back"
+import { cn, sleep } from "@/lib/utils"
+import { getSubmissionInfo } from "@/server/actions/get-submission-info"
+import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
+
 import moment from "moment"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import ReactDiffViewer from "react-diff-viewer-continued"
 import { PiCopySimple, PiCopySimpleDuotone } from "react-icons/pi"
 import { toast } from "sonner"
-
-import { Back } from "@/components/back"
-import { cn, sleep } from "@/lib/utils"
-import { getSubmissionInfo } from "@/server/actions/get-submission-info"
-import { getTestcaseInfo } from "@/server/actions/get-testcase-info"
 
 export function Submission({ submissionId }: { submissionId: number }) {
   const pathname = usePathname()

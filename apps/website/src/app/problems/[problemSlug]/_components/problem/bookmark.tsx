@@ -1,11 +1,11 @@
 "use client"
 
+import { cn } from "@/lib/utils"
+import { toggleBookmark } from "@/server/actions/toggle-bookmark"
+
 import { useState } from "react"
 import { PiBookmarkSimple, PiBookmarkSimpleDuotone } from "react-icons/pi"
 import { toast } from "sonner"
-
-import { cn } from "@/lib/utils"
-import { toggleBookmark } from "@/server/actions/toggle-bookmark"
 
 export function ProblemBookmark({
   problemId,

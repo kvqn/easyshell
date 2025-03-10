@@ -1,12 +1,12 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
-
 import type { getUserSubmissions } from "@/server/queries"
 
 import { PastSubmissions } from "./past-submissions"
 import { Submission } from "./submission"
 import { SubmitPrompt } from "./submit-prompt"
+
+import { useSearchParams } from "next/navigation"
 
 export function Submissions({
   problemId,
