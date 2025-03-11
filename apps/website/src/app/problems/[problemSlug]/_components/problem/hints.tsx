@@ -1,4 +1,5 @@
 import { BackgroundHeroTexture } from "@/components/backgrounds/hero-texture"
+import { Markdown } from "@/components/markdown"
 import {
   Accordion,
   AccordionContent,
@@ -6,9 +7,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { getProblemHintBody, getProblemHintCount } from "@/lib/server/problems"
-import { customComponents } from "@/mdx-components"
-
-import { MDXRemote } from "next-mdx-remote-client/rsc"
 
 export function Wrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -33,12 +31,7 @@ export async function ProblemHints({ slug }: { slug: string }) {
     Array.from({ length: hintCount }).map(async (_, hint) => {
       return {
         hint: hint + 1,
-        node: (
-          <MDXRemote
-            source={await getProblemHintBody(slug, hint + 1)}
-            components={customComponents}
-          />
-        ),
+        node: <Markdown source={await getProblemHintBody(slug, hint + 1)} />,
       }
     }),
   )

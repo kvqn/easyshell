@@ -4,5 +4,9 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
-  "pages_build_output_dir": ".vercel/output/static"
+  "pages_build_output_dir": ".vercel/output/static",
+  "vars": {
+    "APP": "website",
+    "NEXTAUTH_URL": "https://easyshell.xyz",
+  }
 }
