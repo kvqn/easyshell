@@ -1,6 +1,5 @@
-import { getProblemInfo } from "@easyshell/problems"
-
 import { ensureAuth } from "@/lib/server/auth"
+import { getProblemInfo } from "@/lib/server/problems"
 import { isProblemBookmarked } from "@/lib/server/queries"
 
 import { ProblemBookmark } from "./bookmark"

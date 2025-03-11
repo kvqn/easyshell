@@ -1,4 +1,4 @@
-import type { ProblemConfig } from "@easyshell/problems"
+import type { ProblemConfig } from "@easyshell/problems/schema"
 
 const config: ProblemConfig = {
   id: 1,

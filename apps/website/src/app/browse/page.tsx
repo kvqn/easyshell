@@ -1,4 +1,4 @@
-import { getProblems, getPublicProblemInfo } from "@easyshell/problems"
+import { getProblems, getPublicProblemInfo } from "@/lib/server/problems"
 
 import Link from "next/link"
 

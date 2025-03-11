@@ -1,4 +1,4 @@
-import type { FsType } from "@easyshell/problems"
+import type { FsType } from "@easyshell/problems/schema"
 
 import { $, ExecaError } from "execa"
 import { readdir } from "fs/promises"

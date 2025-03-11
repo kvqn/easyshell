@@ -1,11 +1,10 @@
-import { getPublicTestcaseInfo } from "@easyshell/problems"
-
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { ensureAuth } from "@/lib/server/auth"
+import { getPublicTestcaseInfo } from "@/lib/server/problems"
 import { getUserSubmissions } from "@/lib/server/queries"
 
 import { Problem } from "./problem"

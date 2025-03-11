@@ -1,5 +1,4 @@
-import { getProblemBody } from "@easyshell/problems"
-
+import { getProblemBody } from "@/lib/server/problems"
 import { customComponents } from "@/mdx-components"
 
 import { MDXRemote } from "next-mdx-remote-client/rsc"
