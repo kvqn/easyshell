@@ -18,7 +18,6 @@ services:
       APP: website
       DATABASE_URL: postgres://postgres:password@easyshell-dev-postgres:5432/easyshell
       CONTAINER_MANAGER_URL: http://easyshell-dev-container-manager:4000
-      PROBLEMS_DIR: /app/problems
       NEXTAUTH_URL: http://localhost:3000
       # Secrets
       NEXTAUTH_SECRET:

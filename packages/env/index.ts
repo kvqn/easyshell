@@ -7,7 +7,6 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
 
-    PROBLEMS_DIR: z.string(),
     APP: z.enum(["website", "queue-processor", "script"]), // assert env.APP for correct types
 
     ...(process.env.APP === "queue-processor"
