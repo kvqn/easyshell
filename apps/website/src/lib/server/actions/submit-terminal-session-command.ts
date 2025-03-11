@@ -1,6 +1,6 @@
 "use server"
 
-import { db } from "@easyshell/db"
+import { db } from "@/db"
 import { terminalSessions } from "@easyshell/db/schema"
 
 import { ensureAuth } from "@/lib/server/auth"

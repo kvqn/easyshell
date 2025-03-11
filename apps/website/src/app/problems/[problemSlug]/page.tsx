@@ -18,12 +18,12 @@ export async function generateMetadata({
   }
 }
 
-export async function generateStaticParams() {
-  const problems = await getProblems()
-  return problems.map((problem) => ({
-    problemSlug: problem,
-  }))
-}
+// export async function generateStaticParams() {
+//   const problems = await getProblems()
+//   return problems.map((problem) => ({
+//     problemSlug: problem,
+//   }))
+// }
 
 export default async function Page({
   params,

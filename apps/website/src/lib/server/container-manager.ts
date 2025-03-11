@@ -1,5 +1,4 @@
-import { env } from "@easyshell/env"
-
+import { env } from "@/env"
 import { STATUS_INTERNAL_SERVER_ERROR, STATUS_LOCKED } from "@/lib/utils"
 
 import { z } from "zod"

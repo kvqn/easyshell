@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { getServerUser } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
@@ -54,7 +54,7 @@ function Options() {
 }
 
 async function User() {
-  const user = await getServerUser()
+  const user = (await auth())?.user
   if (user)
     return (
       <div className="flex w-full flex-col">

@@ -195,7 +195,7 @@ function Diff({ expected, actual }: { expected: string; actual: string }) {
         oldValue={expected}
         newValue={actual}
         hideLineNumbers={true}
-        hideMarkers={true}
+        // hideMarkers={true}
         styles={{
           variables: {
             light: {

@@ -1,8 +1,11 @@
-import { db } from "@easyshell/db"
 import { images } from "@easyshell/db/schema"
+
+import { db } from "@/db"
 
 import { decode } from "base64-arraybuffer"
 import { eq } from "drizzle-orm"
+
+export const runtime = "edge"
 
 export async function GET(
   _request: Request,

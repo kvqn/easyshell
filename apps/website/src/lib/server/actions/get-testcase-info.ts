@@ -1,6 +1,6 @@
 "use server"
 
-import { db } from "@easyshell/db"
+import { db } from "@/db"
 import { submissionTestcases, submissions } from "@easyshell/db/schema"
 
 import { getProblemInfo, getProblemSlugFromId } from "@/lib/server/problems"

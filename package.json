@@ -27,11 +27,11 @@
     "problems:test": "SKIP_ENV_VALIDATION=1 APP=queue-processor WORKING_DIR_HOST=${PWD}/.easyshell WORKING_DIR_DOCKER=${PWD}/.easyshell bun ./scripts/problems-test.ts",
     "problems:new": "APP=script bun ./scripts/problems-new.ts",
     "dev:queue-processor": "bun ./apps/queue-processor/index.ts",
-    "dev:website": "cd apps/website && APP=website bunx next dev",
-    "lint:tsc": "bunx tsc --noEmit",
-    "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 bunx next lint",
-    "start:queue-processor": "cd apps/queue-processor && APP=queue-processor bun start",
-    "start:website": "cd apps/website && APP=website bun start",
-    "build:website": "cd apps/website && SKIP_ENV_VALIDATION=1 bun run build"
+    "dev:website": "cd apps/website && APP=website next dev",
+    "lint:tsc": "npx tsc --noEmit",
+    "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 next lint",
+    "start:queue-processor": "cd apps/queue-processor && APP=queue-processor npm run start",
+    "start:website": "cd apps/website && APP=website npm run start",
+    "build:website": "cd apps/website && SKIP_ENV_VALIDATION=1 npm run build"
   }
 }

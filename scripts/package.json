@@ -6,6 +6,9 @@
   "module": "nodenext",
   "target": "es2022",
   "dependencies": {
+    "@easyshell/utils": "0.1.0",
+    "@easyshell/queue-processor": "0.1.0",
+    "execa": "^9.5.2",
     "arg": "^5.0.2"
   },
   "devDependencies": {

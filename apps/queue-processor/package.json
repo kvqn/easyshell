@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@easyshell/utils": "workspace:*",
-    "@easyshell/problems": "workspace:*",
-    "@easyshell/env": "workspace:*"
+    "@easyshell/utils": "0.1.0",
+    "@easyshell/problems": "0.1.0",
+    "execa": "^9.5.2",
+    "@easyshell/env": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.17.16"

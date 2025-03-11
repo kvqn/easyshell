@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@easyshell/env": "workspace:*",
+    "@easyshell/env": "0.1.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

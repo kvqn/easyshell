@@ -1,4 +1,4 @@
-import { db } from "@easyshell/db"
+import { db } from "@/db"
 import {
   accounts,
   bookmarks,

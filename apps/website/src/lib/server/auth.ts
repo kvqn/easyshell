@@ -1,19 +1,17 @@
-import { db } from "@easyshell/db"
 import {
   accounts,
   sessions,
   users,
   verificationTokens,
 } from "@easyshell/db/schema"
-import { env } from "@easyshell/env"
+
+import { db } from "@/db"
+import { env } from "@/env"
 
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { count, eq } from "drizzle-orm"
-import {
-  type DefaultSession,
-  type NextAuthOptions,
-  getServerSession,
-} from "next-auth"
+import { type DefaultSession } from "next-auth"
+import NextAuth from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import DiscordProvider from "next-auth/providers/discord"
 import GithubProvider from "next-auth/providers/github"
@@ -46,7 +44,8 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
-export const authOptions: NextAuthOptions = {
+// export const authOptions: NextAuthOptions = {
+export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -88,25 +87,19 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-}
+})
 
 /**
  * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
  *
  * @see https://next-auth.js.org/configuration/nextjs
  */
-export const getServerAuthSession = () => getServerSession(authOptions)
-
-export async function getServerUser() {
-  const session = await getServerAuthSession()
-  return session?.user
-}
 
 export async function ensureAuth() {
-  const _user = await getServerUser()
-  if (!_user) redirect("/login")
+  const session = await auth()
+  if (!session) redirect("/login")
   const user = (
-    await db.select().from(users).where(eq(users.id, _user.id)).limit(1)
+    await db.select().from(users).where(eq(users.id, session.user.id)).limit(1)
   )[0]
   if (!user) redirect("/login")
   if (!user.name) {

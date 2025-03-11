@@ -1,15 +1,12 @@
 "use server"
 
-import { db } from "@easyshell/db"
 import { images, users } from "@easyshell/db/schema"
 
+import { db } from "@/db"
 import { ensureAuth } from "@/lib/server/auth"
-import { neverThrow } from "@/lib/utils"
 
 import { encode } from "base64-arraybuffer"
-import { randomUUID } from "crypto"
-import { eq } from "drizzle-orm"
-import sharp from "sharp"
+import { count, eq } from "drizzle-orm"
 
 export async function setUserImage(file: File): Promise<{
   success: boolean
@@ -33,24 +30,16 @@ export async function setUserImage(file: File): Promise<{
 
     const { id: userId } = await ensureAuth()
 
-    const { data: processedImageBlob, error: processingError } =
-      await neverThrow(
-        sharp(await file.arrayBuffer())
-          .resize(400, 400)
-          .toFormat("jpeg")
-          .toBuffer(),
-      )
+    const imageBlob = await file.arrayBuffer()
+    const extension = file.name.split(".").pop() ?? "jpg"
 
-    if (processingError)
-      return {
-        success: false,
-        message: "Could not process the image.",
-      }
-
-    const base64 = encode(processedImageBlob.buffer as ArrayBuffer)
-    const name = `${randomUUID()}.jpg`
+    const base64 = encode(imageBlob)
 
     await db.transaction(async (tx) => {
+      const imageCount = (
+        await tx.select({ imageCount: count() }).from(images)
+      )[0]!.imageCount
+      const name = `${imageCount + 1}.${extension}`
       await tx.insert(images).values({
         name,
         base64,
