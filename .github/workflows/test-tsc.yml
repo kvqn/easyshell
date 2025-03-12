@@ -26,10 +26,13 @@ jobs:
     environment: linting
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun i
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm i
         name: Install dependencies
-      - run: bun lint:tsc
+      - run: npm problems:build-pkg
+      - run: npm run lint:tsc
         name: Check TypeScript types
-      - run: bun lint:next
+      - run: npm run lint:next
         name: Lint Next.js files

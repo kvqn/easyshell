@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  deploy-vps:
     environment: deployment
     runs-on: ubuntu-latest
     steps:
@@ -26,3 +26,18 @@ jobs:
         run: ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
       - name: SSH into server
         run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './scripts/update-easyshell-prod.sh'
+  deploy-cf:
+    environment: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm install
+      - run: npm run problems:build-pkg
+      - run: npm run deploy
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
