@@ -10,6 +10,8 @@ on:
       - "**/*.tsx"
       - "**/*.jsx"
       - "**/*.cjs"
+      - "**/*.ejs"
+      - "**/*.mjs"
       - "**/*.json"
   pull_request:
     paths:
@@ -18,6 +20,8 @@ on:
       - "**/*.tsx"
       - "**/*.jsx"
       - "**/*.cjs"
+      - "**/*.ejs"
+      - "**/*.mjs"
       - "**/*.json"
 
 jobs:
