@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 22.14.0
       - run: npm i
-      - run: bunx prettier --check .
+      - run: npx prettier --check .
   gofmt:
     runs-on: ubuntu-latest
     steps:

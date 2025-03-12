@@ -37,6 +37,7 @@ jobs:
       - run: npm install
       - run: npm run problems:build-pkg
       - run: npm run deploy
+        working-directory: ./apps/website
         env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
