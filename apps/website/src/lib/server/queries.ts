@@ -1,4 +1,3 @@
-import { db } from "@/db"
 import {
   accounts,
   bookmarks,
@@ -9,6 +8,7 @@ import {
   terminalSessions,
 } from "@easyshell/db/schema"
 
+import { db } from "@/db"
 import { containerManagerIsRunning } from "@/lib/server/container-manager"
 import { getProblemSlugFromId } from "@/lib/server/problems"
 

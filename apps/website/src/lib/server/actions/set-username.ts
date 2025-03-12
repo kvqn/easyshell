@@ -1,8 +1,8 @@
 "use server"
 
-import { db } from "@/db"
 import { users } from "@easyshell/db/schema"
 
+import { db } from "@/db"
 import { ensureAuth } from "@/lib/server/auth"
 import { checkValidUsername } from "@/lib/utils"
 

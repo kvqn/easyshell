@@ -1,8 +1,8 @@
 "use server"
 
-import { db } from "@/db"
 import { submissionTestcaseQueue, submissions } from "@easyshell/db/schema"
 
+import { db } from "@/db"
 import { ensureAuth } from "@/lib/server/auth"
 import { getProblemInfo, getProblemSlugFromId } from "@/lib/server/problems"
 
