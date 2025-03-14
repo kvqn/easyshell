@@ -13,7 +13,7 @@ async function baseAsserts(
 
   try {
     await assertDirExists(PROBLEM_DIR)
-    await assertFileExists(`${PROBLEM_DIR}/page.mdx`)
+    await assertFileExists(`${PROBLEM_DIR}/page.md`)
     await assertFileExists(`${PROBLEM_DIR}/config.ts`)
   } catch (error) {
     if (error instanceof Error) return [false, error.message]
