@@ -46,7 +46,7 @@ async function _problemConfig(problem: string) {
 }
 
 async function _getProblemBody(slug: string): Promise<string> {
-  const path = `${PROBLEMS_DIR}/${slug}/page.mdx`
+  const path = `${PROBLEMS_DIR}/${slug}/page.md`
   return await readFile(path, { encoding: "utf8" })
 }
 
@@ -54,7 +54,7 @@ async function _getProblemHintBody(
   slug: string,
   hint: number,
 ): Promise<string> {
-  const path = `${PROBLEMS_DIR}/${slug}/hints/${hint}.mdx`
+  const path = `${PROBLEMS_DIR}/${slug}/hints/${hint}.md`
   return await readFile(path, { encoding: "utf8" })
 }
 

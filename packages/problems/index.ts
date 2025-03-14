@@ -86,7 +86,7 @@ export async function getPublicTestcaseInfo(slug: string) {
 }
 
 export async function getProblemBody(slug: string): Promise<string> {
-  const path = `${PROBLEMS_DIR}/${slug}/page.mdx`
+  const path = `${PROBLEMS_DIR}/${slug}/page.md`
   return await readFile(path, { encoding: "utf8" })
 }
 
@@ -94,7 +94,7 @@ export async function getProblemHintBody(
   slug: string,
   hint: number,
 ): Promise<string> {
-  const path = `${PROBLEMS_DIR}/${slug}/hints/${hint}.mdx`
+  const path = `${PROBLEMS_DIR}/${slug}/hints/${hint}.md`
   return await readFile(path, { encoding: "utf8" })
 }
 
