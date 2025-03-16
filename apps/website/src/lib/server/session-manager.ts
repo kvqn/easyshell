@@ -30,8 +30,8 @@ export async function sessionManagerExec({
       status: "error"
       type:
         | "took_too_long"
-        | "container_not_running"
-        | "container_error"
+        | "session_not_running"
+        | "session_error"
         | "critical_server_error"
       message: string
     }
@@ -40,13 +40,13 @@ export async function sessionManagerExec({
   if (!isSessionRunning)
     return {
       status: "error",
-      type: "container_not_running",
-      message: "The container is not running",
+      type: "session_not_running",
+      message: "The session is not running",
     }
 
   let resp: Response
   try {
-    resp = await fetch(`${env.CONTAINER_MANAGER_URL}/exec`, {
+    resp = await fetch(`${env.SESSION_MANAGER_URL}/exec`, {
       method: "POST",
       body: JSON.stringify({
         container_name: containerName,
@@ -65,7 +65,7 @@ export async function sessionManagerExec({
       return {
         status: "error",
         type: "critical_server_error",
-        message: "Request Failed (container manager might be down)",
+        message: "Request Failed (session manager might be down)",
       }
 
     return {
@@ -82,22 +82,22 @@ export async function sessionManagerExec({
     return {
       status: "error",
       type: "critical_server_error",
-      message: "Failed to parse response from container manager",
+      message: "Failed to parse response from session manager",
     }
   }
 
   if (resp.status === STATUS_LOCKED)
     return {
       status: "error",
-      type: "container_error",
-      message: "The container is locked because it is running another command",
+      type: "session_error",
+      message: "The session is locked because it is running another command",
     }
 
   if (resp.status === STATUS_INTERNAL_SERVER_ERROR)
     return {
       status: "error",
-      type: "container_error",
-      message: "The container encountered an error",
+      type: "session_error",
+      message: "The session encountered an error",
     }
 
   const parsing_result = SessionManagerExecResponseSchema.safeParse(json)
@@ -106,7 +106,7 @@ export async function sessionManagerExec({
     return {
       status: "error",
       type: "critical_server_error",
-      message: "Failed to parse response from container manager",
+      message: "Failed to parse response from session manager",
     }
 
   const data = parsing_result.data
@@ -123,7 +123,7 @@ const SessionManagerIsRunningResponseSchema = z.object({
 })
 
 export async function sessionManagerIsRunning(containerName: string) {
-  const resp = await fetch(`${env.CONTAINER_MANAGER_URL}/is-running`, {
+  const resp = await fetch(`${env.SESSION_MANAGER_URL}/is-running`, {
     method: "POST",
     body: JSON.stringify({
       container_name: containerName,
@@ -142,7 +142,7 @@ export async function sessionManagerCreate(args: {
   container_name: string
   image: string
 }) {
-  const resp = await fetch(`${env.CONTAINER_MANAGER_URL}/create`, {
+  const resp = await fetch(`${env.SESSION_MANAGER_URL}/create`, {
     method: "POST",
     body: JSON.stringify(args),
   })
@@ -152,7 +152,7 @@ export async function sessionManagerCreate(args: {
 }
 
 export async function sessionManagerKill(containerName: string) {
-  const resp = await fetch(`${env.CONTAINER_MANAGER_URL}/kill`, {
+  const resp = await fetch(`${env.SESSION_MANAGER_URL}/kill`, {
     method: "POST",
     body: JSON.stringify({
       container_name: containerName,
