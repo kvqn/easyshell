@@ -10,7 +10,8 @@ import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
-const WORKING_DIR = `${PROJECT_ROOT}/.easyshell`
+const WORKING_DIR = `/tmp/easyshell/build`
+await mkdir(WORKING_DIR, { recursive: true })
 
 await rm(WORKING_DIR, { recursive: true, force: true })
 
