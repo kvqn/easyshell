@@ -5,7 +5,7 @@ import {
   insertTerminalSession,
 } from "@/lib/server/queries"
 
-import { containerManagerCreate } from "./container-manager"
+import { sessionManagerCreate } from "./session-manager"
 
 export async function runTerminalSession({
   problemId,
@@ -19,7 +19,7 @@ export async function runTerminalSession({
   const problemSlug = await getProblemSlugFromId(parseInt(problemId))
   if (!problemSlug) throw new Error("Problem not found")
 
-  await containerManagerCreate({
+  await sessionManagerCreate({
     image: `easyshell-${problemSlug}-${testcaseId}`,
     container_name: `easyshell-${problemSlug}-${testcaseId}-session-${sessionId}`,
   })

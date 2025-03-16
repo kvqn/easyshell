@@ -4,15 +4,15 @@ on:
     branches:
       - main
     paths:
-      - apps/container-manager/**
+      - apps/session-manager/**
       - apps/entrypoint/**
   pull_request:
     paths:
-      - apps/container-manager/**
+      - apps/session-manager/**
       - apps/entrypoint/**
 
 jobs:
-  container-manager:
+  session-manager:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +23,7 @@ jobs:
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.64.2
-          working-directory: apps/container-manager
+          working-directory: apps/session-manager
   entrypoint:
     runs-on: ubuntu-latest
     steps:

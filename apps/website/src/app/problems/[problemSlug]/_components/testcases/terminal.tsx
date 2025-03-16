@@ -76,11 +76,11 @@ export function TestcaseTerminal({
         toast.error("Aborted", {
           description: submissionResponse.message,
         })
-      else if (submissionResponse.type === "container_not_running")
+      else if (submissionResponse.type === "session_not_running")
         toast.error("Failed", {
           description: submissionResponse.message,
         })
-      else if (submissionResponse.type === "container_error")
+      else if (submissionResponse.type === "session_error")
         toast.error("Failed", {
           description: submissionResponse.message,
         })

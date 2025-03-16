@@ -31,7 +31,7 @@ export const env = createEnv({
           GOOGLE_CLIENT_ID: z.string(),
           GOOGLE_CLIENT_SECRET: z.string(),
 
-          CONTAINER_MANAGER_URL: z.string().url(),
+          SESSION_MANAGER_URL: z.string().url(),
         }
       : {}),
   },

@@ -3,11 +3,11 @@
 package exec
 
 import (
-	"container-manager/utils"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
+	"session-manager/utils"
 	"strings"
 )
 
