@@ -12,8 +12,6 @@ export const env = createEnv({
     ...(process.env.APP === "queue-processor"
       ? {
           DATABASE_URL: z.string().url(),
-          WORKING_DIR_DOCKER: z.string(),
-          WORKING_DIR_HOST: z.string(),
         }
       : {}),
 

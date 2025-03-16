@@ -1,4 +1,3 @@
-import { env } from "@easyshell/env"
 import { getProblemInfo } from "@easyshell/problems"
 import { unzip } from "@easyshell/utils"
 
@@ -8,8 +7,10 @@ import { mkdir } from "fs/promises"
 import { readFile } from "fs/promises"
 import { z } from "zod"
 
-await mkdir(`${env.WORKING_DIR_DOCKER}/inputs`, { recursive: true })
-await mkdir(`${env.WORKING_DIR_DOCKER}/outputs`, { recursive: true })
+export const WORKING_DIR = "/tmp/easyshell/queue-processor"
+
+await mkdir(`${WORKING_DIR}/inputs`, { recursive: true })
+await mkdir(`${WORKING_DIR}/outputs`, { recursive: true })
 
 const OutputJsonSchema = z.object({
   stdout: z.string(),
@@ -36,8 +37,8 @@ export async function runSubmissionAndGetOutput({
   const inputFileName = `${containerName}.sh`
   const outputFileName = `${containerName}.json`
 
-  const inputFilePath = `${env.WORKING_DIR_DOCKER}/inputs/${containerName}.sh`
-  const outputFilePath = `${env.WORKING_DIR_DOCKER}/outputs/${containerName}.json`
+  const inputFilePath = `${WORKING_DIR}/inputs/${containerName}.sh`
+  const outputFilePath = `${WORKING_DIR}/outputs/${containerName}.json`
 
   const image = `easyshell-${problemSlug}-${testcaseId}`
 
@@ -46,8 +47,8 @@ export async function runSubmissionAndGetOutput({
 
   const startedAt = new Date()
 
-  const inputFilePathForDocker = `${env.WORKING_DIR_HOST}/inputs/${inputFileName}`
-  const outputFilePathForDocker = `${env.WORKING_DIR_HOST}/outputs/${outputFileName}`
+  const inputFilePathForDocker = `${WORKING_DIR}/inputs/${inputFileName}`
+  const outputFilePathForDocker = `${WORKING_DIR}/outputs/${outputFileName}`
 
   await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 ${image} -mode submission`
   const finishedAt = new Date()
