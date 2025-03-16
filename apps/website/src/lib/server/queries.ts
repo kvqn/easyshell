@@ -9,8 +9,8 @@ import {
 } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { containerManagerIsRunning } from "@/lib/server/container-manager"
 import { getProblemSlugFromId } from "@/lib/server/problems"
+import { sessionManagerIsRunning } from "@/lib/server/session-manager"
 
 import { and, asc, desc, eq, isNull } from "drizzle-orm"
 
@@ -41,7 +41,7 @@ export async function getActiveTerminalSession({
   if (!session[0]) return null
 
   const container_name = `easyshell-${problemSlug}-${testcaseId}-session-${session[0].id}`
-  const isRunning = await containerManagerIsRunning(container_name)
+  const isRunning = await sessionManagerIsRunning(container_name)
 
   if (isRunning) return session[0]
   await db

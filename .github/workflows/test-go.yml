@@ -4,11 +4,11 @@ on:
     branches:
       - main
     paths:
-      - apps/container-manager/**
+      - apps/session-manager/**
       - apps/entrypoint/**
   pull_request:
     paths:
-      - apps/container-manager/**
+      - apps/session-manager/**
       - apps/entrypoint/**
 
 jobs:
