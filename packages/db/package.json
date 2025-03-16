@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.4",
-    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/pg-worker": "^6.5.0",
     "drizzle-orm": "^0.39.1"
   },
   "devDependencies": {
