@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os/exec"
+	"session-manager/utils"
 )
 
 type request struct {
@@ -25,9 +26,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var command string
-	command = fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1", req.ContainerName)
-	command += fmt.Sprintf(" %s -mode session", req.Image)
+	command := fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1 --pull=always %s/%s -mode session", req.ContainerName, utils.DockerRegistry, req.Image)
 
 	fmt.Println("Command: ", command)
 

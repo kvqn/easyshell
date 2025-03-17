@@ -6,6 +6,7 @@
   "dependencies": {
     "@easyshell/utils": "0.1.0",
     "@easyshell/problems": "0.1.0",
+    "@easyshell/env": "0.1.0",
     "execa": "^9.5.2",
     "@easyshell/env": "0.1.0"
   },
