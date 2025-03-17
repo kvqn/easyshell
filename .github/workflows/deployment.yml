@@ -29,8 +29,8 @@ jobs:
     steps:
       - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - uses: actions/checkout@v4
-      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/session-manager:latest -f ./apps/session-manager/Dockerfile ./apps/session-manager
-      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/easyshell/session-manager:latest
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/session-manager:latest -f ./apps/session-manager/Dockerfile ./apps/session-manager
+      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/session-manager:latest
 
   registry-push-queue-processor:
     environment: deployment
@@ -38,8 +38,8 @@ jobs:
     steps:
       - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - uses: actions/checkout@v4
-      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/queue-processor:latest -f ./apps/queue-processor/Dockerfile .
-      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/easyshell/queue-processor:latest
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest -f ./apps/queue-processor/Dockerfile .
+      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest
 
   # ============================================================================
 
