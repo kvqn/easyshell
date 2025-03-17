@@ -23,12 +23,12 @@ await rm(WORKING_DIR, { recursive: true, force: true })
 
 async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
   console.log("building", tag)
-  await $`docker build -t ${DOCKER_REGISTRY}/${tag} ${dir}`
+  await $`docker build -t ${tag} ${dir}`
 }
 
 async function dockerPush(tag: string) {
   console.log("pushing", tag)
-  await $`docker push ${DOCKER_REGISTRY}/${tag}`
+  await $`docker push ${tag}`
 }
 
 async function init() {
@@ -150,7 +150,7 @@ ENTRYPOINT ["/entrypoint"]
     )
 
     await dockerBuild({
-      tag: tag,
+      tag: `${DOCKER_REGISTRY}/${tag}`,
       dir: IMAGE_DIR,
     })
   }
@@ -159,7 +159,7 @@ ENTRYPOINT ["/entrypoint"]
 async function pushProblem(problem: string) {
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
-    const tag = `easyshell-${problem}-${testcase.id}`
+    const tag = `${DOCKER_REGISTRY}/easyshell-${problem}-${testcase.id}`
     await dockerPush(tag)
   }
 }
