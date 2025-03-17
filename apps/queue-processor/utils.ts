@@ -1,3 +1,4 @@
+import { env } from "@easyshell/env"
 import { getProblemInfo } from "@easyshell/problems"
 import { unzip } from "@easyshell/utils"
 
@@ -50,7 +51,7 @@ export async function runSubmissionAndGetOutput({
   const inputFilePathForDocker = `${WORKING_DIR}/inputs/${inputFileName}`
   const outputFilePathForDocker = `${WORKING_DIR}/outputs/${outputFileName}`
 
-  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 ${image} -mode submission`
+  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 --pull=always ${env.DOCKER_REGISTRY}/${image} -mode submission`
   const finishedAt = new Date()
 
   const output = OutputJsonSchema.parse(

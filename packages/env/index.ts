@@ -12,6 +12,7 @@ export const env = createEnv({
     ...(process.env.APP === "queue-processor"
       ? {
           DATABASE_URL: z.string().url(),
+          DOCKER_REGISTRY: z.string(),
         }
       : {}),
 

@@ -10,14 +10,25 @@ import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
+if (process.env.DOCKER_CONTAINER_REGISTRY === undefined) {
+  console.error("DOCKER_CONTAINER_REGISTRY must be set")
+  process.exit(1)
+}
+const DOCKER_CONTAINER_REGISTRY = process.env.DOCKER_CONTAINER_REGISTRY
+
 const WORKING_DIR = `/tmp/easyshell/build`
 await mkdir(WORKING_DIR, { recursive: true })
 
 await rm(WORKING_DIR, { recursive: true, force: true })
 
-function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
+async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
   console.log("building", tag)
-  return $`docker build -t ${tag} ${dir}`
+  await $`docker build -t ${DOCKER_CONTAINER_REGISTRY}/${tag} ${dir}`
+}
+
+async function dockerPush(tag: string) {
+  console.log("pushing", tag)
+  await $`docker push ${DOCKER_CONTAINER_REGISTRY}/${tag}`
 }
 
 async function init() {
@@ -66,7 +77,7 @@ async function _existsAndIsDir(path: string) {
   }
 }
 
-async function handleProblem(problem: string) {
+async function buildProblem(problem: string) {
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
     const tag = `easyshell-${problem}-${testcase.id}`
@@ -145,6 +156,14 @@ ENTRYPOINT ["/entrypoint"]
   }
 }
 
+async function pushProblem(problem: string) {
+  const info = await getProblemInfo(problem)
+  for (const testcase of info.testcases) {
+    const tag = `easyshell-${problem}-${testcase.id}`
+    await dockerPush(tag)
+  }
+}
+
 async function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
@@ -162,14 +181,16 @@ async function main() {
   const problems = await getProblems()
   if (arg === "all") {
     await init()
-    for (const problem of problems) await handleProblem(problem)
+    for (const problem of problems) await buildProblem(problem)
+    for (const problem of problems) await pushProblem(problem)
   } else {
     if (!problems.includes(arg)) {
       console.error(`Problem not found: ${arg}`)
       process.exit(1)
     }
     await init()
-    await handleProblem(arg)
+    await buildProblem(arg)
+    await pushProblem(arg)
   }
 }
 
