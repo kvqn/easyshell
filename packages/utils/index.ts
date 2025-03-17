@@ -85,12 +85,9 @@ let _PROJECT_ROOT = process.env.PROJECT_ROOT
 
 if (!_PROJECT_ROOT) {
   try {
-    _PROJECT_ROOT = (await $`git rev-parse --show-toplevel`).stdout
+    _PROJECT_ROOT = $.sync`git rev-parse --show-toplevel`.stdout
   } catch (e) {
-    if (e instanceof ExecaError) {
-      throw Error("Not a git repository")
-    }
-    throw Error("Unknown error")
+    throw Error("Not a git repository")
   }
 }
 

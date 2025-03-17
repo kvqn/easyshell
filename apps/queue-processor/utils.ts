@@ -3,15 +3,19 @@ import { getProblemInfo } from "@easyshell/problems"
 import { unzip } from "@easyshell/utils"
 
 import { $ } from "execa"
+import { mkdir } from "fs"
 import { writeFile } from "fs/promises"
-import { mkdir } from "fs/promises"
 import { readFile } from "fs/promises"
 import { z } from "zod"
 
 export const WORKING_DIR = "/tmp/easyshell/queue-processor"
 
-await mkdir(`${WORKING_DIR}/inputs`, { recursive: true })
-await mkdir(`${WORKING_DIR}/outputs`, { recursive: true })
+mkdir(`${WORKING_DIR}/inputs`, { recursive: true }, (err) => {
+  if (err) throw err
+})
+mkdir(`${WORKING_DIR}/outputs`, { recursive: true }, (err) => {
+  if (err) throw err
+})
 
 const OutputJsonSchema = z.object({
   stdout: z.string(),
