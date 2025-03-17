@@ -10,11 +10,11 @@ import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
-if (process.env.DOCKER_CONTAINER_REGISTRY === undefined) {
-  console.error("DOCKER_CONTAINER_REGISTRY must be set")
+if (process.env.DOCKER_REGISTRY === undefined) {
+  console.error("DOCKER_REGISTRY must be set")
   process.exit(1)
 }
-const DOCKER_CONTAINER_REGISTRY = process.env.DOCKER_CONTAINER_REGISTRY
+const DOCKER_REGISTRY = process.env.DOCKER_REGISTRY
 
 const WORKING_DIR = `/tmp/easyshell/build`
 await mkdir(WORKING_DIR, { recursive: true })
@@ -23,12 +23,12 @@ await rm(WORKING_DIR, { recursive: true, force: true })
 
 async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
   console.log("building", tag)
-  await $`docker build -t ${DOCKER_CONTAINER_REGISTRY}/${tag} ${dir}`
+  await $`docker build -t ${DOCKER_REGISTRY}/${tag} ${dir}`
 }
 
 async function dockerPush(tag: string) {
   console.log("pushing", tag)
-  await $`docker push ${DOCKER_CONTAINER_REGISTRY}/${tag}`
+  await $`docker push ${DOCKER_REGISTRY}/${tag}`
 }
 
 async function init() {
