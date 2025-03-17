@@ -18,8 +18,6 @@ jobs:
       - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - uses: oven-sh/setup-bun@v2
       - uses: actions/checkout@v4
-        with:
-          node-version: 22.14.0
       - run: bun i
       - run: bun problems:build
 
@@ -29,7 +27,7 @@ jobs:
     steps:
       - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - uses: actions/checkout@v4
-      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/session-manager:latest -f ./apps/session-manager/Dockerfile
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/session-manager:latest -f ./apps/session-manager/Dockerfile ./apps/session-manager
       - run: docker push ${{ secrets.DOCKER_REGISTRY }}/easyshell/session-manager:latest
 
   registry-push-queue-processor:
@@ -38,7 +36,7 @@ jobs:
     steps:
       - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - uses: actions/checkout@v4
-      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/queue-processor:latest -f ./apps/queue-processor/Dockerfile
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/easyshell/queue-processor:latest -f ./apps/queue-processor/Dockerfile .
       - run: docker push ${{ secrets.DOCKER_REGISTRY }}/easyshell/queue-processor:latest
 
   # ============================================================================
@@ -88,9 +86,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
-      - uses: actions/checkout@v4
         with:
           node-version: 22.14.0
+      - uses: actions/checkout@v4
       - run: npm install
       - run: npm run problems:build-pkg
       - run: npm run deploy

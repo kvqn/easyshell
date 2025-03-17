@@ -4,7 +4,7 @@ RUN apk add docker
 
 WORKDIR /app
 
-COPY ../../ .
+COPY . .
 RUN bun i
 RUN bun problems:build-pkg
 

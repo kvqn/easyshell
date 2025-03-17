@@ -11,7 +11,7 @@ import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
 if (process.env.DOCKER_CONTAINER_REGISTRY === undefined) {
-  console.error("CONTAINER_REGISTRY must be set")
+  console.error("DOCKER_CONTAINER_REGISTRY must be set")
   process.exit(1)
 }
 const DOCKER_CONTAINER_REGISTRY = process.env.DOCKER_CONTAINER_REGISTRY
