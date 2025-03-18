@@ -26,7 +26,7 @@
     "problems:test": "APP=script tsx ./scripts/problems-test.ts",
     "problems:new": "APP=script tsx ./scripts/problems-new.ts",
     "lint:tsc": "npx tsc --noEmit",
-    "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 next lint",
+    "lint:next": "cd apps/website && next lint",
     "format:check": "npx prettier --check . && gofmt -l -s .",
     "format:write": "npx prettier --write . && gofmt -w -s ."
   }

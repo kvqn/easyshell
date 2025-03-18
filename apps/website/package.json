@@ -7,7 +7,7 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev --ip 0.0.0.0",
     "deploy": "npm run pages:build && wrangler pages deploy",
-    "build": "SKIP_ENV_VALIDATION=1 next build",
+    "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
