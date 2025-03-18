@@ -4,13 +4,12 @@
 
 ## Quick Links
 
-- Overview
+- [Overview](#easyshell---overview)
   - [Architecture and Features](#architecture-and-features)
-- Services
-  - [Website](apps/website/README.md)
-  - [Queue Processor](apps/queue-processor/README.md)
-  - [Session Manager](apps/session-manager/README.md)
-  - [Entrypoint](apps/entrypoint/README.md)
+    - [Website](apps/website/README.md)
+    - [Queue Processor](apps/queue-processor/README.md)
+    - [Session Manager](apps/session-manager/README.md)
+    - [Entrypoint](apps/entrypoint/README.md)
 - [Development Guide](#development-guide)
   - [Pre-Requisites](#pre-requisites)
   - [Environment Variables](#environment-variables)
@@ -18,43 +17,46 @@
 
 ## Architecture and Features
 
+### Services
+
 There are a few microservices that work together to make the platform work.
 
 ![architecture.svg](./.github/assets/architecture.svg)
 
-- ### Website
+- #### Website
 
   Frontend for [easyshell.xyz](https://easyshell.xyz). See [Website](apps/website/README.md) for more information.
 
-- ### Session Manager
+- #### Session Manager
 
   Manages the terminal sessions. See [Session Manager](apps/session-manager/README.md) for more information.
 
-- ### Queue Processor
+- #### Queue Processor
 
   Processes the submissions. See [Queue Processor](apps/queue-processor/README.md) for more information.
 
-- ### Entrypoint
+- #### Entrypoint
 
   Entrypoint for the all the docker containers. See [Entrypoint](apps/entrypoint/README.md) for more information.
 
 ---
 
-# Development Guide
+## Development Guide
 
 In this section,
 
 - [Pre-Requisites](#pre-requisites)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
+- [Problems]
 
-## Pre-Requisites
+### Pre-Requisites
 
 - Node (v22.14.0) and NPM (10.9.2) (can be installed using `nvm install 22`. see [nvm](https://github.com/nvm-sh/nvm))
 - Go (1.23.6)
 - Docker
 
-## Environment Variables
+### Environment Variables
 
 The following environment variables might be required
 
@@ -73,52 +75,52 @@ The following environment variables might be required
 - [`GOOGLE_CLIENT_ID`](#google_client_id)
 - [`GOOGLE_CLIENT_SECRET`](#google_client_secret)
 
-### `APP`
+#### `APP`
 
 This is a helper variable that is used to determine which environment variables to load and verify.
 Possible values are - `queue-processor`, `website` and `script`.
 
 This is **required**. However, if you execute scripts in the [package.json](package.json) using `npm run`, you might not need to set this.
 
-### `PROJECT_ROOT`
+#### `PROJECT_ROOT`
 
 In order to run some scripts, the code needs to determine the _project root_ (the root of the git repository). If executing the scripts in the git context, the project root is inferred using `git rev-parse --show-toplevel`. However, if the script is executed outside the git context, the `PROJECT_ROOT` environment variable needs to be set.
 
-### `DOCKER_REGISTRY`
+#### `DOCKER_REGISTRY`
 
 The docker registry to use for pushing images. This is required for pushing images to the registry. If unset, the images will not be pushed.
 
 If you are using a registry, then make sure you are already logged in.
 
-### `DATABASE_URL`
+#### `DATABASE_URL`
 
 The database connection string. Currently set this to a NeonDB instance.
 
-### `SESSION_MANAGER_URL`
+#### `SESSION_MANAGER_URL`
 
 This is the URL of the session manager. For cloudflare deployment, this cannot be a fixed IP address.
 
 This is **required** for running the nextjs application.
 
-### `NEXTAUTH_URL`
+#### `NEXTAUTH_URL`
 
-### `NEXTAUTH_SECRET`
+#### `NEXTAUTH_SECRET`
 
-### `DISCORD_CLIENT_ID`
+#### `DISCORD_CLIENT_ID`
 
-### `DISCORD_CLIENT_SECRET`
+#### `DISCORD_CLIENT_SECRET`
 
-### `GITHUB_CLIENT_ID`
+#### `GITHUB_CLIENT_ID`
 
-### `GITHUB_CLIENT_SECRET`
+#### `GITHUB_CLIENT_SECRET`
 
-### `GOOGLE_CLIENT_ID`
+#### `GOOGLE_CLIENT_ID`
 
-### `GOOGLE_CLIENT_SECRET`
+#### `GOOGLE_CLIENT_SECRET`
 
 These are the [NextAuth](https://authjs.dev) configuration variables. These are **required** for running the nextjs application.
 
-## Scripts
+### Scripts
 
 Many scripts have been defined in the [package.json](package.json).
 This section will go over these scripts and the additional steps or environment variables required for their execution.
@@ -134,23 +136,23 @@ Also see [NextJS Scripts](apps/website/README.md#scripts), [Queue Processor Scri
 - [`problems:build`](#problemsbuild)
 - [`problems:build-pkg`](#problemsbuild-pkg)
 
-### `lint:tsc`
+#### `lint:tsc`
 
 Lint the entire TS/JS codebase using `tsc`.
 
-### `lint:next`
+#### `lint:next`
 
 Lint the NextJS codebase using `next lint`.
 
-### `format:check`
+#### `format:check`
 
 Check formatting for the entire codebase using `prettier` and `gofmt`.
 
-### `format:write`
+#### `format:write`
 
 Format the entire codebase using `prettier` and `gofmt`.
 
-### `problems:new`
+#### `problems:new`
 
 Create a new problem.
 
@@ -159,7 +161,7 @@ Might require the following environment variables.
 - `APP=script`
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
-### `problems:lint`
+#### `problems:lint`
 
 Lint the problem configuration files.
 
@@ -168,7 +170,7 @@ Might require the following environment variables.
 - `APP` - This is required and should be set to `script`. Already set in [package.json](package.json).
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
-### `problems:test`
+#### `problems:test`
 
 Test the problem images using tests defined in the problem configs.
 
@@ -177,7 +179,7 @@ Might require the following environment variables.
 - `APP` - This is required and should be set to `queue-processor`. Already set in [package.json].
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
-### `problems:build`
+#### `problems:build`
 
 Build (and push) the problem images.
 
@@ -187,7 +189,7 @@ Might require the following environment variables.
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 - `DOCKER_REGISTRY` might need to be defined if the images need to be pushed to a registry.
 
-### `problems:build-pkg`
+#### `problems:build-pkg`
 
 NextJs cannot do dynamically import problems from the problems directory when deployed on the edge. A problems cache is generated containing only the information needed by the nextjs application. This command generates that cache.
 
@@ -195,3 +197,45 @@ Might require the following environment variables.
 
 - `APP` - This is required and should be set to `script`. Already set in [package.json](package.json).
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
+
+### Problems
+
+All problems for easyshell are stored in the [problems/](problems) directory. They have a strict structure, which dictates the problem's behaviour and affects its build process.
+
+#### Problem Structure
+
+- [`page.md`](#pagemd)
+- [`hints/`](#hints)
+- [`hints/<hint-id>.md`](#hintshint-idmd)
+- [`testcases/`](#testcases)
+- [`testcases/<testcase-id>/`](#testcasestestcase-id)
+- [`config.ts`](#configts)
+
+##### `page.md`
+
+Explaination of the problem. For consistency, it should contain only two top-level headings - `Problem Statement` and `Instructions`.
+This file is **required**.
+
+##### `hints/`
+
+Folder containing hints for the problem.
+This folder is **optional**.
+
+##### `hints/<hint-id>.md`
+
+Hint for the problem. `<hint-id>` must begin from `1` and can only increase sequentially from there on.
+
+##### `testcases/`
+
+Folder containing testcases for the problem.
+This folder is **required**.
+
+##### `testcases/<testcase-id>/`
+
+Folder containing the files for the testcase. `<testcase-id>` must begin from `1` and can only increase sequentially from there on.
+
+At least one public testcase is required.
+
+##### `config.ts`
+
+This file contains the configuration for the problem. It is **required**.

@@ -14,25 +14,25 @@ The following environment variables are required to run this service. See [Envir
 
 There isn't a script management system for this service. Use the following commands to achieve what you want.
 
-- To format the code, run the following command.
+- Format
 
   ```sh
   gofmt -w .
   ```
 
-- To lint the code, run the following command.
+- Lint
 
   ```sh
   golangci-lint run
   ```
 
-- To build the `session-manager` binary, run the following command.
+- Build `session-manager` binary
 
   ```sh
   go build
   ```
 
-- To run the `session-manager`, run the following command.
+- Run `session-manager`
 
   ```sh
   ./session-manager

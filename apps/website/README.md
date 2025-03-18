@@ -6,6 +6,8 @@ Also Refer - [tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn
 
 The website has no context of `docker` and so it uses other microservices for session and submission management. See [Session Manager](../session-manager/README.md) and [Queue Processor](../queue-processor/README.md) for more information. Also see [Architecture](../../README.md#architecture) for a more high level overview.
 
+Before running the server, you need to first build the problems cache using [`problems:build-pkg`](../../README.md#problemsbuild-pkg) script.
+
 ## Environment Variables
 
 This app Requires the following environment variables. See [Environment Variables](../../README.md#environment-variables) for more information.
@@ -21,7 +23,7 @@ This app Requires the following environment variables. See [Environment Variable
 - `DATABASE_URL`
 - `SESSION_MANAGER_URL`
 
-# Scripts
+## Scripts
 
 These are the nextjs related scripts.
 
