@@ -1,3 +1,4 @@
+import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
 import { PROJECT_ROOT } from "@easyshell/utils"
@@ -138,7 +139,7 @@ const startedAt = new Date()
 
 await RunParallelStuff({
   tasks,
-  parallel_limit: 10,
+  parallel_limit: env.PARALLEL_LIMIT_TEST,
 })
 
 const endedAt = new Date()

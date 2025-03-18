@@ -215,7 +215,10 @@ async function main() {
     "=================================== Building ===================================",
   )
   console.log()
-  await RunParallelStuff({ tasks: build_tasks, parallel_limit: 5 })
+  await RunParallelStuff({
+    tasks: build_tasks,
+    parallel_limit: env.PARALLEL_LIMIT_BUILD,
+  })
   console.log(
     "================================================================================",
   )
@@ -224,7 +227,10 @@ async function main() {
     "=================================== Pushing ====================================",
   )
   console.log()
-  await RunParallelStuff({ tasks: push_tasks, parallel_limit: 5 })
+  await RunParallelStuff({
+    tasks: push_tasks,
+    parallel_limit: env.PARALLEL_LIMIT_PUSH,
+  })
   console.log(
     "================================================================================",
   )

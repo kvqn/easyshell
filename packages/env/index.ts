@@ -38,6 +38,14 @@ export const env = createEnv({
           SESSION_MANAGER_URL: z.string().url(),
         }
       : {}),
+
+    ...(process.env.APP === "script"
+      ? {
+          PARALLEL_LIMIT_BUILD: z.number().default(5),
+          PARALLEL_LIMIT_PUSH: z.number().default(5),
+          PARALLEL_LIMIT_TEST: z.number().default(5),
+        }
+      : {}),
   },
 
   clientPrefix: "NEXT_PUBLIC_",

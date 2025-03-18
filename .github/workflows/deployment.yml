@@ -22,6 +22,8 @@ jobs:
       - run: bun problems:build all
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
+          PARALLEL_LIMIT_BUILD: 4
+          PARALLEL_LIMIT_PUSH: 10
 
   registry-push-session-manager:
     environment: deployment
