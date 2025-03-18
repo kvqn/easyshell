@@ -47,7 +47,7 @@ export async function RunParallelStuff({
         process.stdout.write(`\r${task.name}: ${result}\n`)
       }
       process.stdout.write(
-        `\rProgress [ ${index + 1 - running} / ${tasks.length} ]`,
+        `\rProgress [ ${index - running} / ${tasks.length} ]`,
       )
     }
   }

@@ -23,7 +23,7 @@ async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
 
 async function dockerPush(tag: string) {
   if (env.DOCKER_REGISTRY === "") return
-  await $`docker push ${tag}`
+  await $`docker push ${env.DOCKER_REGISTRY}${tag}`
 }
 
 async function init() {
@@ -163,7 +163,7 @@ async function pushProblemTasks(problem: string): Promise<Array<Task>> {
   const tasks: Array<Task> = []
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
-    const tag = `${env.DOCKER_REGISTRY}easyshell-${problem}-${testcase.id}`
+    const tag = `easyshell-${problem}-${testcase.id}`
     tasks.push({
       name: `push-${tag}`,
       callable: async () => {
