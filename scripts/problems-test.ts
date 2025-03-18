@@ -1,8 +1,13 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
-import { PROJECT_ROOT, sleep } from "@easyshell/utils"
+import { PROJECT_ROOT } from "@easyshell/utils"
 
-import { assertDirExists, assertFileExists } from "./_utils"
+import {
+  RunParallelStuff,
+  Task,
+  assertDirExists,
+  assertFileExists,
+} from "./_utils"
 
 import { randomBytes } from "crypto"
 
@@ -86,7 +91,7 @@ async function runSubmissionTest(
 const args = process.argv.slice(2)
 if (args.length === 0) {
   console.error(
-    "Provide a problem slug to test. Type 'all'to test all problems.",
+    "Provide a problem slug to test. Type 'all' to test all problems.",
   )
   process.exit(1)
 }
@@ -112,34 +117,29 @@ let total = tests.length
 let failed = 0
 let passed = 0
 
-const PARALLEL_LIMIT = 20
-
-let parallel = 0
-let index = 0
-
-async function runTest(test: (typeof tests)[number]) {
-  const [result, message] = await test.callable()
-  if (result) {
-    passed++
-  } else {
-    failed++
-    console.error(`\rFailed Test : ${test.name}\n\t${message}`)
+function testTask(test: (typeof tests)[number]): Task {
+  return {
+    name: test.name,
+    callable: async () => {
+      const [result, message] = await test.callable()
+      if (result) {
+        passed++
+      } else {
+        failed++
+        return `${message}`
+      }
+    },
   }
-  parallel--
 }
 
-const promises: Array<Promise<void>> = []
+const tasks = tests.map(testTask)
 
 const startedAt = new Date()
 
-while (index < total) {
-  while (parallel >= PARALLEL_LIMIT) await sleep(100)
-  parallel++
-  promises.push(runTest(tests[index]!))
-  index++
-}
-
-await Promise.all(promises)
+await RunParallelStuff({
+  tasks,
+  parallel_limit: 10,
+})
 
 const endedAt = new Date()
 

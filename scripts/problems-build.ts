@@ -2,6 +2,7 @@ import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { PROJECT_ROOT } from "@easyshell/utils"
 
+import { RunParallelStuff, Task } from "./_utils"
 import "./problems-lint"
 
 import { $ } from "execa"
@@ -17,16 +18,11 @@ await mkdir(WORKING_DIR, { recursive: true })
 await rm(WORKING_DIR, { recursive: true, force: true })
 
 async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
-  console.log("building", tag)
   await $`docker build -t ${tag} ${dir}`
 }
 
 async function dockerPush(tag: string) {
-  if (env.DOCKER_REGISTRY === "") {
-    console.log("skipping push", tag)
-    return
-  }
-  console.log("pushing", tag)
+  if (env.DOCKER_REGISTRY === "") return
   await $`docker push ${tag}`
 }
 
@@ -76,7 +72,8 @@ async function _existsAndIsDir(path: string) {
   }
 }
 
-async function buildProblem(problem: string) {
+async function buildProblemTasks(problem: string): Promise<Array<Task>> {
+  const tasks: Array<Task> = []
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
     const tag = `easyshell-${problem}-${testcase.id}`
@@ -148,19 +145,35 @@ ENTRYPOINT ["/entrypoint"]
 `,
     )
 
-    await dockerBuild({
-      tag: `${env.DOCKER_REGISTRY}${tag}`,
-      dir: IMAGE_DIR,
+    tasks.push({
+      name: `build-${tag}`,
+      callable: async () => {
+        await dockerBuild({
+          tag: `${env.DOCKER_REGISTRY}${tag}`,
+          dir: IMAGE_DIR,
+        })
+        return "done"
+      },
     })
   }
+  return tasks
 }
 
-async function pushProblem(problem: string) {
+async function pushProblemTasks(problem: string): Promise<Array<Task>> {
+  const tasks: Array<Task> = []
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
     const tag = `${env.DOCKER_REGISTRY}easyshell-${problem}-${testcase.id}`
-    await dockerPush(tag)
+    tasks.push({
+      name: `push-${tag}`,
+      callable: async () => {
+        if (env.DOCKER_REGISTRY === "") return "skipped"
+        await dockerPush(tag)
+        return "done"
+      },
+    })
   }
+  return tasks
 }
 
 async function main() {
@@ -177,20 +190,46 @@ async function main() {
   }
   const arg = args[0]!
 
+  const build_tasks: Array<Task> = []
+  const push_tasks: Array<Task> = []
+
   const problems = await getProblems()
   if (arg === "all") {
     await init()
-    for (const problem of problems) await buildProblem(problem)
-    for (const problem of problems) await pushProblem(problem)
+    for (const problem of problems)
+      build_tasks.push(...(await buildProblemTasks(problem)))
+    for (const problem of problems)
+      push_tasks.push(...(await pushProblemTasks(problem)))
   } else {
     if (!problems.includes(arg)) {
       console.error(`Problem not found: ${arg}`)
       process.exit(1)
     }
     await init()
-    await buildProblem(arg)
-    await pushProblem(arg)
+    build_tasks.push(...(await buildProblemTasks(arg)))
+    push_tasks.push(...(await pushProblemTasks(arg)))
   }
+
+  console.log()
+  console.log(
+    "=================================== Building ===================================",
+  )
+  console.log()
+  await RunParallelStuff({ tasks: build_tasks, parallel_limit: 5 })
+  console.log(
+    "================================================================================",
+  )
+  console.log()
+  console.log(
+    "=================================== Pushing ====================================",
+  )
+  console.log()
+  await RunParallelStuff({ tasks: push_tasks, parallel_limit: 5 })
+  console.log(
+    "================================================================================",
+  )
+  console.log()
+  console.log("All Done!")
 }
 
 await main()
