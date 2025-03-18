@@ -13,7 +13,7 @@
     "@types/node": "^20.17.16"
   },
   "scripts": {
-    "start": "bun run index.ts",
-    "dev": "bun run --watch index.ts"
+    "build": "npx esbuild index.ts --bundle --platform=node --outfile=queue-processor.cjs",
+    "start": "node queue-processor.cjs"
   }
 }
