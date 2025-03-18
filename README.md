@@ -2,29 +2,53 @@
 
 **easyshell** is a platform for trying, learning and mastering shell commands. See it for yourself - [easyshell.xyz](https://easyshell.xyz).
 
-# Architecture and Features
+## Quick Links
+
+- Overview
+  - [Architecture and Features](#architecture-and-features)
+- Services
+  - [Website](apps/website/README.md)
+  - [Queue Processor](apps/queue-processor/README.md)
+  - [Session Manager](apps/session-manager/README.md)
+  - [Entrypoint](apps/entrypoint/README.md)
+- [Development Guide](#development-guide)
+  - [Pre-Requisites](#pre-requisites)
+  - [Environment Variables](#environment-variables)
+  - [Scripts](#scripts)
+
+## Architecture and Features
 
 There are a few microservices that work together to make the platform work.
 
-![./.github/assets/architecture.svg]
+![architecture.svg](./.github/assets/architecture.svg)
 
-## Website
+- ### Website
 
-This is frontend for [easyshell.xyz](https://easyshell.xyz). See [Website](apps/website/README.md) for more information.
+  Frontend for [easyshell.xyz](https://easyshell.xyz). See [Website](apps/website/README.md) for more information.
 
-## Session Manager
+- ### Session Manager
 
-This service manages the terminal sessions. See [Session Manager](apps/session-manager/README.md) for more information.
+  Manages the terminal sessions. See [Session Manager](apps/session-manager/README.md) for more information.
 
-## Queue Processor
+- ### Queue Processor
 
-This service processes the submissions. See [Queue Processor](apps/queue-processor/README.md) for more information.
+  Processes the submissions. See [Queue Processor](apps/queue-processor/README.md) for more information.
 
-## Entrypoint
+- ### Entrypoint
 
-This is the entrypoint for the all the docker containers. See [Entrypoint](apps/entrypoint/README.md) for more information.
+  Entrypoint for the all the docker containers. See [Entrypoint](apps/entrypoint/README.md) for more information.
 
-# Pre-Requisites
+---
+
+# Development Guide
+
+In this section,
+
+- [Pre-Requisites](#pre-requisites)
+- [Environment Variables](#environment-variables)
+- [Scripts](#scripts)
+
+## Pre-Requisites
 
 - Node (v22.14.0) and NPM (10.9.2) (can be installed using `nvm install 22`. see [nvm](https://github.com/nvm-sh/nvm))
 - Go (1.23.6)
@@ -94,14 +118,12 @@ This is **required** for running the nextjs application.
 
 These are the [NextAuth](https://authjs.dev) configuration variables. These are **required** for running the nextjs application.
 
-# Scripts
+## Scripts
 
 Many scripts have been defined in the [package.json](package.json).
 This section will go over these scripts and the additional steps or environment variables required for their execution.
 
 Also see [NextJS Scripts](apps/website/README.md#scripts), [Queue Processor Scripts](apps/queue-processor/README.md#scripts) and [Script Scripts](apps/script/README.md#scripts) for more information.
-
-## Root Scripts
 
 - [`lint:tsc`](#linttsc)
 - [`lint:next`](#lintnext)
