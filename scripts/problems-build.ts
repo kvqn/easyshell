@@ -1,3 +1,4 @@
+import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { PROJECT_ROOT } from "@easyshell/utils"
 
@@ -16,7 +17,7 @@ if (process.env.DOCKER_REGISTRY === undefined) {
 }
 const DOCKER_REGISTRY = process.env.DOCKER_REGISTRY
 
-const WORKING_DIR = `/tmp/easyshell/build`
+const WORKING_DIR = `${env.WORKING_DIR}/build`
 await mkdir(WORKING_DIR, { recursive: true })
 
 await rm(WORKING_DIR, { recursive: true, force: true })

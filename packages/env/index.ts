@@ -9,6 +9,8 @@ export const env = createEnv({
 
     APP: z.enum(["website", "queue-processor", "script"]), // assert env.APP for correct types
 
+    WORKING_DIR: z.string().default("/tmp/easyshell"),
+
     ...(process.env.APP === "queue-processor"
       ? {
           DATABASE_URL: z.string().url(),
