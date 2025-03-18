@@ -54,8 +54,9 @@ export async function runSubmissionAndGetOutput({
 
   const inputFilePathForDocker = `${WORKING_DIR}/inputs/${inputFileName}`
   const outputFilePathForDocker = `${WORKING_DIR}/outputs/${outputFileName}`
+  const pullPolicy = env.DOCKER_REGISTRY === "" ? "" : "--pull=always "
 
-  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 --pull=always ${env.DOCKER_REGISTRY}/${image} -mode submission`
+  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 ${pullPolicy}${env.DOCKER_REGISTRY}${image} -mode submission`
   const finishedAt = new Date()
 
   const output = OutputJsonSchema.parse(

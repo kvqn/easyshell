@@ -26,7 +26,12 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	command := fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1 --pull=always %s/%s -mode session", req.ContainerName, utils.DockerRegistry, req.Image)
+	pullPolicy := ""
+	if utils.DockerRegistry != "" {
+		pullPolicy = "--pull=always"
+	}
+
+	command := fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1 %s %s%s -mode session", req.ContainerName, pullPolicy, utils.DockerRegistry, req.Image)
 
 	fmt.Println("Command: ", command)
 

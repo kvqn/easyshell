@@ -5,16 +5,17 @@ export const env = createEnv({
   server: {
     NODE_ENV: z
       .enum(["development", "test", "production"])
-      .default("development"),
-
+      .default("development"), // TODO: do we need this?
     APP: z.enum(["website", "queue-processor", "script"]), // assert env.APP for correct types
-
+    DOCKER_REGISTRY: z
+      .string()
+      .optional()
+      .transform((v) => (v ? v + "/" : "")),
     WORKING_DIR: z.string().default("/tmp/easyshell"),
 
     ...(process.env.APP === "queue-processor"
       ? {
           DATABASE_URL: z.string().url(),
-          DOCKER_REGISTRY: z.string(),
         }
       : {}),
 
