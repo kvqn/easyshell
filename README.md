@@ -37,7 +37,7 @@ There are a few microservices that work together to make the platform work.
 
 - #### Entrypoint
 
-  Entrypoint for the all the docker containers. See [Entrypoint](apps/entrypoint/README.md) for more information.
+  Entrypoint for all testcase images. See [Entrypoint](apps/entrypoint/README.md) for more information.
 
 ---
 
@@ -64,10 +64,9 @@ The following environment variables might be required
 - [`PROJECT_ROOT`](#project_root)
 - [`DOCKER_REGISTRY`](#docker_registry)
 - [`DATABASE_URL`](#database_url)
-- [`SESSION_MANAGER_URL`](#nextauth_url)
+- [`SESSION_MANAGER_URL`](#session_manager_url)
 - [`NEXTAUTH_URL`](#nextauth_url)
 - [`NEXTAUTH_SECRET`](#nextauth_secret)
-- [`NEXTAUTH_URL`](#nextauth_url)
 - [`DISCORD_CLIENT_ID`](#discord_client_id)
 - [`DISCORD_CLIENT_SECRET`](#discord_client_secret)
 - [`GITHUB_CLIENT_ID`](#github_client_id)
@@ -80,27 +79,23 @@ The following environment variables might be required
 This is a helper variable that is used to determine which environment variables to load and verify.
 Possible values are - `queue-processor`, `website` and `script`.
 
-This is **required**. However, if you execute scripts in the [package.json](package.json) using `npm run`, you might not need to set this.
-
 #### `PROJECT_ROOT`
 
-In order to run some scripts, the code needs to determine the _project root_ (the root of the git repository). If executing the scripts in the git context, the project root is inferred using `git rev-parse --show-toplevel`. However, if the script is executed outside the git context, the `PROJECT_ROOT` environment variable needs to be set.
+To run certain scripts, the _project root_ is automatically determined using `git rev-parse --show-toplevel` when within a git context. If running outside of one, please set the `PROJECT_ROOT` environment variable manually.
 
 #### `DOCKER_REGISTRY`
 
-The docker registry to use for pushing images. This is required for pushing images to the registry. If unset, the images will not be pushed.
+Docker registry to use for pushing images. This is required for pushing images to the registry. If unset, the images will not be pushed.
 
 If you are using a registry, then make sure you are already logged in.
 
 #### `DATABASE_URL`
 
-The database connection string. Currently set this to a NeonDB instance.
+Database connection string. Set this to a NeonDB instance.
 
 #### `SESSION_MANAGER_URL`
 
-This is the URL of the session manager. For cloudflare deployment, this cannot be a fixed IP address.
-
-This is **required** for running the nextjs application.
+URL of the session manager. For cloudflare deployment, this cannot be a fixed IP address.
 
 #### `NEXTAUTH_URL`
 
@@ -118,14 +113,14 @@ This is **required** for running the nextjs application.
 
 #### `GOOGLE_CLIENT_SECRET`
 
-These are the [NextAuth](https://authjs.dev) configuration variables. These are **required** for running the nextjs application.
+These are the [NextAuth](https://authjs.dev) configuration variables. These are **required** for running the Next.js application.
 
 ### Scripts
 
 Many scripts have been defined in the [package.json](package.json).
 This section will go over these scripts and the additional steps or environment variables required for their execution.
 
-Also see [NextJS Scripts](apps/website/README.md#scripts), [Queue Processor Scripts](apps/queue-processor/README.md#scripts) and [Script Scripts](apps/script/README.md#scripts) for more information.
+Also see [Next.js Scripts](apps/website/README.md#scripts), [Queue Processor Scripts](apps/queue-processor/README.md#scripts) and [Script Scripts](apps/script/README.md#scripts) for more information.
 
 - [`lint:tsc`](#linttsc)
 - [`lint:next`](#lintnext)
@@ -142,7 +137,7 @@ Lint the entire TS/JS codebase using `tsc`.
 
 #### `lint:next`
 
-Lint the NextJS codebase using `next lint`.
+Lint the Next.js codebase using `next lint`.
 
 #### `format:check`
 
@@ -191,7 +186,7 @@ Might require the following environment variables.
 
 #### `problems:build-pkg`
 
-NextJs cannot do dynamically import problems from the problems directory when deployed on the edge. A problems cache is generated containing only the information needed by the nextjs application. This command generates that cache.
+Next.js cannot dynamically import problems from the problems directory when deployed on the edge. A problems cache is generated containing only the information needed by the Next.js application. This command generates that cache.
 
 Might require the following environment variables.
 

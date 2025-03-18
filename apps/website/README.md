@@ -1,6 +1,6 @@
 # Overview
 
-The website for [easyshell.xyz](https://easyshell.xyz) is made using [NextJS 15](https://nextjs.org/blog/next-15) and deployed on [Cloudflare Pages](https://pages.cloudflare.com/) using [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages).
+The website for [easyshell.xyz](https://easyshell.xyz) is made using [Next.js 15](https://nextjs.org/blog/next-15) and deployed on [Cloudflare Pages](https://pages.cloudflare.com/) using [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages).
 
 Also Refer - [tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [react-icons](https://react-icons.github.io/react-icons/)
 
@@ -25,7 +25,7 @@ This app Requires the following environment variables. See [Environment Variable
 
 ## Scripts
 
-These are the nextjs related scripts.
+These are the Next.js related scripts.
 
 - [`lint`](#lint)
 - [`dev`](#dev)
@@ -37,28 +37,28 @@ These are the nextjs related scripts.
 
 ### `lint`
 
-Lint the nextjs application using `next lint`.
+Lint the Next.js application using `next lint`.
 
 ### `dev`
 
-Run the nextjs application in development mode.
+Run the Next.js application in development mode.
 
 ### `build`
 
-Build the nextjs application.
+Build the Next.js application.
 
 ### `start`
 
-Start the nextjs application.
+Start the Next.js application.
 
 ### `pages:build`
 
-Build the nextjs application for cloudflare pages.
+Build the Next.js application for cloudflare pages.
 
 ### `preview`
 
-Preview the nextjs application for cloudflare pages using wrangler.
+Preview the Next.js application for cloudflare pages using wrangler.
 
 ### `deploy`
 
-Deploy the nextjs application to cloudflare pages using wrangler.
+Deploy the Next.js application to cloudflare pages using wrangler.
