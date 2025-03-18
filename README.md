@@ -63,6 +63,7 @@ The following environment variables might be required
 
 - [`APP`](#app)
 - [`PROJECT_ROOT`](#project_root)
+- [`WORKING_DIR`](#working_dir)
 - [`DOCKER_REGISTRY`](#docker_registry)
 - [`DATABASE_URL`](#database_url)
 - [`SESSION_MANAGER_URL`](#session_manager_url)
@@ -83,6 +84,10 @@ Possible values are - `queue-processor`, `website` and `script`.
 #### `PROJECT_ROOT`
 
 To run certain scripts, the _project root_ is automatically determined using `git rev-parse --show-toplevel` when within a git context. If running outside of one, please set the `PROJECT_ROOT` environment variable manually.
+
+#### `WORKING_DIR`
+
+Directory for temporary files. If not specified, `/tmp/easyshell` is used.
 
 #### `DOCKER_REGISTRY`
 
@@ -182,8 +187,9 @@ Build (and push) the problem images.
 Might require the following environment variables.
 
 - `APP` - This is required and should be set to `script`. Already set in [package.json](package.json).
-- `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
-- `DOCKER_REGISTRY` might need to be defined if the images need to be pushed to a registry.
+- `PROJECT_ROOT` - required if the script is not run from within the git repository.
+- `DOCKER_REGISTRY` - required if the images need to be pushed to a registry.
+- `WORKING_DIR` - optional, defaults to `/tmp/easyshell`.
 
 #### `problems:build-pkg`
 
