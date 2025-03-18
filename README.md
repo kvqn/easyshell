@@ -14,6 +14,7 @@
   - [Pre-Requisites](#pre-requisites)
   - [Environment Variables](#environment-variables)
   - [Scripts](#scripts)
+  - [Problems](#problems)
 
 ## Architecture and Features
 
@@ -48,7 +49,7 @@ In this section,
 - [Pre-Requisites](#pre-requisites)
 - [Environment Variables](#environment-variables)
 - [Scripts](#scripts)
-- [Problems]
+- [Problems](#problems)
 
 ### Pre-Requisites
 

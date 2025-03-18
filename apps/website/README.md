@@ -4,7 +4,7 @@ The website for [easyshell.xyz](https://easyshell.xyz) is made using [Next.js 15
 
 Also Refer - [tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [react-icons](https://react-icons.github.io/react-icons/)
 
-The website has no context of `docker` and so it uses other microservices for session and submission management. See [Session Manager](../session-manager/README.md) and [Queue Processor](../queue-processor/README.md) for more information. Also see [Architecture](../../README.md#architecture) for a more high level overview.
+The website has no context of `docker` and so it uses other microservices for session and submission management. See [Session Manager](../session-manager/README.md) and [Queue Processor](../queue-processor/README.md) for more information. Also see [Architecture](../../README.md#architecture) for a more high-level overview.
 
 Before running the server, you need to first build the problems cache using [`problems:build-pkg`](../../README.md#problemsbuild-pkg) script.
 
@@ -53,12 +53,12 @@ Start the Next.js application.
 
 ### `pages:build`
 
-Build the Next.js application for cloudflare pages.
+Build the Next.js application for Cloudflare Pages.
 
 ### `preview`
 
-Preview the Next.js application for cloudflare pages using wrangler.
+Preview the Next.js application for Cloudflare Pages using wrangler.
 
 ### `deploy`
 
-Deploy the Next.js application to cloudflare pages using wrangler.
+Deploy the Next.js application to Cloudflare Pages using wrangler.
