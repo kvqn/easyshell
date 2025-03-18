@@ -11,12 +11,6 @@ import { mkdir } from "fs/promises"
 import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
-if (process.env.DOCKER_REGISTRY === undefined) {
-  console.error("DOCKER_REGISTRY must be set")
-  process.exit(1)
-}
-const DOCKER_REGISTRY = process.env.DOCKER_REGISTRY
-
 const WORKING_DIR = `${env.WORKING_DIR}/build`
 await mkdir(WORKING_DIR, { recursive: true })
 
@@ -28,6 +22,10 @@ async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
 }
 
 async function dockerPush(tag: string) {
+  if (env.DOCKER_REGISTRY === "") {
+    console.log("skipping push", tag)
+    return
+  }
   console.log("pushing", tag)
   await $`docker push ${tag}`
 }
@@ -151,7 +149,7 @@ ENTRYPOINT ["/entrypoint"]
     )
 
     await dockerBuild({
-      tag: `${DOCKER_REGISTRY}/${tag}`,
+      tag: `${env.DOCKER_REGISTRY}${tag}`,
       dir: IMAGE_DIR,
     })
   }
@@ -160,7 +158,7 @@ ENTRYPOINT ["/entrypoint"]
 async function pushProblem(problem: string) {
   const info = await getProblemInfo(problem)
   for (const testcase of info.testcases) {
-    const tag = `${DOCKER_REGISTRY}/easyshell-${problem}-${testcase.id}`
+    const tag = `${env.DOCKER_REGISTRY}easyshell-${problem}-${testcase.id}`
     await dockerPush(tag)
   }
 }

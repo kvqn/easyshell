@@ -21,9 +21,9 @@
   },
   "scripts": {
     "problems:build-pkg": "APP=script tsx ./scripts/problems-build-package.ts",
-    "problems:build": "SKIP_ENV_VALIDATION=1 APP=script tsx ./scripts/problems-build.ts",
+    "problems:build": "APP=script tsx ./scripts/problems-build.ts",
     "problems:lint": "APP=script tsx ./scripts/problems-lint.ts",
-    "problems:test": "SKIP_ENV_VALIDATION=1 APP=queue-processor tsx ./scripts/problems-test.ts",
+    "problems:test": "APP=script tsx ./scripts/problems-test.ts",
     "problems:new": "APP=script tsx ./scripts/problems-new.ts",
     "lint:tsc": "npx tsc --noEmit",
     "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 next lint",
