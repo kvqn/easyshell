@@ -209,7 +209,7 @@ All problems for easyshell are stored in the [problems/](problems) directory. Th
 
 ##### `page.md`
 
-Explaination of the problem. For consistency, it should contain only two top-level headings - `Problem Statement` and `Instructions`.
+Explanation of the problem. For consistency, it should contain only two top-level headings - `Problem Statement` and `Instructions`.
 This file is **required**.
 
 ##### `hints/`
