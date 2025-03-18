@@ -20,18 +20,14 @@
     "tsx": "^4.19.3"
   },
   "scripts": {
-    "deploy:dev": "docker compose -f ./deployment/dev/compose.yml up",
     "problems:build-pkg": "APP=script tsx ./scripts/problems-build-package.ts",
     "problems:build": "SKIP_ENV_VALIDATION=1 APP=script tsx ./scripts/problems-build.ts",
     "problems:lint": "APP=script tsx ./scripts/problems-lint.ts",
     "problems:test": "SKIP_ENV_VALIDATION=1 APP=queue-processor tsx ./scripts/problems-test.ts",
     "problems:new": "APP=script tsx ./scripts/problems-new.ts",
-    "dev:queue-processor": "tsx ./apps/queue-processor/index.ts",
-    "dev:website": "cd apps/website && APP=website next dev",
     "lint:tsc": "npx tsc --noEmit",
     "lint:next": "cd apps/website && SKIP_ENV_VALIDATION=1 next lint",
-    "start:queue-processor": "cd apps/queue-processor && APP=queue-processor npm run start",
-    "start:website": "cd apps/website && APP=website npm run start",
-    "build:website": "cd apps/website && SKIP_ENV_VALIDATION=1 npm run build"
+    "format:check": "npx prettier --check . && gofmt -l -s .",
+    "format:write": "npx prettier --write . && gofmt -w -s ."
   }
 }
