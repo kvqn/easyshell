@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@easyshell/utils": "0.1.0",
     "@easyshell/env": "0.1.0",
+    "@easyshell/utils": "0.1.0",
     "execa": "^9.5.2"
   },
   "devDependencies": {
-    "@types/node": "^20.17.16"
+    "@types/node": "^20.17.16",
+    "tsx": "^4.19.3"
   },
   "scripts": {
     "problems:cache": "APP=script tsx ../../scripts/problems-cache-queue-processor.ts",
