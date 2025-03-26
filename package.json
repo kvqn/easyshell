@@ -20,7 +20,9 @@
     "tsx": "^4.19.3"
   },
   "scripts": {
-    "problems:build-pkg": "APP=script tsx ./scripts/problems-build-package.ts",
+    "problems:cache": "npm run problems:cache:queue-processor && npm run problems:cache:website",
+    "problems:cache:queue-processor": "cd apps/queue-processor && npm run build-problems-cache",
+    "problems:cache:website": "cd apps/website && npm run build-problems-cache",
     "problems:build": "APP=script tsx ./scripts/problems-build.ts",
     "problems:lint": "APP=script tsx ./scripts/problems-lint.ts",
     "problems:test": "APP=script tsx ./scripts/problems-test.ts",
