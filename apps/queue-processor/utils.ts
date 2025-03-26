@@ -3,7 +3,7 @@ import { unzip } from "@easyshell/utils/server"
 
 import { getProblemInfo } from "./problems"
 
-import { $ } from "execa"
+import { execa } from "execa"
 import { mkdir } from "fs"
 import { writeFile } from "fs/promises"
 import { readFile } from "fs/promises"
@@ -55,9 +55,28 @@ export async function runSubmissionAndGetOutput({
 
   const inputFilePathForDocker = `${WORKING_DIR}/inputs/${inputFileName}`
   const outputFilePathForDocker = `${WORKING_DIR}/outputs/${outputFileName}`
-  const pullPolicy = env.DOCKER_REGISTRY === "" ? "" : "--pull=always "
+  const pullPolicy = env.DOCKER_REGISTRY === "" ? undefined : "--pull=always "
 
-  await $`docker run --rm --name ${containerName} -v ${inputFilePathForDocker}:/input.sh -v ${outputFilePathForDocker}:/output.json --net easyshell -m 10m --cpus 0.1 ${pullPolicy}${env.DOCKER_REGISTRY}${image} -mode submission`
+  await execa("docker", [
+    "run",
+    "--rm",
+    "--name",
+    containerName,
+    "-v",
+    `${inputFilePathForDocker}:/input.sh`,
+    "-v",
+    `${outputFilePathForDocker}:/output.json`,
+    "--net",
+    "easyshell",
+    "-m",
+    "10m",
+    "--cpus",
+    "0.1",
+    ...[pullPolicy].filter((x) => x !== undefined),
+    `${env.DOCKER_REGISTRY}${image}`,
+    "-mode",
+    "submission",
+  ])
   const finishedAt = new Date()
 
   const output = OutputJsonSchema.parse(
