@@ -1,6 +1,6 @@
 import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
-import { PROJECT_ROOT } from "@easyshell/utils/build"
+import { PROBLEMS_DIR, PROJECT_ROOT } from "@easyshell/utils/build"
 
 import { RunParallelStuff, Task } from "./_utils"
 import "./problems-lint"
@@ -83,7 +83,7 @@ async function buildProblemTasks(problem: string): Promise<Array<Task>> {
       recursive: true,
     })
 
-    const TESTCASE_DIR = `${PROJECT_ROOT}/problems/${problem}/testcases/${testcase.id}`
+    const TESTCASE_DIR = `${PROBLEMS_DIR}/${problem}/testcases/${testcase.id}`
 
     let copyRoot = false
 
@@ -120,7 +120,7 @@ async function buildProblemTasks(problem: string): Promise<Array<Task>> {
       daemon_build_steps = await testcase.daemonSetup({
         image_dir: IMAGE_DIR,
         testcase_dir: TESTCASE_DIR,
-        problem_dir: `${PROJECT_ROOT}/problems/${problem}`,
+        problem_dir: `${PROBLEMS_DIR}/${problem}`,
       })
     }
 
