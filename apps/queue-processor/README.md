@@ -18,8 +18,18 @@ Running the queue-processor requires the following environment variables. See [E
 
 Run scripts using `npm run <script>`.
 
+- [`problems:cache`](#problemscache)
 - [`build`](#build)
 - [`start`](#start)
+
+### `problems:cache`
+
+Caches problems for the queue-processor.
+
+Might require the following environment variables.
+
+- `APP` - This is required and should be set to `script`. Already set in [package.json](./package.json).
+- `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
 ### `build`
 

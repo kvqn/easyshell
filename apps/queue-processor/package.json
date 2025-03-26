@@ -12,7 +12,7 @@
     "@types/node": "^20.17.16"
   },
   "scripts": {
-    "build-problems-cache": "APP=script tsx ../../scripts/problems-cache-queue-processor.ts",
+    "problems:cache": "APP=script tsx ../../scripts/problems-cache-queue-processor.ts",
     "build": "npx esbuild index.ts --bundle --platform=node --outfile=queue-processor.cjs",
     "start": "node queue-processor.cjs"
   }

@@ -191,14 +191,17 @@ Might require the following environment variables.
 - `DOCKER_REGISTRY` - required if the images need to be pushed to a registry.
 - `WORKING_DIR` - optional, defaults to `/tmp/easyshell`.
 
-#### `problems:build-pkg`
+#### `problems:cache:website`
 
-Next.js cannot dynamically import problems from the problems directory when deployed on the edge. A problems cache is generated containing only the information needed by the Next.js application. This command generates that cache.
+Calls [`problems:cache`](./apps/website/README.md#problemscache) in [website](./apps/website/README.md) app.
 
-Might require the following environment variables.
+#### `problems:cache:queue-processor`
 
-- `APP` - This is required and should be set to `script`. Already set in [package.json](package.json).
-- `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
+Calls [`problems:cache`](./apps/queue-processor/README.md#problemscache) in [queue-processor](./apps/queue-processor/README.md) app.
+
+#### `problems:cache`
+
+Calls both [`problems:cache:website`](#problemscachewebsite) and [`problems:cache:queue-processor`](#problemscachequeue-processor).
 
 ### Problems
 
