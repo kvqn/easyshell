@@ -94,7 +94,7 @@ jobs:
           node-version: 22.14.0
       - uses: actions/checkout@v4
       - run: npm install
-      - run: npm run problems:build-pkg
+      - run: npm run problems:cache:website
       - run: npm run deploy
         working-directory: ./apps/website
         env:
