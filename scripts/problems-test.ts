@@ -1,7 +1,7 @@
 import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
-import { PROJECT_ROOT } from "@easyshell/utils"
+import { PROJECT_ROOT } from "@easyshell/utils/build"
 
 import {
   RunParallelStuff,

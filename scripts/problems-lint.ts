@@ -1,5 +1,5 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
-import { PROJECT_ROOT } from "@easyshell/utils"
+import { PROJECT_ROOT } from "@easyshell/utils/build"
 
 import { assertDirExists, assertFileExists } from "./_utils"
 

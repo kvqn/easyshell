@@ -1,6 +1,7 @@
 import { env } from "@easyshell/env"
-import { getProblemInfo } from "@easyshell/problems"
-import { unzip } from "@easyshell/utils"
+import { unzip } from "@easyshell/utils/server"
+
+import { getProblemInfo } from "./problems"
 
 import { $ } from "execa"
 import { mkdir } from "fs"

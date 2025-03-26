@@ -1,7 +1,5 @@
 import type { FsType, ProblemConfig } from "@easyshell/problems/schema"
-import { PROBLEMS_DIR, getFs } from "@easyshell/utils"
-
-import { readFile } from "fs/promises"
+import { PROBLEMS_DIR, getFs } from "@easyshell/utils/build"
 
 const SLUG = "move-that-file"
 

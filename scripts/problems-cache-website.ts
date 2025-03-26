@@ -3,7 +3,7 @@ import {
   ProblemInfo,
   ProblemInfoSchema,
 } from "@easyshell/problems/schema"
-import { PROJECT_ROOT } from "@easyshell/utils"
+import { PROJECT_ROOT } from "@easyshell/utils/build"
 
 import "./problems-lint"
 

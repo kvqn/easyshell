@@ -27,6 +27,7 @@ This app Requires the following environment variables. See [Environment Variable
 
 These are the Next.js related scripts.
 
+- [`problems:cache`](#problemscache)
 - [`lint`](#lint)
 - [`dev`](#dev)
 - [`build`](#build)
@@ -34,6 +35,15 @@ These are the Next.js related scripts.
 - [`pages:build`](#pagesbuild)
 - [`preview`](#preview)
 - [`deploy`](#deploy)
+
+### `problems:cache`
+
+Next.js cannot dynamically import problems from the problems directory when deployed on the edge. A problems cache is generated containing only the information needed by the Next.js application. This command generates that cache.
+
+Might require the following environment variables.
+
+- `APP` - This is required and should be set to `script`. Already set in [package.json](./package.json).
+- `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
 ### `lint`
 

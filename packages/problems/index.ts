@@ -1,4 +1,4 @@
-import { PROBLEMS_DIR } from "@easyshell/utils"
+import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
 import { ProblemConfigSchema } from "./schema"
 
