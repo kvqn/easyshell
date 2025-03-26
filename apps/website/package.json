@@ -8,6 +8,7 @@
     "preview": "npm run pages:build && wrangler pages dev --ip 0.0.0.0",
     "deploy": "npm run pages:build && wrangler pages deploy",
     "build": "SKIP_ENV_VALIDATION=1 next build",
+    "build-problems-cache": "APP=script tsx ../../scripts/problems-build-cache.ts",
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"

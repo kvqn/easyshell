@@ -5,9 +5,9 @@ import {
   submissions,
 } from "@easyshell/db/schema"
 import { env } from "@easyshell/env"
-import { getProblemSlugFromId } from "@easyshell/problems"
 import { sleep } from "@easyshell/utils"
 
+import { getProblemSlugFromId } from "./problems"
 import { WORKING_DIR, runSubmissionAndGetOutput } from "./utils"
 
 import { and, eq, sql } from "drizzle-orm"
