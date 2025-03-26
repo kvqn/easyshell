@@ -21,8 +21,8 @@
   },
   "scripts": {
     "problems:cache": "npm run problems:cache:queue-processor && npm run problems:cache:website",
-    "problems:cache:queue-processor": "cd apps/queue-processor && npm run build-problems-cache",
-    "problems:cache:website": "cd apps/website && npm run build-problems-cache",
+    "problems:cache:queue-processor": "cd apps/queue-processor && npm run problems:cache",
+    "problems:cache:website": "cd apps/website && npm run problems:cache",
     "problems:build": "APP=script tsx ./scripts/problems-build.ts",
     "problems:lint": "APP=script tsx ./scripts/problems-lint.ts",
     "problems:test": "APP=script tsx ./scripts/problems-test.ts",
