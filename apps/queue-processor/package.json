@@ -13,7 +13,7 @@
     "tsx": "^4.19.3"
   },
   "scripts": {
-    "problems:cache": "APP=script tsx ../../scripts/problems-cache-queue-processor.ts",
+    "problems:cache": "cd ../../scripts && APP=script tsx ./problems-cache-queue-processor.ts",
     "build": "npx esbuild index.ts --bundle --platform=node --outfile=queue-processor.cjs",
     "start": "node queue-processor.cjs"
   }
