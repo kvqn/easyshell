@@ -7,7 +7,7 @@ import { readFile } from "fs/promises"
 import { readdir } from "fs/promises"
 import { z } from "zod"
 
-const PROBLEMS_IMPORT_DIR = "./problems"
+const PROBLEMS_IMPORT_DIR = "./data/problems"
 
 /**
  * Read and return the problem config, making sure it is valid.

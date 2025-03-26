@@ -1,7 +1,7 @@
 import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
-import { PROJECT_ROOT } from "@easyshell/utils/build"
+import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
 import {
   RunParallelStuff,
@@ -15,7 +15,7 @@ import { randomBytes } from "crypto"
 async function baseAsserts(
   slug: string,
 ): Promise<[true, undefined] | [false, string]> {
-  const PROBLEM_DIR = `${PROJECT_ROOT}/problems/${slug}`
+  const PROBLEM_DIR = `${PROBLEMS_DIR}/${slug}`
 
   try {
     await assertDirExists(PROBLEM_DIR)

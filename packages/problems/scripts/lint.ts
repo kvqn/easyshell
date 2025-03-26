@@ -1,17 +1,17 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
-import { PROJECT_ROOT } from "@easyshell/utils/build"
+import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
 import { assertDirExists, assertFileExists } from "./_utils"
 
 export async function checkProblems() {
-  await assertDirExists(`${PROJECT_ROOT}/problems`)
+  await assertDirExists(PROBLEMS_DIR)
   const problemSlugs = await getProblems()
 
   const existingProblemIds = new Set<number>()
 
   for (const problemSlug of problemSlugs) {
     console.log(`Checking problem: ${problemSlug}`)
-    const PROBLEM_DIR = `${PROJECT_ROOT}/problems/${problemSlug}`
+    const PROBLEM_DIR = `${PROBLEMS_DIR}/${problemSlug}`
 
     await assertDirExists(PROBLEM_DIR)
     await assertFileExists(`${PROBLEM_DIR}/page.md`)

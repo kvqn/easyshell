@@ -20,7 +20,7 @@ if (!_PROJECT_ROOT) {
 }
 
 export const PROJECT_ROOT = _PROJECT_ROOT
-export const PROBLEMS_DIR = `${PROJECT_ROOT}/problems`
+export const PROBLEMS_DIR = `${PROJECT_ROOT}/packages/problems/data/problems`
 
 export async function getFs(path: string): Promise<FsType> {
   const files = await readdir(path, { recursive: true })

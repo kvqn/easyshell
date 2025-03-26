@@ -3,9 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
+    "cache:website": "APP=script tsx ./scripts/cache-website.ts",
+    "build": "APP=script tsx ./scripts/problems-build.ts",
+    "lint": "APP=script tsx ./scripts/problems-lint.ts",
+    "test": "APP=script tsx ./scripts/problems-test.ts",
+    "new": "APP=script tsx ./scripts/problems-new.ts"
+  },
   "dependencies": {
     "@easyshell/env": "0.1.0",
     "@easyshell/utils": "0.1.0",
+    "execa": "^9.5.2",
     "zod": "^3.24.1"
   },
   "devDependencies": {

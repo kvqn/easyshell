@@ -9,7 +9,7 @@ RUN npm i
 WORKDIR /src/apps/queue-processor
 
 ENV PROJECT_ROOT=/src
-RUN npm run problems:cache
+RUN npm run cache
 RUN npx esbuild index.ts --bundle --platform=node --outfile=queue-processor.cjs
 
 FROM node:22-alpine

@@ -10,8 +10,7 @@
     "packages/utils",
     "packages/env",
     "apps/website",
-    "apps/queue-processor",
-    "scripts"
+    "apps/queue-processor"
   ],
   "devDependencies": {
     "@typescript-eslint/typescript-estree": "^8.25.0",
@@ -20,13 +19,6 @@
     "tsx": "^4.19.3"
   },
   "scripts": {
-    "problems:cache": "npm run problems:cache:queue-processor && npm run problems:cache:website",
-    "problems:cache:queue-processor": "cd apps/queue-processor && npm run problems:cache",
-    "problems:cache:website": "cd apps/website && npm run problems:cache",
-    "problems:build": "APP=script tsx ./scripts/problems-build.ts",
-    "problems:lint": "APP=script tsx ./scripts/problems-lint.ts",
-    "problems:test": "APP=script tsx ./scripts/problems-test.ts",
-    "problems:new": "APP=script tsx ./scripts/problems-new.ts",
     "lint:tsc": "npx tsc --noEmit",
     "lint:next": "cd apps/website && next lint",
     "format:check": "npx prettier --check . && gofmt -l -s .",
