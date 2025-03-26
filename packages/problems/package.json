@@ -6,10 +6,10 @@
   "scripts": {
     "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
     "cache:website": "APP=script tsx ./scripts/cache-website.ts",
-    "build": "APP=script tsx ./scripts/problems-build.ts",
-    "lint": "APP=script tsx ./scripts/problems-lint.ts",
-    "test": "APP=script tsx ./scripts/problems-test.ts",
-    "new": "APP=script tsx ./scripts/problems-new.ts"
+    "build": "APP=script tsx ./scripts/build.ts",
+    "lint": "APP=script tsx ./scripts/lint.ts",
+    "test": "APP=script tsx ./scripts/test.ts",
+    "new": "APP=script tsx ./scripts/new.ts"
   },
   "dependencies": {
     "@easyshell/env": "0.1.0",
