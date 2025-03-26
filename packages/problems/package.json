@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "cache:queue-processor": "APP=script && tsx ./scripts/cache-queue-processor.ts",
-    "cache:website": "APP=script && tsx ./scripts/cache-website.ts",
+    "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
+    "cache:website": "APP=script tsx ./scripts/cache-website.ts",
     "build": "APP=script tsx ./scripts/problems-build.ts",
     "lint": "APP=script tsx ./scripts/problems-lint.ts",
     "test": "APP=script tsx ./scripts/problems-test.ts",
