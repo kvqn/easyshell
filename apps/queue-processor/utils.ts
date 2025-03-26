@@ -1,5 +1,5 @@
 import { env } from "@easyshell/env"
-import { unzip } from "@easyshell/utils"
+import { unzip } from "@easyshell/utils/server"
 
 import { getProblemInfo } from "./problems"
 

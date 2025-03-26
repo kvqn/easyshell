@@ -1,5 +1,5 @@
 import { getProblemInfo, getProblems } from "@easyshell/problems"
-import { PROBLEMS_DIR } from "@easyshell/utils"
+import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
 import { max } from "@/lib/utils"
 
