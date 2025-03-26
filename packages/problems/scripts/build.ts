@@ -22,7 +22,8 @@ async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
 }
 
 async function dockerPush(tag: string) {
-  await $`docker push ${tag}`
+  if (env.DOCKER_REGISTRY === "") return
+  await $`docker push ${env.DOCKER_REGISTRY}${tag}`
 }
 
 async function init() {
@@ -166,22 +167,8 @@ async function pushProblemTasks(problem: string): Promise<Array<Task>> {
     tasks.push({
       name: `push-${tag}`,
       callable: async () => {
-        if (env.DOCKER_REGISTRY === "") return "skipped (no registry)"
-        const tagWithRegistry = `${env.DOCKER_REGISTRY}${tag}`
-
-        const { stdout: localDigest } =
-          await $`docker image inspect ${tagWithRegistry}`.pipe("jq", [
-            "-r",
-            ".[0].Id",
-          ])
-        const { stdout: remoteDigest } =
-          await $`docker manifest inspect ${tagWithRegistry}`.pipe("jq", [
-            "-r",
-            ".config.digest",
-          ])
-        if (localDigest === remoteDigest) return "skipped (up to date)"
-
-        await dockerPush(tagWithRegistry)
+        if (env.DOCKER_REGISTRY === "") return "skipped"
+        await dockerPush(tag)
         return "done"
       },
     })
