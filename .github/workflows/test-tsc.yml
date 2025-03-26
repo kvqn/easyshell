@@ -35,7 +35,10 @@ jobs:
           node-version: 22.14.0
       - run: npm i
         name: Install dependencies
-      - run: npm run problems:cache
+      - run: npm run cache:website
+        working-directory: ./packages/problems
+      - run: npm run cache:queue-processor
+        working-directory: ./packages/problems
       - run: npm run lint:tsc
         name: Check TypeScript types
       - run: npm run lint:next

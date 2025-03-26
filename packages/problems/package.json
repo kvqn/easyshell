@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "scripts": {
+    "cache:queue-processor": "cd apps/queue-processor && npm run problems:cache",
+    "cache:website": "cd apps/website && npm run problems:cache",
+    "build": "APP=script tsx ./scripts/problems-build.ts",
+    "lint": "APP=script tsx ./scripts/problems-lint.ts",
+    "test": "APP=script tsx ./scripts/problems-test.ts",
+    "new": "APP=script tsx ./scripts/problems-new.ts"
+  },
   "dependencies": {
     "@easyshell/env": "0.1.0",
     "@easyshell/utils": "0.1.0",
