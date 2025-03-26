@@ -47,26 +47,11 @@ jobs:
 
   # =============================== Deployments ================================
 
-  deploy-session-manager:
-    needs:
-      - registry-push-problems
-      - registry-push-session-manager
-    environment: deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Make .ssh folder
-        run: mkdir -p ~/.ssh
-      - name: Write SSH private key
-        run: echo '${{ secrets.SESSION_MANAGER__SSH_PRIVATE_KEY }}' > ~/.ssh/id_rsa
-      - name: Set permissions for SSH private key
-        run: chmod 400 ~/.ssh/id_rsa
-      - name: SSH into server
-        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SESSION_MANAGER__SSH_USER }}@${{ secrets.SESSION_MANAGER__SSH_HOST }} './scripts/update-session-manager.sh'
-
-  deploy-queue-processor:
+  deploy-vps:
     needs:
       - registry-push-problems
       - registry-push-queue-processor
+      - registry-push-session-manager
     environment: deployment
     runs-on: ubuntu-latest
     steps:
@@ -79,11 +64,11 @@ jobs:
       - name: Make .ssh folder
         run: mkdir -p ~/.ssh
       - name: Write SSH private key
-        run: echo '${{ secrets.QUEUE_PROCESSOR__SSH_PRIVATE_KEY }}' > ~/.ssh/id_rsa
+        run: echo '${{ secrets.SSH_PRIVATE_KEY }}' > ~/.ssh/id_rsa
       - name: Set permissions for SSH private key
         run: chmod 400 ~/.ssh/id_rsa
       - name: SSH into server
-        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.QUEUE_PROCESSOR__SSH_USER }}@${{ secrets.QUEUE_PROCESSOR__SSH_HOST }} './scripts/update-queue-processor.sh'
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './scripts/update-easyshell.sh'
 
   deploy-cf:
     environment: deployment
