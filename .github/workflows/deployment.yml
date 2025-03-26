@@ -19,7 +19,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - uses: actions/checkout@v4
       - run: bun i
-      - run: bun problems:build all
+      - run: bun run build all
+        working-directory: ./packages/problems
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
           PARALLEL_LIMIT_BUILD: 4
