@@ -55,7 +55,7 @@ export async function runSubmissionAndGetOutput({
 
   const inputFilePathForDocker = `${WORKING_DIR}/inputs/${inputFileName}`
   const outputFilePathForDocker = `${WORKING_DIR}/outputs/${outputFileName}`
-  const pullPolicy = env.DOCKER_REGISTRY === "" ? undefined : "--pull=always "
+  const pullPolicy = env.DOCKER_REGISTRY === "" ? undefined : "--pull=always"
 
   await execa("docker", [
     "run",
