@@ -55,7 +55,7 @@ jobs:
       - id: remote-digest
         run: echo "::set-output name=remote-digest::$(docker manifest inspect ${{ secrets.DOCKER_REGISTRY }}/queue-processor | jq -r '.config.digest')"
       - if: steps.local-digest.outputs.local-digest != steps.remote-digest.outputs.remote-digest
-      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest
+        run: docker push ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest
 
   # ============================================================================
 
