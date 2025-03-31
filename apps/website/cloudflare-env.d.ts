@@ -11,7 +11,7 @@ interface CloudflareEnv {
   GOOGLE_CLIENT_SECRET: string
   NEXTAUTH_URL: string
   DATABASE_URL: string
-  CONTAINER_MANAGER_URL: string
+  SESSION_MANAGER_URL: string
   APP: string
   ASSETS: Fetcher
 }

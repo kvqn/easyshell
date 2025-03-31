@@ -4,9 +4,9 @@ import { terminalSessions } from "@easyshell/db/schema"
 
 import { db } from "@/db"
 import { ensureAuth } from "@/lib/server/auth"
-import { containerManagerExec } from "@/lib/server/container-manager"
 import { getProblemSlugFromId } from "@/lib/server/problems"
 import { insertTerminalSessionLog } from "@/lib/server/queries"
+import { sessionManagerExec } from "@/lib/server/session-manager"
 
 import type { getTerminalSession } from "./get-terminal-session"
 
@@ -25,7 +25,7 @@ export async function submitTerminalSessionCommand({
     }
   | ({
       status: "error"
-    } & Awaited<ReturnType<typeof containerManagerExec>>)
+    } & Awaited<ReturnType<typeof sessionManagerExec>>)
 > {
   const user = await ensureAuth()
 
@@ -49,7 +49,7 @@ export async function submitTerminalSessionCommand({
   const container_name = `easyshell-${problemSlug}-${terminalSession[0].testcaseId}-session-${sessionId}`
 
   const startedAt = new Date()
-  const execResponse = await containerManagerExec({
+  const execResponse = await sessionManagerExec({
     containerName: container_name,
     command,
   })

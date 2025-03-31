@@ -5,10 +5,10 @@ import {
   submissions,
 } from "@easyshell/db/schema"
 import { env } from "@easyshell/env"
-import { getProblemSlugFromId } from "@easyshell/problems"
 import { sleep } from "@easyshell/utils"
 
-import { runSubmissionAndGetOutput } from "./utils"
+import { getProblemSlugFromId } from "./problems"
+import { WORKING_DIR, runSubmissionAndGetOutput } from "./utils"
 
 import { and, eq, sql } from "drizzle-orm"
 import { mkdir } from "fs/promises"
@@ -118,8 +118,8 @@ async function processQueueItem(
 }
 
 async function init() {
-  await mkdir(`${env.WORKING_DIR_DOCKER}/inputs`, { recursive: true })
-  await mkdir(`${env.WORKING_DIR_DOCKER}/outputs`, { recursive: true })
+  await mkdir(`${WORKING_DIR}/inputs`, { recursive: true })
+  await mkdir(`${WORKING_DIR}/outputs`, { recursive: true })
 }
 
 async function loop() {
