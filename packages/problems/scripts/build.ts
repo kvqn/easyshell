@@ -3,7 +3,6 @@ import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { PROBLEMS_DIR, PROJECT_ROOT } from "@easyshell/utils/build"
 
 import { RunParallelStuff, Task } from "./_utils"
-import "./lint"
 
 import { $ } from "execa"
 import { writeFile } from "fs/promises"

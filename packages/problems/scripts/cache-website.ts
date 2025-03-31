@@ -5,8 +5,6 @@ import {
 } from "@easyshell/problems/schema"
 import { PROBLEMS_DIR, PROJECT_ROOT } from "@easyshell/utils/build"
 
-import "./lint"
-
 import { readdir } from "fs/promises"
 import { stat } from "fs/promises"
 import { readFile } from "fs/promises"
