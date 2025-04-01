@@ -12,7 +12,7 @@ import { db } from "@/db"
 import { getProblemSlugFromId } from "@/lib/server/problems"
 import { sessionManagerIsRunning } from "@/lib/server/session-manager"
 
-import { and, asc, desc, eq, isNull } from "drizzle-orm"
+import { and, asc, desc, eq, isNull, sql } from "drizzle-orm"
 
 export async function getActiveTerminalSession({
   userId,
@@ -226,4 +226,79 @@ export async function getUserProviders(userId: string) {
   }
 
   return providers
+}
+
+export async function getUserSubmissionStats(
+  userId: string,
+): Promise<{ problems: Record<string, "solved" | "attempted"> }> {
+  const user_submissions = db.$with("user_submissions").as(
+    db
+      .select({
+        submissionId: submissions.id,
+      })
+      .from(submissions)
+      .where(eq(submissions.userId, userId)),
+  )
+
+  const user_submission_testcases = db.$with("user_submission_testcases").as(
+    db
+      .with(user_submissions)
+      .select({
+        submissionId: user_submissions.submissionId,
+        testcaseId: submissionTestcases.testcaseId,
+        passed: submissionTestcases.passed,
+      })
+      .from(user_submissions)
+      .innerJoin(
+        submissionTestcases,
+        eq(user_submissions.submissionId, submissionTestcases.submissionId),
+      ),
+  )
+
+  const user_submission_passed = db.$with("user_submission_passed").as(
+    db
+      .with(user_submission_testcases)
+      .select({
+        submissionId: user_submission_testcases.submissionId,
+        passed:
+          sql<boolean>`cast(bool_and(${user_submission_testcases.passed}) as boolean)`.as(
+            "passed",
+          ),
+      })
+      .from(user_submission_testcases)
+      .groupBy(user_submission_testcases.submissionId),
+  )
+
+  const user_problem_passed = db.$with("user_problem_passed").as(
+    db
+      .with(user_submission_passed)
+      .select({
+        problemId: submissions.problemId,
+        passed:
+          sql<boolean>`cast(bool_or(${user_submission_passed.passed}) as boolean)`.as(
+            "passed",
+          ),
+      })
+      .from(submissions)
+      .innerJoin(
+        user_submission_passed,
+        eq(submissions.id, user_submission_passed.submissionId),
+      )
+      .groupBy(submissions.problemId),
+  )
+
+  const result = await db
+    .with(user_problem_passed)
+    .select()
+    .from(user_problem_passed)
+
+  const result_map: Record<string, "solved" | "attempted"> = {}
+  for (const { problemId, passed } of result) {
+    const slug = await getProblemSlugFromId(problemId)
+    result_map[slug] = passed ? "solved" : "attempted"
+  }
+
+  return {
+    problems: result_map,
+  }
 }
