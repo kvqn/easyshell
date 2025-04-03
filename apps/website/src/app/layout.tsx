@@ -26,6 +26,12 @@ export default function RootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@1&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="flex h-screen flex-col font-geist ">
         <ThemeProvider attribute="class" defaultTheme="light">
           <SessionProvider>

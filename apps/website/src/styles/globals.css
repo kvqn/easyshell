@@ -7,6 +7,7 @@
 @theme {
   --font-geist: var(--font-geist-sans);
   --font-geist-mono: var(--font-geist-mono);
+  --font-clash-display: "Clash Display", sans-serif;
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -48,6 +49,8 @@
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-text-loop-left: text-loop-left 120s linear infinite;
+  --animate-text-loop-right: text-loop-right 120s linear infinite;
 
   @keyframes accordion-down {
     from {
@@ -63,6 +66,22 @@
     }
     to {
       height: 0;
+    }
+  }
+  @keyframes text-loop-left {
+    0% {
+      transform: translateX(-25%);
+    }
+    100% {
+      transform: translateX(-75%);
+    }
+  }
+  @keyframes text-loop-right {
+    0% {
+      transform: translateX(-75%);
+    }
+    100% {
+      transform: translateX(-25%);
     }
   }
 }

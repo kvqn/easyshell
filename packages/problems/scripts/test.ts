@@ -4,6 +4,7 @@ import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
 import { neverThrow } from "@easyshell/utils"
 import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
+import { SeriesList } from "../data/series"
 import {
   RunParallelStuff,
   Task,
@@ -28,7 +29,7 @@ async function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
     console.error(
-      "Provide a problem slug to test. Type 'all' to test all problems.",
+      "Provide a problem slug to test. Type 'all' to test all problems. Type 'base' to run base tests.",
     )
     process.exit(1)
   }
@@ -40,9 +41,11 @@ async function main() {
 
   const arg = args[0]!
 
-  const tests: Array<Test> = []
+  const tests: Array<Test> = await base_tests()
 
-  if (arg === "all") {
+  if (arg === "base") {
+    // do nothing
+  } else if (arg === "all") {
     for (const problem of await getProblems()) {
       tests.push(...(await construct_tests(problem)))
     }
@@ -119,6 +122,44 @@ function TestTreeToTests(tree: TestTree): Array<Test> {
 
   traverse(tree)
   return final_tests
+}
+
+async function base_tests(): Promise<Array<Test>> {
+  const tree: TestTree = {
+    tests: [
+      {
+        name: "assert problems dir exists",
+        callable: async () => {
+          const { error } = await neverThrow(assertDirExists(PROBLEMS_DIR))
+          if (error) return error.message
+        },
+      },
+      {
+        name: "series",
+        callable: async () => {
+          if (
+            new Set(SeriesList.map((s) => s.slug)).size !== SeriesList.length
+          ) {
+            return "duplicate series slugs"
+          }
+
+          const problems = await getProblems()
+          for (const series of SeriesList) {
+            if (new Set(series.problems).size !== series.problems.length) {
+              return `(series: ${series.slug}) duplicate problem slugs`
+            }
+
+            for (const problemSlug of series.problems) {
+              if (!problems.includes(problemSlug))
+                return `(series: ${series.slug}) problem slug ${problemSlug} not found`
+            }
+          }
+        },
+      },
+    ],
+  }
+
+  return TestTreeToTests(tree)
 }
 
 async function construct_tests(slug: string): Promise<Array<Test>> {

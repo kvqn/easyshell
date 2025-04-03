@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "APP=script tsx ./scripts/build.ts",
     "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
     "cache:website": "APP=script tsx ./scripts/cache-website.ts",
-    "build": "APP=script tsx ./scripts/build.ts",
-    "test": "APP=script tsx ./scripts/test.ts",
-    "new": "APP=script tsx ./scripts/new.ts"
+    "new": "APP=script tsx ./scripts/new.ts",
+    "test": "APP=script tsx ./scripts/test.ts"
   },
   "dependencies": {
     "@easyshell/env": "0.1.0",
@@ -16,7 +16,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "execa": "^9.5.2",
-    "@types/node": "^20.17.16"
+    "@types/node": "^20.17.16",
+    "execa": "^9.5.2"
   }
 }
