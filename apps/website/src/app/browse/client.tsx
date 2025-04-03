@@ -1,6 +1,6 @@
 "use client"
 
-import { ProblemStatus } from "@/components/problem-status"
+import { ProblemDifficulty, ProblemStatus } from "@/components/problem-status"
 import { Input } from "@/components/ui/input"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import type { getPublicProblemInfo } from "@/lib/server/problems"
@@ -118,7 +118,10 @@ function Problem({
       className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex"
     >
       <div className="w-20 text-center">{info.id}</div>
-      <div className="grow">{info.slug}</div>
+      <div className="grow flex items-center">
+        <span className="grow">{info.slug}</span>
+        <ProblemDifficulty difficulty={info.difficulty} />
+      </div>
       <div className="w-10 lg:w-20 flex items-center justify-center">
         <ProblemStatus status={info.status} />
       </div>

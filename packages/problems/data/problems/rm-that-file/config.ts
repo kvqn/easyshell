@@ -30,6 +30,7 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Remove That File",
   description: `A single file is standing in the way—time to delete it and clear the clutter! 🗑️`,
+  difficulty: "easy",
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),

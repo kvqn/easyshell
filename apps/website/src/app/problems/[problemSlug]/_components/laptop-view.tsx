@@ -30,7 +30,7 @@ export async function LaptopView({
         <Problem slug={problemSlug} />
       </ResizablePanel>
       <ResizableHandle />
-      <ResizablePanel className="flex w-full flex-col p-4">
+      <ResizablePanel className="flex w-full flex-col p-2">
         <ProblemPageTabs
           tabs={[
             {

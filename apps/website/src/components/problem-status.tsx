@@ -28,3 +28,19 @@ export function ProblemStatus({ status }: { status?: "attempted" | "solved" }) {
   }
   return null
 }
+
+export function ProblemDifficulty({
+  difficulty,
+}: {
+  difficulty: "easy" | "medium" | "hard"
+}) {
+  if (difficulty === "easy") {
+    return <span className="text-green-400 text-sm">easy</span>
+  }
+  if (difficulty === "medium") {
+    return <span className="text-yellow-400 text-sm">medium</span>
+  }
+  if (difficulty === "hard") {
+    return <span className="text-red-400 text-sm">hard</span>
+  }
+}

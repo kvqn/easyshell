@@ -1,9 +1,10 @@
 "use client"
 
+import { EasyTooltip } from "@/components/ui/tooltip"
 import { toggleBookmark } from "@/lib/server/actions/toggle-bookmark"
 import { cn } from "@/lib/utils"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PiBookmarkSimple, PiBookmarkSimpleDuotone } from "react-icons/pi"
 import { toast } from "sonner"
 
@@ -33,19 +34,34 @@ export function ProblemBookmark({
   }
 
   return (
-    <div className="relative group cursor-pointer w-fit h-fit" onClick={handle}>
-      <PiBookmarkSimple className="text-3xl" />
-      <PiBookmarkSimpleDuotone
-        className={cn(
-          "absolute text-3xl transition-opacity top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-          {
-            "opacity-0": !bookmarked,
-            "opacity-25": inBetween && bookmarked,
-            "opacity-75": inBetween && !bookmarked,
-            "opacity-100": bookmarked,
-          },
-        )}
-      />
-    </div>
+    <EasyTooltip
+      tip={
+        bookmarked
+          ? inBetween
+            ? "Removing Bookmark..."
+            : "Remove Bookmark"
+          : inBetween
+            ? "Adding Bookmark..."
+            : "Add Bookmark"
+      }
+    >
+      <div
+        className="relative group cursor-pointer w-fit h-fit"
+        onClick={handle}
+      >
+        <PiBookmarkSimple className="text-3xl" />
+        <PiBookmarkSimpleDuotone
+          className={cn(
+            "absolute text-3xl transition-opacity top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            {
+              "opacity-0": !bookmarked,
+              "opacity-25": inBetween && bookmarked,
+              "opacity-75": inBetween && !bookmarked,
+              "opacity-100": bookmarked,
+            },
+          )}
+        />
+      </div>
+    </EasyTooltip>
   )
 }
