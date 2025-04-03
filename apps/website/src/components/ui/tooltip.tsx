@@ -69,8 +69,20 @@ export function EasyTooltip({
 }) {
   return (
     <Tooltip open={tip === undefined ? false : undefined}>
-      <TooltipTrigger>{children}</TooltipTrigger>
-      <TooltipContent>{tip}</TooltipContent>
+      <TooltipTrigger
+        onClick={(e) => {
+          e.preventDefault()
+        }}
+      >
+        {children}
+      </TooltipTrigger>
+      <TooltipContent
+        onPointerDownOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
+        {tip}
+      </TooltipContent>
     </Tooltip>
   )
 }
