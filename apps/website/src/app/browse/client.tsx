@@ -30,9 +30,9 @@ export function ProblemList({
       problems.filter((problem) =>
         problem.slug
           .toLowerCase()
-          .replace("-", "")
+          .replaceAll("-", "")
           .includes(
-            filter.search.toLowerCase().replace("-", "").replace(" ", ""),
+            filter.search.toLowerCase().replaceAll("-", "").replaceAll(" ", ""),
           ),
       ),
     )
