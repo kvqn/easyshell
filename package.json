@@ -21,6 +21,7 @@
   "scripts": {
     "lint:tsc": "npx tsc --noEmit",
     "lint:next": "cd apps/website && next lint",
+    "lint": "npm run lint:tsc && npm run lint:next",
     "format:check": "npx prettier --check . && gofmt -l -s .",
     "format:write": "npx prettier --write . && gofmt -w -s ."
   }
