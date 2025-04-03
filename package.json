@@ -12,17 +12,18 @@
     "apps/website",
     "apps/queue-processor"
   ],
+  "scripts": {
+    "format:check": "npx prettier --check . && gofmt -l -s .",
+    "format:write": "npx prettier --write . && gofmt -w -s .",
+    "lint": "npm run lint:tsc && npm run lint:next",
+    "lint:next": "cd apps/website && next lint",
+    "lint:tsc": "npx tsc --noEmit"
+  },
   "devDependencies": {
     "@typescript-eslint/typescript-estree": "^8.25.0",
     "prettier": "^3.4.2",
+    "prettier-plugin-packagejson": "^2.5.10",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tsx": "^4.19.3"
-  },
-  "scripts": {
-    "lint:tsc": "npx tsc --noEmit",
-    "lint:next": "cd apps/website && next lint",
-    "lint": "npm run lint:tsc && npm run lint:next",
-    "format:check": "npx prettier --check . && gofmt -l -s .",
-    "format:write": "npx prettier --write . && gofmt -w -s ."
   }
 }

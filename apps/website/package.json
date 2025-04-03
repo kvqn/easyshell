@@ -4,13 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev --ip 0.0.0.0",
-    "deploy": "npm run pages:build && wrangler pages deploy",
     "build": "SKIP_ENV_VALIDATION=1 next build",
     "cache": "cd ../../packages/problems && npm run cache:website",
+    "deploy": "npm run pages:build && wrangler pages deploy",
     "dev": "next dev",
     "lint": "next lint",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev --ip 0.0.0.0",
     "start": "next start"
   },
   "dependencies": {
