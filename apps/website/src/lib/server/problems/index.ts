@@ -83,3 +83,8 @@ export async function getProblemHintCount(slug: string): Promise<number> {
   if (count === undefined) throw new Error("Problem not found")
   return count
 }
+
+export async function getProblemDifficulty(slug: string) {
+  const info = await getProblemInfo(slug)
+  return info.difficulty
+}
