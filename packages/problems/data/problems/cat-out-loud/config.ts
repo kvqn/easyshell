@@ -27,7 +27,7 @@ const config: ProblemConfig = {
   title: "Read a File",
   description: `Bring the contents of any file right into your terminal view. No GUIs allowed! 🖥️`,
   difficulty: "easy",
-  tags: ["Basics"],
+  tags: ["cat"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: true }),

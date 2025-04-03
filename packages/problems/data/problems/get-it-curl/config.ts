@@ -45,7 +45,7 @@ const config: ProblemConfig = {
   title: "Get it Curl",
   description: `Dig up the freshest hot take.`,
   difficulty: "medium",
-  tags: ["Basics", "Networking"],
+  tags: ["curl", "jq"],
   testcases: [
     await testcaseConfig({
       id: 1,

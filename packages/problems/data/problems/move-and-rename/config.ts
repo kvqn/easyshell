@@ -29,7 +29,7 @@ const config: ProblemConfig = {
   title: "Move And Rename",
   description: `Sometimes, files end up in the wrong place with the wrong name.`,
   difficulty: "easy",
-  tags: ["Basics"],
+  tags: ["mv"],
   testcases: [await testcaseConfig({ id: 1, isPublic: true })],
   tests: [{ testcase: 1, pass: true, input: "mv index.htlm index.html" }],
 }
