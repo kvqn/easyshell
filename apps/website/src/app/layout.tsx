@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/sonner"
+import { TooltipProvider } from "@/components/ui/tooltip"
 import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"
@@ -36,8 +37,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light">
           <SessionProvider>
             <Toaster />
-            <Navbar />
-            <div className="grow">{children}</div>
+            <TooltipProvider>
+              <Navbar />
+              <div className="grow">{children}</div>
+            </TooltipProvider>
           </SessionProvider>
         </ThemeProvider>
       </body>

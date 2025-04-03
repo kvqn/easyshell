@@ -5,7 +5,7 @@ import { GrInProgress } from "react-icons/gr"
 
 function ProblemSolved() {
   return (
-    <EasyTooltip text="Solved">
+    <EasyTooltip tip="Solved">
       <FaCircleCheck className="text-green-500" />
     </EasyTooltip>
   )
@@ -13,7 +13,7 @@ function ProblemSolved() {
 
 function ProblemAttempted() {
   return (
-    <EasyTooltip text="Attempted">
+    <EasyTooltip tip="Attempted">
       <GrInProgress className="text-yellow-500" />
     </EasyTooltip>
   )
