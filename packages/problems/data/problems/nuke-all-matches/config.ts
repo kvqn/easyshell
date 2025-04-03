@@ -30,6 +30,7 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Nuke All Matches",
   description: `Some files are just junk, and they’re everywhere! Find them all and wipe them out. 💥`,
+  difficulty: "easy",
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),

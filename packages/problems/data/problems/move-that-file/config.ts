@@ -32,6 +32,7 @@ const config: ProblemConfig = {
   slug: "move-that-file",
   title: "Move That File",
   description: `Move a file from one location to another—because sometimes, things just need to be somewhere else. 🚀`,
+  difficulty: "easy",
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),

@@ -45,6 +45,7 @@ export async function getPublicProblemInfo(slug: string) {
     slug: info.slug,
     title: info.title,
     description: info.description,
+    difficulty: info.difficulty,
     tags: info.tags,
   }
 }

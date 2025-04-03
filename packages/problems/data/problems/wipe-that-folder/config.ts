@@ -30,6 +30,7 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Wipe That Folder",
   description: `A whole folder needs to be erased. Make sure it’s gone—completely! 🚮`,
+  difficulty: "easy",
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),

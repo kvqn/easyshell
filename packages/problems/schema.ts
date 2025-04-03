@@ -13,6 +13,7 @@ export const ProblemConfigSchema = z
       .refine((val) => !val.startsWith(" "))
       .refine((val) => !val.endsWith(" ")),
     description: z.string().nonempty(),
+    difficulty: z.enum(["easy", "medium", "hard"]),
     tags: z
       .array(
         z
@@ -70,6 +71,7 @@ export const ProblemInfoSchema = z.object({
     .refine((val) => !val.startsWith(" "))
     .refine((val) => !val.endsWith(" ")),
   description: z.string().nonempty(),
+  difficulty: z.enum(["easy", "medium", "hard"]),
   tags: z
     .array(
       z

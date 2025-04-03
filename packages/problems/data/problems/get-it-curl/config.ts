@@ -44,6 +44,7 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Get it Curl",
   description: `Dig up the freshest hot take.`,
+  difficulty: "medium",
   tags: ["Basics", "Networking"],
   testcases: [
     await testcaseConfig({
