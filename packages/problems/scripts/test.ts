@@ -39,6 +39,12 @@ async function main() {
     process.exit(1)
   }
 
+  if (process.env.SKIP_SUBMISSION_TESTS) {
+    console.info(
+      "Skipping submission tests because SKIP_SUBMISSION_TESTS is set.",
+    )
+  }
+
   const arg = args[0]!
 
   const tests: Array<Test> = await base_tests()
@@ -199,38 +205,54 @@ async function construct_tests(slug: string): Promise<Array<Test>> {
         ],
         children: await (async (): Promise<Array<Test>> => {
           const tests: Array<Test> = []
-          const problemInfo = await getProblemInfo(slug)
 
-          if (!problemInfo.tests) problemInfo.tests = []
-          problemInfo.tests.push({ testcase: "all", pass: false, input: "" })
+          tests.push({
+            name: `(${slug}) import`,
+            callable: async () => {
+              const { error, data } = await neverThrow(getProblemInfo(slug))
+              if (error) return error.message
+              if (!data) return "no data found"
+            },
+          })
 
-          for (const { testcase, input, pass, index } of problemInfo.tests.map(
-            (t, i) => ({
+          if (!process.env.SKIP_SUBMISSION_TESTS) {
+            const problemInfo = await getProblemInfo(slug)
+
+            if (!problemInfo.tests) problemInfo.tests = []
+            problemInfo.tests.push({ testcase: "all", pass: false, input: "" })
+
+            for (const {
+              testcase,
+              input,
+              pass,
+              index,
+            } of problemInfo.tests.map((t, i) => ({
               ...t,
               index: i,
-            }),
-          )) {
-            if (testcase === "all") {
-              for (const { id: testcaseId } of problemInfo.testcases) {
+            }))) {
+              if (testcase === "all") {
+                for (const { id: testcaseId } of problemInfo.testcases) {
+                  tests.push({
+                    name: `(${slug}) test-${index}-testcase-${testcaseId}`,
+                    callable: () =>
+                      _runSubmissionTest(slug, testcaseId, input, pass),
+                  })
+                }
+              } else if (testcase instanceof Array) {
+                for (const testcaseId of testcase) {
+                  tests.push({
+                    name: `(${slug}) test-${index}-testcase-${testcaseId}`,
+                    callable: () =>
+                      _runSubmissionTest(slug, testcaseId, input, pass),
+                  })
+                }
+              } else {
                 tests.push({
-                  name: `(${slug}) test-${index}-testcase-${testcaseId}`,
+                  name: `(${slug}) test-${index}-testcase-${testcase}`,
                   callable: () =>
-                    _runSubmissionTest(slug, testcaseId, input, pass),
+                    _runSubmissionTest(slug, testcase, input, pass),
                 })
               }
-            } else if (testcase instanceof Array) {
-              for (const testcaseId of testcase) {
-                tests.push({
-                  name: `(${slug}) test-${index}-testcase-${testcaseId}`,
-                  callable: () =>
-                    _runSubmissionTest(slug, testcaseId, input, pass),
-                })
-              }
-            } else {
-              tests.push({
-                name: `(${slug}) test-${index}-testcase-${testcase}`,
-                callable: () => _runSubmissionTest(slug, testcase, input, pass),
-              })
             }
           }
 
