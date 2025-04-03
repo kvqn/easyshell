@@ -1,5 +1,6 @@
 "use client"
 
+import { ClientOnly } from "@/components/client-only"
 import type { getUserSubmissions } from "@/lib/server/queries"
 
 import { PastSubmissions } from "./past-submissions"
@@ -27,7 +28,9 @@ export function Submissions({
     return (
       <Suspense fallback={<div>Loading</div>}>
         <div className="flex h-full flex-col gap-4">
-          <SubmitPrompt problemId={problemId} />
+          <ClientOnly>
+            <SubmitPrompt problemId={problemId} />
+          </ClientOnly>
           <PastSubmissions
             problemSlug={problemSlug}
             pastSubmissions={pastSubmissions}
