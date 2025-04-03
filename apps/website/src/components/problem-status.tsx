@@ -1,40 +1,21 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { EasyTooltip } from "./ui/tooltip"
 
 import { FaCircleCheck } from "react-icons/fa6"
 import { GrInProgress } from "react-icons/gr"
 
 function ProblemSolved() {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <FaCircleCheck className="text-green-500" />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Solved</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <EasyTooltip text="Solved">
+      <FaCircleCheck className="text-green-500" />
+    </EasyTooltip>
   )
 }
 
 function ProblemAttempted() {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <GrInProgress className="text-yellow-500" />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Attempted</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <EasyTooltip text="Attempted">
+      <GrInProgress className="text-yellow-500" />
+    </EasyTooltip>
   )
 }
 
