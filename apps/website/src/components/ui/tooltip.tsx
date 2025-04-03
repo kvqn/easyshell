@@ -61,18 +61,16 @@ function TooltipContent({
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
 
 export function EasyTooltip({
-  text,
+  tip,
   children,
 }: {
-  text: string
+  tip?: React.ReactNode
   children: React.ReactNode
 }) {
   return (
-    <Tooltip>
+    <Tooltip open={tip === undefined ? false : undefined}>
       <TooltipTrigger>{children}</TooltipTrigger>
-      <TooltipContent>
-        <p>{text}</p>
-      </TooltipContent>
+      <TooltipContent>{tip}</TooltipContent>
     </Tooltip>
   )
 }

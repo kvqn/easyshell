@@ -64,7 +64,7 @@ export function ProblemList({
                 }}
               />
             </div>
-            <EasyTooltip text="Search">
+            <EasyTooltip tip="Search">
               <div
                 className="relative h-4 w-4 cursor-pointer"
                 onClick={() => {
