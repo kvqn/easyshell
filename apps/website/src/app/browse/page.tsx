@@ -3,7 +3,11 @@ import { SeriesList } from "@easyshell/problems/data/series"
 import { TextBackground } from "@/components/backgrounds/text-background"
 import { Progress } from "@/components/ui/progress"
 import { ensureAuth } from "@/lib/server/auth"
-import { getProblems, getPublicProblemInfo } from "@/lib/server/problems"
+import {
+  getAllTags,
+  getProblems,
+  getPublicProblemInfo,
+} from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 
 import { ProblemList } from "./client"
@@ -29,6 +33,7 @@ export default async function Page() {
       }),
     )
   ).sort((a, b) => a.id - b.id)
+  const tags = await getAllTags()
 
   return (
     <div className="flex flex-col gap-4">
@@ -46,7 +51,7 @@ export default async function Page() {
         ))}
       </div>
 
-      <ProblemList problems={problems} />
+      <ProblemList problems={problems} tags={tags} />
     </div>
   )
 }

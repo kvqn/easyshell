@@ -114,3 +114,14 @@ export async function getProblemMetadata(slug: string): Promise<{
     series,
   }
 }
+
+export async function getAllTags() {
+  const tags = new Set<string>()
+  for (const problem of await getProblems()) {
+    const info = await getProblemInfo(problem)
+    for (const tag of info.tags) {
+      tags.add(tag)
+    }
+  }
+  return Array.from(tags)
+}

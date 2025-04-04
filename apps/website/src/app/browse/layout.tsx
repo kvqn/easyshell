@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Browse Problems
         </h1>
       </div>
-      <div className="w-[85%] min-w-80 max-w-3xl">{children}</div>
+      <div className="w-[85%] min-w-80">{children}</div>
     </div>
   )
 }
