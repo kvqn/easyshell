@@ -2,16 +2,15 @@
 
 import { BadgeCheckbox } from "@/components/badge-checkbox"
 import { ProblemDifficulty, ProblemStatus } from "@/components/problem-status"
+import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { EasyTooltip } from "@/components/ui/tooltip"
 import type { getPublicProblemInfo } from "@/lib/server/problems"
 import { cn } from "@/lib/utils"
 
 import Link from "next/link"
-import { useEffect, useRef, useState } from "react"
-import { PiMagnifyingGlass, PiMagnifyingGlassDuotone } from "react-icons/pi"
+import { useEffect, useState } from "react"
+import { PiMagnifyingGlass } from "react-icons/pi"
 
 export function ProblemList({
   problems,
@@ -24,8 +23,6 @@ export function ProblemList({
   >
   tags: Array<string>
 }) {
-  const [searchOpen, setSearchOpen] = useState(false)
-  const searchRef = useRef<HTMLInputElement | null>(null)
   const [filter, setFilter] = useState<{
     search: string
     difficulty: { easy: boolean; medium: boolean; hard: boolean }
@@ -36,13 +33,17 @@ export function ProblemList({
     tags: new Set(tags),
   })
 
+  const [options, setOptions] = useState<{ showTags: boolean }>({
+    showTags: false,
+  })
+
   const [filteredProblems, setFilteredProblems] = useState(problems)
 
   useEffect(() => {
     setFilteredProblems(
       problems.filter(
         (problem) =>
-          problem.slug
+          (problem.slug
             .toLowerCase()
             .replaceAll("-", "")
             .includes(
@@ -50,7 +51,16 @@ export function ProblemList({
                 .toLowerCase()
                 .replaceAll("-", "")
                 .replaceAll(" ", ""),
-            ) &&
+            ) ||
+            problem.title
+              .toLowerCase()
+              .replaceAll(" ", "")
+              .includes(
+                filter.search
+                  .toLowerCase()
+                  .replaceAll("-", "")
+                  .replaceAll(" ", ""),
+              )) &&
           filter.difficulty[problem.difficulty] &&
           new Set(problem.tags).intersection(filter.tags).size > 0,
       ),
@@ -66,62 +76,17 @@ export function ProblemList({
           <div className="w-20 text-center">#</div>
           <div className="grow flex justify-between items-center">
             <p className="grow">Title</p>
-            <div className="flex gap-2 items-center">
-              <div
-                className={cn("transition-all w-0", {
-                  "w-60 px-2": searchOpen,
-                  "overflow-hidden": !searchOpen,
-                })}
-              >
-                <Input
-                  ref={searchRef}
-                  className="h-6 px-2 py-0 font-normal outline-none ring-0"
-                  value={filter.search}
-                  onChange={(e) => {
-                    setFilter((prev) => ({ ...prev, search: e.target.value }))
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Escape") setSearchOpen(false)
-                    e.stopPropagation()
-                  }}
-                />
-              </div>
-              <EasyTooltip tip="Search">
-                <div
-                  className="relative h-4 w-4 cursor-pointer"
-                  onClick={() => {
-                    if (searchOpen) {
-                      searchRef.current?.blur()
-                    } else {
-                      searchRef.current?.focus()
-                    }
-                    setSearchOpen((prev) => !prev)
-                  }}
-                >
-                  <PiMagnifyingGlass
-                    className={cn(
-                      "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity opacity-100 h-4 w-4",
-                      {
-                        "opacity-0": searchOpen,
-                      },
-                    )}
-                  />
-                  <PiMagnifyingGlassDuotone
-                    className={cn(
-                      "absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity opacity-0 h-4 w-4",
-                      { "opacity-100": searchOpen },
-                    )}
-                  />
-                </div>
-              </EasyTooltip>
-            </div>
           </div>
           <div className="w-10 lg:w-20 text-center">Status</div>
         </div>
         <div className="divide-y">
           {filteredProblems.length > 0 ? (
             filteredProblems.map((problem) => (
-              <Problem key={problem.id} info={problem} />
+              <Problem
+                key={problem.id}
+                info={problem}
+                showTags={options.showTags}
+              />
             ))
           ) : (
             <div className="h-40 w-full flex items-center justify-center text-neutral-400 text-xl">
@@ -136,9 +101,39 @@ export function ProblemList({
         </div>
         <Card className="py-2 px-4">
           <div className="font-semibold text-neutral-400 text-sm text-center">
+            OPTIONS
+          </div>
+          <div className="flex items-center justify-center gap-2 my-2 flex-col">
+            <div className="relative">
+              <Input
+                className="h-8 text-neutral-500 placeholder:text-neutral-400"
+                placeholder="Search"
+                value={filter.search}
+                onChange={(e) => {
+                  setFilter((prev) => ({ ...prev, search: e.target.value }))
+                }}
+              />
+              <PiMagnifyingGlass className="absolute top-1/2 -translate-y-1/2 right-2 text-neutral-400" />
+            </div>
+            <BadgeCheckbox
+              value={options.showTags}
+              onValueChange={(val) => {
+                setOptions((prev) => ({
+                  ...prev,
+                  showTags: val,
+                }))
+              }}
+              className="text-white bg-neutral-800 hover:bg-neutral-700"
+            >
+              Show Tags
+            </BadgeCheckbox>
+          </div>
+        </Card>
+        <Card className="py-2 px-4">
+          <div className="font-semibold text-neutral-400 text-sm text-center">
             DIFFICULTY
           </div>
-          <div className="flex flex-col gap-1 items-center my-2">
+          <div className="flex flex-col gap-2 items-center my-2">
             {difficulties.map((d) => (
               <BadgeCheckbox
                 key={d}
@@ -219,20 +214,38 @@ export function ProblemList({
 
 function Problem({
   info,
+  showTags,
 }: {
   info: Awaited<ReturnType<typeof getPublicProblemInfo>> & {
     status?: "attempted" | "solved"
   }
+  showTags: boolean
 }) {
   return (
     <Link
       href={`/problems/${info.slug}`}
       className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex"
     >
-      <div className="w-20 text-center">{info.id}</div>
-      <div className="grow flex items-center">
-        <span className="grow">{info.slug}</span>
-        <ProblemDifficulty difficulty={info.difficulty} />
+      <div className="w-20 font-geist-mono flex items-center justify-center">
+        {info.id}
+      </div>
+      <div className="flex flex-col grow">
+        <div className="flex items-center justify-between px-2">
+          <span>{info.title}</span>
+          <ProblemDifficulty difficulty={info.difficulty} />
+        </div>
+        {showTags && (
+          <div className="flex items-center justify-between px-2">
+            <div className="text-xs text-neutral-400">{info.slug}</div>
+            <div className="flex gap-2 items-center">
+              {info.tags.map((t) => (
+                <Badge className="py-0 px-2 text-xs" key={t}>
+                  {t}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div className="w-10 lg:w-20 flex items-center justify-center">
         <ProblemStatus status={info.status} />
