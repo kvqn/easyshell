@@ -3,7 +3,11 @@ import { SeriesList } from "@easyshell/problems/data/series"
 import { TextBackground } from "@/components/backgrounds/text-background"
 import { Progress } from "@/components/ui/progress"
 import { ensureAuth } from "@/lib/server/auth"
-import { getProblems, getPublicProblemInfo } from "@/lib/server/problems"
+import {
+  getAllTags,
+  getProblems,
+  getPublicProblemInfo,
+} from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 
 import { ProblemList } from "./client"
@@ -29,10 +33,15 @@ export default async function Page() {
       }),
     )
   ).sort((a, b) => a.id - b.id)
+  const tags = await getAllTags()
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-4">
+    <div className="flex flex-col">
+      <div className="font-clash-display text-2xl font-semibold">Series</div>
+      <div className="text-neutral-500 font-clash-display">
+        Curated list of problems to master specific topics.
+      </div>
+      <div className="flex gap-4 mt-4">
         {SeriesList.map((series) => (
           <SeriesCard
             key={series.slug}
@@ -45,8 +54,13 @@ export default async function Page() {
           />
         ))}
       </div>
-
-      <ProblemList problems={problems} />
+      <div className="font-clash-display text-2xl font-semibold mt-4">
+        Problems
+      </div>
+      <div className="text-neutral-500 font-clash-display mb-4">
+        Browse all problems and filter by tags.
+      </div>
+      <ProblemList problems={problems} tags={tags} />
     </div>
   )
 }
