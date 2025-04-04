@@ -1,3 +1,4 @@
+import { ProblemAbout } from "./about"
 import { ProblemBody } from "./body"
 import { ProblemHeading } from "./heading"
 import { ProblemHints } from "./hints"
@@ -11,6 +12,7 @@ export function Problem({ slug }: { slug: string }) {
         <ProblemHeading slug={slug} />
         <ProblemBody slug={slug} />
         <ProblemHints slug={slug} />
+        <ProblemAbout slug={slug} />
       </div>
     </Suspense>
   )

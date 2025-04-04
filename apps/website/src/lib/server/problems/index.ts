@@ -1,3 +1,4 @@
+import { SeriesList } from "@easyshell/problems/data/series"
 import { ProblemInfoSchema } from "@easyshell/problems/schema"
 
 import { getUserSubmissionStats } from "@/lib/server/queries"
@@ -94,4 +95,22 @@ export async function getProblemDifficulty(slug: string) {
 export async function getProblemStatus(slug: string, userId: string) {
   const stats = await getUserSubmissionStats(userId)
   return stats.problems[slug]
+}
+
+export async function getProblemMetadata(slug: string): Promise<{
+  tags: Array<string>
+  series: Array<{ slug: string; name: string }>
+}> {
+  const tags = (await getProblemInfo(slug)).tags
+  const series = SeriesList.filter((s) => s.problems.includes(slug)).map(
+    (s) => ({
+      slug: s.slug,
+      name: s.name,
+    }),
+  )
+
+  return {
+    tags,
+    series,
+  }
 }

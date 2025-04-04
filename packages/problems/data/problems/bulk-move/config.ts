@@ -34,7 +34,7 @@ const config: ProblemConfig = {
   title: "Bulk Move",
   description: `A scattered mess of log files? Gather them all into one place while leaving everything else untouched! 📂`,
   difficulty: "easy",
-  tags: ["Basics"],
+  tags: ["mv", "find"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: true }),

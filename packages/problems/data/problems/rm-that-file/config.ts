@@ -31,7 +31,7 @@ const config: ProblemConfig = {
   title: "Remove That File",
   description: `A single file is standing in the way—time to delete it and clear the clutter! 🗑️`,
   difficulty: "easy",
-  tags: ["Basics"],
+  tags: ["rm"],
   testcases: [
     await testcaseConfig({ id: 1, isPublic: true }),
     await testcaseConfig({ id: 2, isPublic: true }),

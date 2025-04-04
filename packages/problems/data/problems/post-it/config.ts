@@ -43,7 +43,7 @@ const config: ProblemConfig = {
   title: "Make a Post Request",
   description: `Good job on fetching the most recent post! Now, let's make a post of our own.`,
   difficulty: "easy",
-  tags: ["Basics"],
+  tags: ["curl", "jq"],
   testcases: [
     await testcaseConfig({
       id: 1,
