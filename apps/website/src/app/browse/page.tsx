@@ -36,8 +36,12 @@ export default async function Page() {
   const tags = await getAllTags()
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-4">
+    <div className="flex flex-col">
+      <div className="font-clash-display text-2xl font-semibold">Series</div>
+      <div className="text-neutral-500 font-clash-display">
+        Curated list of problems to master specific topics.
+      </div>
+      <div className="flex gap-4 mt-4">
         {SeriesList.map((series) => (
           <SeriesCard
             key={series.slug}
@@ -50,7 +54,12 @@ export default async function Page() {
           />
         ))}
       </div>
-
+      <div className="font-clash-display text-2xl font-semibold mt-4">
+        Problems
+      </div>
+      <div className="text-neutral-500 font-clash-display mb-4">
+        Browse all problems and filter by tags.
+      </div>
       <ProblemList problems={problems} tags={tags} />
     </div>
   )
