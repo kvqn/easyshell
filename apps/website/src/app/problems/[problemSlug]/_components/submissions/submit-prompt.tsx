@@ -42,7 +42,9 @@ export function SubmitPrompt({ problemId }: { problemId: number }) {
             if (submitting) return
             if (
               e.key === "Enter" &&
-              ((os === "windows" && e.ctrlKey) || (os === "mac" && e.metaKey))
+              ((os === "windows" && e.ctrlKey) ||
+                (os === "mac" && e.metaKey) ||
+                (os === "linux" && e.ctrlKey))
             ) {
               await handleSubmit()
             }

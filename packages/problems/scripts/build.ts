@@ -83,6 +83,9 @@ async function buildProblemTasks(problem: string): Promise<Array<Task>> {
     })
 
     const TESTCASE_DIR = `${PROBLEMS_DIR}/${problem}/testcases/${testcase.id}`
+    await mkdir(TESTCASE_DIR, {
+      recursive: true,
+    })
 
     let copyRoot = false
 
