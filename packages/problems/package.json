@@ -8,7 +8,7 @@
     "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
     "cache:website": "APP=script tsx ./scripts/cache-website.ts",
     "new": "APP=script tsx ./scripts/new.ts",
-    "test": "APP=script tsx ./scripts/test.ts"
+    "test": "npm run cache:queue-processor && APP=script tsx ./scripts/test.ts"
   },
   "dependencies": {
     "@easyshell/env": "0.1.0",

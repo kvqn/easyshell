@@ -30,7 +30,7 @@ export const SeriesList: Array<{
   {
     slug: "networking",
     name: "Networking",
-    problems: ["get-it-curl", "post-it"],
+    problems: ["get-it-curl", "post-it", "post-with-token"],
     description: "Download, upload, make some requests, do some queries.",
     image: "",
   },
