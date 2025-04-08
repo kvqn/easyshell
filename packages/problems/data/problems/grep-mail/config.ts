@@ -40,7 +40,7 @@ const config: ProblemConfig = {
   id: 13,
   slug: SLUG,
   title: "Extract All the E-mails",
-  description: `Your boss needs email addresses from a file to "gently encourage" potential investors and clients. Help him out by extracti!`,
+  description: `Your boss needs email addresses from a file to "gently encourage" potential investors and clients.`,
   difficulty: "easy",
   tags: ["grep"],
   testcases: [
