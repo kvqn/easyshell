@@ -18,7 +18,6 @@ async function testcaseConfig({
 }): Promise<ProblemConfig["testcases"][number]> {
   return {
     id: id,
-    folder: \`\${id}\`,
     public: isPublic,
     daemonSetup: async ({ image_dir, problem_dir, testcase_dir }) => {
       // setup the daemon, perform copies and string replacements.
@@ -34,6 +33,7 @@ const config: ProblemConfig = {
   slug: "__SLUG__",
   title: "__TITLE__",
   description: \`description\`,
+  difficulty: "easy",
   tags: ["Basics"],
   testcases: [
     await testcaseConfig({
