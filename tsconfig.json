@@ -12,7 +12,7 @@
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
     /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": ["dom", "dom.iterable", "ES2023"],
     "noEmit": true,
     "module": "esnext",
     "moduleResolution": "bundler",

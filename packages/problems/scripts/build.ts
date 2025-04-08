@@ -49,7 +49,7 @@ RUN go build -C /src/entrypoint -o /bin/entrypoint
 
 FROM alpine:3.21 AS base
 
-RUN apk add zip jq curl
+RUN apk add zip jq curl grep
 
 EXPOSE 8080
 
