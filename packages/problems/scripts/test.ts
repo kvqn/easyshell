@@ -162,6 +162,52 @@ async function base_tests(): Promise<Array<Test>> {
           }
         },
       },
+      {
+        name: "(unique problem slugs)",
+        callable: async () => {
+          const problems = await getProblems()
+          const problem_slugs = new Set<string>()
+          const duplicates = new Set<string>()
+          for (const problem of problems) {
+            if (problem_slugs.has(problem)) {
+              duplicates.add(problem)
+            }
+            problem_slugs.add(problem)
+          }
+          if (duplicates.size > 0)
+            return `duplicate problem slugs: ${Array.from(duplicates).join(
+              ", ",
+            )}`
+        },
+      },
+
+      {
+        name: "(unique problem ids)",
+        callable: async () => {
+          const problems = await getProblems()
+          const id_map = new Map<number, Set<string>>()
+          for (const problem of problems) {
+            const { error, data } = await neverThrow(getProblemInfo(problem))
+            if (error) return error.message
+            if (!data) return `no data found for problem ${problem}`
+            if (id_map.has(data.id)) {
+              id_map.get(data.id)!.add(problem)
+            } else {
+              id_map.set(data.id, new Set([problem]))
+            }
+          }
+          const duplicates = Array.from(id_map.entries()).filter(
+            ([_, problems]) => problems.size > 1,
+          )
+          if (duplicates.length > 0) {
+            return `duplicates found: ${duplicates
+              .map(
+                ([id, problems]) => `${id}: ${Array.from(problems).join(", ")}`,
+              )
+              .join("; ")}`
+          }
+        },
+      },
     ],
   }
 
