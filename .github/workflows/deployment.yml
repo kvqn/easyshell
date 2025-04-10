@@ -24,6 +24,7 @@ jobs:
       - run: npm run build all
         name: build problems
         working-directory: ./packages/problems
+      - run: docker network create easyshell
       - run: npm run test all
         name: test problems
         working-directory: ./packages/problems
