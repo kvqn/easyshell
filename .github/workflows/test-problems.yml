@@ -1,0 +1,22 @@
+name: Test Problems
+
+on:
+  pull_request:
+    paths:
+      - "packages/problems"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: linting
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm i
+        name: Install dependencies
+      - run: npm run build all
+        working-directory: ./packages/problems
+      - run: npm run test all
+        working-directory: ./packages/problems
