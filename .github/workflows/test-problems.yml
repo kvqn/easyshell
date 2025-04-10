@@ -3,7 +3,7 @@ name: Test Problems
 on:
   pull_request:
     paths:
-      - "packages/problems"
+      - "packages/problems/**"
 
 jobs:
   test:
