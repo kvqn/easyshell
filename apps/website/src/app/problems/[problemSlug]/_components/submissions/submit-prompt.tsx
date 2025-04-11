@@ -8,11 +8,19 @@ import { clientOS } from "@/lib/client"
 import { newSubmission } from "@/lib/server/actions/new-submission"
 
 import { usePathname, useRouter } from "next/navigation"
+import { usePostHog } from "posthog-js/react"
 import { useState } from "react"
 
-export function SubmitPrompt({ problemId }: { problemId: number }) {
+export function SubmitPrompt({
+  problemId,
+  problemSlug,
+}: {
+  problemId: number
+  problemSlug: string
+}) {
   const pathname = usePathname()
   const router = useRouter()
+  const posthog = usePostHog()
 
   const [input, setInput] = useState("")
   const [submitting, setSubmitting] = useState(false)
@@ -20,6 +28,9 @@ export function SubmitPrompt({ problemId }: { problemId: number }) {
 
   async function handleSubmit() {
     setSubmitting(true)
+    posthog.capture("submission", {
+      problemSlug,
+    })
     const resp = await newSubmission({
       problemId,
       input,
