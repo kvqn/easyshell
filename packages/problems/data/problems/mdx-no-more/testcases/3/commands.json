@@ -1,0 +1,25 @@
+{
+  "shell_tips": [
+    {
+      "command": "ls",
+      "description": "List files and directories."
+    },
+    {
+      "command": "cd",
+      "description": "Change directory."
+    },
+    {
+      "command": "grep",
+      "description": "Search for patterns in text."
+    },
+    {
+      "command": "chmod",
+      "description": "Change file permissions."
+    },
+    {
+      "command": "echo",
+      "description": "Print text to the terminal."
+    }
+  ],
+  "pro_tip": "Combine commands using pipes (|) for powerful workflows!"
+}

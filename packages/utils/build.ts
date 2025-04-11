@@ -31,3 +31,7 @@ export async function getFs(path: string): Promise<FsType> {
   }
   return fs
 }
+
+export function testcaseDir(problemSlug: string, testcaseId: number) {
+  return `${PROBLEMS_DIR}/${problemSlug}/testcases/${testcaseId}`
+}
