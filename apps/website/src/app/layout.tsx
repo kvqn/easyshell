@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"
 import { SessionProvider } from "./_components/session-provider"
+import { ClientSideProviders } from "./client-side-providers"
 
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
@@ -34,15 +35,17 @@ export default function RootLayout({
         />
       </head>
       <body className="flex h-screen flex-col font-geist ">
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <SessionProvider>
-            <Toaster />
-            <TooltipProvider>
-              <Navbar />
-              <div className="grow">{children}</div>
-            </TooltipProvider>
-          </SessionProvider>
-        </ThemeProvider>
+        <ClientSideProviders>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            <SessionProvider>
+              <Toaster />
+              <TooltipProvider>
+                <Navbar />
+                <div className="grow">{children}</div>
+              </TooltipProvider>
+            </SessionProvider>
+          </ThemeProvider>
+        </ClientSideProviders>
       </body>
     </html>
   )

@@ -14,4 +14,6 @@ interface CloudflareEnv {
   SESSION_MANAGER_URL: string
   APP: string
   ASSETS: Fetcher
+  NEXT_PUBLIC_POSTHOG_HOST: string
+  NEXT_PUBLIC_POSTHOG_KEY: string
 }
