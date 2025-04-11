@@ -6,4 +6,4 @@ You’ve got a bunch of `.mdx` files sitting in a directory, but your website is
 
 1. Rename all `.mdx` files to `.md`, keeping their original filenames intact.
 
-2. Ensure no other file types are affected during the renaming process.
+2. Ensure no other filetypes are affected during the renaming process.
