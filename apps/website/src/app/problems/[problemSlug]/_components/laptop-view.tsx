@@ -12,6 +12,8 @@ import { Submissions } from "./submissions"
 import { ProblemPageTabs } from "./tabs"
 import { TestcaseTabs } from "./testcases/tabs"
 
+import { Suspense } from "react"
+
 export async function LaptopView({
   problemId,
   problemSlug,
@@ -37,22 +39,26 @@ export async function LaptopView({
               title: "Testcases",
               value: "testcases",
               content: (
-                <TestcaseTabs
-                  problemId={problemId}
-                  problemSlug={problemSlug}
-                  testcases={testcaseIds}
-                />
+                <Suspense fallback={<div>Loading</div>}>
+                  <TestcaseTabs
+                    problemId={problemId}
+                    problemSlug={problemSlug}
+                    testcases={testcaseIds}
+                  />
+                </Suspense>
               ),
             },
             {
               title: "Submissions",
               value: "submissions",
               content: (
-                <Submissions
-                  problemId={problemId}
-                  problemSlug={problemSlug}
-                  pastSubmissions={submissions}
-                />
+                <Suspense fallback={<div>Loading</div>}>
+                  <Submissions
+                    problemId={problemId}
+                    problemSlug={problemSlug}
+                    pastSubmissions={submissions}
+                  />
+                </Suspense>
               ),
             },
           ]}

@@ -126,6 +126,7 @@ export function TestcaseTerminal({
 
   useEffect(() => {
     void (async () => {
+      setSession(null)
       const session = await getTerminalSession({
         problemId: problemId,
         testcaseId: testcase,
@@ -144,12 +145,13 @@ export function TestcaseTerminal({
           <div
             className={cn(
               "absolute left-1/2 top-1/2 z-20 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black",
-              {
-                "z-[-20]": !restarting,
-              },
             )}
           >
-            <p className="animate-spin text-white">Restarting</p>
+            {restarting ? (
+              <p className="animate-spin text-white">Restarting</p>
+            ) : (
+              <p className="text-neutral-600">Loading</p>
+            )}
           </div>
         </div>
         <div className="flex">
