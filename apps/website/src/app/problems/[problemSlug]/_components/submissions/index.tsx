@@ -29,7 +29,7 @@ export function Submissions({
       <Suspense fallback={<div>Loading</div>}>
         <div className="flex h-full flex-col gap-4">
           <ClientOnly>
-            <SubmitPrompt problemId={problemId} />
+            <SubmitPrompt problemId={problemId} problemSlug={problemSlug} />
           </ClientOnly>
           <PastSubmissions
             problemSlug={problemSlug}
