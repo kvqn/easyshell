@@ -17,7 +17,6 @@ export function ClientSideProviders({
   children: React.ReactNode
 }) {
   useEffect(() => {
-    console.log(env.NEXT_PUBLIC_POSTHOG_KEY, env.NEXT_PUBLIC_POSTHOG_HOST)
     posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
       api_host: env.NEXT_PUBLIC_POSTHOG_HOST,
       capture_pageview: false,
