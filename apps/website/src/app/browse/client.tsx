@@ -253,3 +253,68 @@ function Problem({
     </Link>
   )
 }
+
+export function ProblemListSkeleton() {
+  return (
+    <div className="flex gap-4">
+      <div className="w-full divide-y rounded-xl border overflow-hidden border-neutral-400 flex flex-col h-fit">
+        <div className="divide-x divide-neutral-300 *:p-2 flex font-semibold bg-gray-50 border-b border-b-neutral-400">
+          <div className="w-20 text-center">#</div>
+          <div className="grow flex justify-between items-center">
+            <p className="grow">Title</p>
+          </div>
+          <div className="w-10 lg:w-20 text-center">Status</div>
+        </div>
+        <div className="divide-y">
+          {Array.from({ length: 10 }).map((_, idx) => (
+            <ProblemSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+      <div className="w-60 flex flex-col gap-4">
+        <div className="text-center font-bold text-xl text-neutral-500">
+          FILTERS
+        </div>
+        <Card className="py-2 px-4">
+          <div className="font-semibold text-neutral-400 text-sm text-center">
+            OPTIONS
+          </div>
+          <div className="flex items-center justify-center gap-2 my-2 flex-col">
+            <div className="relative">
+              <Input
+                className="h-8 text-neutral-500 placeholder:text-neutral-400"
+                placeholder="Search"
+              />
+              <PiMagnifyingGlass className="absolute top-1/2 -translate-y-1/2 right-2 text-neutral-400" />
+            </div>
+          </div>
+        </Card>
+        <Card className="py-2 px-4">
+          <div className="font-semibold text-neutral-400 text-sm text-center">
+            DIFFICULTY
+          </div>
+          <div className="flex flex-col gap-2 items-center my-2"></div>
+        </Card>
+        <Card className="py-2 px-4">
+          <div className="font-semibold text-neutral-400 text-sm text-center">
+            TAGS
+          </div>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+function ProblemSkeleton() {
+  return (
+    <div className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex">
+      <div className="w-20 font-geist-mono flex items-center justify-center animate-pulse">
+        <div className="animate-pulse bg-neutral-100 h-6 w-8"></div>
+      </div>
+      <div className="flex flex-col grow">
+        <div className="flex items-center justify-between px-2 animate-pulse bg-neutral-100 h-6 w-40"></div>
+      </div>
+      <div className="w-10 lg:w-20"></div>
+    </div>
+  )
+}

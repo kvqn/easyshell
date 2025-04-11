@@ -3,6 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { useEffect } from "react"
 
 export function ProblemPageTabs({
   tabs,
@@ -17,10 +18,15 @@ export function ProblemPageTabs({
 
   const tab = searchParams.get("tab") ?? defaultValue
 
+  useEffect(() => {
+    for (const { value } of tabs) {
+      router.prefetch(`${pathname}?tab=${value}`)
+    }
+  }, [tabs, pathname, router])
+
   function setTab(newTab: string) {
     router.replace(`${pathname}?tab=${newTab}`)
   }
-
   return (
     <Tabs
       defaultValue={defaultValue}

@@ -51,6 +51,7 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-text-loop-left: text-loop-left 120s linear infinite;
   --animate-text-loop-right: text-loop-right 120s linear infinite;
+  --animate-progress: progress 3s linear;
 
   @keyframes accordion-down {
     from {
@@ -82,6 +83,15 @@
     }
     100% {
       transform: translateX(-25%);
+    }
+  }
+
+  @keyframes progress {
+    from {
+      width: 0;
+    }
+    to {
+      width: "60%";
     }
   }
 }

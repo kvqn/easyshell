@@ -5,7 +5,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { TestcaseTerminal } from "./terminal"
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 
 export function TestcaseTabs({
   problemId,
@@ -22,6 +22,12 @@ export function TestcaseTabs({
 
   const _testcase = searchParams.get("testcase")
   const testcase = _testcase ? parseInt(_testcase) : 1
+
+  useEffect(() => {
+    for (const tc of testcases) {
+      router.prefetch(`${pathname}?tab=testcases&testcase=${tc}`)
+    }
+  }, [testcases, pathname, router])
 
   function setTestcase(tc: string) {
     router.push(`${pathname}?tab=testcases&testcase=${tc}`)
