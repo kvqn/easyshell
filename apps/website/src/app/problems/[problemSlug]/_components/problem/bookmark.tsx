@@ -46,13 +46,13 @@ export function ProblemBookmark({
       }
     >
       <div
-        className="relative group cursor-pointer w-fit h-fit"
+        className="group relative h-fit w-fit cursor-pointer"
         onClick={handle}
       >
         <PiBookmarkSimple className="text-3xl" />
         <PiBookmarkSimpleDuotone
           className={cn(
-            "absolute text-3xl transition-opacity top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity",
             {
               "opacity-0": !bookmarked,
               "opacity-25": inBetween && bookmarked,

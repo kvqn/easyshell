@@ -21,7 +21,7 @@ function Logo() {
 
 export function Navbar() {
   return (
-    <div className="flex items-center gap-8 px-4 py-2 bg-transparent">
+    <div className="flex items-center gap-8 bg-transparent px-4 py-2">
       <Logo />
       <Link
         href="/problems"
@@ -82,7 +82,7 @@ async function User() {
 
   return (
     <div className="flex w-full flex-col gap-2">
-      <p className="py-2 px-4 border border-neutral-200 rounded-md text-neutral-500">
+      <p className="rounded-md border border-neutral-200 px-4 py-2 text-neutral-500">
         Not logged in
       </p>
       <Link href="/login" className="w-full">

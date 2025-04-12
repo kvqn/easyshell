@@ -82,13 +82,13 @@ export function SettingsNameImage({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-4">
-          <div className="relative h-20 w-20 group cursor-pointer overflow-hidden rounded-full">
-            <Avatar className="h-full w-full absolute group-hover:blur-xs transition-all">
+          <div className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full">
+            <Avatar className="absolute h-full w-full transition-all group-hover:blur-xs">
               <AvatarImage src={image ? URL.createObjectURL(image) : _image} />
               <AvatarFallback>{name[0]}</AvatarFallback>
             </Avatar>
             <label htmlFor="avatar-upload">
-              <div className="h-full w-full flex items-center justify-center top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity absolute cursor-pointer">
+              <div className="absolute top-0 left-0 flex h-full w-full cursor-pointer items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
                 <PiUploadBold className="text-xl text-white" />
               </div>
             </label>
@@ -111,41 +111,41 @@ export function SettingsNameImage({
           <div className="relative grow">
             <Input
               value={name}
-              className="text-gray-500 h-full w-full"
+              className="h-full w-full text-gray-500"
               onChange={(e) => setName(e.target.value)}
             />
             {checkValidUsername(name) ? (
-              <PiCheck className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600" />
+              <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
             ) : (
-              <PiX className="absolute right-4 top-1/2 -translate-y-1/2 text-red-600" />
+              <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />
             )}
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end gap-4 items-center">
+      <CardFooter className="flex items-center justify-end gap-4">
         <Popover>
           <PopoverTrigger asChild>
-            <div className="text-gray-500 hover:underline cursor-pointer text-xs lg:text-sm mr-auto lg:mr-0">
+            <div className="mr-auto cursor-pointer text-xs text-gray-500 hover:underline lg:mr-0 lg:text-sm">
               Need Help?
             </div>
           </PopoverTrigger>
           <PopoverContent>
             <div>
-              <h3 className="font-semibold text-sm">Username</h3>
-              <p className="text-neutral-400 text-xs">
+              <h3 className="text-sm font-semibold">Username</h3>
+              <p className="text-xs text-neutral-400">
                 The username must satisfy the following criteria
               </p>
-              <ul className="list-disc ml-4 text-xs mt-2">
+              <ul className="mt-2 ml-4 list-disc text-xs">
                 <li>Must be at least 3 and at most 20 characters.</li>
                 <li>
                   Must contain only alphanumerics, underscores and dashes.
                 </li>
               </ul>
-              <h3 className="font-semibold text-sm mt-4">Avatar Image</h3>
-              <p className="text-neutral-400 text-xs">
+              <h3 className="mt-4 text-sm font-semibold">Avatar Image</h3>
+              <p className="text-xs text-neutral-400">
                 The avatar image must satisfy the following criteria
               </p>
-              <ul className="list-disc ml-4 text-xs mt-2">
+              <ul className="mt-2 ml-4 list-disc text-xs">
                 <li>Size be under 1MB.</li>
                 <li>(Recommended) at least 400 x 400 pixels.</li>
               </ul>

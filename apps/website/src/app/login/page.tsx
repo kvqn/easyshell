@@ -28,8 +28,8 @@ export default function Page() {
           }}
         >
           <div className="relative h-8 w-6">
-            <PiDiscordLogo className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-            <PiDiscordLogoDuotone className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+            <PiDiscordLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+            <PiDiscordLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
           </div>
           <p className="grow text-center">Login with Discord</p>
         </Button>
@@ -41,8 +41,8 @@ export default function Page() {
           }}
         >
           <div className="relative h-8 w-6">
-            <PiGithubLogo className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-            <PiGithubLogoDuotone className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+            <PiGithubLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+            <PiGithubLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
           </div>
           <p className="grow text-center">Login with GitHub</p>
         </Button>
@@ -54,8 +54,8 @@ export default function Page() {
           }}
         >
           <div className="relative h-8 w-6">
-            <PiGoogleLogo className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-            <PiGoogleLogoDuotone className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+            <PiGoogleLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+            <PiGoogleLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
           </div>
           <p className="grow text-center">Login with Google</p>
         </Button>

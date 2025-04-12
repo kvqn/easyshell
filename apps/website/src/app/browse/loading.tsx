@@ -11,18 +11,18 @@ export default function Page() {
   return (
     <div className="flex flex-col">
       <div className="font-clash-display text-2xl font-semibold">Series</div>
-      <div className="text-neutral-500 font-clash-display">
+      <div className="font-clash-display text-neutral-500">
         Curated list of problems to master specific topics.
       </div>
-      <div className="flex gap-4 mt-4">
+      <div className="mt-4 flex gap-4">
         {SeriesList.map((series) => (
           <SeriesCardSkeleton key={series.slug} series={series} />
         ))}
       </div>
-      <div className="font-clash-display text-2xl font-semibold mt-4">
+      <div className="mt-4 font-clash-display text-2xl font-semibold">
         Problems
       </div>
-      <div className="text-neutral-500 font-clash-display mb-4">
+      <div className="mb-4 font-clash-display text-neutral-500">
         Browse all problems and filter by tags.
       </div>
       <ProblemListSkeleton />
@@ -39,17 +39,17 @@ function SeriesCardSkeleton({
     <Link
       href={`/series/${series.slug}`}
       key={series.slug}
-      className="border rounded-xl w-60 flex flex-col hover:bg-neutral-50 transition-colors overflow-hidden"
+      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50"
     >
       <div className="h-18 animate-pulse bg-neutral-100"></div>
-      <div className="px-4 py-2 flex flex-col">
-        <div className="flex justify-between items-center">
+      <div className="flex flex-col px-4 py-2">
+        <div className="flex items-center justify-between">
           <div className="font-clash-display font-semibold">{series.name}</div>
         </div>
-        <div className="text-sm text-neutral-600 text-justify">
+        <div className="text-justify text-sm text-neutral-600">
           {series.description}
         </div>
-        <Progress className="my-2 bg-emerald-100 animate-pulse" value={0} />
+        <Progress className="my-2 animate-pulse bg-emerald-100" value={0} />
       </div>
     </Link>
   )

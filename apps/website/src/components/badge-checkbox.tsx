@@ -18,7 +18,7 @@ export function BadgeCheckbox({
   return (
     <Badge
       className={cn(
-        "flex items-center gap-1 rounded-full cursor-pointer justify-between",
+        "flex cursor-pointer items-center justify-between gap-1 rounded-full",
         className,
       )}
       onClick={() => {

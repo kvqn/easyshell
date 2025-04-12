@@ -36,17 +36,17 @@ export default async function Page({
   ).sort((a, b) => a.id - b.id)
 
   return (
-    <div className="w-4/5 mx-auto pt-20">
+    <div className="mx-auto w-4/5 pt-20">
       <Back href="/browse" />
-      <div className="text-4xl font-bold mt-10 font-clash-display">
+      <div className="mt-10 font-clash-display text-4xl font-bold">
         {series.name}
       </div>
-      <div className="text-2xl font-clash-display">{series.description}</div>
-      <div className="mt-10 w-full divide-y rounded-xl border overflow-hidden border-neutral-400">
-        <div className="divide-x divide-neutral-300 *:p-2 flex font-semibold bg-gray-200 border-b border-b-neutral-400">
+      <div className="font-clash-display text-2xl">{series.description}</div>
+      <div className="mt-10 w-full divide-y overflow-hidden rounded-xl border border-neutral-400">
+        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-200 font-semibold *:p-2">
           <div className="w-20 text-center">#</div>
           <div className="grow">Title</div>
-          <div className="w-10 lg:w-20 text-center">Status</div>
+          <div className="w-10 text-center lg:w-20">Status</div>
         </div>
         <div className="divide-y">
           {problems.map((problem) => (
@@ -68,11 +68,11 @@ function Problem({
   return (
     <Link
       href={`/problems/${info.slug}`}
-      className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex"
+      className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100"
     >
       <div className="w-20 text-center">{info.id}</div>
       <div className="grow">{info.slug}</div>
-      <div className="w-10 lg:w-20 flex items-center justify-center">
+      <div className="flex w-10 items-center justify-center lg:w-20">
         <ProblemStatus status={info.status} />
       </div>
     </Link>

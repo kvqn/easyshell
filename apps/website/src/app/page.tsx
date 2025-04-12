@@ -11,10 +11,10 @@ export default function HomePage() {
   const [animationDone, setAnimationDone] = useState(false)
   return (
     <div className="flex h-full flex-col items-center justify-center gap-4">
-      <div className="h-full w-full fixed top-0 left-0 -z-10">
+      <div className="fixed top-0 left-0 -z-10 h-full w-full">
         <div className="relative h-full w-full overflow-hidden">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[20s] "></div>
-          <div className="absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/2 w-[150%] h-[150%] bg-emerald-100 rounded-full opacity-70 mix-blend-multiply filter blur-xl animate-blob animate-spin duration-[30s] "></div>
+          <div className="animate-blob absolute top-0 left-1/2 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[20s]"></div>
+          <div className="animate-blob absolute right-1/2 bottom-0 h-[150%] w-[150%] translate-x-1/2 translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[30s]"></div>
         </div>
       </div>
       <Heading setAnimationDone={setAnimationDone} />
@@ -37,8 +37,8 @@ export default function HomePage() {
               variant="secondary"
             >
               <div className="relative h-8 w-6">
-                <PiGithubLogo className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-                <PiGithubLogoDuotone className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+                <PiGithubLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+                <PiGithubLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               View on GitHub
             </Button>

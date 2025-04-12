@@ -7,13 +7,13 @@ import Link from "next/link"
 export async function ProblemAbout({ slug }: { slug: string }) {
   const { tags, series } = await getProblemMetadata(slug)
   return (
-    <div className="border-t mt-8 mx-4">
-      <div className="text-xl font-bold mt-6 mb-4">About this problem</div>
-      <div className="border rounded-md divide-y bg-neutral-50 border-neutral-300 divide-neutral-300">
-        <div className="flex gap-2 items-center">
-          <div className="text-sm font-semibold w-20 px-2">Tags</div>
-          <Spoiler className="border-l grow border-neutral-300">
-            <div className="flex gap-4 px-4 pt-1.5 pb-2 items-center">
+    <div className="mx-4 mt-8 border-t">
+      <div className="mt-6 mb-4 text-xl font-bold">About this problem</div>
+      <div className="divide-y divide-neutral-300 rounded-md border border-neutral-300 bg-neutral-50">
+        <div className="flex items-center gap-2">
+          <div className="w-20 px-2 text-sm font-semibold">Tags</div>
+          <Spoiler className="grow border-l border-neutral-300">
+            <div className="flex items-center gap-4 px-4 pt-1.5 pb-2">
               {tags.map((tag, i) => (
                 <Badge key={i}>{tag}</Badge>
               ))}
@@ -21,10 +21,10 @@ export async function ProblemAbout({ slug }: { slug: string }) {
           </Spoiler>
         </div>
         {series.length > 0 ? (
-          <div className="flex gap-2 items-center">
-            <div className="text-sm w-20 font-semibold px-2">Series</div>
+          <div className="flex items-center gap-2">
+            <div className="w-20 px-2 text-sm font-semibold">Series</div>
 
-            <div className="flex gap-4 px-4 pt-1 pb-2 border-l border-neutral-300 items-center">
+            <div className="flex items-center gap-4 border-l border-neutral-300 px-4 pt-1 pb-2">
               {series.map((s) => (
                 <Link key={s.slug} href={`/series/${s.slug}`}>
                   <Badge>{s.name}</Badge>

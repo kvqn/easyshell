@@ -23,7 +23,7 @@ export async function ProblemHeading({ slug }: { slug: string }) {
   return (
     <div
       className={cn(
-        "bg-neutral-100 px-4 mx-2 py-2 border-black border-2 rounded-t-md rounded-b-xl shadow-sm",
+        "mx-2 rounded-t-md rounded-b-xl border-2 border-black bg-neutral-100 px-4 py-2 shadow-sm",
         {
           "bg-linear-to-b from-emerald-100 via-emerald-50 via-10% to-neutral-100":
             difficulty === "easy",
@@ -36,7 +36,7 @@ export async function ProblemHeading({ slug }: { slug: string }) {
     >
       <div className="flex items-center gap-4">
         <p className="text-6xl font-black">#{id}</p>
-        <div className="flex flex-col grow">
+        <div className="flex grow flex-col">
           <h1 className="text-xl font-bold">{title}</h1>
           <p className="font-mono text-sm text-neutral-500">{slug}</p>
         </div>

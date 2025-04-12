@@ -10,8 +10,8 @@ import { getProblemHintBody, getProblemHintCount } from "@/lib/server/problems"
 
 export function Wrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-6 border-t mx-4">
-      <h2 className="mb-2 mt-6 text-xl font-bold">Hints</h2>
+    <div className="mx-4 mt-6 border-t">
+      <h2 className="mt-6 mb-2 text-xl font-bold">Hints</h2>
       {children}
     </div>
   )
@@ -22,7 +22,7 @@ export async function ProblemHints({ slug }: { slug: string }) {
   if (hintCount === 0)
     return (
       <Wrapper>
-        <BackgroundHeroTexture className="text-center text-neutral-400 border rounded-md py-4 heropattern-texture-neutral-200 bg-neutral-50 border-neutral-300">
+        <BackgroundHeroTexture className="heropattern-texture-neutral-200 rounded-md border border-neutral-300 bg-neutral-50 py-4 text-center text-neutral-400">
           No hints for this one. Good luck!
         </BackgroundHeroTexture>
       </Wrapper>

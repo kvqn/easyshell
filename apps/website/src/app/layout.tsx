@@ -34,7 +34,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="flex h-screen flex-col font-geist ">
+      <body className="flex h-screen flex-col font-geist">
         <ClientSideProviders>
           <ThemeProvider attribute="class" defaultTheme="light">
             <SessionProvider>

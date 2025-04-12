@@ -5,9 +5,9 @@ export function Back({ href }: { href: string }) {
   return (
     <Link
       href={href}
-      className="flex items-center gap-1 pl-2 border rounded-md w-fit group bg-neutral-50 hover:bg-neutral-100 transition-colors border-neutral-300 shadow-xs text-neutral-500 hover:text-neutral-600"
+      className="group flex w-fit items-center gap-1 rounded-md border border-neutral-300 bg-neutral-50 pl-2 text-neutral-500 shadow-xs transition-colors hover:bg-neutral-100 hover:text-neutral-600"
     >
-      <IoIosArrowBack className="m-0 p-0 group-hover:-translate-x-0.5 transition-transform w-4 h-4" />
+      <IoIosArrowBack className="m-0 h-4 w-4 p-0 transition-transform group-hover:-translate-x-0.5" />
       <p className="mr-4">Back</p>
     </Link>
   )

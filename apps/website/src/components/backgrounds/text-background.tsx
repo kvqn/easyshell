@@ -11,7 +11,7 @@ export function TextBackground({
 }) {
   return (
     <div className={cn("relative overflow-hidden bg-neutral-100", className)}>
-      <div className="text-md font-clash-display font-bold text-neutral-300 *:flex *:gap-4 absolute top-0 left-0 flex flex-col *:flex-nowrap text-nowrap">
+      <div className="text-md absolute top-0 left-0 flex flex-col font-clash-display font-bold text-nowrap text-neutral-300 *:flex *:flex-nowrap *:gap-4">
         <div className="animate-text-loop-left">
           {Array.from({ length: 20 }).map((_, i) => (
             <p key={i}>{text}</p>

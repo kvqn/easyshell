@@ -69,43 +69,43 @@ export function Submission({ submissionId }: { submissionId: number }) {
       <Back href={`${pathname}?tab=submissions`} />
       <div className="flex flex-col gap-4">
         <div className="flex flex-col items-center">
-          <h2 className=" text-2xl font-bold">
+          <h2 className="text-2xl font-bold">
             Attempt #{info.submission.attempt}
           </h2>
           <div className="text-xs text-neutral-400">
             {moment(info.submission.submittedAt).fromNow()}
           </div>
         </div>
-        <div className="border rounded-xl p-8 shadow flex flex-col gap-2">
-          <div className="flex justify-between items-end">
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
+          <div className="flex items-end justify-between">
             <div className="text-xl font-semibold">Input</div>
             <div
-              className="relative group h-4 w-4 cursor-pointer"
+              className="group relative h-4 w-4 cursor-pointer"
               onClick={async () => {
                 await navigator.clipboard.writeText(info.submission.input)
                 toast.success("Copied to clipboard")
               }}
             >
-              <PiCopySimple className="absolute group-hover:opacity-0 opacity-100 transition-opacity top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-              <PiCopySimpleDuotone className="absolute group-hover:opacity-100 opacity-0 transition-opacity top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              <PiCopySimple className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity group-hover:opacity-0" />
+              <PiCopySimpleDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </div>
-          <div className="font-mono px-2 py-1 border rounded-md bg-neutral-200 text-sm text-center">
+          <div className="rounded-md border bg-neutral-200 px-2 py-1 text-center font-mono text-sm">
             {info.submission.input}
           </div>
         </div>
-        <div className="border rounded-xl p-8 shadow flex flex-col gap-2">
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
           <div className="text-xl font-semibold">Testcases</div>
           <div className="flex flex-wrap justify-center gap-4 px-8">
             {info.testcases.map((testcase) => (
               <div
                 key={testcase.id}
                 className={cn(
-                  "cursor-pointer rounded-xl border px-6 py-2 transition-colors bg-neutral-100 border-neutral-400 hover:bg-neutral-200",
+                  "cursor-pointer rounded-xl border border-neutral-400 bg-neutral-100 px-6 py-2 transition-colors hover:bg-neutral-200",
                 )}
                 onClick={() => setSelectedTestcaseId(testcase.id)}
               >
-                <p className="font-semibold text-md">Testcase #{testcase.id}</p>
+                <p className="text-md font-semibold">Testcase #{testcase.id}</p>
                 <p
                   className={cn("text-sm opacity-80", {
                     "text-neutral-200":
@@ -169,7 +169,7 @@ function Testcase({
         </h2>
       </div>
       {info.expected_stdout !== undefined ? (
-        <div className="border rounded-xl p-8 shadow flex flex-col gap-2">
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
           <div className="text-lg font-semibold">Stdout</div>
           <Diff expected={info.expected_stdout} actual={info.stdout} />
         </div>

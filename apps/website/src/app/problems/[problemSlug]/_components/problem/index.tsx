@@ -7,7 +7,7 @@ export function Problem({ slug }: { slug: string }) {
   return (
     <div className="h-[calc(100vh-80px)] py-2">
       <ProblemHeading slug={slug} />
-      <div className="overflow-y-scroll h-[calc(100vh-220px)]">
+      <div className="h-[calc(100vh-220px)] overflow-y-scroll">
         <ProblemBody slug={slug} />
         <ProblemHints slug={slug} />
         <ProblemAbout slug={slug} />

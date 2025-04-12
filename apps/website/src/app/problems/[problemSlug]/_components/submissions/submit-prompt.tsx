@@ -62,7 +62,7 @@ export function SubmitPrompt({
           }}
         />
         {["windows", "linux", "mac"].includes(os) ? (
-          <div className="flex gap-1 items-center text-neutral-400 text-sm absolute right-4 top-1/2 -translate-y-1/2">
+          <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-1 text-sm text-neutral-400">
             <CommandKey />
             <ReturnKey />
           </div>
@@ -71,7 +71,7 @@ export function SubmitPrompt({
       <EasyTooltip
         tip={
           ["windows", "linux", "mac"].includes(os) ? (
-            <div className="flex gap-1 items-center text-neutral-400 text-sm">
+            <div className="flex items-center gap-1 text-sm text-neutral-400">
               <CommandKey />
               <ReturnKey />
             </div>

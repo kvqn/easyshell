@@ -15,9 +15,9 @@ export default function Page() {
               Update your personal details.
             </p>
           </CardHeader>
-          <CardContent className="animate-pulse pb-10 flex gap-4 items-center">
+          <CardContent className="flex animate-pulse items-center gap-4 pb-10">
             <div className="size-20 rounded-full bg-gray-200" />
-            <div className="h-8 bg-gray-200 flex-grow"></div>
+            <div className="h-8 flex-grow bg-gray-200"></div>
           </CardContent>
         </Card>
         <Card>
@@ -31,7 +31,7 @@ export default function Page() {
                 <p className="text-sm font-medium text-gray-700">Dark Mode</p>
                 <p className="text-sm text-gray-500">Toggle dark theme.</p>
               </div>
-              <div className="w-10 h-5 rounded-full animate-pulse bg-gray-200" />
+              <div className="h-5 w-10 animate-pulse rounded-full bg-gray-200" />
             </div>
           </CardContent>
         </Card>
@@ -41,10 +41,10 @@ export default function Page() {
             <h2 className="text-xl font-bold">Integrations</h2>
             <p className="text-sm text-gray-500">Connect your accounts.</p>
           </CardHeader>
-          <CardContent className="flex items-center justify-center pb-8 gap-4 lg:gap-8 flex-wrap animate-pulse">
-            <div className="w-32 h-16 bg-gray-200 rounded-full" />
-            <div className="w-32 h-16 bg-gray-200 rounded-full" />
-            <div className="w-32 h-16 bg-gray-200 rounded-full" />
+          <CardContent className="flex animate-pulse flex-wrap items-center justify-center gap-4 pb-8 lg:gap-8">
+            <div className="h-16 w-32 rounded-full bg-gray-200" />
+            <div className="h-16 w-32 rounded-full bg-gray-200" />
+            <div className="h-16 w-32 rounded-full bg-gray-200" />
           </CardContent>
         </Card>
       </div>

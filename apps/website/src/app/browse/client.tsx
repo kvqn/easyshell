@@ -71,13 +71,13 @@ export function ProblemList({
 
   return (
     <div className="flex gap-4">
-      <div className="w-full divide-y rounded-xl border overflow-hidden border-neutral-400 flex flex-col h-fit">
-        <div className="divide-x divide-neutral-300 *:p-2 flex font-semibold bg-gray-50 border-b border-b-neutral-400">
+      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400">
+        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2">
           <div className="w-20 text-center">#</div>
-          <div className="grow flex justify-between items-center">
+          <div className="flex grow items-center justify-between">
             <p className="grow">Title</p>
           </div>
-          <div className="w-10 lg:w-20 text-center">Status</div>
+          <div className="w-10 text-center lg:w-20">Status</div>
         </div>
         <div className="divide-y">
           {filteredProblems.length > 0 ? (
@@ -89,21 +89,21 @@ export function ProblemList({
               />
             ))
           ) : (
-            <div className="h-40 w-full flex items-center justify-center text-neutral-400 text-xl">
+            <div className="flex h-40 w-full items-center justify-center text-xl text-neutral-400">
               What are you looking for?
             </div>
           )}
         </div>
       </div>
-      <div className="w-60 flex flex-col gap-4">
-        <div className="text-center font-bold text-xl text-neutral-500">
+      <div className="flex w-60 flex-col gap-4">
+        <div className="text-center text-xl font-bold text-neutral-500">
           FILTERS
         </div>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             OPTIONS
           </div>
-          <div className="flex items-center justify-center gap-2 my-2 flex-col">
+          <div className="my-2 flex flex-col items-center justify-center gap-2">
             <div className="relative">
               <Input
                 className="h-8 text-neutral-500 placeholder:text-neutral-400"
@@ -113,7 +113,7 @@ export function ProblemList({
                   setFilter((prev) => ({ ...prev, search: e.target.value }))
                 }}
               />
-              <PiMagnifyingGlass className="absolute top-1/2 -translate-y-1/2 right-2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
             </div>
             <BadgeCheckbox
               value={options.showTags}
@@ -123,17 +123,17 @@ export function ProblemList({
                   showTags: val,
                 }))
               }}
-              className="text-white bg-neutral-800 hover:bg-neutral-700"
+              className="bg-neutral-800 text-white hover:bg-neutral-700"
             >
               Show Tags
             </BadgeCheckbox>
           </div>
         </Card>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             DIFFICULTY
           </div>
-          <div className="flex flex-col gap-2 items-center my-2">
+          <div className="my-2 flex flex-col items-center gap-2">
             {difficulties.map((d) => (
               <BadgeCheckbox
                 key={d}
@@ -157,13 +157,13 @@ export function ProblemList({
             ))}
           </div>
         </Card>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             TAGS
           </div>
           <div className="flex justify-between px-4">
             <button
-              className="text-neutral-300 text-xs hover:underline hover:text-neutral-400 transition-all cursor-pointer"
+              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline"
               onClick={() => {
                 setFilter((prev) => ({
                   ...prev,
@@ -174,7 +174,7 @@ export function ProblemList({
               Select All
             </button>
             <button
-              className="text-neutral-300 text-xs hover:underline hover:text-neutral-400 transition-all cursor-pointer"
+              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline"
               onClick={() => {
                 setFilter((prev) => ({
                   ...prev,
@@ -185,7 +185,7 @@ export function ProblemList({
               Clear All
             </button>
           </div>
-          <div className="flex gap-2 items-center my-2 flex-wrap justify-center">
+          <div className="my-2 flex flex-wrap items-center justify-center gap-2">
             {tags.map((t) => (
               <BadgeCheckbox
                 key={t}
@@ -224,12 +224,12 @@ function Problem({
   return (
     <Link
       href={`/problems/${info.slug}`}
-      className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex"
+      className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100"
     >
-      <div className="w-20 font-geist-mono flex items-center justify-center">
+      <div className="flex w-20 items-center justify-center font-geist-mono">
         {info.id}
       </div>
-      <div className="flex flex-col grow">
+      <div className="flex grow flex-col">
         <div className="flex items-center justify-between px-2">
           <span>{info.title}</span>
           <ProblemDifficulty difficulty={info.difficulty} />
@@ -237,9 +237,9 @@ function Problem({
         {showTags && (
           <div className="flex items-center justify-between px-2">
             <div className="text-xs text-neutral-400">{info.slug}</div>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               {info.tags.map((t) => (
-                <Badge className="py-0 px-2 text-xs" key={t}>
+                <Badge className="px-2 py-0 text-xs" key={t}>
                   {t}
                 </Badge>
               ))}
@@ -247,7 +247,7 @@ function Problem({
           </div>
         )}
       </div>
-      <div className="w-10 lg:w-20 flex items-center justify-center">
+      <div className="flex w-10 items-center justify-center lg:w-20">
         <ProblemStatus status={info.status} />
       </div>
     </Link>
@@ -257,13 +257,13 @@ function Problem({
 export function ProblemListSkeleton() {
   return (
     <div className="flex gap-4">
-      <div className="w-full divide-y rounded-xl border overflow-hidden border-neutral-400 flex flex-col h-fit">
-        <div className="divide-x divide-neutral-300 *:p-2 flex font-semibold bg-gray-50 border-b border-b-neutral-400">
+      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400">
+        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2">
           <div className="w-20 text-center">#</div>
-          <div className="grow flex justify-between items-center">
+          <div className="flex grow items-center justify-between">
             <p className="grow">Title</p>
           </div>
-          <div className="w-10 lg:w-20 text-center">Status</div>
+          <div className="w-10 text-center lg:w-20">Status</div>
         </div>
         <div className="divide-y">
           {Array.from({ length: 10 }).map((_, idx) => (
@@ -271,32 +271,32 @@ export function ProblemListSkeleton() {
           ))}
         </div>
       </div>
-      <div className="w-60 flex flex-col gap-4">
-        <div className="text-center font-bold text-xl text-neutral-500">
+      <div className="flex w-60 flex-col gap-4">
+        <div className="text-center text-xl font-bold text-neutral-500">
           FILTERS
         </div>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             OPTIONS
           </div>
-          <div className="flex items-center justify-center gap-2 my-2 flex-col">
+          <div className="my-2 flex flex-col items-center justify-center gap-2">
             <div className="relative">
               <Input
                 className="h-8 text-neutral-500 placeholder:text-neutral-400"
                 placeholder="Search"
               />
-              <PiMagnifyingGlass className="absolute top-1/2 -translate-y-1/2 right-2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
             </div>
           </div>
         </Card>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             DIFFICULTY
           </div>
-          <div className="flex flex-col gap-2 items-center my-2"></div>
+          <div className="my-2 flex flex-col items-center gap-2"></div>
         </Card>
-        <Card className="py-2 px-4">
-          <div className="font-semibold text-neutral-400 text-sm text-center">
+        <Card className="px-4 py-2">
+          <div className="text-center text-sm font-semibold text-neutral-400">
             TAGS
           </div>
         </Card>
@@ -307,12 +307,12 @@ export function ProblemListSkeleton() {
 
 function ProblemSkeleton() {
   return (
-    <div className="cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 flex">
-      <div className="w-20 font-geist-mono flex items-center justify-center animate-pulse">
-        <div className="animate-pulse bg-neutral-100 h-6 w-8"></div>
+    <div className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100">
+      <div className="flex w-20 animate-pulse items-center justify-center font-geist-mono">
+        <div className="h-6 w-8 animate-pulse bg-neutral-100"></div>
       </div>
-      <div className="flex flex-col grow">
-        <div className="flex items-center justify-between px-2 animate-pulse bg-neutral-100 h-6 w-40"></div>
+      <div className="flex grow flex-col">
+        <div className="flex h-6 w-40 animate-pulse items-center justify-between bg-neutral-100 px-2"></div>
       </div>
       <div className="w-10 lg:w-20"></div>
     </div>

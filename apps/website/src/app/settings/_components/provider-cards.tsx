@@ -23,16 +23,16 @@ interface ProviderCardProps {
 export function ProviderCard({ provider, connected }: ProviderCardProps) {
   const icons = {
     discord: {
-      connected: <PiDiscordLogoDuotone className="w-6 h-6" />,
-      disconnected: <PiDiscordLogo className="w-6 h-6" />,
+      connected: <PiDiscordLogoDuotone className="h-6 w-6" />,
+      disconnected: <PiDiscordLogo className="h-6 w-6" />,
     },
     github: {
-      connected: <PiGithubLogoDuotone className="w-6 h-6" />,
-      disconnected: <PiGithubLogo className="w-6 h-6" />,
+      connected: <PiGithubLogoDuotone className="h-6 w-6" />,
+      disconnected: <PiGithubLogo className="h-6 w-6" />,
     },
     google: {
-      connected: <PiGoogleLogoDuotone className="w-6 h-6" />,
-      disconnected: <PiGoogleLogo className="w-6 h-6" />,
+      connected: <PiGoogleLogoDuotone className="h-6 w-6" />,
+      disconnected: <PiGoogleLogo className="h-6 w-6" />,
     },
   }
 
@@ -44,7 +44,7 @@ export function ProviderCard({ provider, connected }: ProviderCardProps) {
 
   return (
     <div
-      className="pl-4 pr-6 py-2 flex items-center border rounded-full shadow bg-neutral-50 gap-2 cursor-pointer hover:bg-neutral-100 transition-colors"
+      className="flex cursor-pointer items-center gap-2 rounded-full border bg-neutral-50 py-2 pr-6 pl-4 shadow transition-colors hover:bg-neutral-100"
       onClick={async () => {
         if (connected) {
           toast.success("Already Connected", {
