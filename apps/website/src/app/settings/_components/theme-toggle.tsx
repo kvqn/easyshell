@@ -1,17 +1,15 @@
 "use client"
 
 import { Switch } from "@/components/ui/switch"
-
-import { toast } from "sonner"
+import { useTheme } from "@/lib/client"
 
 export function ThemeToggle() {
+  const { theme, setTheme } = useTheme()
   return (
     <Switch
-      checked={false}
-      onCheckedChange={() => {
-        toast.info("Sorry, you can't change theme at this moment", {
-          description: "This feature is not yet implemented.",
-        })
+      checked={theme === "dark"}
+      onCheckedChange={(checked) => {
+        setTheme(checked ? "dark" : "light")
       }}
     />
   )
