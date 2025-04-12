@@ -71,8 +71,8 @@ export function ProblemList({
 
   return (
     <div className="flex gap-4">
-      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400">
-        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2">
+      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400 dark:divide-neutral-800 dark:border-neutral-800">
+        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2 dark:divide-neutral-800 dark:border-b-neutral-800 dark:bg-neutral-900">
           <div className="w-20 text-center">#</div>
           <div className="flex grow items-center justify-between">
             <p className="grow">Title</p>
@@ -103,10 +103,10 @@ export function ProblemList({
           <div className="text-center text-sm font-semibold text-neutral-400">
             OPTIONS
           </div>
-          <div className="my-2 flex flex-col items-center justify-center gap-2">
+          <div className="my-2 flex flex-col items-center justify-center gap-4">
             <div className="relative">
               <Input
-                className="h-8 text-neutral-500 placeholder:text-neutral-400"
+                className="h-8 text-neutral-500 placeholder:text-neutral-400 dark:bg-black"
                 placeholder="Search"
                 value={filter.search}
                 onChange={(e) => {
@@ -123,7 +123,7 @@ export function ProblemList({
                   showTags: val,
                 }))
               }}
-              className="bg-neutral-800 text-white hover:bg-neutral-700"
+              className="bg-neutral-800 text-white hover:bg-neutral-700 dark:hover:bg-neutral-900"
             >
               Show Tags
             </BadgeCheckbox>
@@ -145,11 +145,12 @@ export function ProblemList({
                   }))
                 }}
                 className={cn({
-                  "bg-emerald-100 text-emerald-600 hover:bg-emerald-200":
+                  "bg-emerald-100 text-emerald-600 hover:bg-emerald-200 dark:bg-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900":
                     d === "easy",
-                  "bg-orange-100 text-orange-600 hover:bg-orange-200":
+                  "bg-orange-100 text-orange-600 hover:bg-orange-200 dark:bg-orange-800 dark:text-orange-400 dark:hover:bg-orange-900":
                     d === "medium",
-                  "bg-rose-100 text-rose-600 hover:bg-rose-200": d === "hard",
+                  "bg-rose-100 text-rose-600 hover:bg-rose-200 dark:bg-rose-800 dark:text-rose-400 dark:hover:bg-rose-900":
+                    d === "hard",
                 })}
               >
                 {d}
@@ -163,7 +164,7 @@ export function ProblemList({
           </div>
           <div className="flex justify-between px-4">
             <button
-              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline"
+              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
               onClick={() => {
                 setFilter((prev) => ({
                   ...prev,
@@ -174,7 +175,7 @@ export function ProblemList({
               Select All
             </button>
             <button
-              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline"
+              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
               onClick={() => {
                 setFilter((prev) => ({
                   ...prev,
@@ -224,7 +225,7 @@ function Problem({
   return (
     <Link
       href={`/problems/${info.slug}`}
-      className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100"
+      className="group flex cursor-pointer divide-x transition-all *:p-2 hover:bg-gray-100 dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
     >
       <div className="flex w-20 items-center justify-center font-geist-mono">
         {info.id}
