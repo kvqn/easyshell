@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen p-6">
       <div className="mx-auto max-w-4xl space-y-6">
         <Card>
           <CardHeader>
@@ -16,8 +16,8 @@ export default function Page() {
             </p>
           </CardHeader>
           <CardContent className="flex animate-pulse items-center gap-4 pb-10">
-            <div className="size-20 rounded-full bg-gray-200" />
-            <div className="h-8 flex-grow bg-gray-200"></div>
+            <div className="size-20 rounded-full bg-gray-200 dark:bg-neutral-800" />
+            <div className="h-8 flex-grow bg-gray-200 dark:bg-neutral-800"></div>
           </CardContent>
         </Card>
         <Card>
@@ -42,9 +42,9 @@ export default function Page() {
             <p className="text-sm text-gray-500">Connect your accounts.</p>
           </CardHeader>
           <CardContent className="flex animate-pulse flex-wrap items-center justify-center gap-4 pb-8 lg:gap-8">
-            <div className="h-16 w-32 rounded-full bg-gray-200" />
-            <div className="h-16 w-32 rounded-full bg-gray-200" />
-            <div className="h-16 w-32 rounded-full bg-gray-200" />
+            <div className="h-16 w-32 rounded-full bg-gray-200 dark:bg-neutral-800" />
+            <div className="h-16 w-32 rounded-full bg-gray-200 dark:bg-neutral-800" />
+            <div className="h-16 w-32 rounded-full bg-gray-200 dark:bg-neutral-800" />
           </CardContent>
         </Card>
       </div>

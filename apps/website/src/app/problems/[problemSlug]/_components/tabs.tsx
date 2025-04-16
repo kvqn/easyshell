@@ -42,7 +42,7 @@ export function ProblemPageTabs({
         ))}
       </TabsList>
       {tabs.map(({ value, content }) => (
-        <TabsContent key={value} value={value}>
+        <TabsContent key={value} value={value} className="h-full">
           {content}
         </TabsContent>
       ))}

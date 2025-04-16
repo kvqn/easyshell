@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 
 import { signIn } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
 import {
   PiDiscordLogo,
   PiDiscordLogoDuotone,
@@ -13,6 +14,8 @@ import {
 } from "react-icons/pi"
 
 export default function Page() {
+  const searchParams = useSearchParams()
+  const callback = searchParams.get("callback") ?? "/"
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border p-8 shadow-xl">
       <div>
@@ -24,7 +27,7 @@ export default function Page() {
           className="group flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
-            await signIn("discord")
+            await signIn("discord", { callbackUrl: callback })
           }}
         >
           <div className="relative h-8 w-6">
@@ -37,7 +40,7 @@ export default function Page() {
           className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
-            await signIn("github")
+            await signIn("github", { callbackUrl: callback })
           }}
         >
           <div className="relative h-8 w-6">
@@ -50,7 +53,7 @@ export default function Page() {
           className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
-            await signIn("google")
+            await signIn("google", { callbackUrl: callback })
           }}
         >
           <div className="relative h-8 w-6">

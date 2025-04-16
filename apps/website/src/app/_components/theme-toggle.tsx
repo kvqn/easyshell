@@ -10,7 +10,7 @@ export function ThemeToggle() {
   return (
     <Button
       variant="outline"
-      className="group flex-grow"
+      className="group w-fit"
       onClick={() => {
         if (theme === "light") setTheme("dark")
         else setTheme("light")

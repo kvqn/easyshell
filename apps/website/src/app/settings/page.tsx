@@ -15,7 +15,7 @@ export const metadata = {
 }
 
 export default async function Page() {
-  const user = await ensureAuth()
+  const user = await ensureAuth("/settings")
   const providers = await getUserProviders(user.id)
 
   return (

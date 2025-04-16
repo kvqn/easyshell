@@ -49,11 +49,11 @@ function Options() {
       </PopoverTrigger>
       <PopoverContent className="w-full">
         <div className="flex w-full flex-col gap-2">
-          <div className="flex justify-between gap-2 *:flex-grow">
+          <div className="flex justify-between gap-2 *:grow">
             <Link href="/settings">
               <Button
                 variant="outline"
-                className="group flex items-center justify-center"
+                className="group flex w-full items-center justify-center"
               >
                 <div className="relative size-4">
                   <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
@@ -83,8 +83,8 @@ async function User() {
           <p>{user.name}</p>
         </div>
 
-        <Link href="/logout" className="w-full">
-          <Button variant="outline" className="mt-2 w-full">
+        <Link href="/logout" className="mt-2 w-full">
+          <Button variant="outline" className="w-full">
             Logout
           </Button>
         </Link>
@@ -92,11 +92,11 @@ async function User() {
     )
 
   return (
-    <div className="flex w-full flex-col gap-1">
-      <p className="rounded-md border border-neutral-200 px-4 py-2 text-neutral-500">
+    <div className="flex w-full flex-col">
+      <p className="rounded-md border px-4 py-2 text-neutral-500">
         Not logged in
       </p>
-      <Link href="/login" className="w-full">
+      <Link href="/login" className="mt-2 w-full">
         <Button className="w-full">Login</Button>
       </Link>
     </div>

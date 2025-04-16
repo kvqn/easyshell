@@ -1,7 +1,8 @@
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getPublicTestcaseInfo } from "@/lib/server/problems"
 import { getUserSubmissions } from "@/lib/server/queries"
 
+import { LoginToProceed } from "./login-to-proceed"
 import { Problem } from "./problem"
 import { Submissions } from "./submissions"
 import { ProblemPageTabs } from "./tabs"
@@ -14,10 +15,14 @@ export async function MobileView({
   problemId: number
   problemSlug: string
 }) {
+  const session = await auth()
+  const user = session?.user
+
   const testcases = await getPublicTestcaseInfo(problemSlug)
   const testcaseIds = testcases.map((testcase) => testcase.id)
-  const { id: userId } = await ensureAuth()
-  const submissions = await getUserSubmissions({ problemId, userId })
+  const submissions = user
+    ? await getUserSubmissions({ problemId, userId: user.id })
+    : null
   return (
     <div className="p-2">
       <ProblemPageTabs
@@ -30,23 +35,27 @@ export async function MobileView({
           {
             title: "Testcases",
             value: "testcases",
-            content: (
+            content: user ? (
               <TestcaseTabs
                 problemId={problemId}
                 problemSlug={problemSlug}
                 testcases={testcaseIds}
               />
+            ) : (
+              <LoginToProceed />
             ),
           },
           {
             title: "Submissions",
             value: "submissions",
-            content: (
+            content: submissions ? (
               <Submissions
                 problemId={problemId}
                 problemSlug={problemSlug}
                 pastSubmissions={submissions}
               />
+            ) : (
+              <LoginToProceed />
             ),
           },
         ]}
