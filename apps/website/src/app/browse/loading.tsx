@@ -38,9 +38,9 @@ function SeriesCardSkeleton({
     <Link
       href={`/series/${series.slug}`}
       key={series.slug}
-      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50"
+      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50 dark:bg-neutral-950"
     >
-      <div className="h-18 animate-pulse bg-neutral-100"></div>
+      <div className="h-18 animate-pulse bg-neutral-100 dark:bg-stone-900"></div>
       <div className="flex flex-col px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="font-clash-display font-semibold">{series.name}</div>
@@ -48,7 +48,10 @@ function SeriesCardSkeleton({
         <div className="text-justify text-sm text-neutral-600">
           {series.description}
         </div>
-        <Progress className="my-2 animate-pulse bg-emerald-100" value={0} />
+        <Progress
+          className="my-2 animate-pulse bg-emerald-100 dark:bg-emerald-950 dark:*:bg-emerald-800"
+          value={0}
+        />
       </div>
     </Link>
   )

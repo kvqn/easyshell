@@ -191,8 +191,8 @@ export function ProblemList({
 export function ProblemListSkeleton() {
   return (
     <div className="flex gap-4">
-      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400">
-        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2">
+      <div className="flex h-fit w-full flex-col divide-y divide-neutral-400 overflow-hidden rounded-xl border border-neutral-400 dark:divide-neutral-800 dark:border-neutral-800">
+        <div className="flex divide-x divide-neutral-400 border-b bg-gray-50 font-semibold *:p-2 dark:divide-neutral-800 dark:bg-neutral-900">
           <div className="w-20 text-center">#</div>
           <div className="flex grow items-center justify-between">
             <p className="grow">Title</p>
@@ -241,12 +241,12 @@ export function ProblemListSkeleton() {
 
 function ProblemSkeleton() {
   return (
-    <div className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100">
+    <div className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100 dark:bg-neutral-950">
       <div className="flex w-20 animate-pulse items-center justify-center font-geist-mono">
-        <div className="h-6 w-8 animate-pulse bg-neutral-100"></div>
+        <div className="h-6 w-8 animate-pulse bg-neutral-100 dark:bg-neutral-800"></div>
       </div>
       <div className="flex grow flex-col">
-        <div className="flex h-6 w-40 animate-pulse items-center justify-between bg-neutral-100 px-2"></div>
+        <div className="flex h-6 w-40 animate-pulse items-center justify-between bg-neutral-100 px-2 dark:bg-neutral-800" />
       </div>
       <div className="w-10 lg:w-20"></div>
     </div>
