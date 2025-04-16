@@ -91,7 +91,7 @@ export function ProblemList({
                   setFilter((prev) => ({ ...prev, search: e.target.value }))
                 }}
               />
-              <PiMagnifyingGlass className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
             </div>
             <BadgeCheckbox
               value={options.showTags}
@@ -222,7 +222,7 @@ export function ProblemListSkeleton() {
                 className="h-8 text-neutral-500 placeholder:text-neutral-400"
                 placeholder="Search"
               />
-              <PiMagnifyingGlass className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
             </div>
           </div>
         </Card>
@@ -245,7 +245,7 @@ export function ProblemListSkeleton() {
 function ProblemSkeleton() {
   return (
     <div className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100">
-      <div className="font-geist-mono flex w-20 animate-pulse items-center justify-center">
+      <div className="flex w-20 animate-pulse items-center justify-center font-geist-mono">
         <div className="h-6 w-8 animate-pulse bg-neutral-100"></div>
       </div>
       <div className="flex grow flex-col">

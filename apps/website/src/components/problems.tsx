@@ -54,7 +54,7 @@ function Problem({
       href={`/problems/${info.slug}`}
       className="group flex cursor-pointer divide-x transition-all *:p-2 hover:bg-gray-100 dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
     >
-      <div className="font-geist-mono flex w-20 items-center justify-center">
+      <div className="flex w-20 items-center justify-center font-geist-mono">
         {info.id}
       </div>
       <div className="flex grow flex-col">

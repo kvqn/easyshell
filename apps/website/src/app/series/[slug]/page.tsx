@@ -39,10 +39,10 @@ export default async function Page({
   return (
     <div className="mx-auto w-4/5 pt-20">
       <Back href="/browse" />
-      <div className="font-clash-display mt-10 text-4xl font-bold">
+      <div className="mt-10 font-clash-display text-4xl font-bold">
         {series.name}
       </div>
-      <div className="font-clash-display mb-10 text-2xl">
+      <div className="mb-10 font-clash-display text-2xl">
         {series.description}
       </div>
       <Problems problems={problems} />

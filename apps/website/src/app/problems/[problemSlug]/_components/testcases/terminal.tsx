@@ -137,14 +137,14 @@ export function TestcaseTerminal({
 
   if (!session)
     return (
-      <div className="font-geist-mono flex flex-col rounded-md border-4 border-gray-400">
-        <div className="relative flex h-80 flex-col overflow-scroll whitespace-pre-line bg-black px-2 py-1">
-          <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
+      <div className="flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
+        <div className="relative flex h-80 flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line">
+          <p className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity select-none hover:opacity-0">
             {problemSlug}-{testcase}
           </p>
           <div
             className={cn(
-              "absolute left-1/2 top-1/2 z-20 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black",
+              "absolute top-1/2 left-1/2 z-20 flex h-full w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center bg-black",
             )}
           >
             {restarting ? (
@@ -157,22 +157,22 @@ export function TestcaseTerminal({
         <div className="flex">
           <input
             className={cn(
-              "outline-hidden grow bg-neutral-800 px-2 py-1 text-white",
+              "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
             )}
           />
-          <button className="w-20 select-none bg-green-800 px-2 text-neutral-200 hover:bg-green-700"></button>
+          <button className="w-20 bg-green-800 px-2 text-neutral-200 select-none hover:bg-green-700"></button>
         </div>
       </div>
     )
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="font-geist-mono relative flex flex-col rounded-md border-4 border-gray-400">
-        <p className="absolute left-1/2 top-0 -translate-x-1/2 select-none rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity hover:opacity-0">
+      <div className="relative flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
+        <p className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity select-none hover:opacity-0">
           {problemSlug}-{testcase}
         </p>
         <div
-          className="flex h-80 flex-col overflow-scroll whitespace-pre-line bg-black px-2 py-1"
+          className="flex h-80 flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line"
           ref={terminalRef}
           style={{
             fontSize: `${options.fontSize}rem`,
@@ -205,7 +205,7 @@ export function TestcaseTerminal({
               }}
               disabled={running}
               className={cn(
-                "outline-hidden grow bg-neutral-800 px-2 py-1 text-white",
+                "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
                 {
                   "text-neutral-400": running,
                 },
@@ -227,7 +227,7 @@ export function TestcaseTerminal({
           <button
             onClick={handleSubmit}
             disabled={running}
-            className="w-20 select-none bg-green-800 px-2 text-neutral-200 hover:bg-green-700"
+            className="w-20 bg-green-800 px-2 text-neutral-200 select-none hover:bg-green-700"
           >
             {running ? (
               <ImSpinner3 className="m-auto animate-spin" />

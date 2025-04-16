@@ -86,8 +86,8 @@ export function Submission({ submissionId }: { submissionId: number }) {
                 toast.success("Copied to clipboard")
               }}
             >
-              <PiCopySimple className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity group-hover:opacity-0" />
-              <PiCopySimpleDuotone className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100" />
+              <PiCopySimple className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity group-hover:opacity-0" />
+              <PiCopySimpleDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </div>
           <div className="rounded-md border bg-neutral-200 px-2 py-1 text-center font-mono text-sm">

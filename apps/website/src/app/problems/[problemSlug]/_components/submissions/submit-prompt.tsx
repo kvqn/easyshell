@@ -62,7 +62,7 @@ export function SubmitPrompt({
           }}
         />
         {["windows", "linux", "mac"].includes(os) ? (
-          <div className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-1 text-sm text-neutral-400">
+          <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-1 text-sm text-neutral-400">
             <CommandKey />
             <ReturnKey />
           </div>
