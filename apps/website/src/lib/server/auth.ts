@@ -95,9 +95,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
  * @see https://next-auth.js.org/configuration/nextjs
  */
 
-export async function ensureAuth() {
+export async function ensureAuth(callbackUrl = "/") {
   const session = await auth()
-  if (!session) redirect("/login")
+  if (!session) redirect(`/login?callback=${callbackUrl}`)
   const user = (
     await db.select().from(users).where(eq(users.id, session.user.id)).limit(1)
   )[0]
