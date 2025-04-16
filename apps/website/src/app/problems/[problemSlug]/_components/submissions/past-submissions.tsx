@@ -30,7 +30,7 @@ export function PastSubmissions({
             height={50}
             alt="arrow-pointing-to-prompt"
             unoptimized
-            className="absolute top-8 left-0 z-[-1] -translate-x-[30%] -translate-y-full scale-75 lg:-translate-x-1/2 lg:scale-100"
+            className="absolute left-0 top-8 z-[-1] -translate-x-[30%] -translate-y-full scale-75 lg:-translate-x-1/2 lg:scale-100"
           />
         </div>
       </div>
@@ -46,11 +46,11 @@ export function PastSubmissions({
           className={cn(
             "flex items-center gap-2 rounded border p-2 transition-colors",
             {
-              "border-gray-500 bg-gray-200 text-gray-800 hover:bg-gray-300":
+              "border-neutral-500 bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-neutral-700 dark:text-neutral-200":
                 submission.status === "running",
-              "border-green-500 bg-green-200 text-green-800 hover:bg-green-300":
+              "border-green-500 bg-green-200 text-green-800 hover:bg-green-300 dark:bg-green-800 dark:text-green-200":
                 submission.status === "passed",
-              "border-red-500 bg-red-200 text-red-800 hover:bg-red-300":
+              "border-red-500 bg-red-200 text-red-800 hover:bg-red-300 dark:bg-red-800 dark:text-red-200":
                 submission.status === "failed",
             },
           )}

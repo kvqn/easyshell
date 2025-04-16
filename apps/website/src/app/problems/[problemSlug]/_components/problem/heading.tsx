@@ -23,13 +23,13 @@ export async function ProblemHeading({ slug }: { slug: string }) {
   return (
     <div
       className={cn(
-        "mx-2 rounded-t-md rounded-b-xl border-2 border-black bg-neutral-100 px-4 py-2 shadow-sm",
+        "mx-2 rounded-b-xl rounded-t-md border-2 border-black bg-neutral-100 px-4 py-2 shadow-sm dark:bg-neutral-950 dark:text-neutral-200",
         {
-          "bg-linear-to-b from-emerald-100 via-emerald-50 via-10% to-neutral-100":
+          "bg-linear-to-b from-emerald-100 via-emerald-50 via-10% to-neutral-100 dark:from-emerald-500/20 dark:via-emerald-300/10 dark:to-neutral-900":
             difficulty === "easy",
-          "bg-linear-to-b from-orange-100 via-orange-50 via-10% to-neutral-100":
+          "bg-linear-to-b from-orange-100 via-orange-50 via-10% to-neutral-100 dark:from-orange-500/20 dark:via-orange-300/10 dark:to-neutral-900":
             difficulty === "medium",
-          "bg-linear-to-b from-rose-100 via-rose-50 via-10% to-neutral-100":
+          "bg-linear-to-b from-rose-100 via-rose-50 via-10% to-neutral-100 dark:from-rose-500/20 dark:via-rose-300/10 dark:to-neutral-900":
             difficulty === "hard",
         },
       )}

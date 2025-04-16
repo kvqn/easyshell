@@ -2,6 +2,7 @@
 
 import { BadgeCheckbox } from "@/components/badge-checkbox"
 import { ProblemDifficulty, ProblemStatus } from "@/components/problem-status"
+import { Problems } from "@/components/problems"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -71,30 +72,7 @@ export function ProblemList({
 
   return (
     <div className="flex gap-4">
-      <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400 dark:divide-neutral-800 dark:border-neutral-800">
-        <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2 dark:divide-neutral-800 dark:border-b-neutral-800 dark:bg-neutral-900">
-          <div className="w-20 text-center">#</div>
-          <div className="flex grow items-center justify-between">
-            <p className="grow">Title</p>
-          </div>
-          <div className="w-10 text-center lg:w-20">Status</div>
-        </div>
-        <div className="divide-y">
-          {filteredProblems.length > 0 ? (
-            filteredProblems.map((problem) => (
-              <Problem
-                key={problem.id}
-                info={problem}
-                showTags={options.showTags}
-              />
-            ))
-          ) : (
-            <div className="flex h-40 w-full items-center justify-center text-xl text-neutral-400">
-              What are you looking for?
-            </div>
-          )}
-        </div>
-      </div>
+      <Problems problems={filteredProblems} showTags={options.showTags} />
       <div className="flex w-60 flex-col gap-4">
         <div className="text-center text-xl font-bold text-neutral-500">
           FILTERS
@@ -113,7 +91,7 @@ export function ProblemList({
                   setFilter((prev) => ({ ...prev, search: e.target.value }))
                 }}
               />
-              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400" />
             </div>
             <BadgeCheckbox
               value={options.showTags}
@@ -213,48 +191,6 @@ export function ProblemList({
   )
 }
 
-function Problem({
-  info,
-  showTags,
-}: {
-  info: Awaited<ReturnType<typeof getPublicProblemInfo>> & {
-    status?: "attempted" | "solved"
-  }
-  showTags: boolean
-}) {
-  return (
-    <Link
-      href={`/problems/${info.slug}`}
-      className="group flex cursor-pointer divide-x transition-all *:p-2 hover:bg-gray-100 dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
-    >
-      <div className="flex w-20 items-center justify-center font-geist-mono">
-        {info.id}
-      </div>
-      <div className="flex grow flex-col">
-        <div className="flex items-center justify-between px-2">
-          <span>{info.title}</span>
-          <ProblemDifficulty difficulty={info.difficulty} />
-        </div>
-        {showTags && (
-          <div className="flex items-center justify-between px-2">
-            <div className="text-xs text-neutral-400">{info.slug}</div>
-            <div className="flex items-center gap-2">
-              {info.tags.map((t) => (
-                <Badge className="px-2 py-0 text-xs" key={t}>
-                  {t}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="flex w-10 items-center justify-center lg:w-20">
-        <ProblemStatus status={info.status} />
-      </div>
-    </Link>
-  )
-}
-
 export function ProblemListSkeleton() {
   return (
     <div className="flex gap-4">
@@ -286,7 +222,7 @@ export function ProblemListSkeleton() {
                 className="h-8 text-neutral-500 placeholder:text-neutral-400"
                 placeholder="Search"
               />
-              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
+              <PiMagnifyingGlass className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-400" />
             </div>
           </div>
         </Card>
@@ -309,7 +245,7 @@ export function ProblemListSkeleton() {
 function ProblemSkeleton() {
   return (
     <div className="flex cursor-pointer divide-x transition-colors *:p-2 hover:bg-gray-100">
-      <div className="flex w-20 animate-pulse items-center justify-center font-geist-mono">
+      <div className="font-geist-mono flex w-20 animate-pulse items-center justify-center">
         <div className="h-6 w-8 animate-pulse bg-neutral-100"></div>
       </div>
       <div className="flex grow flex-col">
