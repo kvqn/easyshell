@@ -7,8 +7,11 @@ import {
 } from "@/components/ui/popover"
 import { auth } from "@/lib/server/auth"
 
+import { ThemeToggle } from "./theme-toggle"
+
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
+import { PiGear, PiGearDuotone } from "react-icons/pi"
 
 function Logo() {
   return (
@@ -25,7 +28,7 @@ export function Navbar() {
       <Logo />
       <Link
         href="/problems"
-        className="mt-1 hidden text-gray-500 transition-colors hover:text-black lg:block"
+        className="mt-1 hidden text-neutral-500 transition-colors hover:text-black lg:block dark:hover:text-white"
       >
         Problems
       </Link>
@@ -45,7 +48,21 @@ function Options() {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full">
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col gap-2">
+          <div className="flex justify-between gap-2 *:flex-grow">
+            <Link href="/settings">
+              <Button
+                variant="outline"
+                className="group flex items-center justify-center"
+              >
+                <div className="relative size-4">
+                  <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+                  <PiGearDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
+              </Button>
+            </Link>
+            <ThemeToggle />
+          </div>
           <User />
         </div>
       </PopoverContent>
@@ -58,19 +75,13 @@ async function User() {
   if (user)
     return (
       <div className="flex w-full flex-col">
-        <div className="flex w-fit gap-2 rounded-md border px-4 py-2">
+        <div className="flex w-full gap-1 rounded-md border px-4 py-2">
           <Avatar className="mr-1.5 h-6 w-6">
             <AvatarImage src={user.image ?? ""} />
             <AvatarFallback>{user.name![0]}</AvatarFallback>
           </Avatar>
           <p>{user.name}</p>
         </div>
-
-        <Link href="/settings" className="w-full">
-          <Button variant="outline" className="mt-2 w-full">
-            Settings
-          </Button>
-        </Link>
 
         <Link href="/logout" className="w-full">
           <Button variant="outline" className="mt-2 w-full">
@@ -81,7 +92,7 @@ async function User() {
     )
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-1">
       <p className="rounded-md border border-neutral-200 px-4 py-2 text-neutral-500">
         Not logged in
       </p>

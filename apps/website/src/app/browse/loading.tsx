@@ -1,6 +1,5 @@
 import { SeriesList } from "@easyshell/problems/data/series"
 
-import { TextBackground } from "@/components/backgrounds/text-background"
 import { Progress } from "@/components/ui/progress"
 
 import { ProblemListSkeleton } from "./client"

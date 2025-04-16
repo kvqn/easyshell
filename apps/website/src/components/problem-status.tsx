@@ -35,12 +35,18 @@ export function ProblemDifficulty({
   difficulty: "easy" | "medium" | "hard"
 }) {
   if (difficulty === "easy") {
-    return <span className="text-sm text-green-400">easy</span>
+    return (
+      <span className="text-sm text-green-400 dark:text-green-600">easy</span>
+    )
   }
   if (difficulty === "medium") {
-    return <span className="text-sm text-yellow-400">medium</span>
+    return (
+      <span className="text-sm text-yellow-400 dark:text-yellow-600">
+        medium
+      </span>
+    )
   }
   if (difficulty === "hard") {
-    return <span className="text-sm text-red-400">hard</span>
+    return <span className="text-sm text-red-400 dark:text-red-600">hard</span>
   }
 }

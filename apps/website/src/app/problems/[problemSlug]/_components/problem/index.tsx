@@ -5,7 +5,7 @@ import { ProblemHints } from "./hints"
 
 export function Problem({ slug }: { slug: string }) {
   return (
-    <div className="h-[calc(100vh-80px)] py-2">
+    <div className="h-[calc(100vh-80px)] py-2 dark:bg-neutral-900">
       <ProblemHeading slug={slug} />
       <div className="h-[calc(100vh-220px)] overflow-y-scroll">
         <ProblemBody slug={slug} />

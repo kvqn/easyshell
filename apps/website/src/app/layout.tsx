@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import { getPathname } from "@/lib/server/utils"
 import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"
@@ -22,6 +23,8 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const pathname = getPathname()
+  console.log("pathname", pathname)
   return (
     <html
       lang="en"
@@ -34,7 +37,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="flex h-screen flex-col font-geist">
+      <body className="flex h-screen flex-col font-geist dark:bg-neutral-900">
         <ClientSideProviders>
           <ThemeProvider attribute="class" defaultTheme="light">
             <SessionProvider>

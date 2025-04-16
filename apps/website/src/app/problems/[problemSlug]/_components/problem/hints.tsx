@@ -45,9 +45,9 @@ export async function ProblemHints({ slug }: { slug: string }) {
           <AccordionItem
             value={`${i + 1}`}
             key={i + 1}
-            className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm"
+            className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm dark:bg-neutral-900"
           >
-            <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50">{`Hint #${i + 1}`}</AccordionTrigger>
+            <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50 dark:bg-black">{`Hint #${i + 1}`}</AccordionTrigger>
             <AccordionContent className="px-4 py-2">{node}</AccordionContent>
           </AccordionItem>
         ))}

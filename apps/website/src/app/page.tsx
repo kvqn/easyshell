@@ -13,8 +13,8 @@ export default function HomePage() {
     <div className="flex h-full flex-col items-center justify-center gap-4">
       <div className="fixed top-0 left-0 -z-10 h-full w-full">
         <div className="relative h-full w-full overflow-hidden">
-          <div className="animate-blob absolute top-0 left-1/2 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[20s]"></div>
-          <div className="animate-blob absolute right-1/2 bottom-0 h-[150%] w-[150%] translate-x-1/2 translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[30s]"></div>
+          <div className="animate-blob absolute top-0 left-1/2 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[20s] dark:bg-emerald-900 dark:opacity-5 dark:mix-blend-multiply" />
+          <div className="animate-blob absolute right-1/2 bottom-0 h-[150%] w-[150%] translate-x-1/2 translate-y-1/2 animate-spin rounded-full bg-emerald-100 opacity-70 mix-blend-multiply blur-xl filter duration-[30s] dark:bg-emerald-900 dark:opacity-5 dark:mix-blend-multiply" />
         </div>
       </div>
       <Heading setAnimationDone={setAnimationDone} />
@@ -33,7 +33,7 @@ export default function HomePage() {
           </Link>
           <Link href="https://github.com/kvqn/easyshell">
             <Button
-              className="group flex items-center gap-2"
+              className="group flex items-center gap-2 dark:hover:bg-neutral-700"
               variant="secondary"
             >
               <div className="relative h-8 w-6">
@@ -108,7 +108,7 @@ function Heading({
   return (
     <h1 className="flex text-3xl font-bold lg:text-7xl">
       <p ref={text1} className="mr-2 lg:mr-6" />
-      <p ref={text2} className="text-black" />
+      <p ref={text2} className="" />
       <p ref={text3} className="text-emerald-500" />
       <p ref={blinker}>_</p>
     </h1>
@@ -148,7 +148,7 @@ function Tagline() {
   return (
     <p
       ref={ref}
-      className="text-2xl font-thin text-gray-600 transition-opacity lg:text-4xl"
+      className="text-2xl font-thin text-neutral-500 transition-opacity lg:text-4xl"
     />
   )
 }

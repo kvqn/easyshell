@@ -19,7 +19,7 @@ export default async function Page() {
   const providers = await getUserProviders(user.id)
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen p-6">
       <div className="mx-auto max-w-4xl space-y-6">
         <SettingsNameImage image={user.image} name={user.name} />
         <Card>

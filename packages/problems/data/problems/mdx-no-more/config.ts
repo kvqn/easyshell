@@ -34,7 +34,7 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Bye Bye MDX, Hello MD!",
   description: `Rename all .mdx files to .md because your plugin can't handle the fancy stuff.`,
-  difficulty: "medium",
+  difficulty: "hard",
   tags: ["mv", "find", "xargs", "sed", "grep"],
   testcases: [
     await testcaseConfig({

@@ -77,7 +77,7 @@ function SeriesCard({
     <Link
       href={`/series/${series.slug}`}
       key={series.slug}
-      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50"
+      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50 dark:bg-neutral-950/75 dark:hover:bg-black"
     >
       <TextBackground text={series.slug} className="h-18" />
       <div className="flex flex-col px-4 py-2">
@@ -87,11 +87,11 @@ function SeriesCard({
             {progress}%
           </div>
         </div>
-        <div className="text-justify text-sm text-neutral-600">
+        <div className="text-justify text-sm text-neutral-600 dark:text-neutral-500">
           {series.description}
         </div>
         <Progress
-          className="my-2 bg-emerald-100 *:bg-emerald-600"
+          className="my-2 bg-emerald-100 *:bg-emerald-600 dark:bg-emerald-950 dark:*:bg-emerald-800"
           value={progress}
         />
       </div>

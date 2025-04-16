@@ -21,7 +21,7 @@ export default function Page() {
       </div>
       <div className="flex flex-col gap-4 rounded-xl border p-4 shadow-xs">
         <Button
-          className="group flex items-center gap-4 hover:bg-gray-200"
+          className="group flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
             await signIn("discord")
@@ -34,7 +34,7 @@ export default function Page() {
           <p className="grow text-center">Login with Discord</p>
         </Button>
         <Button
-          className="group flex items-center gap-2 hover:bg-gray-200"
+          className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
             await signIn("github")
@@ -47,7 +47,7 @@ export default function Page() {
           <p className="grow text-center">Login with GitHub</p>
         </Button>
         <Button
-          className="group flex items-center gap-2 hover:bg-gray-200"
+          className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
           variant="secondary"
           onClick={async () => {
             await signIn("google")
