@@ -54,10 +54,10 @@ export default async function Page() {
           />
         ))}
       </div>
-      <div className="mt-4 font-clash-display text-2xl font-semibold">
+      <div className="font-clash-display mt-4 text-2xl font-semibold">
         Problems
       </div>
-      <div className="mb-4 font-clash-display text-neutral-500">
+      <div className="font-clash-display mb-4 text-neutral-500">
         Browse all problems and filter by tags.
       </div>
       <ProblemList problems={problems} tags={tags} />

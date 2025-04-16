@@ -83,12 +83,12 @@ export function SettingsNameImage({
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-4">
           <div className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full">
-            <Avatar className="absolute h-full w-full transition-all group-hover:blur-xs">
+            <Avatar className="group-hover:blur-xs absolute h-full w-full transition-all">
               <AvatarImage src={image ? URL.createObjectURL(image) : _image} />
               <AvatarFallback>{name[0]}</AvatarFallback>
             </Avatar>
             <label htmlFor="avatar-upload">
-              <div className="absolute top-0 left-0 flex h-full w-full cursor-pointer items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="absolute left-0 top-0 flex h-full w-full cursor-pointer items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
                 <PiUploadBold className="text-xl text-white" />
               </div>
             </label>
@@ -115,9 +115,9 @@ export function SettingsNameImage({
               onChange={(e) => setName(e.target.value)}
             />
             {checkValidUsername(name) ? (
-              <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
+              <PiCheck className="absolute right-4 top-1/2 -translate-y-1/2 text-green-600" />
             ) : (
-              <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />
+              <PiX className="absolute right-4 top-1/2 -translate-y-1/2 text-red-600" />
             )}
           </div>
         </div>
@@ -135,7 +135,7 @@ export function SettingsNameImage({
               <p className="text-xs text-neutral-400">
                 The username must satisfy the following criteria
               </p>
-              <ul className="mt-2 ml-4 list-disc text-xs">
+              <ul className="ml-4 mt-2 list-disc text-xs">
                 <li>Must be at least 3 and at most 20 characters.</li>
                 <li>
                   Must contain only alphanumerics, underscores and dashes.
@@ -145,7 +145,7 @@ export function SettingsNameImage({
               <p className="text-xs text-neutral-400">
                 The avatar image must satisfy the following criteria
               </p>
-              <ul className="mt-2 ml-4 list-disc text-xs">
+              <ul className="ml-4 mt-2 list-disc text-xs">
                 <li>Size be under 1MB.</li>
                 <li>(Recommended) at least 400 x 400 pixels.</li>
               </ul>
