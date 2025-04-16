@@ -2,7 +2,7 @@ import { SeriesList } from "@easyshell/problems/data/series"
 
 import { TextBackground } from "@/components/backgrounds/text-background"
 import { Progress } from "@/components/ui/progress"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import {
   getAllTags,
   getProblems,
@@ -19,8 +19,9 @@ export const metadata = {
 }
 
 export default async function Page() {
-  const user = await ensureAuth()
-  const submission_stats = await getUserSubmissionStats(user.id)
+  const session = await auth()
+  const user = session?.user
+  const submission_stats = user ? await getUserSubmissionStats(user.id) : null
 
   const problems = (
     await Promise.all(
@@ -28,7 +29,9 @@ export default async function Page() {
         const info = await getPublicProblemInfo(problem)
         return {
           ...info,
-          status: submission_stats.problems[info.slug],
+          status: submission_stats
+            ? submission_stats.problems[info.slug]
+            : undefined,
         }
       }),
     )
@@ -47,8 +50,10 @@ export default async function Page() {
             key={series.slug}
             series={series}
             num_solved={
-              series.problems.filter(
-                (p) => submission_stats.problems[p] === "solved",
+              series.problems.filter((p) =>
+                submission_stats
+                  ? submission_stats.problems[p] === "solved"
+                  : 0,
               ).length
             }
           />

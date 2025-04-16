@@ -3,10 +3,11 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getPublicTestcaseInfo } from "@/lib/server/problems"
 import { getUserSubmissions } from "@/lib/server/queries"
 
+import { LoginToProceed } from "./login-to-proceed"
 import { Problem } from "./problem"
 import { Submissions } from "./submissions"
 import { ProblemPageTabs } from "./tabs"
@@ -21,10 +22,14 @@ export async function LaptopView({
   problemId: number
   problemSlug: string
 }) {
+  const session = await auth()
+  const user = session?.user
+
   const testcases = await getPublicTestcaseInfo(problemSlug)
   const testcaseIds = testcases.map((testcase) => testcase.id)
-  const { id: userId } = await ensureAuth()
-  const submissions = await getUserSubmissions({ problemId, userId })
+  const submissions = user
+    ? await getUserSubmissions({ problemId, userId: user.id })
+    : null
 
   return (
     <ResizablePanelGroup direction="horizontal">
@@ -38,7 +43,7 @@ export async function LaptopView({
             {
               title: "Testcases",
               value: "testcases",
-              content: (
+              content: user ? (
                 <Suspense fallback={<div>Loading</div>}>
                   <TestcaseTabs
                     problemId={problemId}
@@ -46,12 +51,14 @@ export async function LaptopView({
                     testcases={testcaseIds}
                   />
                 </Suspense>
+              ) : (
+                <LoginToProceed />
               ),
             },
             {
               title: "Submissions",
               value: "submissions",
-              content: (
+              content: submissions ? (
                 <Suspense fallback={<div>Loading</div>}>
                   <Submissions
                     problemId={problemId}
@@ -59,6 +66,8 @@ export async function LaptopView({
                     pastSubmissions={submissions}
                   />
                 </Suspense>
+              ) : (
+                <LoginToProceed />
               ),
             },
           ]}

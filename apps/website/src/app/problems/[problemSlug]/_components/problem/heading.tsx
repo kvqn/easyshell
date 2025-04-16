@@ -1,5 +1,5 @@
 import { EasyTooltip } from "@/components/ui/tooltip"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import {
   getProblemDifficulty,
   getProblemInfo,
@@ -15,11 +15,14 @@ import { TbProgress } from "react-icons/tb"
 import { TbCircleDotted } from "react-icons/tb"
 
 export async function ProblemHeading({ slug }: { slug: string }) {
-  const { id: userId } = await ensureAuth()
+  const session = await auth()
+  const user = session?.user
   const { id, title, description } = await getProblemInfo(slug)
-  const isBookmarked = await isProblemBookmarked({ userId, problemId: id })
+  const isBookmarked = user
+    ? await isProblemBookmarked({ userId: user.id, problemId: id })
+    : false
   const difficulty = await getProblemDifficulty(slug)
-  const status = await getProblemStatus(slug, userId)
+  const status = user ? await getProblemStatus(slug, user.id) : undefined
   return (
     <div
       className={cn(

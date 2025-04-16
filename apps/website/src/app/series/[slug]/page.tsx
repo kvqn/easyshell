@@ -2,7 +2,7 @@ import { SeriesList } from "@easyshell/problems/data/series"
 
 import { Back } from "@/components/back"
 import { Problems } from "@/components/problems"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getPublicProblemInfo } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 
@@ -19,8 +19,9 @@ export default async function Page({
     notFound()
   }
 
-  const user = await ensureAuth()
-  const userStats = await getUserSubmissionStats(user.id)
+  const session = await auth()
+  const user = session?.user
+  const userStats = user ? await getUserSubmissionStats(user.id) : null
 
   const problems = (
     await Promise.all(
@@ -28,7 +29,7 @@ export default async function Page({
         const info = await getPublicProblemInfo(problem)
         return {
           ...info,
-          status: userStats.problems[info.slug],
+          status: userStats ? userStats.problems[info.slug] : undefined,
         }
       }),
     )
