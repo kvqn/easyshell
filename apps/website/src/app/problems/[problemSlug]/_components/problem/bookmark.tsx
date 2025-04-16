@@ -4,7 +4,7 @@ import { EasyTooltip } from "@/components/ui/tooltip"
 import { toggleBookmark } from "@/lib/server/actions/toggle-bookmark"
 import { cn } from "@/lib/utils"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { PiBookmarkSimple, PiBookmarkSimpleDuotone } from "react-icons/pi"
 import { toast } from "sonner"
 

@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { getPathname } from "@/lib/server/utils"
-import { cn } from "@/lib/utils"
 import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"

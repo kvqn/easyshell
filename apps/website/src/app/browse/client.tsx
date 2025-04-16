@@ -1,15 +1,12 @@
 "use client"
 
 import { BadgeCheckbox } from "@/components/badge-checkbox"
-import { ProblemDifficulty, ProblemStatus } from "@/components/problem-status"
 import { Problems } from "@/components/problems"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import type { getPublicProblemInfo } from "@/lib/server/problems"
 import { cn } from "@/lib/utils"
 
-import Link from "next/link"
 import { useEffect, useState } from "react"
 import { PiMagnifyingGlass } from "react-icons/pi"
 

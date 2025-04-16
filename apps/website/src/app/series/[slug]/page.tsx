@@ -1,13 +1,11 @@
 import { SeriesList } from "@easyshell/problems/data/series"
 
 import { Back } from "@/components/back"
-import { ProblemStatus } from "@/components/problem-status"
 import { Problems } from "@/components/problems"
 import { ensureAuth } from "@/lib/server/auth"
 import { getPublicProblemInfo } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 
-import Link from "next/link"
 import { notFound } from "next/navigation"
 
 export default async function Page({
