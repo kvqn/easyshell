@@ -53,7 +53,7 @@ export default async function Page() {
               series.problems.filter((p) =>
                 submission_stats
                   ? submission_stats.problems[p] === "solved"
-                  : 0,
+                  : false,
               ).length
             }
           />
