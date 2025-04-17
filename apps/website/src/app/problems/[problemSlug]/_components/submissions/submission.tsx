@@ -38,11 +38,10 @@ export function Submission({ submissionId }: { submissionId: number }) {
   useEffect(() => {
     void (async () => {
       while (true) {
-        const info = await getSubmissionInfo({ submissionId })
-        setInfo(info)
-
+        const newInfo = await getSubmissionInfo({ submissionId })
+        setInfo(newInfo)
         let fetchAgain = false
-        for (const testcase of info.testcases) {
+        for (const testcase of newInfo.testcases) {
           if (testcase.status === "pending" || testcase.status === "running") {
             fetchAgain = true
             break
@@ -90,18 +89,18 @@ export function Submission({ submissionId }: { submissionId: number }) {
               <PiCopySimpleDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </div>
-          <div className="rounded-md border bg-neutral-200 px-2 py-1 text-center font-mono text-sm">
+          <div className="rounded-md border bg-neutral-200 px-2 py-1 text-center font-mono text-sm dark:bg-neutral-800">
             {info.submission.input}
           </div>
         </div>
-        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow dark:bg-neutral-900">
           <div className="text-xl font-semibold">Testcases</div>
           <div className="flex flex-wrap justify-center gap-4 px-8">
             {info.testcases.map((testcase) => (
               <div
                 key={testcase.id}
                 className={cn(
-                  "cursor-pointer rounded-xl border border-neutral-400 bg-neutral-100 px-6 py-2 transition-colors hover:bg-neutral-200",
+                  "cursor-pointer rounded-xl border border-neutral-400 bg-neutral-100 px-6 py-2 transition-colors hover:bg-neutral-200 dark:border-neutral-600 dark:bg-neutral-900 dark:hover:bg-neutral-800",
                 )}
                 onClick={() => setSelectedTestcaseId(testcase.id)}
               >

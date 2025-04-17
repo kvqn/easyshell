@@ -122,7 +122,10 @@ export function SubmitPrompt({
           <Button
             disabled={submitting}
             onClick={handleSubmit}
-            className={cn("flex items-center gap-4", { grow: multiline })}
+            className={cn(
+              "flex items-center gap-4 dark:bg-neutral-300 dark:hover:bg-neutral-200",
+              { grow: multiline },
+            )}
           >
             <div>Submit</div>
             <div
