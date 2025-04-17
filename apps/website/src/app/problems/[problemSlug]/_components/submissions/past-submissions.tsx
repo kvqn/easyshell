@@ -18,10 +18,10 @@ export function PastSubmissions({
     return (
       <div className="flex flex-col items-center justify-center">
         <div className="relative top-14 flex flex-col">
-          <p className="text-center text-xl font-semibold text-gray-600 lg:text-2xl">
+          <p className="text-center text-xl font-semibold text-gray-600 lg:text-2xl dark:text-gray-400">
             No submissions yet
           </p>
-          <p className="text-md text-center text-gray-400 lg:text-lg">
+          <p className="text-md text-center text-gray-400 lg:text-lg dark:text-gray-600">
             Create a submission using the prompt above
           </p>
           <Image
