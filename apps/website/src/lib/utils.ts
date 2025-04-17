@@ -75,3 +75,5 @@ export async function neverThrow<T, E = Error>(
 }
 
 // ----------------------------------------------------------------
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>

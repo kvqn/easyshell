@@ -1,15 +1,30 @@
 "use client"
 
+import {
+  PromptSettings,
+  usePromptSettingsContext,
+} from "@/app/settings/_components/prompt-settings"
 import { CommandKey, ReturnKey } from "@/components/keys"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { clientOS } from "@/lib/client"
 import { newSubmission } from "@/lib/server/actions/new-submission"
+import { cn } from "@/lib/utils"
 
 import { usePathname, useRouter } from "next/navigation"
 import { usePostHog } from "posthog-js/react"
 import { useState } from "react"
+import { BsGearWideConnected } from "react-icons/bs"
+import { PiCaretLeftFill } from "react-icons/pi"
 
 export function SubmitPrompt({
   problemId,
@@ -26,6 +41,8 @@ export function SubmitPrompt({
   const [submitting, setSubmitting] = useState(false)
   const os = clientOS()
 
+  const [dialogOpen, setDialogOpen] = useState(false)
+
   async function handleSubmit() {
     setSubmitting(true)
     posthog.capture("submission", {
@@ -41,51 +58,122 @@ export function SubmitPrompt({
     setSubmitting(false)
   }
 
+  const { multiline } = usePromptSettingsContext()
+
   return (
-    <div className="flex gap-2">
-      <div className="relative grow">
-        <Input
+    <div
+      className={cn("flex gap-1", {
+        "flex-col": multiline,
+      })}
+    >
+      <div className="relative h-fit grow">
+        <Textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={submitting}
-          className="border-2 border-neutral-400 font-mono"
+          className={cn(
+            "h-10 min-h-10 resize-none self-center border-2 border-neutral-400 font-mono",
+            {
+              "h-20 resize-y": multiline,
+            },
+          )}
           onKeyDown={async (e) => {
             if (submitting) return
-            if (
-              e.key === "Enter" &&
-              ((os === "windows" && e.ctrlKey) ||
+            if (e.key === "Enter") {
+              if (
+                (os === "windows" && e.ctrlKey) ||
                 (os === "mac" && e.metaKey) ||
-                (os === "linux" && e.ctrlKey))
-            ) {
-              await handleSubmit()
+                (os === "linux" && e.ctrlKey)
+              ) {
+                await handleSubmit()
+              } else if (multiline) {
+                setInput((prev) => prev + "\n")
+              } else {
+                e.preventDefault()
+              }
             }
           }}
         />
         {["windows", "linux", "mac"].includes(os) ? (
-          <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-1 text-sm text-neutral-400">
+          <div
+            className={cn(
+              "absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-1 text-sm text-neutral-400",
+              {
+                hidden: multiline,
+              },
+            )}
+          >
             <CommandKey />
             <ReturnKey />
           </div>
         ) : null}
       </div>
-      <EasyTooltip
-        tip={
-          ["windows", "linux", "mac"].includes(os) ? (
-            <div className="flex items-center gap-1 text-sm text-neutral-400">
+      <div className={cn("flex h-fit gap-1", { "w-full": multiline })}>
+        <EasyTooltip
+          tip={
+            !multiline && ["windows", "linux", "mac"].includes(os) ? (
+              <div className="flex items-center gap-1 text-sm text-neutral-400">
+                <CommandKey />
+                <ReturnKey />
+              </div>
+            ) : undefined
+          }
+        >
+          <Button
+            disabled={submitting}
+            onClick={handleSubmit}
+            className={cn("flex items-center gap-4", { grow: multiline })}
+          >
+            <div>Submit</div>
+            <div
+              className={cn(
+                "hidden items-center gap-1 text-sm text-neutral-400",
+                {
+                  flex: multiline,
+                },
+              )}
+            >
               <CommandKey />
               <ReturnKey />
             </div>
-          ) : undefined
-        }
-      >
-        <Button
-          disabled={submitting}
-          onClick={handleSubmit}
-          className="flex items-center"
-        >
-          Submit
-        </Button>
-      </EasyTooltip>
+          </Button>
+        </EasyTooltip>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogTrigger asChild>
+            <EasyTooltip tip="Prompt Settings">
+              <div
+                className={cn(
+                  "group flex h-10 w-4 cursor-pointer items-center justify-center rounded-md bg-neutral-200 text-neutral-500 transition-all hover:w-10 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700",
+                  {
+                    "w-10": dialogOpen || multiline,
+                  },
+                )}
+                onClick={() => setDialogOpen(!dialogOpen)}
+              >
+                <PiCaretLeftFill
+                  className={cn("group-hover:hidden", {
+                    hidden: multiline || dialogOpen,
+                  })}
+                />
+                <BsGearWideConnected
+                  className={cn("hidden group-hover:block", {
+                    block: multiline || dialogOpen,
+                  })}
+                />
+              </div>
+            </EasyTooltip>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Prompt Settings</DialogTitle>
+              <DialogDescription className="text-gray-500">
+                Configure the submission prompt.
+              </DialogDescription>
+            </DialogHeader>
+            <PromptSettings />
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   )
 }

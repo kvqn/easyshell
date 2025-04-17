@@ -1,5 +1,6 @@
 "use client"
 
+import { PromptSettingsContextProvider } from "@/app/settings/_components/prompt-settings"
 import { ClientOnly } from "@/components/client-only"
 import type { getUserSubmissions } from "@/lib/server/queries"
 
@@ -29,7 +30,9 @@ export function Submissions({
       <Suspense fallback={<div>Loading</div>}>
         <div className="flex h-full flex-col gap-4">
           <ClientOnly>
-            <SubmitPrompt problemId={problemId} problemSlug={problemSlug} />
+            <PromptSettingsContextProvider>
+              <SubmitPrompt problemId={problemId} problemSlug={problemSlug} />
+            </PromptSettingsContextProvider>
           </ClientOnly>
           <PastSubmissions
             problemSlug={problemSlug}
