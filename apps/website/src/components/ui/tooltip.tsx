@@ -63,9 +63,11 @@ export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
 export function EasyTooltip({
   tip,
   children,
+  contentClassName,
 }: {
   tip?: React.ReactNode
   children: React.ReactNode
+  contentClassName?: string
 }) {
   return (
     <Tooltip open={tip === undefined ? false : undefined}>
@@ -73,6 +75,7 @@ export function EasyTooltip({
         onClick={(e) => {
           e.preventDefault()
         }}
+        asChild
       >
         {children}
       </TooltipTrigger>
@@ -80,6 +83,10 @@ export function EasyTooltip({
         onPointerDownOutside={(e) => {
           e.preventDefault()
         }}
+        className={cn(
+          "text-neutral-400 dark:text-neutral-600",
+          contentClassName,
+        )}
       >
         {tip}
       </TooltipContent>

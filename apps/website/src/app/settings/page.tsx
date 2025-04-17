@@ -1,8 +1,13 @@
+import { ClientOnly } from "@/components/client-only"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { ensureAuth } from "@/lib/server/auth"
 import { getUserProviders } from "@/lib/server/queries"
 
 import { SettingsNameImage } from "./_components/name-image"
+import {
+  PromptSettings,
+  PromptSettingsContextProvider,
+} from "./_components/prompt-settings"
 import {
   DiscordCard,
   GithubCard,
@@ -25,16 +30,26 @@ export default async function Page() {
         <Card>
           <CardHeader>
             <h2 className="text-xl font-bold">Preferences</h2>
-            <p className="text-sm text-gray-500">Customize your experience.</p>
+            <p className="text-sm text-gray-500">
+              Configure these settings to customize your experience on
+              easyshell.
+            </p>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-700">Dark Mode</p>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Dark Mode
+                </p>
                 <p className="text-sm text-gray-500">Toggle dark theme.</p>
               </div>
               <ThemeToggle />
             </div>
+            <ClientOnly>
+              <PromptSettingsContextProvider>
+                <PromptSettings />
+              </PromptSettingsContextProvider>
+            </ClientOnly>
           </CardContent>
         </Card>
 
