@@ -39,12 +39,6 @@ export default async function Page() {
         Curated list of problems to master specific topics.
       </div>
       <SeriesCarousel submission_stats={submission_stats} />
-      <div className="mt-4 font-clash-display text-2xl font-semibold">
-        Problems
-      </div>
-      <div className="mb-4 font-clash-display text-neutral-500">
-        Browse all problems and filter by tags.
-      </div>
       <ProblemList problems={problems} tags={tags} />
     </div>
   )

@@ -4,7 +4,9 @@ import { SeriesList } from "@easyshell/problems/data/series"
 
 import { TextBackground } from "@/components/backgrounds/text-background"
 import { BadgeCheckbox } from "@/components/badge-checkbox"
+import { DesktopContainer, MobileContainer } from "@/components/media"
 import { Problems } from "@/components/problems"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import {
   Carousel,
@@ -14,6 +16,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import type { getPublicProblemInfo } from "@/lib/server/problems"
@@ -24,6 +34,7 @@ import Autoplay from "embla-carousel-autoplay"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { PiMagnifyingGlass } from "react-icons/pi"
+import { PiFunnelDuotone } from "react-icons/pi"
 
 export function ProblemList({
   problems,
@@ -82,124 +93,150 @@ export function ProblemList({
 
   const difficulties = ["easy", "medium", "hard"] as const
 
-  return (
-    <div className="flex gap-4">
-      <Problems problems={filteredProblems} showTags={options.showTags} />
-      <div className="flex w-60 flex-col gap-4">
-        <div className="text-center text-xl font-bold text-neutral-500">
-          FILTERS
-        </div>
-        <Card className="px-4 py-2">
-          <div className="text-center text-sm font-semibold text-neutral-400">
-            OPTIONS
-          </div>
-          <div className="my-2 flex flex-col items-center justify-center gap-4">
-            <div className="relative">
-              <Input
-                className="h-8 text-neutral-500 placeholder:text-neutral-400 dark:bg-black"
-                placeholder="Search"
-                value={filter.search}
-                onChange={(e) => {
-                  setFilter((prev) => ({ ...prev, search: e.target.value }))
-                }}
-              />
-              <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
-            </div>
-            <BadgeCheckbox
-              value={options.showTags}
-              onValueChange={(val) => {
-                setOptions((prev) => ({
-                  ...prev,
-                  showTags: val,
-                }))
-              }}
-              className="bg-neutral-800 text-white hover:bg-neutral-700 dark:hover:bg-neutral-900"
-            >
-              Show Tags
-            </BadgeCheckbox>
-          </div>
-        </Card>
-        <Card className="px-4 py-2">
-          <div className="text-center text-sm font-semibold text-neutral-400">
-            DIFFICULTY
-          </div>
-          <div className="my-2 flex flex-col items-center gap-2">
-            {difficulties.map((d) => (
-              <BadgeCheckbox
-                key={d}
-                value={filter.difficulty[d]}
-                onValueChange={(val) => {
-                  setFilter((prev) => ({
-                    ...prev,
-                    difficulty: { ...prev.difficulty, [d]: val },
-                  }))
-                }}
-                className={cn({
-                  "bg-emerald-100 text-emerald-600 hover:bg-emerald-200 dark:bg-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900":
-                    d === "easy",
-                  "bg-orange-100 text-orange-600 hover:bg-orange-200 dark:bg-orange-800 dark:text-orange-400 dark:hover:bg-orange-900":
-                    d === "medium",
-                  "bg-rose-100 text-rose-600 hover:bg-rose-200 dark:bg-rose-800 dark:text-rose-400 dark:hover:bg-rose-900":
-                    d === "hard",
-                })}
-              >
-                {d}
-              </BadgeCheckbox>
-            ))}
-          </div>
-        </Card>
-        <Card className="px-4 py-2">
-          <div className="text-center text-sm font-semibold text-neutral-400">
-            TAGS
-          </div>
-          <div className="flex justify-between px-4">
-            <button
-              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
-              onClick={() => {
-                setFilter((prev) => ({
-                  ...prev,
-                  tags: new Set(tags),
-                }))
-              }}
-            >
-              Select All
-            </button>
-            <button
-              className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
-              onClick={() => {
-                setFilter((prev) => ({
-                  ...prev,
-                  tags: new Set(),
-                }))
-              }}
-            >
-              Clear All
-            </button>
-          </div>
-          <div className="my-2 flex flex-wrap items-center justify-center gap-2">
-            {tags.map((t) => (
-              <BadgeCheckbox
-                key={t}
-                value={filter.tags.has(t)}
-                onValueChange={(val) => {
-                  setFilter((prev) => ({
-                    ...prev,
-                    tags: new Set(
-                      val
-                        ? [...prev.tags, t]
-                        : [...prev.tags].filter((tag) => tag !== t),
-                    ),
-                  }))
-                }}
-                className="w-16"
-              >
-                {t}
-              </BadgeCheckbox>
-            ))}
-          </div>
-        </Card>
+  const filtersComponent = (
+    <div className="flex w-60 flex-col gap-4">
+      <div className="text-center text-xl font-bold text-neutral-500">
+        FILTERS
       </div>
+      <Card className="px-4 py-2">
+        <div className="text-center text-sm font-semibold text-neutral-400">
+          OPTIONS
+        </div>
+        <div className="my-2 flex flex-col items-center justify-center gap-4">
+          <div className="relative">
+            <Input
+              className="h-8 text-neutral-500 placeholder:text-neutral-400 dark:bg-black"
+              placeholder="Search"
+              value={filter.search}
+              onChange={(e) => {
+                setFilter((prev) => ({ ...prev, search: e.target.value }))
+              }}
+            />
+            <PiMagnifyingGlass className="absolute top-1/2 right-2 -translate-y-1/2 text-neutral-400" />
+          </div>
+          <BadgeCheckbox
+            value={options.showTags}
+            onValueChange={(val) => {
+              setOptions((prev) => ({
+                ...prev,
+                showTags: val,
+              }))
+            }}
+            className="bg-neutral-800 text-white hover:bg-neutral-700 dark:hover:bg-neutral-900"
+          >
+            Show Tags
+          </BadgeCheckbox>
+        </div>
+      </Card>
+      <Card className="px-4 py-2">
+        <div className="text-center text-sm font-semibold text-neutral-400">
+          DIFFICULTY
+        </div>
+        <div className="my-2 flex flex-col items-center gap-2">
+          {difficulties.map((d) => (
+            <BadgeCheckbox
+              key={d}
+              value={filter.difficulty[d]}
+              onValueChange={(val) => {
+                setFilter((prev) => ({
+                  ...prev,
+                  difficulty: { ...prev.difficulty, [d]: val },
+                }))
+              }}
+              className={cn({
+                "bg-emerald-100 text-emerald-600 hover:bg-emerald-200 dark:bg-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-900":
+                  d === "easy",
+                "bg-orange-100 text-orange-600 hover:bg-orange-200 dark:bg-orange-800 dark:text-orange-400 dark:hover:bg-orange-900":
+                  d === "medium",
+                "bg-rose-100 text-rose-600 hover:bg-rose-200 dark:bg-rose-800 dark:text-rose-400 dark:hover:bg-rose-900":
+                  d === "hard",
+              })}
+            >
+              {d}
+            </BadgeCheckbox>
+          ))}
+        </div>
+      </Card>
+      <Card className="px-4 py-2">
+        <div className="text-center text-sm font-semibold text-neutral-400">
+          TAGS
+        </div>
+        <div className="flex justify-between px-4">
+          <button
+            className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
+            onClick={() => {
+              setFilter((prev) => ({
+                ...prev,
+                tags: new Set(tags),
+              }))
+            }}
+          >
+            Select All
+          </button>
+          <button
+            className="cursor-pointer text-xs text-neutral-300 transition-all hover:text-neutral-400 hover:underline dark:text-neutral-700 dark:hover:text-neutral-600"
+            onClick={() => {
+              setFilter((prev) => ({
+                ...prev,
+                tags: new Set(),
+              }))
+            }}
+          >
+            Clear All
+          </button>
+        </div>
+        <div className="my-2 flex flex-wrap items-center justify-center gap-2">
+          {tags.map((t) => (
+            <BadgeCheckbox
+              key={t}
+              value={filter.tags.has(t)}
+              onValueChange={(val) => {
+                setFilter((prev) => ({
+                  ...prev,
+                  tags: new Set(
+                    val
+                      ? [...prev.tags, t]
+                      : [...prev.tags].filter((tag) => tag !== t),
+                  ),
+                }))
+              }}
+              className="w-16"
+            >
+              {t}
+            </BadgeCheckbox>
+          ))}
+        </div>
+      </Card>
     </div>
+  )
+
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col">
+          <div className="mt-4 font-clash-display text-2xl font-semibold">
+            Problems
+          </div>
+          <div className="mb-4 font-clash-display text-neutral-500">
+            Browse all problems and filter by tags.
+          </div>
+        </div>
+        <MobileContainer>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="px-2 py-2" variant="outline">
+                <PiFunnelDuotone className="size-6" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-fit">{filtersComponent}</DialogContent>
+          </Dialog>
+        </MobileContainer>
+      </div>
+      <div className="flex gap-4">
+        <Problems problems={filteredProblems} showTags={options.showTags} />
+        <DesktopContainer>{filtersComponent}</DesktopContainer>
+      </div>
+    </>
   )
 }
 
