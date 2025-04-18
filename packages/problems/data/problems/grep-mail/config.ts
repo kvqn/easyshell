@@ -16,10 +16,9 @@ async function testcaseConfig({
     `${PROBLEMS_DIR}/${SLUG}/testcases/${id}/email.txt`,
   )
 
-  const matches = text
-    .toString()
-    .matchAll(/([^@\s]+@[^@\s]+)/g)
-    .map((match) => match[0]!.toString())
+  const matches = Array.from(
+    text.toString().matchAll(/([^@\s]+@[^@\s]+)/g),
+  ).map((match) => match[0]!.toString())
 
   const emails = new Set<string>()
 

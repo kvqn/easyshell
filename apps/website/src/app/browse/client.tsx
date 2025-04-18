@@ -60,7 +60,7 @@ export function ProblemList({
                   .replaceAll(" ", ""),
               )) &&
           filter.difficulty[problem.difficulty] &&
-          new Set(problem.tags).intersection(filter.tags).size > 0,
+          problem.tags.some((tag) => filter.tags.has(tag)),
       ),
     )
   }, [filter, problems])
