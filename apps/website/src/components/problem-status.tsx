@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils"
+
 import { EasyTooltip } from "./ui/tooltip"
 
 import { FaCircleCheck } from "react-icons/fa6"
@@ -34,19 +36,15 @@ export function ProblemDifficulty({
 }: {
   difficulty: "easy" | "medium" | "hard"
 }) {
-  if (difficulty === "easy") {
-    return (
-      <span className="text-sm text-green-400 dark:text-green-600">easy</span>
-    )
-  }
-  if (difficulty === "medium") {
-    return (
-      <span className="text-sm text-yellow-400 dark:text-yellow-600">
-        medium
-      </span>
-    )
-  }
-  if (difficulty === "hard") {
-    return <span className="text-sm text-red-400 dark:text-red-600">hard</span>
-  }
+  return (
+    <span
+      className={cn("text-xs lg:text-sm", {
+        "text-green-400 dark:text-green-600": difficulty === "easy",
+        "text-yellow-400 dark:text-yellow-600": difficulty === "medium",
+        "text-red-400 dark:text-red-600": difficulty === "hard",
+      })}
+    >
+      {difficulty}
+    </span>
+  )
 }

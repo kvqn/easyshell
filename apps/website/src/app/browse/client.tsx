@@ -16,14 +16,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import type { getPublicProblemInfo } from "@/lib/server/problems"
@@ -217,7 +210,7 @@ export function ProblemList({
           <div className="mt-4 font-clash-display text-2xl font-semibold">
             Problems
           </div>
-          <div className="mb-4 font-clash-display text-neutral-500">
+          <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
             Browse all problems and filter by tags.
           </div>
         </div>

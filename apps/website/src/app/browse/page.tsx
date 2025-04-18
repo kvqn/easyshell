@@ -35,7 +35,7 @@ export default async function Page() {
   return (
     <div className="flex flex-col">
       <div className="font-clash-display text-2xl font-semibold">Series</div>
-      <div className="mb-4 font-clash-display text-neutral-500">
+      <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
         Curated list of problems to master specific topics.
       </div>
       <SeriesCarousel submission_stats={submission_stats} />

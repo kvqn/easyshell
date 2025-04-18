@@ -19,11 +19,11 @@ export function Problems({
   return (
     <div className="flex h-fit w-full flex-col divide-y overflow-hidden rounded-xl border border-neutral-400 dark:divide-neutral-800 dark:border-neutral-800">
       <div className="flex divide-x divide-neutral-300 border-b border-b-neutral-400 bg-gray-50 font-semibold *:p-2 dark:divide-neutral-800 dark:border-b-neutral-800 dark:bg-neutral-900">
-        <div className="w-20 text-center">#</div>
+        <div className="w-10 text-center lg:w-20">#</div>
         <div className="flex grow items-center justify-between">
           <p className="grow">Title</p>
         </div>
-        <div className="w-10 text-center lg:w-20">Status</div>
+        <div className="hidden w-20 text-center lg:block">Status</div>
       </div>
       <div className="divide-y">
         {problems.length > 0 ? (
@@ -52,14 +52,14 @@ function Problem({
   return (
     <Link
       href={`/problems/${info.slug}`}
-      className="group flex cursor-pointer divide-x transition-all *:p-2 hover:bg-gray-100 dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
+      className="group flex cursor-pointer divide-x text-xs transition-all *:p-2 hover:bg-gray-100 lg:text-base dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
     >
-      <div className="flex w-20 items-center justify-center font-geist-mono">
+      <div className="flex min-w-10 items-center justify-center font-geist-mono lg:w-20">
         {info.id}
       </div>
-      <div className="flex grow flex-col">
-        <div className="flex items-center justify-between px-2">
-          <span>{info.title}</span>
+      <div className="flex grow flex-col overflow-hidden">
+        <div className="flex items-center justify-between">
+          <div className="min-w-0 flex-1 truncate">{info.title}</div>
           <ProblemDifficulty difficulty={info.difficulty} />
         </div>
         {showTags && (
@@ -75,7 +75,7 @@ function Problem({
           </div>
         )}
       </div>
-      <div className="flex w-10 items-center justify-center lg:w-20">
+      <div className="hidden w-20 items-center justify-center lg:block">
         <ProblemStatus status={info.status} />
       </div>
     </Link>
