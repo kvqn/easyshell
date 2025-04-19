@@ -9,13 +9,23 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Slider } from "@/components/ui/slider"
+import { EasyTooltip } from "@/components/ui/tooltip"
 import { getTerminalSession } from "@/lib/server/actions/get-terminal-session"
 import { killTerminalSessions } from "@/lib/server/actions/kill-terminal-sessions"
 import { submitTerminalSessionCommand } from "@/lib/server/actions/submit-terminal-session-command"
 import { cn } from "@/lib/utils"
 
 import { useEffect, useRef, useState } from "react"
+import { BsGearWideConnected } from "react-icons/bs"
 import { ImSpinner3 } from "react-icons/im"
 import { toast } from "sonner"
 
@@ -136,6 +146,8 @@ export function TestcaseTerminal({
     })()
   }, [problemId, testcase, restarted])
 
+  const [settingsOpen, setSettingsOpen] = useState(false)
+
   if (!session)
     return (
       <div className="flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
@@ -167,13 +179,13 @@ export function TestcaseTerminal({
     )
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="relative flex flex-col rounded-md border-4 border-gray-400 font-geist-mono">
+    <div className="flex h-full flex-col gap-4">
+      <div className="relative flex grow flex-col rounded-md border-4 border-gray-400 font-geist-mono">
         <p className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity select-none hover:opacity-0">
           {problemSlug}-{testcase}
         </p>
         <div
-          className="flex h-80 flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line"
+          className="flex grow flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line"
           ref={terminalRef}
           style={{
             fontSize: `${options.fontSize}rem`,
@@ -238,15 +250,32 @@ export function TestcaseTerminal({
           </button>
         </div>
       </div>
-      <Accordion type="single" collapsible className="space-y-4">
-        <AccordionItem
-          value={`options`}
-          className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm dark:bg-neutral-800"
-        >
-          <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50 dark:bg-black dark:hover:bg-neutral-900">
-            <p className="grow text-center">Terminal Options</p>
-          </AccordionTrigger>
-          <AccordionContent className="px-4 py-2">
+      <div className="flex items-center gap-2">
+        <div className="flex h-full grow items-center justify-center rounded-md border">
+          Terminal Health
+        </div>
+        <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
+          <DialogTrigger asChild>
+            <EasyTooltip tip="Terminal Settings">
+              <div
+                className={cn(
+                  "group flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-neutral-200 text-neutral-500 transition-all hover:w-10 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700",
+                )}
+                onClick={() => setSettingsOpen(!settingsOpen)}
+              >
+                <BsGearWideConnected />
+              </div>
+            </EasyTooltip>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </DialogDescription>
+            </DialogHeader>
+
             <div className="*p-4 flex flex-col gap-4 p-4 *:rounded-md *:p-4 *:shadow-sm">
               <Card className="space-y-2">
                 <label htmlFor="font-size" className="font-semibold">
@@ -279,9 +308,9 @@ export function TestcaseTerminal({
                 </Button>
               </Card>
             </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   )
 }

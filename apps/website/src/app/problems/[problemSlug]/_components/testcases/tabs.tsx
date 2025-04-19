@@ -34,7 +34,7 @@ export function TestcaseTabs({
   }
 
   return (
-    <div>
+    <div className="flex h-full flex-col">
       <Tabs value={testcase.toString()} onValueChange={setTestcase}>
         <TabsList className="w-full">
           {testcases.map((tc) => (
@@ -44,7 +44,7 @@ export function TestcaseTabs({
           ))}
         </TabsList>
       </Tabs>
-      <div className="p-2">
+      <div className="grow p-2">
         <Suspense fallback={<div>Loading</div>}>
           <TestcaseTerminal
             problemId={problemId}

@@ -32,7 +32,7 @@ export function ProblemPageTabs({
       defaultValue={defaultValue}
       value={tab}
       onValueChange={setTab}
-      className="h-full"
+      className="flex h-full flex-col"
     >
       <TabsList className="w-full">
         {tabs.map(({ title, value }) => (
@@ -42,7 +42,7 @@ export function ProblemPageTabs({
         ))}
       </TabsList>
       {tabs.map(({ value, content }) => (
-        <TabsContent key={value} value={value} className="h-full">
+        <TabsContent key={value} value={value} className="grow">
           {content}
         </TabsContent>
       ))}
