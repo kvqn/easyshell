@@ -33,7 +33,7 @@ export function CollapsibleProblemPanel({
       </ResizablePanel>
       {collapsed ? (
         <div
-          className="relative flex h-full w-10 cursor-pointer flex-col items-center justify-between rounded-r-lg border-r-4 bg-neutral-900 py-6 hover:bg-neutral-800/50 dark:border-neutral-600 dark:text-neutral-400"
+          className="relative flex h-full w-10 cursor-pointer flex-col items-center justify-between rounded-r-lg border-r-4 border-neutral-600 bg-neutral-200 py-6 text-neutral-600 hover:bg-neutral-300 dark:border-neutral-600 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800/50"
           onClick={() => {
             panelRef.current?.expand()
           }}
@@ -49,12 +49,12 @@ export function CollapsibleProblemPanel({
           withHandle
           handle={
             <div
-              className="z-20 flex cursor-pointer items-center justify-center rounded-md px-1 py-4 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+              className="z-20 flex cursor-pointer items-center justify-center rounded-md bg-neutral-200 px-1 py-4 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700"
               onClick={() => {
                 panelRef.current?.collapse()
               }}
             >
-              <PiCaretLeftFill className="dark:text-neutral-400" />
+              <PiCaretLeftFill className="text-neutral-600 dark:text-neutral-400" />
             </div>
           }
         />
