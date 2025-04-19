@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
 import { getTerminalSession } from "@/lib/server/actions/get-terminal-session"
@@ -240,14 +241,14 @@ export function TestcaseTerminal({
       <Accordion type="single" collapsible className="space-y-4">
         <AccordionItem
           value={`options`}
-          className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm"
+          className="border-top-0 rounded-lg border bg-neutral-100 shadow-sm dark:bg-neutral-800"
         >
-          <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50">
+          <AccordionTrigger className="text-md rounded-lg border bg-white px-4 py-2 font-semibold shadow-sm hover:bg-neutral-50 dark:bg-black dark:hover:bg-neutral-900">
             <p className="grow text-center">Terminal Options</p>
           </AccordionTrigger>
           <AccordionContent className="px-4 py-2">
-            <div className="flex flex-col gap-4 p-4 *:rounded-md *:bg-white *:p-4 *:shadow-sm">
-              <div className="space-y-2">
+            <div className="*p-4 flex flex-col gap-4 p-4 *:rounded-md *:p-4 *:shadow-sm">
+              <Card className="space-y-2">
                 <label htmlFor="font-size" className="font-semibold">
                   Font Size
                 </label>
@@ -263,20 +264,20 @@ export function TestcaseTerminal({
                     }))
                   }}
                 />
-              </div>
-              <div className="flex items-center gap-2">
+              </Card>
+              <Card className="flex items-center gap-2">
                 <Checkbox />
                 <p>Show Times</p>
-              </div>
-              <div>
+              </Card>
+              <Card>
                 <Button
-                  className="w-full bg-green-800 text-neutral-200"
+                  className="w-full bg-green-800 text-neutral-200 hover:bg-green-700"
                   onClick={handleRestartTerminal}
                   disabled={restarting}
                 >
                   {restarting ? "Restating ..." : "Restart Terminal"}
                 </Button>
-              </div>
+              </Card>
             </div>
           </AccordionContent>
         </AccordionItem>
