@@ -75,7 +75,7 @@ function Problem({
           </div>
         )}
       </div>
-      <div className="hidden w-20 items-center justify-center lg:block">
+      <div className="hidden w-20 items-center justify-center lg:flex">
         <ProblemStatus status={info.status} />
       </div>
     </Link>
