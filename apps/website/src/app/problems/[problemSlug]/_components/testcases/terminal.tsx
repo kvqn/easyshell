@@ -269,10 +269,9 @@ export function TestcaseTerminal({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Are you absolutely sure?</DialogTitle>
+              <DialogTitle>Terminal Settings</DialogTitle>
               <DialogDescription>
-                This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                Customize your terminal experience.
               </DialogDescription>
             </DialogHeader>
 
@@ -295,7 +294,12 @@ export function TestcaseTerminal({
                 />
               </Card>
               <Card className="flex items-center gap-2">
-                <Checkbox />
+                <Checkbox
+                  checked={false}
+                  onClick={() => {
+                    toast.error("This feature is not available yet")
+                  }}
+                />
                 <p>Show Times</p>
               </Card>
               <Card>
