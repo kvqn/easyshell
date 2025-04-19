@@ -1,12 +1,9 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { auth } from "@/lib/server/auth"
 import { getPublicTestcaseInfo } from "@/lib/server/problems"
 import { getUserSubmissions } from "@/lib/server/queries"
 
+import { CollapsibleProblemPanel } from "./collapsible-resizeable-panel"
 import { LoginToProceed } from "./login-to-proceed"
 import { Problem } from "./problem"
 import { Submissions } from "./submissions"
@@ -32,12 +29,11 @@ export async function LaptopView({
     : null
 
   return (
-    <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel>
+    <ResizablePanelGroup direction="horizontal" className="h-full">
+      <CollapsibleProblemPanel>
         <Problem slug={problemSlug} />
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel className="flex w-full flex-col p-2">
+      </CollapsibleProblemPanel>
+      <ResizablePanel className="flex h-full w-full flex-col p-2">
         <ProblemPageTabs
           tabs={[
             {

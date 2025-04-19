@@ -24,7 +24,7 @@ export async function MobileView({
     ? await getUserSubmissions({ problemId, userId: user.id })
     : null
   return (
-    <div className="p-2">
+    <div className="h-full p-2">
       <ProblemPageTabs
         tabs={[
           {
