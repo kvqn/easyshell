@@ -227,7 +227,9 @@ export function ProblemList({
       </div>
       <div className="flex gap-4">
         <Problems problems={filteredProblems} showTags={options.showTags} />
-        <DesktopContainer>{filtersComponent}</DesktopContainer>
+        <div>
+          <DesktopContainer>{filtersComponent}</DesktopContainer>
+        </div>
       </div>
     </>
   )
