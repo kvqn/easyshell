@@ -14,6 +14,7 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { getTerminalSession } from "@/lib/server/actions/get-terminal-session"
+import { isSessionAlive } from "@/lib/server/actions/is-session-alive"
 import { killTerminalSessions } from "@/lib/server/actions/kill-terminal-sessions"
 import { submitTerminalSessionCommand } from "@/lib/server/actions/submit-terminal-session-command"
 import { cn } from "@/lib/utils"
@@ -157,6 +158,22 @@ export function TestcaseTerminal({
     isOnline: boolean
     lastChecked: Date
   }>({ isOnline: true, lastChecked: new Date() })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      void (async () => {
+        if (!session) return
+        setOnlineStatus({
+          isOnline: await isSessionAlive(session.id),
+          lastChecked: new Date(),
+        })
+      })()
+    }, 60000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [onlineStatus, session])
 
   if (!session)
     return (
