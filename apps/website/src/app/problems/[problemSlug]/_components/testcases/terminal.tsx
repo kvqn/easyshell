@@ -1,11 +1,5 @@
 "use client"
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -20,10 +14,12 @@ import {
 import { Slider } from "@/components/ui/slider"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { getTerminalSession } from "@/lib/server/actions/get-terminal-session"
+import { isSessionAlive } from "@/lib/server/actions/is-session-alive"
 import { killTerminalSessions } from "@/lib/server/actions/kill-terminal-sessions"
 import { submitTerminalSessionCommand } from "@/lib/server/actions/submit-terminal-session-command"
 import { cn } from "@/lib/utils"
 
+import moment from "moment"
 import { useEffect, useRef, useState } from "react"
 import { BsGearWideConnected } from "react-icons/bs"
 import { ImSpinner3 } from "react-icons/im"
@@ -83,11 +79,15 @@ export function TestcaseTerminal({
         }
       })
     } else {
-      if (submissionResponse.type === "took_too_long")
+      setOnlineStatus({
+        isOnline: false,
+        lastChecked: new Date(),
+      })
+      if (submissionResponse.type === "took_too_long") {
         toast.error("Aborted", {
           description: submissionResponse.message,
         })
-      else if (submissionResponse.type === "session_not_running")
+      } else if (submissionResponse.type === "session_not_running")
         toast.error("Failed", {
           description: submissionResponse.message,
         })
@@ -126,6 +126,10 @@ export function TestcaseTerminal({
     if (session) {
       setPromptHistory([...session.logs.map((log) => log.stdin), ""])
       setPromptHistoryIndex(session.logs.length + 1)
+      setOnlineStatus({
+        isOnline: true,
+        lastChecked: new Date(),
+      })
     }
   }, [session])
 
@@ -147,6 +151,27 @@ export function TestcaseTerminal({
   }, [problemId, testcase, restarted])
 
   const [settingsOpen, setSettingsOpen] = useState(false)
+
+  const [onlineStatus, setOnlineStatus] = useState<{
+    isOnline: boolean
+    lastChecked: Date
+  }>({ isOnline: true, lastChecked: new Date() })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      void (async () => {
+        if (!session) return
+        setOnlineStatus({
+          isOnline: await isSessionAlive(session.id),
+          lastChecked: new Date(),
+        })
+      })()
+    }, 60000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [onlineStatus, session])
 
   if (!session)
     return (
@@ -181,9 +206,6 @@ export function TestcaseTerminal({
   return (
     <div className="flex h-full flex-col gap-4">
       <div className="relative flex grow flex-col rounded-md border-4 border-gray-400 font-geist-mono">
-        <p className="absolute top-0 left-1/2 -translate-x-1/2 rounded-b-md bg-neutral-800 px-4 text-center font-semibold text-white opacity-100 transition-opacity select-none hover:opacity-0">
-          {problemSlug}-{testcase}
-        </p>
         <div
           className="flex grow flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line"
           ref={terminalRef}
@@ -251,15 +273,53 @@ export function TestcaseTerminal({
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <div className="flex h-full grow items-center justify-center rounded-md border">
-          Terminal Health
+        <div className="flex h-full grow items-center justify-between rounded-md border bg-neutral-100 px-4 text-xs dark:bg-neutral-800">
+          <div className="flex flex-col">
+            <p className="font-semibold">
+              {problemSlug}-{testcase}-session-{session.id}
+            </p>
+            <p className="text-neutral-400">
+              created {moment(session.createdAt).fromNow()}
+            </p>
+          </div>
+          <div className="flex flex-col items-end">
+            <div
+              className={cn(
+                "flex items-center gap-2 rounded-full border px-2 shadow-xs",
+                {
+                  "border-green-200 bg-green-100 shadow-green-200 dark:border-green-800 dark:bg-green-900/60 dark:shadow-green-800/60":
+                    onlineStatus.isOnline,
+                  "border-red-200 bg-red-100 shadow-red-200 dark:border-red-800 dark:bg-red-900/60 dark:shadow-red-800/60":
+                    !onlineStatus.isOnline,
+                },
+              )}
+            >
+              <div
+                className={cn("size-1.5 rounded-full shadow-xl", {
+                  "bg-green-500 shadow-green-300": onlineStatus.isOnline,
+                  "bg-red-500 shadow-red-300": !onlineStatus.isOnline,
+                })}
+              ></div>
+              <p
+                className={cn({
+                  "text-green-600": onlineStatus.isOnline,
+                  "text-red-600": !onlineStatus.isOnline,
+                })}
+              >
+                {onlineStatus.isOnline ? "online" : "offline"}
+              </p>
+            </div>
+            <p className="text-neutral-400">
+              checked {moment(onlineStatus.lastChecked).fromNow()}
+            </p>
+          </div>
         </div>
         <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
           <DialogTrigger asChild>
             <EasyTooltip tip="Terminal Settings">
               <div
                 className={cn(
-                  "group flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-neutral-200 text-neutral-500 transition-all hover:w-10 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700",
+                  "group flex h-10 w-10 cursor-pointer items-center justify-center rounded-md border bg-neutral-100 text-neutral-500 transition-all hover:w-10 hover:border-neutral-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700",
                 )}
                 onClick={() => setSettingsOpen(!settingsOpen)}
               >
