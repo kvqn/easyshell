@@ -11,11 +11,18 @@ import {
 } from "@/components/ui/popover"
 import { setUserImage } from "@/lib/server/actions/set-image"
 import { setUsername } from "@/lib/server/actions/set-username"
-import { checkValidUsername, sleep } from "@/lib/utils"
+import { sleep } from "@/lib/utils"
 
 import { useEffect, useState } from "react"
 import { PiCheck, PiUploadBold, PiX } from "react-icons/pi"
 import { toast } from "sonner"
+
+function checkLocalValidUsername(name: string) {
+  if (name.length > 20) return false
+  if (name.length < 3) return false
+  if (!/^[a-zA-Z][a-zA-Z\d_-]*[a-zA-Z]$/.test(name)) return false
+  return true
+}
 
 export function SettingsNameImage({
   image: _image,
@@ -114,7 +121,7 @@ export function SettingsNameImage({
               className="h-full w-full text-gray-500"
               onChange={(e) => setName(e.target.value)}
             />
-            {checkValidUsername(name) ? (
+            {checkLocalValidUsername(name) ? (
               <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
             ) : (
               <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />

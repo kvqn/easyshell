@@ -3,8 +3,7 @@
 import { users } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth } from "@/lib/server/auth"
-import { checkValidUsername } from "@/lib/utils"
+import { ensureAuth, isNameValid } from "@/lib/server/auth"
 
 import { eq } from "drizzle-orm"
 
@@ -20,12 +19,12 @@ export async function setUsername(name: string): Promise<{
       message: "You already have that username.",
     }
 
-  const valid = checkValidUsername(name)
+  const valid = await isNameValid({ name: name, checkUnique: false })
 
-  if (!valid)
+  if (!valid.valid)
     return {
       success: false,
-      message: "Invalid username.",
+      message: `Invalid Username (${valid.error})`,
     }
 
   const existing =

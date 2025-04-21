@@ -17,43 +17,155 @@ import DiscordProvider from "next-auth/providers/discord"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import { redirect } from "next/navigation"
+import { z } from "zod"
 
 /**
- * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
- * object and keep type safety.
- *
- * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
+ * Determine if the name is valid.
+ * By default, also checks for uniqueness. Set checkUnique=false to disable this behavior.
  */
+export async function isNameValid({
+  name,
+  checkUnique,
+}: {
+  name: string
+  checkUnique: boolean
+}): Promise<
+  | { valid: true }
+  | {
+      valid: false
+      error: "too-short" | "too-long" | "invalid-characters" | "already-exists"
+    }
+> {
+  if (name.length > 20) return { valid: false, error: "too-long" }
+  if (name.length < 3) return { valid: false, error: "too-short" }
+  if (!/^[a-zA-Z][a-zA-Z\d_-]*[a-zA-Z]$/.test(name))
+    return { valid: false, error: "invalid-characters" }
+
+  if (checkUnique) {
+    const exists = (
+      await db.select({}).from(users).where(eq(users.name, name)).limit(1)
+    )[0]
+    if (exists !== undefined) return { valid: false, error: "already-exists" }
+  }
+
+  return { valid: true }
+}
+
+/**
+ * Generates a valid username from an existing username that might be invalid.
+ * It also checks for uniqueness, i.e. if the name already exists, a unique suffix is added.
+ */
+async function generateValidName(name: string): Promise<string> {
+  let newName = ""
+  for (const char of name) {
+    if (/[a-zA-Z0-9_-]/.test(char)) {
+      newName += char
+    }
+    if (char === " ") {
+      newName += "_"
+    } else {
+      newName += "-"
+    }
+  }
+
+  if (!(await isNameValid({ name: newName, checkUnique: false })).valid) {
+    return await generateAnonymousName()
+  }
+
+  return newName
+}
+
+async function generateAnonymousName(): Promise<string> {
+  const userCount = await db
+    .select({
+      count: count(),
+    })
+    .from(users)
+
+  const name = `user-${userCount[0]!.count + 1}`
+  return name
+}
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string
-      // ...other properties
-      // role: UserRole;
+      name: string
     } & DefaultSession["user"]
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
-/**
- * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
- *
- * @see https://next-auth.js.org/configuration/options
- */
-// export const authOptions: NextAuthOptions = {
+const UserSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string().email(),
+  image: z.string().optional(),
+})
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    session: (ctx) => {
+      console.log("callback:session", ctx)
+      const { session, user } = ctx
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      }
+    },
+    async signIn(ctx) {
+      console.log("callback:signIn", ctx)
+      const { user, account, profile, email, credentials } = ctx
+
+      const parsedUser = UserSchema.safeParse(user)
+      if (!parsedUser.success) return "/couldnt-sign-in"
+
+      const parsedUserData = parsedUser.data
+
+      const statusNameValid = await isNameValid({
+        name: parsedUserData.name,
+        checkUnique: false,
+      })
+
+      if (!statusNameValid.valid) {
+        const newName = await generateValidName(parsedUserData.name)
+        await db
+          .update(users)
+          .set({
+            name: newName,
+          })
+          .where(eq(users.id, parsedUserData.id))
+      }
+
+      return true
+    },
+    async jwt(ctx) {
+      console.log("callback:jwt", ctx)
+      const { token, user, account, profile, isNewUser } = ctx
+      return token
+    },
+  },
+  events: {
+    async signIn(event) {
+      console.log("event:signIn", event)
+    },
+    async signOut(event) {
+      console.log("event:signOut", event)
+    },
+    async createUser(event) {
+      console.log("event:createUser", event)
+    },
+    async updateUser(event) {
+      console.log("event:updateUser", event)
+    },
+    async linkAccount(event) {
+      console.log("event:linkAccount", event)
+    },
+    async session(event) {
+      console.log("event:session", event)
+    },
   },
   adapter: DrizzleAdapter(db, {
     usersTable: users,
@@ -77,24 +189,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
     }),
-    /**
-     * ...add more providers here.
-     *
-     * Most other providers require a bit more work than the Discord provider. For example, the
-     * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-     * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-     *
-     * @see https://next-auth.js.org/providers/github
-     */
   ],
 })
 
 /**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
+ * DEPRECATED
  */
-
 export async function ensureAuth(callbackUrl = "/") {
   const session = await auth()
   if (!session) redirect(`/login?callback=${callbackUrl}`)
