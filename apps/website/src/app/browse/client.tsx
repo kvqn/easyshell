@@ -214,7 +214,7 @@ export function ProblemList({
             Browse all problems and filter by tags.
           </div>
         </div>
-        <MobileContainer>
+        <MobileContainer className="w-fit">
           <Dialog>
             <DialogTrigger asChild>
               <Button className="px-2 py-2" variant="outline">
@@ -227,9 +227,9 @@ export function ProblemList({
       </div>
       <div className="flex gap-4">
         <Problems problems={filteredProblems} showTags={options.showTags} />
-        <div>
-          <DesktopContainer>{filtersComponent}</DesktopContainer>
-        </div>
+        <DesktopContainer className="w-fit">
+          {filtersComponent}
+        </DesktopContainer>
       </div>
     </>
   )
@@ -344,7 +344,7 @@ export function SeriesCarousel({
         }),
       ]}
     >
-      <CarouselContent className="">
+      <CarouselContent className="pb-6">
         {SeriesList.map((series) => (
           <CarouselItem key={series.slug} className="basis-auto">
             <SeriesCard
@@ -386,7 +386,7 @@ function SeriesCard({
     <Link
       href={`/series/${series.slug}`}
       key={series.slug}
-      className="flex w-60 flex-col overflow-hidden rounded-xl border transition-colors hover:bg-neutral-50 dark:bg-neutral-950/75 dark:hover:bg-black"
+      className="flex w-60 flex-col overflow-hidden rounded-xl border shadow-lg transition-colors hover:bg-neutral-50 dark:bg-neutral-950/75 dark:hover:bg-black"
     >
       <TextBackground text={series.slug} className="h-18" />
       <div className="flex flex-col px-4 py-2">
