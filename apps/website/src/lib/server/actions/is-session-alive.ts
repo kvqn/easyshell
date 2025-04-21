@@ -20,5 +20,5 @@ export async function isSessionAlive(sessionId: number) {
     return false
   }
 
-  return false
+  return true
 }

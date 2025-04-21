@@ -79,17 +79,15 @@ export function TestcaseTerminal({
         }
       })
     } else {
-      if (submissionResponse.type === "took_too_long") {
-        toast.error("Aborted", {
-          description: submissionResponse.message,
-        })
-        return
-      }
       setOnlineStatus({
         isOnline: false,
         lastChecked: new Date(),
       })
-      if (submissionResponse.type === "session_not_running")
+      if (submissionResponse.type === "took_too_long") {
+        toast.error("Aborted", {
+          description: submissionResponse.message,
+        })
+      } else if (submissionResponse.type === "session_not_running")
         toast.error("Failed", {
           description: submissionResponse.message,
         })
