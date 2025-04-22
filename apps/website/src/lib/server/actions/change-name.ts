@@ -12,7 +12,7 @@ export async function changeName(name: string): Promise<{
   message: string
 }> {
   const user = (await auth())?.user
-  if (!user) return
+  if (!user) return { success: false, message: "Not logged in." }
 
   if (name === user.name)
     return {
