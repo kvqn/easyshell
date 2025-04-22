@@ -3,7 +3,7 @@
 import { users } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { auth } from "@/lib/server/auth"
+import { auth, isNameValid } from "@/lib/server/auth"
 
 import { eq } from "drizzle-orm"
 
@@ -20,10 +20,11 @@ export async function changeName(name: string): Promise<{
       message: "You already have that name.",
     }
 
-  if (name.length === 0)
+  const valid = await isNameValid(name)
+  if (!valid.valid)
     return {
       success: false,
-      message: "Name cannot be empty.",
+      message: valid.error,
     }
 
   await db

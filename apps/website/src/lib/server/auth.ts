@@ -13,7 +13,7 @@ import { resend } from "@/lib/server/resend"
 
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { count, eq } from "drizzle-orm"
-import { type DefaultSession, Session } from "next-auth"
+import { type DefaultSession } from "next-auth"
 import NextAuth from "next-auth"
 import { type Adapter } from "next-auth/adapters"
 import DiscordProvider from "next-auth/providers/discord"
@@ -21,6 +21,8 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
 import { redirect } from "next/navigation"
+
+// =============================== Helper Utilities ===============================
 
 /**
  * Determine if the username is valid.
@@ -55,6 +57,15 @@ export async function isUsernameValid({
     if (exists !== undefined) return { valid: false, error: "already-exists" }
   }
 
+  return { valid: true }
+}
+
+export async function isNameValid(
+  name: string,
+): Promise<{ valid: true } | { valid: false; error: string }> {
+  if (name.length === 0) return { valid: false, error: "empty" }
+  if (name !== name.trim())
+    return { valid: false, error: "leading or trailing whitespace" }
   return { valid: true }
 }
 
@@ -120,21 +131,6 @@ async function generateAnonymousName(): Promise<string> {
   return name
 }
 
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string
-      name: string
-      username: string
-      image?: string
-    } & DefaultSession["user"]
-  }
-
-  interface User {
-    username?: string | null
-  }
-}
-
 /**
  * Attempts to fix missing fields for user. Safe to use on a good user.
  */
@@ -145,13 +141,16 @@ async function fixUser(userId: string) {
   )[0]!
 
   let name = user.name ?? user.email.split("@")[0]!
-  if (name.length === 0) name = await generateAnonymousName()
+  const validName = await isNameValid(name)
+  if (!validName.valid) {
+    name = await generateAnonymousName()
+  }
 
   let username = user.username
-  const valid =
+  const validUsername =
     username !== null &&
     (await isUsernameValid({ username: username, checkUnique: false })).valid
-  if (!valid) username = await generateValidUsername(name)
+  if (!validUsername) username = await generateValidUsername(name)
 
   if (username !== user.username || name !== user.name) {
     await db
@@ -172,6 +171,23 @@ async function fixUser(userId: string) {
   }
 }
 
+// ================================ Auth Configuration ===============================
+
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: {
+      id: string
+      name: string
+      username: string
+      image?: string
+    } & DefaultSession["user"]
+  }
+
+  interface User {
+    username?: string | null
+  }
+}
+
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/login",
@@ -186,7 +202,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         !session.user ||
         !session.user.name ||
         !session.user.username ||
-        session.user.name.length === 0 ||
+        !(await isNameValid(session.user.name)).valid ||
         !(
           await isUsernameValid({
             username: session.user.username,
