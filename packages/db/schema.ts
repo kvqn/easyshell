@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm"
 import {
+  AnyPgColumn,
   boolean,
   foreignKey,
   index,
@@ -9,9 +10,14 @@ import {
   primaryKey,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"
 import { type AdapterAccount } from "next-auth/adapters"
+
+export function lower(col: AnyPgColumn) {
+  return sql`lower(${col})`
+}
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -21,19 +27,29 @@ import { type AdapterAccount } from "next-auth/adapters"
  */
 export const createTable = pgTableCreator((name) => `easyshell_${name}`)
 
-export const users = createTable("user", {
-  id: varchar("id", { length: 255 })
-    .notNull()
-    .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("email_verified", {
-    mode: "date",
-    withTimezone: true,
-  }).default(sql`CURRENT_TIMESTAMP`),
-  image: varchar("image", { length: 255 }),
-})
+export const users = createTable(
+  "user",
+  {
+    id: varchar("id", { length: 255 })
+      .notNull()
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    name: varchar("name", { length: 255 }),
+    username: varchar("username", { length: 255 }),
+    email: varchar("email", { length: 255 }).notNull(),
+    emailVerified: timestamp("email_verified", {
+      mode: "date",
+      withTimezone: true,
+    }).default(sql`CURRENT_TIMESTAMP`),
+    image: varchar("image", { length: 255 }),
+  },
+  (t) => [
+    uniqueIndex("idx_email").on(t.email),
+    uniqueIndex("idx_email_lower").on(lower(t.email)),
+    uniqueIndex("idx_username").on(t.username),
+    uniqueIndex("idx_username_lower").on(lower(t.username)),
+  ],
+)
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),

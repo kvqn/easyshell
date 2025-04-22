@@ -78,9 +78,9 @@ async function User() {
         <div className="flex w-full gap-1 rounded-md border px-4 py-2">
           <Avatar className="mr-1.5 h-6 w-6">
             <AvatarImage src={user.image ?? ""} />
-            <AvatarFallback>{user.name![0]}</AvatarFallback>
+            <AvatarFallback>{user.username[0]}</AvatarFallback>
           </Avatar>
-          <p>{user.name}</p>
+          <p>{user.username}</p>
         </div>
 
         <Link href="/logout" className="mt-2 w-full">

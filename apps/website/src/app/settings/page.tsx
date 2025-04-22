@@ -1,7 +1,8 @@
 import { ClientOnly } from "@/components/client-only"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getUserProviders } from "@/lib/server/queries"
+import { getPathname } from "@/lib/server/utils"
 
 import { SettingsNameImage } from "./_components/name-image"
 import {
@@ -15,18 +16,29 @@ import {
 } from "./_components/provider-cards"
 import { ThemeToggle } from "./_components/theme-toggle"
 
+import { redirect } from "next/navigation"
+
 export const metadata = {
   title: "easyshell - account settings",
 }
 
 export default async function Page() {
-  const user = await ensureAuth("/settings")
+  const user = (await auth())?.user
+  if (!user) {
+    const pathname = getPathname()
+    redirect(`/login?callback=${pathname}`)
+  }
+
   const providers = await getUserProviders(user.id)
 
   return (
     <div className="min-h-screen p-6">
       <div className="mx-auto max-w-4xl space-y-6">
-        <SettingsNameImage image={user.image} name={user.name} />
+        <SettingsNameImage
+          image={user.image}
+          username={user.username}
+          name={user.name}
+        />
         <Card>
           <CardHeader>
             <h2 className="text-xl font-bold">Preferences</h2>
