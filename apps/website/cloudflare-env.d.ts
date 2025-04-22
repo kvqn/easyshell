@@ -16,4 +16,5 @@ interface CloudflareEnv {
   ASSETS: Fetcher
   NEXT_PUBLIC_POSTHOG_HOST: string
   NEXT_PUBLIC_POSTHOG_KEY: string
+  RESEND_API_KEY: string
 }
