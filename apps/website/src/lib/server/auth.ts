@@ -5,8 +5,10 @@ import {
   verificationTokens,
 } from "@easyshell/db/schema"
 
+import { MagicLink } from "@/components/emails/magic-link"
 import { db } from "@/db"
 import { env } from "@/env"
+import { resend } from "@/lib/server/resend"
 
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { count, eq } from "drizzle-orm"
@@ -16,18 +18,18 @@ import { type Adapter } from "next-auth/adapters"
 import DiscordProvider from "next-auth/providers/discord"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import Resend from "next-auth/providers/resend"
 import { redirect } from "next/navigation"
-import { z } from "zod"
 
 /**
- * Determine if the name is valid.
+ * Determine if the username is valid.
  * By default, also checks for uniqueness. Set checkUnique=false to disable this behavior.
  */
-export async function isNameValid({
-  name,
+export async function isUsernameValid({
+  username,
   checkUnique,
 }: {
-  name: string
+  username: string
   checkUnique: boolean
 }): Promise<
   | { valid: true }
@@ -36,14 +38,14 @@ export async function isNameValid({
       error: "too-short" | "too-long" | "invalid-characters" | "already-exists"
     }
 > {
-  if (name.length > 20) return { valid: false, error: "too-long" }
-  if (name.length < 3) return { valid: false, error: "too-short" }
-  if (!/^[a-zA-Z][a-zA-Z\d_-]*[a-zA-Z]$/.test(name))
+  if (username.length > 20) return { valid: false, error: "too-long" }
+  if (username.length < 3) return { valid: false, error: "too-short" }
+  if (!/^[a-zA-Z][a-zA-Z\d_-]*[a-zA-Z]$/.test(username))
     return { valid: false, error: "invalid-characters" }
 
   if (checkUnique) {
     const exists = (
-      await db.select({}).from(users).where(eq(users.name, name)).limit(1)
+      await db.select({}).from(users).where(eq(users.name, username)).limit(1)
     )[0]
     if (exists !== undefined) return { valid: false, error: "already-exists" }
   }
@@ -55,24 +57,41 @@ export async function isNameValid({
  * Generates a valid username from an existing username that might be invalid.
  * It also checks for uniqueness, i.e. if the name already exists, a unique suffix is added.
  */
-async function generateValidName(name: string): Promise<string> {
-  let newName = ""
-  for (const char of name) {
+async function generateValidUsername(username: string): Promise<string> {
+  let newUsername = ""
+  for (const char of username) {
     if (/[a-zA-Z0-9_-]/.test(char)) {
-      newName += char
+      newUsername += char
     }
     if (char === " ") {
-      newName += "_"
+      newUsername += "_"
     } else {
-      newName += "-"
+      newUsername += "-"
     }
   }
 
-  if (!(await isNameValid({ name: newName, checkUnique: false })).valid) {
-    return await generateAnonymousName()
+  let suffix = 0
+
+  while (true) {
+    const newUsernameWithSuffix = newUsername + (suffix > 0 ? `-${suffix}` : "")
+    const exists = await isUsernameValid({
+      username: newUsernameWithSuffix,
+      checkUnique: true,
+    })
+    if (exists.valid) {
+      newUsername = newUsernameWithSuffix
+      break
+    }
+
+    if (exists.error === "already-exists") {
+      suffix++
+    } else {
+      newUsername = await generateAnonymousName()
+      suffix = 0
+    }
   }
 
-  return newName
+  return newUsername
 }
 
 async function generateAnonymousName(): Promise<string> {
@@ -93,19 +112,21 @@ declare module "next-auth" {
       name: string
     } & DefaultSession["user"]
   }
+
+  interface User {
+    username?: string | null
+  }
 }
 
-const UserSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  email: z.string().email(),
-  image: z.string().optional(),
-})
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: "/login",
+    signOut: "/logout",
+    // error: "/error/auth",
+    verifyRequest: "/verify-request",
+  },
   callbacks: {
     session: (ctx) => {
-      console.log("callback:session", ctx)
       const { session, user } = ctx
       return {
         ...session,
@@ -115,56 +136,32 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
       }
     },
-    async signIn(ctx) {
-      console.log("callback:signIn", ctx)
-      const { user, account, profile, email, credentials } = ctx
+  },
+  events: {
+    async createUser(event) {
+      // TODO: send welcome email
+      const { user } = event
+      if (!user.email) return
+      if (!user.id) return
 
-      const parsedUser = UserSchema.safeParse(user)
-      if (!parsedUser.success) return "/couldnt-sign-in"
+      const name = user.name ?? user.email.split("@")[0]!
+      const username = user.username ?? (await generateValidUsername(name))
 
-      const parsedUserData = parsedUser.data
-
-      const statusNameValid = await isNameValid({
-        name: parsedUserData.name,
-        checkUnique: false,
-      })
-
-      if (!statusNameValid.valid) {
-        const newName = await generateValidName(parsedUserData.name)
+      if (username !== user.username || name !== user.name) {
         await db
           .update(users)
           .set({
-            name: newName,
+            name: username,
+            username,
           })
-          .where(eq(users.id, parsedUserData.id))
+          .where(eq(users.id, user.id))
       }
-
-      return true
     },
-    async jwt(ctx) {
-      console.log("callback:jwt", ctx)
-      const { token, user, account, profile, isNewUser } = ctx
-      return token
+    async updateUser() {
+      // TODO: send alert email
     },
-  },
-  events: {
-    async signIn(event) {
-      console.log("event:signIn", event)
-    },
-    async signOut(event) {
-      console.log("event:signOut", event)
-    },
-    async createUser(event) {
-      console.log("event:createUser", event)
-    },
-    async updateUser(event) {
-      console.log("event:updateUser", event)
-    },
-    async linkAccount(event) {
-      console.log("event:linkAccount", event)
-    },
-    async session(event) {
-      console.log("event:session", event)
+    async linkAccount() {
+      // TODO: send alert email
     },
   },
   adapter: DrizzleAdapter(db, {
@@ -188,6 +185,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       clientId: env.GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,
       allowDangerousEmailAccountLinking: true,
+    }),
+    Resend({
+      async sendVerificationRequest(params) {
+        const { identifier, url } = params
+        await resend.emails.send({
+          from: "no-reply@easyshell.xyz",
+          to: identifier,
+          subject: `Your Magic Link`,
+          react: MagicLink({ url }),
+        })
+      },
     }),
   ],
 })

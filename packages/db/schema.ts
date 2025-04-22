@@ -35,7 +35,8 @@ export const users = createTable(
       .notNull()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: varchar("name", { length: 255 }).notNull(),
+    name: varchar("name", { length: 255 }),
+    username: varchar("username", { length: 255 }),
     email: varchar("email", { length: 255 }).notNull(),
     emailVerified: timestamp("email_verified", {
       mode: "date",
@@ -44,10 +45,10 @@ export const users = createTable(
     image: varchar("image", { length: 255 }),
   },
   (t) => [
-    unique().on(t.email),
-    unique().on(t.name),
-    uniqueIndex().on(lower(t.email)),
-    uniqueIndex().on(lower(t.name)),
+    uniqueIndex("idx_email").on(t.email),
+    uniqueIndex("idx_email_lower").on(lower(t.email)),
+    uniqueIndex("idx_username").on(t.username),
+    uniqueIndex("idx_username_lower").on(lower(t.username)),
   ],
 )
 

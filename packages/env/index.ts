@@ -36,6 +36,7 @@ export const env = createEnv({
           GOOGLE_CLIENT_SECRET: z.string(),
 
           SESSION_MANAGER_URL: z.string().url(),
+          RESEND_API_KEY: z.string(),
         }
       : {}),
 

@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator"
 
 import { signIn } from "next-auth/react"
 import { useSearchParams } from "next/navigation"
+import { useState } from "react"
 import {
   PiDiscordLogo,
   PiDiscordLogoDuotone,
@@ -18,10 +19,12 @@ import {
   PiGoogleLogoDuotone,
 } from "react-icons/pi"
 import { toast } from "sonner"
+import { z } from "zod"
 
 export default function Page() {
   const searchParams = useSearchParams()
   const callback = searchParams.get("callback") ?? "/"
+  const [email, setEmail] = useState("")
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border p-8 shadow-xl">
       <div>
@@ -80,13 +83,28 @@ export default function Page() {
         <Card className="flex w-full flex-col gap-4 px-6 py-4">
           <div className="flex flex-col gap-2">
             <div className="text-sm font-semibold">Email</div>
-            <Input placeholder="Enter your email address" className="w-full" />
+            <Input
+              placeholder="Enter your email address"
+              className="w-full"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+            />
           </div>
           <Button
             className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
             variant="secondary"
             onClick={async () => {
-              toast.error("This feature is not yet implemented.")
+              const parsedEmail = z.string().email().safeParse(email)
+              if (!parsedEmail.success) {
+                toast.error("Please enter a valid email address.")
+                return
+              }
+              await signIn("resend", {
+                email: parsedEmail.data,
+                callbackUrl: callback,
+              })
             }}
           >
             <div className="relative h-8 w-6">
