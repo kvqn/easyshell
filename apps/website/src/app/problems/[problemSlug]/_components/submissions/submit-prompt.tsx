@@ -25,6 +25,7 @@ import { usePostHog } from "posthog-js/react"
 import { useState } from "react"
 import { BsGearWideConnected } from "react-icons/bs"
 import { PiCaretLeftFill } from "react-icons/pi"
+import { toast } from "sonner"
 
 export function SubmitPrompt({
   problemId,
@@ -52,6 +53,13 @@ export function SubmitPrompt({
       problemId,
       input,
     })
+    if (!resp) {
+      toast.error("Failed to submit command", {
+        description: "Unauthenticated",
+      })
+      setSubmitting(false)
+      return
+    }
     router.replace(
       `${pathname}?tab=submissions&submission=${resp.submissionId}`,
     )

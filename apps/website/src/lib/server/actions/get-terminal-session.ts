@@ -1,6 +1,6 @@
 "use server"
 
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getTerminalSession as _getTerminalSession } from "@/lib/server/terminal-session"
 
 export async function getTerminalSession({
@@ -10,7 +10,8 @@ export async function getTerminalSession({
   problemId: number
   testcaseId: number
 }) {
-  const user = await ensureAuth()
+  const user = (await auth())?.user
+  if (!user) return null
 
   const session = await _getTerminalSession({
     userId: user.id,

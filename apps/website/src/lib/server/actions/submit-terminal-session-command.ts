@@ -3,7 +3,7 @@
 import { terminalSessions } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getProblemSlugFromId } from "@/lib/server/problems"
 import { insertTerminalSessionLog } from "@/lib/server/queries"
 import { sessionManagerExec } from "@/lib/server/session-manager"
@@ -21,13 +21,22 @@ export async function submitTerminalSessionCommand({
 }): Promise<
   | {
       status: "success"
-      log: Awaited<ReturnType<typeof getTerminalSession>>["logs"][0]
+      log: Exclude<
+        Awaited<ReturnType<typeof getTerminalSession>>,
+        null
+      >["logs"][0]
     }
   | ({
       status: "error"
-    } & Awaited<ReturnType<typeof sessionManagerExec>>)
+    } & (
+      | Awaited<ReturnType<typeof sessionManagerExec>>
+      | {
+          type: "not-authenticated"
+        }
+    ))
 > {
-  const user = await ensureAuth()
+  const user = (await auth())?.user
+  if (!user) return { status: "error", type: "not-authenticated" }
 
   const terminalSession = await db
     .select()

@@ -22,7 +22,15 @@ export function ProblemBookmark({
     if (inBetween) return
     setInBetween(true)
     try {
-      const { newBookmarkState } = await toggleBookmark(problemId)
+      const resp = await toggleBookmark(problemId)
+      if (!resp) {
+        toast.error("Failed to toggle bookmark", {
+          description: "Unauthenticated",
+        })
+        setInBetween(false)
+        return
+      }
+      const { newBookmarkState } = resp
       if (newBookmarkState) toast.success("Problem Bookmarked")
       else toast.success("Bookmark Removed")
       setInBetween(false)

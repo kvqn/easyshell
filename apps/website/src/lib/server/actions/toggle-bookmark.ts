@@ -3,15 +3,16 @@
 import { bookmarks } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { isProblemBookmarked } from "@/lib/server/queries"
 
 import { and, eq } from "drizzle-orm"
 
 export async function toggleBookmark(problemId: number): Promise<{
   newBookmarkState: boolean
-}> {
-  const { id: userId } = await ensureAuth()
+} | null> {
+  const userId = (await auth())?.user.id
+  if (!userId) return null
   const isBookmarked = await isProblemBookmarked({ problemId, userId })
   if (isBookmarked) {
     await db

@@ -3,7 +3,7 @@
 import { submissionTestcaseQueue, submissions } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 import { getProblemInfo, getProblemSlugFromId } from "@/lib/server/problems"
 
 export async function newSubmission({
@@ -13,7 +13,9 @@ export async function newSubmission({
   problemId: number
   input: string
 }) {
-  const user = await ensureAuth()
+  const user = (await auth())?.user
+  if (!user) return null
+
   const problemSlug = await getProblemSlugFromId(problemId)
 
   const submissionId = (
