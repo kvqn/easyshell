@@ -138,17 +138,6 @@ export const terminalSessions = createTable(
   (ts) => [index("terminal_session_user_id_idx").on(ts.userId)],
 )
 
-//export const terminalSessionsRelations = relations(
-//  terminalSessions,
-//  ({ one, many }) => ({
-//    user: one(users, {
-//      fields: [terminalSessions.userId],
-//      references: [users.id],
-//    }),
-//    logs: many(terminalSessionLogs),
-//  }),
-//)
-
 export const terminalSessionLogs = createTable(
   "terminal_session_log",
   {
@@ -169,16 +158,6 @@ export const terminalSessionLogs = createTable(
     }),
   ],
 )
-
-//export const terminalSessionLogsRelations = relations(
-//  terminalSessionLogs,
-//  ({ one }) => ({
-//    session: one(terminalSessions, {
-//      fields: [terminalSessionLogs.sessionId],
-//      references: [terminalSessions.id],
-//    }),
-//  }),
-//)
 
 export const submissions = createTable("submissions", {
   id: integer("id").primaryKey().generatedByDefaultAsIdentity(),

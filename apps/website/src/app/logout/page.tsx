@@ -1,31 +1,18 @@
-"use client"
+import { auth } from "@/lib/server/auth"
 
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { LogoutForm } from "./_components/form"
 
-import { signOut } from "next-auth/react"
-import Link from "next/link"
+import { redirect } from "next/navigation"
 
-export default function Page() {
+export default async function Page() {
+  const loggedOut = (await auth())?.user === undefined
+  if (loggedOut) {
+    redirect("/")
+  }
+
   return (
     <div className="flex h-full w-full items-center justify-center">
-      <Card className="flex w-fit flex-col rounded-xl border px-8 py-4">
-        <h2 className="text-lg font-semibold">{`You're about to log out`}</h2>
-        <h3 className="text-sm text-neutral-400">{`Are you sure you want to log out?`}</h3>
-        <div className="mt-4 flex gap-2 *:*:w-full *:grow">
-          <Link href="/">
-            <Button variant={"secondary"}>Cancel</Button>
-          </Link>
-          <Button
-            variant={"destructive"}
-            onClick={async () => {
-              await signOut()
-            }}
-          >
-            Log Out
-          </Button>
-        </div>
-      </Card>
+      <LogoutForm />
     </div>
   )
 }

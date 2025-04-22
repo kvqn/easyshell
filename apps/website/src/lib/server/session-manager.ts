@@ -8,12 +8,6 @@ const SessionManagerExecResponseSchema = z.object({
   stderr: z.string(),
 })
 
-//const SessionManagerExecErrorSchema = z.object({
-//  critical: z.boolean(),
-//  message: z.string(),
-//  error: z.string(),
-//})
-
 export async function sessionManagerExec({
   containerName,
   command,
