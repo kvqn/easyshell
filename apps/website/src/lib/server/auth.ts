@@ -1,5 +1,6 @@
 import {
   accounts,
+  lower,
   sessions,
   users,
   verificationTokens,
@@ -48,7 +49,7 @@ export async function isUsernameValid({
       await db
         .select({ userId: users.id })
         .from(users)
-        .where(eq(users.username, username))
+        .where(eq(lower(users.username), username.toLowerCase()))
         .limit(1)
     )[0]
     if (exists !== undefined) return { valid: false, error: "already-exists" }
@@ -180,7 +181,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         !session.user.name ||
         !session.user.username ||
         session.user.name.length === 0 ||
-        (
+        !(
           await isUsernameValid({
             username: session.user.username,
             checkUnique: false,

@@ -206,6 +206,7 @@ export function SettingsNameImage({
           variant="secondary"
           onClick={() => {
             setUsername(_username)
+            setName(_name)
             setImage(null)
           }}
         >

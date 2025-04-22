@@ -1,6 +1,6 @@
 "use server"
 
-import { users } from "@easyshell/db/schema"
+import { lower, users } from "@easyshell/db/schema"
 
 import { db } from "@/db"
 import { auth, isUsernameValid } from "@/lib/server/auth"
@@ -31,15 +31,15 @@ export async function changeUsername(username: string): Promise<{
       message: `Invalid Username (${valid.error})`,
     }
 
-  const existing =
-    (
-      await db
-        .select({})
-        .from(users)
-        .where(eq(users.username, username))
-        .limit(1)
-    ).length > 0
-  if (existing)
+  const existing = (
+    await db
+      .select({ userId: users.id })
+      .from(users)
+      .where(eq(lower(users.username), username.toLowerCase()))
+      .limit(1)
+  )[0]?.userId
+
+  if (existing !== undefined && existing !== user.id)
     return {
       success: false,
       message: "Username already taken.",
