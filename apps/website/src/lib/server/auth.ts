@@ -76,8 +76,14 @@ async function generateValidUsername(username: string): Promise<string> {
   }
 
   let suffix = 0
+  const loop_limit = 10
+  let loop_iter = 0
 
   while (true) {
+    loop_iter++
+    if (loop_iter > loop_limit) {
+      throw new Error("loop limit exceeded")
+    }
     const newUsernameWithSuffix = newUsername + (suffix > 0 ? `-${suffix}` : "")
     console.log("newUsernameWithSuffix", newUsernameWithSuffix)
     const exists = await isUsernameValid({
