@@ -9,8 +9,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { changeName } from "@/lib/server/actions/change-name"
+import { changeUsername } from "@/lib/server/actions/change-username"
 import { setUserImage } from "@/lib/server/actions/set-image"
-import { setUsername } from "@/lib/server/actions/set-username"
 import { sleep } from "@/lib/utils"
 
 import { useEffect, useState } from "react"
@@ -20,17 +21,20 @@ import { toast } from "sonner"
 function checkLocalValidUsername(name: string) {
   if (name.length > 20) return false
   if (name.length < 3) return false
-  if (!/^[a-zA-Z][a-zA-Z\d_-]*[a-zA-Z]$/.test(name)) return false
+  if (!/^[a-zA-Z\d][a-zA-Z\d_-]*[a-zA-Z\d]$/.test(name)) return false
   return true
 }
 
 export function SettingsNameImage({
   image: _image,
+  username: _username,
   name: _name,
 }: {
   image?: string
+  username: string
   name: string
 }) {
+  const [username, setUsername] = useState(_username)
   const [name, setName] = useState(_name)
   const [image, setImage] = useState<File | null>(null)
   const [submitting, setSubmitting] = useState(false)
@@ -38,19 +42,31 @@ export function SettingsNameImage({
   const [changes, setChanges] = useState(false)
 
   useEffect(() => {
-    setChanges(name !== _name || image !== null)
-  }, [name, image, _name, _image])
+    setChanges(username !== _username || image !== null || name !== _name)
+  }, [username, image, _username, _image, name, _name])
 
   async function handleSubmit() {
     setSubmitting(true)
     let reload = true
     if (name !== _name) {
-      const respName = await setUsername(name)
+      const respName = await changeName(name)
       if (respName.success) {
+        toast.success("Updated name")
+      } else {
+        toast.error("Failed to update name", {
+          description: respName.message,
+        })
+        reload = false
+      }
+    }
+
+    if (username !== _username) {
+      const respUsername = await changeUsername(username)
+      if (respUsername.success) {
         toast.success("Updated username")
       } else {
         toast.error("Failed to update username", {
-          description: respName.message,
+          description: respUsername.message,
         })
         reload = false
       }
@@ -92,7 +108,7 @@ export function SettingsNameImage({
           <div className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full">
             <Avatar className="absolute h-full w-full transition-all group-hover:blur-xs">
               <AvatarImage src={image ? URL.createObjectURL(image) : _image} />
-              <AvatarFallback>{name[0]}</AvatarFallback>
+              <AvatarFallback>{username[0]}</AvatarFallback>
             </Avatar>
             <label htmlFor="avatar-upload">
               <div className="absolute top-0 left-0 flex h-full w-full cursor-pointer items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
@@ -115,17 +131,43 @@ export function SettingsNameImage({
               }}
             />
           </div>
-          <div className="relative grow">
-            <Input
-              value={name}
-              className="h-full w-full text-gray-500"
-              onChange={(e) => setName(e.target.value)}
-            />
-            {checkLocalValidUsername(name) ? (
-              <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
-            ) : (
-              <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />
-            )}
+          <div className="flex grow flex-wrap items-center justify-center gap-4">
+            <div className="flex min-w-80 grow flex-col">
+              <label htmlFor="name" className="font-semibold">
+                Name
+              </label>
+              <div className="relative">
+                <Input
+                  value={name}
+                  name="username"
+                  className="h-full w-full text-gray-500"
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {name.length > 0 ? (
+                  <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
+                ) : (
+                  <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />
+                )}
+              </div>
+            </div>
+            <div className="flex min-w-80 grow flex-col">
+              <label htmlFor="username" className="font-semibold">
+                Username
+              </label>
+              <div className="relative">
+                <Input
+                  value={username}
+                  name="username"
+                  className="h-full w-full text-gray-500"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                {checkLocalValidUsername(username) ? (
+                  <PiCheck className="absolute top-1/2 right-4 -translate-y-1/2 text-green-600" />
+                ) : (
+                  <PiX className="absolute top-1/2 right-4 -translate-y-1/2 text-red-600" />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </CardContent>
@@ -163,7 +205,7 @@ export function SettingsNameImage({
         <Button
           variant="secondary"
           onClick={() => {
-            setName(_name)
+            setUsername(_username)
             setImage(null)
           }}
         >

@@ -1,4 +1,4 @@
-import { SQL, relations, sql } from "drizzle-orm"
+import { relations, sql } from "drizzle-orm"
 import {
   AnyPgColumn,
   boolean,
@@ -10,7 +10,6 @@ import {
   primaryKey,
   text,
   timestamp,
-  unique,
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"

@@ -3,23 +3,27 @@
 import { users } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth, isUsernameValid } from "@/lib/server/auth"
+import { auth, isUsernameValid } from "@/lib/server/auth"
 
 import { eq } from "drizzle-orm"
 
-export async function setUsername(name: string): Promise<{
+export async function changeUsername(username: string): Promise<{
   success: boolean
   message: string
 }> {
-  const user = await ensureAuth()
+  const user = (await auth())?.user
+  if (!user) return
 
-  if (name === user.name)
+  if (username === user.username)
     return {
       success: false,
       message: "You already have that username.",
     }
 
-  const valid = await isUsernameValid({ username: name, checkUnique: false })
+  const valid = await isUsernameValid({
+    username: username,
+    checkUnique: false,
+  })
 
   if (!valid.valid)
     return {
@@ -28,8 +32,13 @@ export async function setUsername(name: string): Promise<{
     }
 
   const existing =
-    (await db.select({}).from(users).where(eq(users.username, name)).limit(1))
-      .length > 0
+    (
+      await db
+        .select({})
+        .from(users)
+        .where(eq(users.username, username))
+        .limit(1)
+    ).length > 0
   if (existing)
     return {
       success: false,
@@ -39,7 +48,7 @@ export async function setUsername(name: string): Promise<{
   await db
     .update(users)
     .set({
-      name: name,
+      username: username,
     })
     .where(eq(users.id, user.id))
 
