@@ -1,5 +1,8 @@
 import { env } from "@/env"
-import { STATUS_INTERNAL_SERVER_ERROR, STATUS_LOCKED } from "@/lib/utils"
+import {
+  HTTP_STATUS_INTERNAL_SERVER_ERROR,
+  HTTP_STATUS_LOCKED,
+} from "@/lib/utils"
 
 import { z } from "zod"
 
@@ -80,14 +83,14 @@ export async function sessionManagerExec({
     }
   }
 
-  if (resp.status === STATUS_LOCKED)
+  if (resp.status === HTTP_STATUS_LOCKED)
     return {
       status: "error",
       type: "session_error",
       message: "The session is locked because it is running another command",
     }
 
-  if (resp.status === STATUS_INTERNAL_SERVER_ERROR)
+  if (resp.status === HTTP_STATUS_INTERNAL_SERVER_ERROR)
     return {
       status: "error",
       type: "session_error",

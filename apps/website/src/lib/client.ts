@@ -1,3 +1,6 @@
+// ====================================================
+// Utility function that can be used ONLY on the client
+// ====================================================
 import { useTheme as _useTheme } from "next-themes"
 
 export function useTheme() {
@@ -36,3 +39,5 @@ export function clientOS() {
   }
   return "unknown"
 }
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>

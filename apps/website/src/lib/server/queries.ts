@@ -1,3 +1,5 @@
+// DEPRECATED
+// TODO: Remove this file
 import {
   accounts,
   bookmarks,
