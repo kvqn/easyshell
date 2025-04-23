@@ -8,7 +8,9 @@ import { GrInProgress } from "react-icons/gr"
 function ProblemSolved() {
   return (
     <EasyTooltip tip="Solved">
-      <FaCircleCheck className="text-green-500" />
+      <div>
+        <FaCircleCheck className="text-green-500" />
+      </div>
     </EasyTooltip>
   )
 }
@@ -16,7 +18,9 @@ function ProblemSolved() {
 function ProblemAttempted() {
   return (
     <EasyTooltip tip="Attempted">
-      <GrInProgress className="text-yellow-500" />
+      <div>
+        <GrInProgress className="text-yellow-500" />
+      </div>
     </EasyTooltip>
   )
 }
