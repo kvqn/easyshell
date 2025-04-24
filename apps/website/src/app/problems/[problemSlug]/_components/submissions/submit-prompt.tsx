@@ -1,5 +1,7 @@
 "use client"
 
+import { terminalSessionLogs } from "@easyshell/db/schema"
+
 import {
   PromptSettings,
   usePromptSettingsContext,
@@ -16,6 +18,7 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { EasyTooltip } from "@/components/ui/tooltip"
+import { db } from "@/db"
 import { clientOS } from "@/lib/client"
 import { newSubmission } from "@/lib/server/actions/new-submission"
 import { cn } from "@/lib/utils"

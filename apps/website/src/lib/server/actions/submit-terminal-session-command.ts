@@ -5,8 +5,10 @@ import { terminalSessions } from "@easyshell/db/schema"
 import { db } from "@/db"
 import { auth } from "@/lib/server/auth"
 import { getProblemSlugFromId } from "@/lib/server/problems"
-import { insertTerminalSessionLog } from "@/lib/server/queries"
-import { sessionManagerExec } from "@/lib/server/session-manager"
+import {
+  insertTerminalSessionLog,
+  sessionManagerExec,
+} from "@/lib/server/session-manager"
 
 import type { getTerminalSession } from "./get-terminal-session"
 
