@@ -48,7 +48,7 @@ export function MagicLink({ url }: { url: string }) {
             </Section>
             <Section className="text-center">
               <Text className="text-sm text-neutral-500">
-                If you didn't request this, please ignore this email.
+                {`If you didn't request this, please ignore this email.`}
               </Text>
             </Section>
           </Container>
