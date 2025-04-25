@@ -259,7 +259,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         await resend.emails.send({
           from: "no-reply@easyshell.xyz",
           to: identifier,
-          subject: `Your Magic Link`,
+          subject: `Sign-In to EasyShell`,
           react: MagicLink({ url }),
         })
       },

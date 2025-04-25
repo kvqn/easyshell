@@ -2,7 +2,6 @@ import {
   Body,
   Button,
   Container,
-  Font,
   Head,
   Heading,
   Html,
@@ -14,48 +13,59 @@ import {
 
 export function MagicLink({ url }: { url: string }) {
   return (
-    <Html lang="en">
-      <Head>
-        <title>Your Magic Link</title>
-        <Font
-          fontFamily="Geist"
-          webFont={{
-            url: "https://github.com/vercel/geist-font/raw/refs/heads/main/packages/next/dist/fonts/geist-sans/Geist-Variable.woff2",
-            format: "woff2",
-          }}
-          fallbackFontFamily="Arial"
-        />
-      </Head>
-      <Preview>Sign in to easyshell.xyz</Preview>
-      <Body>
+    <Html>
+      <Head />
+      <Body style={main}>
         <Tailwind>
-          <Container className="w-[400px] rounded-t-xl bg-neutral-100 py-4">
+          <Preview>Log in with this magic link.</Preview>
+          <Container
+            style={{
+              ...container,
+              background:
+                "radial-gradient(circle at top right, rgba(0, 255, 0, 0.2) 0%, white 75%)",
+            }}
+            className="rounded-xl p-8"
+          >
             <Section className="text-center">
-              <Text className="inline text-3xl font-bold text-black">easy</Text>
-              <Text className="inline text-3xl font-bold text-green-500">
+              <Text className="inline text-4xl font-bold text-black">easy</Text>
+              <Text className="inline text-4xl font-bold text-green-500">
                 shell
               </Text>
             </Section>
+            <Heading className="text-center text-xl text-emerald-500">
+              ✨ Your Magic Link is Here ✨
+            </Heading>
+            <Text className="text-center text-sm text-neutral-800">
+              Click on the link below to sign in to your account.
+            </Text>
+            <Section className="text-center">
+              <Button
+                className="rounded-md bg-green-500 px-4 py-2 text-white"
+                href={url}
+              >
+                Sign In
+              </Button>
+            </Section>
+            <Section className="text-center">
+              <Text className="text-sm text-neutral-500">
+                If you didn't request this, please ignore this email.
+              </Text>
+            </Section>
           </Container>
-          <Heading className="text-center text-emerald-500">
-            ✨ Your Magic Link is Here ✨
-          </Heading>
-          <Text className="text-center text-sm">
-            Click on the link below to sign in to your account.
-          </Text>
-          <Section className="text-center">
-            <Button
-              className="rounded-md bg-green-500 px-4 py-2 text-white"
-              href={url}
-            >
-              Sign In
-            </Button>
-          </Section>
-          <Text className="text-center text-xs text-neutral-400">
-            If you did not request this, please ignore this email.
-          </Text>
         </Tailwind>
       </Body>
     </Html>
   )
+}
+
+const main = {
+  backgroundColor: "#ffffff",
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+}
+
+const container = {
+  margin: "0 auto",
+  backgroundPosition: "bottom",
+  backgroundRepeat: "no-repeat, no-repeat",
 }
