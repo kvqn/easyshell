@@ -1,11 +1,7 @@
-import { useSession } from "next-auth/react"
+// ====================================================
+// Utility function that can be used ONLY on the client
+// ====================================================
 import { useTheme as _useTheme } from "next-themes"
-
-// TODO: remove this
-export function useUser() {
-  const { data: session } = useSession()
-  return session?.user
-}
 
 export function useTheme() {
   const { theme: _theme, setTheme: _setTheme } = _useTheme()
@@ -43,3 +39,5 @@ export function clientOS() {
   }
   return "unknown"
 }
+
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>

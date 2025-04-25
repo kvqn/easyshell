@@ -1,5 +1,7 @@
 "use client"
 
+import { terminalSessionLogs } from "@easyshell/db/schema"
+
 import {
   PromptSettings,
   usePromptSettingsContext,
@@ -16,6 +18,7 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { EasyTooltip } from "@/components/ui/tooltip"
+import { db } from "@/db"
 import { clientOS } from "@/lib/client"
 import { newSubmission } from "@/lib/server/actions/new-submission"
 import { cn } from "@/lib/utils"
@@ -25,6 +28,7 @@ import { usePostHog } from "posthog-js/react"
 import { useState } from "react"
 import { BsGearWideConnected } from "react-icons/bs"
 import { PiCaretLeftFill } from "react-icons/pi"
+import { toast } from "sonner"
 
 export function SubmitPrompt({
   problemId,
@@ -52,6 +56,13 @@ export function SubmitPrompt({
       problemId,
       input,
     })
+    if (!resp) {
+      toast.error("Failed to submit command", {
+        description: "Unauthenticated",
+      })
+      setSubmitting(false)
+      return
+    }
     router.replace(
       `${pathname}?tab=submissions&submission=${resp.submissionId}`,
     )

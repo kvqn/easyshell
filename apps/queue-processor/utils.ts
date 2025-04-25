@@ -120,11 +120,6 @@ export async function runSubmissionAndGetOutput({
     }
   }
 
-  // console.log("passed", passed)
-  // console.log("expected_fs", testcase.expected_fs)
-  // console.log("fs", fs)
-  // console.log("---")
-
   return {
     startedAt,
     finishedAt,

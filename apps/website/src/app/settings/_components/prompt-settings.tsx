@@ -1,7 +1,7 @@
 "use client"
 
 import { Switch } from "@/components/ui/switch"
-import type { SetState } from "@/lib/utils"
+import type { SetState } from "@/lib/client"
 
 import { createContext, useContext, useEffect, useState } from "react"
 

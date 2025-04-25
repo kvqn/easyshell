@@ -20,7 +20,6 @@ import DiscordProvider from "next-auth/providers/discord"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import Resend from "next-auth/providers/resend"
-import { redirect } from "next/navigation"
 
 // =============================== Helper Utilities ===============================
 
@@ -267,36 +266,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }),
   ],
 })
-
-/**
- * DEPRECATED
- */
-export async function ensureAuth(callbackUrl = "/") {
-  const session = await auth()
-  if (!session) redirect(`/login?callback=${callbackUrl}`)
-  const user = (
-    await db.select().from(users).where(eq(users.id, session.user.id)).limit(1)
-  )[0]
-  if (!user) redirect("/login")
-  if (!user.name) {
-    const userCount = await db
-      .select({
-        count: count(),
-      })
-      .from(users)
-
-    user.name = `user-${userCount[0]!.count + 1}`
-    await db
-      .update(users)
-      .set({
-        name: user.name,
-      })
-      .where(eq(users.id, user.id))
-  }
-  return {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    image: user.image ?? undefined,
-  }
-}

@@ -3,7 +3,7 @@
 import { terminalSessions } from "@easyshell/db/schema"
 
 import { db } from "@/db"
-import { ensureAuth } from "@/lib/server/auth"
+import { auth } from "@/lib/server/auth"
 
 import { and, eq, isNull } from "drizzle-orm"
 
@@ -14,7 +14,8 @@ export async function killTerminalSessions({
   problemId: number
   testcaseId: number
 }) {
-  const user = await ensureAuth()
+  const user = (await auth())?.user
+  if (!user) return null
 
   const updated = await db
     .update(terminalSessions)
