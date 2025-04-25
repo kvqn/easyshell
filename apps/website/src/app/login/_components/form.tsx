@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import { cn } from "@/lib/utils"
 
 import { signIn } from "next-auth/react"
 import { useState } from "react"
@@ -111,6 +112,17 @@ export function LoginForm({ callback }: { callback: string }) {
             <p className="grow text-center">Login with Email</p>
           </Button>
         </Card>
+      </div>
+      <div
+        className={cn("text-sm text-neutral-400 dark:text-neutral-600", {
+          hidden: callback === "/",
+        })}
+      >
+        <span>You will be redirected to </span>
+        <span className="rounded-md border bg-neutral-200 px-2 text-neutral-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
+          {callback}
+        </span>
+        <span> after logging in.</span>
       </div>
     </div>
   )
