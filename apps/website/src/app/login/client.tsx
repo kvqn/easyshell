@@ -7,15 +7,30 @@ import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 import { toast } from "sonner"
 
+function validCallbackUrl(url: string): boolean {
+  return /^\/(?:[\w-]+\/?)*$/.test(url)
+}
+
 export function Client({ loggedIn }: { loggedIn: boolean }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callback = searchParams.get("callback") ?? "/"
+  let callback = searchParams.get("callback") ?? "/"
+  if (!validCallbackUrl(callback)) {
+    callback = "/"
+  }
+
+  if (callback === "/") {
+    router.replace("/login")
+  } else {
+    router.replace(`/login?callback=${callback}`)
+  }
 
   useEffect(() => {
     if (loggedIn) {
       toast("You are already logged in")
-      router.push(callback)
+      if (validCallbackUrl(callback)) {
+        router.push(callback)
+      }
     }
   }, [router, loggedIn, callback])
 
