@@ -1,12 +1,12 @@
 import { type Config } from "drizzle-kit"
 
-import { env } from "@/env"
+if (!process.env.DATABASE_URL) throw "DATABASE_URL is required"
 
 export default {
-  schema: "./src/server/db/schema.ts",
+  schema: "./packages/db/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    url: process.env.DATABASE_URL,
   },
-  tablesFilter: ["practish_*"],
+  tablesFilter: ["easyshell_*"],
 } satisfies Config

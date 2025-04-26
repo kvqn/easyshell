@@ -12,15 +12,17 @@ jobs:
     environment: linting
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun i
-      - run: bun prettier:check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm i
+      - run: npx prettier --check .
   gofmt:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version: 1.24.0
       - name: check formatting
         run: gofmt -l -s -w .

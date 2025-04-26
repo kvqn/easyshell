@@ -1,1 +1,4 @@
-problems/*/testcases/**
+**/node_modules
+apps/website/.open-next
+apps/website/.next
+apps/website/.vercel

@@ -1,0 +1,22 @@
+# Regex Cheatsheet for Linux Command Lovers
+
+Regular expressions (regex) are your secret weapon for text matching.
+
+---
+
+## Common Patterns
+
+1. `^`: Matches the start of a line.  
+   Example: `^Hello` matches "Hello" at the beginning of a line.  
+
+2. `$`: Matches the end of a line.  
+   Example: `World$` matches "World" at the end of a line.  
+
+3. `.`: Matches any single character.  
+   Example: `h.t` matches "hat", "hit", or "hot".  
+
+4. `*`: Matches zero or more occurrences of the preceding character.  
+   Example: `he*llo` matches "hello", "hllo", or "heeeello".
+
+Pro Tip: Combine regex with commands like `grep`, `awk`, or `sed` for ultimate text manipulation.
+

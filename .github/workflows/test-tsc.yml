@@ -10,6 +10,8 @@ on:
       - "**/*.tsx"
       - "**/*.jsx"
       - "**/*.cjs"
+      - "**/*.ejs"
+      - "**/*.mjs"
       - "**/*.json"
   pull_request:
     paths:
@@ -18,6 +20,8 @@ on:
       - "**/*.tsx"
       - "**/*.jsx"
       - "**/*.cjs"
+      - "**/*.ejs"
+      - "**/*.mjs"
       - "**/*.json"
 
 jobs:
@@ -26,16 +30,16 @@ jobs:
     environment: linting
     steps:
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-      - run: bun i
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm i
         name: Install dependencies
-      - run: bunx tsc --noEmit
+      - run: npm run cache:website
+        working-directory: ./packages/problems
+      - run: npm run cache:queue-processor
+        working-directory: ./packages/problems
+      - run: npm run lint:tsc
         name: Check TypeScript types
-      - run: bun next:lint
+      - run: npm run lint:next
         name: Lint Next.js files
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      DISCORD_CLIENT_ID: ${{ secrets.DISCORD_CLIENT_ID }}
-      DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
-      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}

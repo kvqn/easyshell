@@ -4,55 +4,35 @@ on:
     branches:
       - main
     paths:
-      - tools/container-manager/go.mod
-      - tools/container-manager/main.go
-      - tools/problems/practish-base/container-io/go.mod
-      - tools/problems/practish-base/container-io/main.go
-      - tools/problems/practish-base/submission-runner/go.mod
-      - tools/problems/practish-base/submission-runner/main.go
+      - apps/session-manager/**
+      - apps/entrypoint/**
   pull_request:
     paths:
-      - tools/container-manager/go.mod
-      - tools/container-manager/main.go
-      - tools/problems/practish-base/container-io/go.mod
-      - tools/problems/practish-base/container-io/main.go
-      - tools/problems/practish-base/submission-runner/go.mod
-      - tools/problems/practish-base/submission-runner/main.go
+      - apps/session-manager/**
+      - apps/entrypoint/**
 
 jobs:
-  container-manager:
+  session-manager:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version: 1.23.6
       - name: check linting
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.60
-          working-directory: tools/container-manager
-  container-io:
+          version: v1.64.2
+          working-directory: apps/session-manager
+  entrypoint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version: 1.23.6
       - name: check linting
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.60
-          working-directory: tools/problems/practish-base/container-io
-  submission-runner:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
-        with:
-          go-version: stable
-      - name: check linting
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: v1.60
-          working-directory: tools/problems/practish-base/submission-runner
+          version: v1.64.2
+          working-directory: apps/entrypoint

@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <title>Home</title>
+  </head>
+  <body>
+    <h1>Movies you MUST watch</h1>
+    <ul>
+      <li><a href="https://www.imdb.com/title/tt0111161">The Shawshank Redemption</a></li>
+      <li><a href="https://www.imdb.com/title/tt0097165">Dead Poets Society</a></li>
+      <li><a href="https://www.imdb.com/title/tt0108052">Schindler's List</a></li>
+      <li><a href="https://www.imdb.com/title/tt0110912">Pulp Fiction</a></li>
+      <li><a href="https://www.imdb.com/title/tt0137523">Fight Club</a></li>
+    </ul>
+</html>
