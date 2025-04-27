@@ -42,6 +42,9 @@ export const users = createTable(
       withTimezone: true,
     }).default(sql`CURRENT_TIMESTAMP`),
     image: varchar("image", { length: 255 }),
+    joinedAt: timestamp("joined_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   (t) => [
     uniqueIndex("idx_email").on(t.email),
