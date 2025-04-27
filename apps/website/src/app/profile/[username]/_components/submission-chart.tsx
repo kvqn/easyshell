@@ -76,9 +76,14 @@ export function SubmissionsChart({
 }) {
   const { theme } = useTheme()
 
-  const easyPercent = Math.round((stats.easy * 100) / stats.totalEasy)
-  const mediumPercent = Math.round((stats.medium * 100) / stats.totalMedium)
-  const hardPercent = Math.round((stats.hard * 100) / stats.totalHard)
+  const easyPercent =
+    stats.totalEasy !== 0 ? Math.round((stats.easy * 100) / stats.totalEasy) : 0
+  const mediumPercent =
+    stats.totalMedium !== 0
+      ? Math.round((stats.medium * 100) / stats.totalMedium)
+      : 0
+  const hardPercent =
+    stats.totalHard !== 0 ? Math.round((stats.hard * 100) / stats.totalHard) : 0
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
