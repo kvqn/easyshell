@@ -10,8 +10,11 @@ export function useTheme() {
     _setTheme(t)
   }
 
+  const theme: "light" | "dark" =
+    _theme === "dark" || _theme === "light" ? _theme : "light"
+
   return {
-    theme: _theme === "dark" || _theme === "light" ? _theme : "light",
+    theme: theme,
     setTheme,
   }
 }

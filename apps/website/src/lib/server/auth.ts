@@ -167,7 +167,48 @@ async function fixUser(userId: string) {
     name: name,
     username: username!,
     image: user.image ?? undefined,
+    joinedAt: user.joinedAt,
   }
+}
+
+/**
+ * Get user by id. User will be fixed if necessary.
+ */
+export async function getUserById(userId: string) {
+  const user = (
+    await db
+      .select({
+        id: users.id,
+      })
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1)
+  )[0]
+
+  if (!user) return null
+
+  const fixedUser = await fixUser(user.id)
+  return fixedUser
+}
+
+/**
+ * Get user by username. User will be fixed if necessary.
+ */
+export async function getUserByUsername(username: string) {
+  const user = (
+    await db
+      .select({
+        id: users.id,
+      })
+      .from(users)
+      .where(eq(lower(users.username), username.toLowerCase()))
+      .limit(1)
+  )[0]
+
+  if (!user) return null
+
+  const fixedUser = await fixUser(user.id)
+  return fixedUser
 }
 
 // ================================ Auth Configuration ===============================
