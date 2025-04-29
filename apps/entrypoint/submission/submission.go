@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -33,13 +34,17 @@ func getFs() map[string]string {
 				fmt.Printf("error opening file: %v\n", err)
 				return err
 			}
-			defer file.Close()
 			content, err := io.ReadAll(file)
 			if err != nil {
 				fmt.Printf("error reading file: %v\n", err)
 				return err
 			}
-			pathWithoutPrefix := path[6:]
+			err = file.Close()
+			if err != nil {
+				fmt.Printf("error closing file: %v\n", err)
+				return err
+			}
+			pathWithoutPrefix := strings.TrimPrefix(path, "/home/")
 			fs[pathWithoutPrefix] = string(content)
 		}
 		return nil
