@@ -17,6 +17,14 @@ if (!TOKEN) {
 const app = new Hono()
 const client = new Client(DATABASE_URL)
 
+/**
+ * Initializes the PostgreSQL client, sets up the Hono server with a secured `/query` endpoint, and starts listening for requests.
+ *
+ * The `/query` endpoint accepts POST requests with a JSON body containing a SQL query, parameters, and a method. It requires a valid Bearer token in the `Authorization` header. Depending on the specified method, it executes the query and returns the results as JSON.
+ *
+ * @remark
+ * The SQL query is sanitized by removing semicolons to prevent execution of multiple statements. Unauthorized requests or unknown methods result in error responses.
+ */
 async function main() {
   await client.connect()
 
