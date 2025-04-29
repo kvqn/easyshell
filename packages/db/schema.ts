@@ -135,9 +135,14 @@ export const terminalSessions = createTable(
       .references(() => users.id),
     problemId: integer("problem_id").notNull(),
     testcaseId: integer("testcase_id").notNull(),
-    createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
-    expiresAt: timestamp("expires_at", { mode: "date" }).notNull(),
-    deletedAt: timestamp("deleted_at", { mode: "date" }),
+    createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    expiresAt: timestamp("expires_at", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
+    deletedAt: timestamp("deleted_at", { mode: "date", withTimezone: true }),
   },
   (ts) => [index("terminal_session_user_id_idx").on(ts.userId)],
 )
@@ -150,8 +155,14 @@ export const terminalSessionLogs = createTable(
     stdin: text("stdin").notNull(),
     stdout: text("stdout").notNull(),
     stderr: text("stderr").notNull(),
-    startedAt: timestamp("started_at").notNull(),
-    finishedAt: timestamp("finished_at").notNull(),
+    startedAt: timestamp("started_at", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
+    finishedAt: timestamp("finished_at", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
   },
   (tsl) => [
     index("terminal_session_log_session_id_idx").on(tsl.sessionId),
@@ -170,7 +181,7 @@ export const submissions = createTable("submissions", {
     .references(() => users.id),
   problemId: integer("problem_id").notNull(),
   input: text("input").notNull(),
-  submittedAt: timestamp("submitted_at", { mode: "date" })
+  submittedAt: timestamp("submitted_at", { mode: "date", withTimezone: true })
     .notNull()
     .defaultNow(),
 })
@@ -183,8 +194,14 @@ export const submissionTestcases = createTable(
     stdout: text("stdout").notNull(),
     stderr: text("stderr").notNull(),
     exitCode: integer("exit_code").notNull(),
-    startedAt: timestamp("started_at", { mode: "date" }).notNull(),
-    finishedAt: timestamp("finished_at", { mode: "date" }).notNull(),
+    startedAt: timestamp("started_at", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
+    finishedAt: timestamp("finished_at", {
+      mode: "date",
+      withTimezone: true,
+    }).notNull(),
     fs: jsonb("fs").$type<Record<string, string>>(),
     passed: boolean("success").notNull(),
   },
@@ -244,5 +261,7 @@ export const images = createTable("images", {
   uploadedBy: varchar("uploaded_by", { length: 255 })
     .notNull()
     .references(() => users.id),
-  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { mode: "date", withTimezone: true })
+    .notNull()
+    .defaultNow(),
 })
