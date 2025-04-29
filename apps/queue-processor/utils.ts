@@ -1,5 +1,4 @@
 import { env } from "@easyshell/env"
-import { unzip } from "@easyshell/utils/server"
 
 import { getProblemInfo } from "./problems"
 
@@ -22,7 +21,7 @@ const OutputJsonSchema = z.object({
   stdout: z.string(),
   stderr: z.string(),
   exit_code: z.number(),
-  fs_zip_base64: z.string(),
+  fs: z.record(z.string()),
 })
 
 export async function runSubmissionAndGetOutput({
@@ -81,8 +80,7 @@ export async function runSubmissionAndGetOutput({
     JSON.parse(await readFile(outputFilePath, { encoding: "utf-8" })),
   )
 
-  const fs =
-    output.fs_zip_base64.length !== 0 ? await unzip(output.fs_zip_base64) : {}
+  const fs = output.fs
 
   const testcase = problem.testcases.find((t) => t.id === testcaseId)
   if (!testcase) throw new Error("Testcase not found")

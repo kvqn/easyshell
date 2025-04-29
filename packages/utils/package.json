@@ -4,11 +4,9 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "execa": "^9.5.2",
-    "yauzl": "^3.2.0"
+    "execa": "^9.5.2"
   },
   "devDependencies": {
-    "@types/node": "^20.17.16",
-    "@types/yauzl": "^2.10.3"
+    "@types/node": "^20.17.16"
   }
 }

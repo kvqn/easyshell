@@ -4,7 +4,6 @@ import { submissionTestcases, submissions } from "@easyshell/db/schema"
 
 import { db } from "@/db"
 import { getProblemInfo, getProblemSlugFromId } from "@/lib/server/problems"
-import { unzip } from "@/lib/server/unzip"
 
 import { getSubmissionInfo } from "./get-submission-info"
 
@@ -23,7 +22,7 @@ export async function getTestcaseInfo({
       stdout: submissionTestcases.stdout,
       stderr: submissionTestcases.stderr,
       exitCode: submissionTestcases.exitCode,
-      fsZipBase64: submissionTestcases.fsZipBase64,
+      fs: submissionTestcases.fs,
       startedAt: submissionTestcases.startedAt,
       finishedAt: submissionTestcases.finishedAt,
       passed: submissionTestcases.passed,
@@ -47,10 +46,6 @@ export async function getTestcaseInfo({
 
   const dataFromDb = _dataFromDb[0]!
 
-  const fs = dataFromDb.fsZipBase64
-    ? await unzip(dataFromDb.fsZipBase64)
-    : undefined
-
   const submission = await getSubmissionInfo({ submissionId })
 
   const problemSlug = await getProblemSlugFromId(
@@ -67,7 +62,7 @@ export async function getTestcaseInfo({
     stdout: dataFromDb.stdout,
     stderr: dataFromDb.stderr,
     exitCode: dataFromDb.exitCode,
-    fs,
+    fs: dataFromDb.fs,
     passed: dataFromDb.passed,
     expected_stdout: testcase.expected_stdout,
     expected_stderr: testcase.expected_stderr,
