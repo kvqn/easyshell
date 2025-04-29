@@ -41,7 +41,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Container: ", reqBody.ContainerName)
 	fmt.Println("Command: ", string(reqBody.Command))
-	endpoint := "http://" + reqBody.ContainerName + ":8080/run"
+
+	// This doesn't matter, we are using a socket
+	// but an endpoint still needs to be passed for whatever reason
+	endpoint := "http://localhost/whatever"
 
 	req, err := http.NewRequest("POST", endpoint, strings.NewReader(reqBody.Command))
 	if err != nil {
