@@ -15,9 +15,14 @@ import { PiGear, PiGearDuotone } from "react-icons/pi"
 
 function Logo() {
   return (
-    <Link className="text-xl lg:text-2xl" href="/">
-      <span className="font-bold">easy</span>
-      <span className="font-bold text-green-500">shell</span>
+    <Link className="text-2xl" href="/">
+      <div className="relative flex">
+        <span className="font-bold">easy</span>
+        <span className="font-bold text-green-500">shell</span>
+        <div className="absolute top-1/2 right-0 translate-y-1/2 font-clash-display text-xs font-semibold text-neutral-500/70">
+          PREVIEW
+        </div>
+      </div>
     </Link>
   )
 }
