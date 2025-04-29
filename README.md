@@ -97,7 +97,15 @@ If you are using a registry, then make sure you are already logged in.
 
 #### `DATABASE_URL`
 
-Database connection string. Set this to a NeonDB instance.
+Database connection string.
+
+### `DRIZZLE_PROXY_URL`
+
+URL of the drizzle proxy.
+
+### `DRIZZLE_PROXY_TOKEN`
+
+Token for the drizzle proxy.
 
 #### `SESSION_MANAGER_URL`
 

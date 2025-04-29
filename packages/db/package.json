@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.4",
-    "@neondatabase/serverless": "^0.10.4",
     "drizzle-orm": "^0.39.1"
   },
   "devDependencies": {

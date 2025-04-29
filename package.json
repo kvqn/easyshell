@@ -10,7 +10,8 @@
     "packages/utils",
     "packages/env",
     "apps/website",
-    "apps/queue-processor"
+    "apps/queue-processor",
+    "apps/db-proxy"
   ],
   "scripts": {
     "format:check": "npx prettier --check . && gofmt -l -s .",

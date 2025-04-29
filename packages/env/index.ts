@@ -21,7 +21,9 @@ export const env = createEnv({
 
     ...(process.env.APP === "website"
       ? {
-          DATABASE_URL: z.string().url(),
+          // DATABASE_URL: z.string().url(),
+          DRIZZLE_PROXY_URL: z.string().url(),
+          DRIZZLE_PROXY_TOKEN: z.string(),
 
           NEXTAUTH_SECRET: z.string(),
           NEXTAUTH_URL: z.string().url(),

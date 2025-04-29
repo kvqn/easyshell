@@ -20,7 +20,8 @@ This app Requires the following environment variables. See [Environment Variable
 - `GITHUB_CLIENT_SECRET`
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
-- `DATABASE_URL`
+- `DRIZZLE_PROXY_URL`
+- `DRIZZLE_PROXY_TOKEN`
 - `SESSION_MANAGER_URL`
 
 ## Scripts
