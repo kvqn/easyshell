@@ -33,7 +33,7 @@ export function Navbar() {
       <Logo />
       <Link
         href="/problems"
-        className="mt-1 hidden text-neutral-500 transition-colors hover:text-black lg:block dark:hover:text-white"
+        className="mt-1 hidden text-neutral-500 transition-colors hover:text-black md:block dark:hover:text-white"
       >
         Problems
       </Link>
