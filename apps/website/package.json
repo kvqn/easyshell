@@ -76,7 +76,6 @@
     "@types/react-dom": "^18.3.5",
     "@types/utf8": "^3.0.3",
     "@types/uuid": "^10.0.0",
-    "@types/yauzl": "^2.10.3",
     "@typescript-eslint/eslint-plugin": "^8.21.0",
     "@typescript-eslint/parser": "^8.21.0",
     "drizzle-kit": "^0.30.5",

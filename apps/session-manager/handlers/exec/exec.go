@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path"
 	"session-manager/utils"
 	"strings"
 )
@@ -40,7 +41,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Container: ", reqBody.ContainerName)
 	fmt.Println("Command: ", string(reqBody.Command))
-	endpoint := "http://" + reqBody.ContainerName + ":8080/run"
+
+	// This doesn't matter, we are using a socket
+	// but an endpoint still needs to be passed for whatever reason
+	endpoint := "http://localhost/whatever"
 
 	req, err := http.NewRequest("POST", endpoint, strings.NewReader(reqBody.Command))
 	if err != nil {
@@ -48,7 +52,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := utils.HttpClient.Do(req)
+	socketPath := path.Join(utils.WorkingDir, "sessions", reqBody.ContainerName, "main.sock")
+	client := utils.SocketClient(socketPath)
+
+	resp, err := client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		if json.NewEncoder(w).Encode(ErrorResponse{

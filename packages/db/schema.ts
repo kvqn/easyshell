@@ -5,6 +5,7 @@ import {
   foreignKey,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTableCreator,
   primaryKey,
@@ -184,7 +185,7 @@ export const submissionTestcases = createTable(
     exitCode: integer("exit_code").notNull(),
     startedAt: timestamp("started_at", { mode: "date" }).notNull(),
     finishedAt: timestamp("finished_at", { mode: "date" }).notNull(),
-    fsZipBase64: text("fs_zip_base64"),
+    fs: jsonb("fs").$type<Record<string, string>>(),
     passed: boolean("success").notNull(),
   },
   (submission) => [

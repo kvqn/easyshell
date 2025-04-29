@@ -4,24 +4,55 @@ import (
 	"bytes"
 	"encoding/json"
 	"entrypoint/daemon"
+	"fmt"
+	"io"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
 	"time"
 )
 
 type outputResponse struct {
-	Stdout      string `json:"stdout"`
-	Stderr      string `json:"stderr"`
-	ExitCode    int    `json:"exit_code"`
-	FsZipBase64 string `json:"fs_zip_base64"`
+	Stdout   string            `json:"stdout"`
+	Stderr   string            `json:"stderr"`
+	ExitCode int               `json:"exit_code"`
+	Fs       map[string]string `json:"fs"`
 }
 
-func fsZipBase64() string {
-	out, err := exec.Command("sh", "-c", "cd /home && zip -r - . | base64").Output()
+func getFs() map[string]string {
+	fs := make(map[string]string)
+	err := filepath.Walk("/home", func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
+			return err
+		}
+		fmt.Printf("visited file or dir: %q\n", path)
+		if info.Mode().IsRegular() {
+			file, err := os.Open(path)
+			if err != nil {
+				fmt.Printf("error opening file: %v\n", err)
+				return err
+			}
+			content, err := io.ReadAll(file)
+			if err != nil {
+				fmt.Printf("error reading file: %v\n", err)
+				return err
+			}
+			err = file.Close()
+			if err != nil {
+				fmt.Printf("error closing file: %v\n", err)
+				return err
+			}
+			pathWithoutPrefix := strings.TrimPrefix(path, "/home/")
+			fs[pathWithoutPrefix] = string(content)
+		}
+		return nil
+	})
 	if err != nil {
-		panic(err)
+		fmt.Printf("error walking the path")
 	}
-	return string(out)
+	return fs
 }
 
 func Main() {
@@ -44,13 +75,13 @@ func Main() {
 	stdout := stdoutBytes.String()
 	stderr := stderrBytes.String()
 
-	fs := fsZipBase64()
+	fs := getFs()
 
 	output := outputResponse{
-		Stdout:      stdout,
-		Stderr:      stderr,
-		ExitCode:    exitCode,
-		FsZipBase64: fs,
+		Stdout:   stdout,
+		Stderr:   stderr,
+		ExitCode: exitCode,
+		Fs:       fs,
 	}
 
 	f, err := os.Create("/output.json")

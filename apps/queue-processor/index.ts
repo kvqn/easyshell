@@ -100,7 +100,7 @@ async function processQueueItem(
     stdout: output.stdout,
     stderr: output.stderr,
     exitCode: output.exit_code,
-    fsZipBase64: output.fs_zip_base64,
+    fs: output.fs,
     startedAt,
     finishedAt,
     passed,
