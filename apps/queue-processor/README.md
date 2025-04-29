@@ -9,7 +9,8 @@ Also see [entrypoint](../entrypoint/README.md) for more information about the pr
 Running the queue-processor requires the following environment variables. See [Environment Variables](../../README.md#environment-variables) for more information.
 
 - `APP` - It should be set to `queue-processor`.
-- `DATABASE_URL`
+- `DRIZZLE_PROXY_URL`
+- `DRIZZLE_PROXY_TOKEN`
 - `DOCKER_REGISTRY` - If not provided, the local images will be used.
 - `PROJECT_ROOT` - The root directory of the project. It is required if you are running the queue-processor outside of the git context.
 - `WORKING_DIR` - If not provided, `/tmp/easyshell` is used.

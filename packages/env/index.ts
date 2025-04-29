@@ -15,13 +15,13 @@ export const env = createEnv({
 
     ...(process.env.APP === "queue-processor"
       ? {
-          DATABASE_URL: z.string().url(),
+          DRIZZLE_PROXY_URL: z.string().url(),
+          DRIZZLE_PROXY_TOKEN: z.string(),
         }
       : {}),
 
     ...(process.env.APP === "website"
       ? {
-          // DATABASE_URL: z.string().url(),
           DRIZZLE_PROXY_URL: z.string().url(),
           DRIZZLE_PROXY_TOKEN: z.string(),
 
