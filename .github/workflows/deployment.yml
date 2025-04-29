@@ -52,6 +52,15 @@ jobs:
       - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest -f ./apps/queue-processor/Dockerfile .
       - run: docker push ${{ secrets.DOCKER_REGISTRY }}/queue-processor:latest
 
+  registry-push-db-proxy:
+    environment: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - uses: actions/checkout@v4
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/db-proxy:latest -f ./apps/db-proxy/Dockerfile .
+      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/db-proxy:latest
+
   # ============================================================================
 
   # =============================== Deployments ================================
@@ -61,6 +70,7 @@ jobs:
       - registry-push-problems
       - registry-push-queue-processor
       - registry-push-session-manager
+      - registry-push-db-proxy
     environment: deployment
     runs-on: ubuntu-latest
     steps:
