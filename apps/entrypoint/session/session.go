@@ -4,9 +4,12 @@ import (
 	"bufio"
 	"encoding/json"
 	"entrypoint/daemon"
+	"fmt"
 	"io"
 	"math/rand"
+	"net"
 	"net/http"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
@@ -56,7 +59,6 @@ func closeLock() {
 
 func run(w http.ResponseWriter, r *http.Request) {
 	if locked {
-		// http.Error(w, "Locked", http.StatusLocked)
 		w.WriteHeader(http.StatusLocked)
 		if json.NewEncoder(w).Encode(errorResponse{
 			Critical: false,
@@ -165,6 +167,13 @@ func run(w http.ResponseWriter, r *http.Request) {
 
 func Main() {
 
+	SOCKET_PATH := "/tmp/easyshell/main.sock"
+
+	if _, err := os.Stat(SOCKET_PATH); err == nil {
+		fmt.Printf("Removing existing socket file: %s\n", SOCKET_PATH)
+		os.Remove(SOCKET_PATH)
+	}
+
 	go daemon.Run()
 
 	cmd = exec.Command("sh")
@@ -175,20 +184,30 @@ func Main() {
 	stderr, _ = cmd.StderrPipe()
 
 	if err := cmd.Start(); err != nil {
-		panic("1 " + err.Error())
+		panic("Error while cmd.Start() : " + err.Error())
 	}
 
 	go func() {
 		err := cmd.Wait()
 		if err != nil {
-			panic("2 " + err.Error())
+			panic("Error while cmd.Wait() : " + err.Error())
 		}
 		panic("Subprocess Ended")
 	}()
 
-	http.HandleFunc("/run", run)
-	err := http.ListenAndServe(":8080", nil)
+	socket, err := net.Listen("unix", SOCKET_PATH)
 	if err != nil {
-		panic("3 " + err.Error())
+		panic("Error while creating socket : " + err.Error())
+	}
+	defer socket.Close()
+
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", run)
+	server := http.Server{
+		Handler: mux,
+	}
+	err = server.Serve(socket)
+	if err != nil {
+		panic("Error while serving : " + err.Error())
 	}
 }

@@ -66,8 +66,6 @@ export async function runSubmissionAndGetOutput({
     `${inputFilePathForDocker}:/input.sh`,
     "-v",
     `${outputFilePathForDocker}:/output.json`,
-    "--net",
-    "easyshell",
     "-m",
     "10m",
     "--cpus",

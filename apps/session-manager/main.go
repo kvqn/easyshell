@@ -7,9 +7,12 @@ import (
 	"session-manager/handlers/exec"
 	is_running "session-manager/handlers/is-running"
 	"session-manager/handlers/kill"
+	"session-manager/utils"
 )
 
 func main() {
+	utils.Init()
+
 	http.HandleFunc("/exec", exec.Handler)
 	http.HandleFunc("/create", create.Handler)
 	http.HandleFunc("/is-running", is_running.Handler)

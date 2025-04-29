@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path"
 	"session-manager/utils"
 	"strings"
 )
@@ -48,7 +49,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp, err := utils.HttpClient.Do(req)
+	socketPath := path.Join(utils.WorkingDir, "sessions", reqBody.ContainerName, "main.sock")
+	client := utils.SocketClient(socketPath)
+
+	resp, err := client.Do(req)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		if json.NewEncoder(w).Encode(ErrorResponse{

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os/exec"
+	"path"
 	"session-manager/utils"
 )
 
@@ -31,7 +32,10 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		pullPolicy = "--pull=always"
 	}
 
-	command := fmt.Sprintf("docker run -d --rm --name %s --net easyshell -m 10m --cpus 0.1 %s %s%s -mode session", req.ContainerName, pullPolicy, utils.DockerRegistry, req.Image)
+	containerDir := path.Join(utils.WorkingDir, "sessions", req.ContainerName)
+	utils.Mkdirp(containerDir)
+
+	command := fmt.Sprintf("docker run -d --rm --name %s -m 10m --cpus 0.1 -v %s:/tmp/easyshell %s %s%s -mode session", req.ContainerName, containerDir, pullPolicy, utils.DockerRegistry, req.Image)
 
 	fmt.Println("Command: ", command)
 
