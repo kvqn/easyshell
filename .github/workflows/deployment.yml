@@ -64,12 +64,6 @@ jobs:
     environment: deployment
     runs-on: ubuntu-latest
     steps:
-      - name: Tailscale
-        uses: tailscale/github-action@v3
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
       - name: Make .ssh folder
         run: mkdir -p ~/.ssh
       - name: Write SSH private key
@@ -77,7 +71,7 @@ jobs:
       - name: Set permissions for SSH private key
         run: chmod 400 ~/.ssh/id_rsa
       - name: SSH into server
-        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './scripts/update-easyshell.sh'
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} ${{ secrets.SSH_COMMAND }}
 
   deploy-cf:
     environment: deployment
