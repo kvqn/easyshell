@@ -47,7 +47,7 @@ export function TestcaseTerminal({
     showTimes: boolean
   }>({
     fontSize: 1,
-    showTimes: false,
+    showTimes: true,
   })
 
   const [restarted, setRestarted] = useState(0)
@@ -205,7 +205,7 @@ export function TestcaseTerminal({
 
   return (
     <div className="flex h-full flex-col gap-4">
-      <div className="relative flex grow flex-col rounded-md border-4 border-gray-400 font-geist-mono">
+      <div className="relative flex grow flex-col rounded-md border-4 border-neutral-400 bg-black font-geist-mono dark:border-neutral-800">
         <div
           className="flex grow flex-col overflow-scroll bg-black px-2 py-1 whitespace-pre-line"
           ref={terminalRef}
@@ -214,8 +214,19 @@ export function TestcaseTerminal({
           }}
         >
           {session.logs.map((log) => (
-            <div key={log.id}>
-              <p className="text-white">{`>>> ${log.stdin}`}</p>
+            <div key={log.id} className="mt-2 border-t border-neutral-700">
+              <div
+                className={cn("flex justify-between text-sm text-neutral-600", {
+                  hidden: !options.showTimes,
+                })}
+              >
+                <div>
+                  took{" "}
+                  {moment(log.finishedAt).diff(log.startedAt, "milliseconds")}ms
+                </div>
+                <div>{moment(log.startedAt).format("HH:mm:ss")}</div>
+              </div>
+              <p className="mt-1 text-white">{`${log.stdin}`}</p>
               {log.stdout.length > 0 && (
                 <p className="text-neutral-400">{log.stdout}</p>
               )}
@@ -225,12 +236,12 @@ export function TestcaseTerminal({
             </div>
           ))}
         </div>
-        <div className="flex">
-          <div className="flex grow bg-neutral-800 text-white">
-            <p className="py-1 pl-2">{`>>>`}</p>
+        <div className="flex rounded-md border-t-2 border-neutral-700">
+          <div className="flex grow bg-neutral-800 text-white dark:bg-neutral-600">
             <input
               ref={inputRef}
               value={promptHistory[promptHistoryIndex] ?? ""}
+              placeholder="Enter command"
               onChange={(e) => {
                 setPromptHistory((prev) => {
                   const newPromptHistory = [...prev]
@@ -240,7 +251,7 @@ export function TestcaseTerminal({
               }}
               disabled={running}
               className={cn(
-                "grow bg-neutral-800 px-2 py-1 text-white outline-hidden",
+                "grow bg-neutral-800 px-2 py-1 text-white outline-hidden dark:bg-neutral-900",
                 {
                   "text-neutral-400": running,
                 },
@@ -262,7 +273,7 @@ export function TestcaseTerminal({
           <button
             onClick={handleSubmit}
             disabled={running}
-            className="w-20 bg-green-800 px-2 text-neutral-200 select-none hover:bg-green-700"
+            className="w-20 cursor-pointer bg-white px-2 font-clash-display text-black transition-colors select-none hover:bg-neutral-200"
           >
             {running ? (
               <ImSpinner3 className="m-auto animate-spin" />
@@ -335,7 +346,7 @@ export function TestcaseTerminal({
               </DialogDescription>
             </DialogHeader>
 
-            <div className="*p-4 flex flex-col gap-4 p-4 *:rounded-md *:p-4 *:shadow-sm">
+            <div className="flex flex-col gap-4 *:rounded-md *:p-4 *:shadow-sm">
               <Card className="space-y-2">
                 <label htmlFor="font-size" className="font-semibold">
                   Font Size
@@ -355,9 +366,12 @@ export function TestcaseTerminal({
               </Card>
               <Card className="flex items-center gap-2">
                 <Checkbox
-                  checked={false}
+                  checked={options.showTimes}
                   onClick={() => {
-                    toast.error("This feature is not available yet")
+                    setOptions((prev) => ({
+                      ...prev,
+                      showTimes: !prev.showTimes,
+                    }))
                   }}
                 />
                 <p>Show Times</p>

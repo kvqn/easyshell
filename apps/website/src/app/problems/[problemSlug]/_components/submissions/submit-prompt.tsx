@@ -1,7 +1,5 @@
 "use client"
 
-import { terminalSessionLogs } from "@easyshell/db/schema"
-
 import {
   PromptSettings,
   usePromptSettingsContext,
@@ -18,7 +16,6 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { EasyTooltip } from "@/components/ui/tooltip"
-import { db } from "@/db"
 import { clientOS } from "@/lib/client"
 import { newSubmission } from "@/lib/server/actions/new-submission"
 import { cn } from "@/lib/utils"
@@ -83,7 +80,7 @@ export function SubmitPrompt({
           onChange={(e) => setInput(e.target.value)}
           disabled={submitting}
           className={cn(
-            "h-10 min-h-10 resize-none self-center border-2 border-neutral-400 font-mono",
+            "h-10 min-h-10 resize-none self-center border-2 border-neutral-400 font-mono dark:border-neutral-600",
             {
               "h-20 resize-y": multiline,
             },

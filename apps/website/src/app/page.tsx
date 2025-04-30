@@ -1,6 +1,8 @@
 import { Footer } from "./_components/footer"
 
 import Link from "next/link"
+import { PiTarget, PiTargetDuotone } from "react-icons/pi"
+import { TbChevronsDown } from "react-icons/tb"
 
 export default function HomePage() {
   return (
@@ -20,18 +22,20 @@ export default function HomePage() {
         Level up your terminal skills with our interactive shell challenges.
       </div>
       <div className="mt-16 flex items-center justify-center gap-8">
-        <div className="rounded-md bg-neutral-200 p-4 font-clash-display font-medium transition-colors hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700">
-          Tell me more
-        </div>
+        <Link
+          href="#disclaimer"
+          className="mt-4 flex items-center gap-2 rounded-md border-b-4 border-neutral-500 bg-neutral-100 p-2 transition-colors hover:bg-neutral-200/80 dark:border-neutral-400 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-600/80"
+        >
+          <TbChevronsDown />
+          <div className="font-clash-display font-medium">Disclaimer</div>
+          <TbChevronsDown />
+        </Link>
         <Link
           href="/browse"
-          className="group relative overflow-hidden rounded-md bg-neutral-950 p-4 font-clash-display font-medium text-black transition-colors dark:bg-white dark:text-white"
+          className="group mt-4 flex items-center gap-1 rounded-md border-b-4 border-neutral-500 bg-neutral-800 px-4 py-2 text-white transition-colors hover:bg-neutral-800/90 dark:border-neutral-600 dark:bg-neutral-100 dark:text-neutral-800 dark:hover:bg-neutral-200"
         >
-          Get Started
-          <div className="absolute top-0 left-0 z-5 h-full w-0 bg-neutral-800 transition-all ease-in group-hover:w-full dark:bg-neutral-200" />
-          <div className="absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-white dark:text-black">
-            Get Started
-          </div>
+          <div className="font-clash-display font-medium">Get Started</div>
+          <PiTarget className="text-xl" />
         </Link>
       </div>
       <div className="mt-auto mb-auto flex flex-wrap justify-around gap-8 px-8 py-16">
@@ -47,6 +51,35 @@ export default function HomePage() {
           title="Customizable"
           description="Customize your experience with themes, fonts, and more."
         />
+      </div>
+      <div
+        className="w-full bg-neutral-100/70 px-8 py-16 dark:bg-neutral-800/60"
+        id="disclaimer"
+      >
+        <div className="mx-auto w-fit">
+          <div className="font-clash-display text-2xl font-bold">
+            DISCLAIMER
+          </div>
+          <div className="font-clash-display text-neutral-700 dark:text-neutral-300">
+            {"This project is under "}
+            <Link
+              href="https://github.com/kvqn/easyshell"
+              className="underline underline-offset-4"
+              target="_blank"
+            >
+              active development.
+            </Link>
+            {` Anything you see here is subject to change. If you encounter any bugs or have any suggestions, `}
+            <Link
+              href="https://x.com/kvqn_dev"
+              className="underline underline-offset-4"
+              target="_blank"
+            >
+              contact me
+            </Link>
+            {`.`}
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

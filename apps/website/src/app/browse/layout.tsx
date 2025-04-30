@@ -2,7 +2,7 @@ import { Footer } from "@/app/_components/footer"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex h-full flex-col items-center gap-8">
       <div
         className="w-full bg-gray-50 p-10 lg:p-10 dark:bg-emerald-950"
         style={{
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Browse Problems
         </h1>
       </div>
-      <div className="w-[85%] min-w-80">{children}</div>
+      <div className="mb-auto w-[85%] min-w-80">{children}</div>
       <Footer />
     </div>
   )

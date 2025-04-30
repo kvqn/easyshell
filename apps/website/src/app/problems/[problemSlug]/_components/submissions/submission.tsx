@@ -3,6 +3,7 @@
 import type { FsType } from "@easyshell/problems/schema"
 
 import { Back } from "@/components/back"
+import { Card } from "@/components/ui/card"
 import { getSubmissionInfo } from "@/lib/server/actions/get-submission-info"
 import { getTestcaseInfo } from "@/lib/server/actions/get-testcase-info"
 import { cn, sleep } from "@/lib/utils"
@@ -10,7 +11,6 @@ import { cn, sleep } from "@/lib/utils"
 import moment from "moment"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import ReactDiffViewer from "react-diff-viewer-continued"
 import { PiCopySimple, PiCopySimpleDuotone } from "react-icons/pi"
 import { toast } from "sonner"
 
@@ -101,13 +101,19 @@ export function Submission({ submissionId }: { submissionId: number }) {
                 key={testcase.id}
                 className={cn(
                   "cursor-pointer rounded-xl border border-neutral-400 bg-neutral-100 px-6 py-2 transition-colors hover:bg-neutral-200 dark:border-neutral-600 dark:bg-neutral-900 dark:hover:bg-neutral-800",
+                  {
+                    "border-green-300 bg-green-300/30 hover:bg-green-300/50 dark:border-green-700 dark:bg-green-700/30 dark:hover:bg-green-700/50":
+                      testcase.status === "finished" && testcase.passed,
+                    "border-red-300 bg-red-300/30 hover:bg-red-300/50 dark:border-red-700 dark:bg-red-700/30 dark:hover:bg-red-700/50":
+                      testcase.status === "finished" && !testcase.passed,
+                  },
                 )}
                 onClick={() => setSelectedTestcaseId(testcase.id)}
               >
                 <p className="text-md font-semibold">Testcase #{testcase.id}</p>
                 <p
                   className={cn("text-sm opacity-80", {
-                    "text-neutral-200":
+                    "text-neutral-400":
                       testcase.status === "pending" ||
                       testcase.status === "running",
                     "text-red-500":
@@ -185,41 +191,31 @@ function Testcase({
 
 function Diff({ expected, actual }: { expected: string; actual: string }) {
   return (
-    <div className="overflow-hidden rounded-md border text-xs" style={{}}>
-      <ReactDiffViewer
-        leftTitle="Expected"
-        rightTitle="Actual"
-        splitView={true}
-        showDiffOnly={false}
-        oldValue={expected}
-        newValue={actual}
-        hideLineNumbers={true}
-        // hideMarkers={true}
-        styles={{
-          variables: {
-            light: {
-              addedGutterBackground: "#FFFFFF",
-              addedBackground: "#FFFFFF",
-              removedBackground: "#FFFFFF",
-              wordAddedBackground: "#fecaca",
-            },
-          },
-        }}
-      />
+    <div className="flex gap-4">
+      <div className="w-full">
+        <div className="font-medium">Expected</div>
+        <div className="mt-2 rounded-md p-2 font-geist-mono text-sm dark:bg-neutral-800">
+          {expected}
+        </div>
+      </div>
+      <div className="w-full">
+        <div className="font-medium">Actual</div>
+        <div className="mt-2 rounded-md p-2 font-geist-mono text-sm dark:bg-neutral-800">
+          {actual}
+        </div>
+      </div>
     </div>
   )
 }
 
 function FsDiff({ expected, actual }: { expected: FsType; actual: FsType }) {
-  const files = new Set<string>()
-  for (const key in expected) files.add(key)
-  for (const key in actual) files.add(key)
+  // const files = new Set<string>()
+  // for (const key in expected) files.add(key)
+  // for (const key in actual) files.add(key)
 
   return (
-    <div>
-      {Array.from(files.keys()).map((file) => (
-        <div key={file}>{file}</div>
-      ))}
-    </div>
+    <Card className="p-4">
+      <div className="text-center">File System Diffs are comming soon!</div>
+    </Card>
   )
 }

@@ -48,9 +48,9 @@ export function PastSubmissions({
             {
               "border-neutral-500 bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-neutral-700 dark:text-neutral-200":
                 submission.status === "running",
-              "border-green-500 bg-green-200 text-green-800 hover:bg-green-300 dark:bg-green-800 dark:text-green-200":
+              "border-green-500 bg-green-200 text-green-800 hover:bg-green-300 dark:border-green-700 dark:bg-green-800/80 dark:text-green-300 dark:hover:bg-green-700/80":
                 submission.status === "passed",
-              "border-red-500 bg-red-200 text-red-800 hover:bg-red-300 dark:bg-red-800 dark:text-red-200":
+              "border-red-500 bg-red-200 text-red-800 hover:bg-red-300 dark:border-red-700 dark:bg-red-800/80 dark:text-red-300 dark:hover:bg-red-700/80":
                 submission.status === "failed",
             },
           )}
