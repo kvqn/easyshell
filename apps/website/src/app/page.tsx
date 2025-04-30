@@ -5,14 +5,14 @@ import Link from "next/link"
 export default function HomePage() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
-      <div className="px-4 pt-16 text-center">
-        <span className="font-clash-display text-3xl font-medium sm:text-4xl lg:text-5xl">
+      <div className="px-4 pt-28 text-center">
+        <span className="font-clash-display text-3xl font-medium sm:text-4xl lg:text-5xl xl:text-6xl">
           {`Using the terminal should be `}
         </span>
-        <span className="font-clash-display text-3xl font-semibold italic underline underline-offset-8 sm:text-4xl lg:text-5xl">
+        <span className="font-clash-display text-3xl font-semibold italic underline underline-offset-8 sm:text-4xl lg:text-5xl xl:text-6xl">
           easy
         </span>
-        <span className="font-clash-display text-3xl font-medium sm:text-4xl lg:text-5xl">
+        <span className="font-clash-display text-3xl font-medium sm:text-4xl lg:text-5xl xl:text-6xl">
           .
         </span>
       </div>
@@ -20,12 +20,12 @@ export default function HomePage() {
         Level up your terminal skills with our interactive shell challenges.
       </div>
       <div className="mt-16 flex items-center justify-center gap-8">
-        <div className="rounded-md bg-neutral-200 p-4 font-clash-display transition-colors hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700">
+        <div className="rounded-md bg-neutral-200 p-4 font-clash-display font-medium transition-colors hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700">
           Tell me more
         </div>
         <Link
           href="/browse"
-          className="group relative overflow-hidden rounded-md bg-neutral-950 p-4 font-clash-display text-black transition-colors dark:bg-white dark:text-white"
+          className="group relative overflow-hidden rounded-md bg-neutral-950 p-4 font-clash-display font-medium text-black transition-colors dark:bg-white dark:text-white"
         >
           Get Started
           <div className="absolute top-0 left-0 z-5 h-full w-0 bg-neutral-800 transition-all ease-in group-hover:w-full dark:bg-neutral-200" />
@@ -34,18 +34,18 @@ export default function HomePage() {
           </div>
         </Link>
       </div>
-      <div className="mt-16 mb-16 grid w-5/6 grid-cols-1 gap-8 *:mx-auto sm:grid-cols-2 *:sm:mx-0 lg:grid-cols-3">
+      <div className="mt-auto mb-auto flex flex-wrap justify-around gap-8 px-8 py-16">
         <Card
           title="Live Terminal"
-          description="Practice your skills on a terminal in your browser"
+          description="Practice your skills on a terminal without leaving your browser."
         />
         <Card
           title="Varying Difficulty"
-          description="Choose from a range of challenges, from beginner to advanced"
+          description="Choose from a range of challenges, from beginner to advanced."
         />
         <Card
-          title="Varying Difficulty"
-          description="Choose from a range of challenges, from beginner to advanced"
+          title="Customizable"
+          description="Customize your experience with themes, fonts, and more."
         />
       </div>
       <Footer />
@@ -68,7 +68,7 @@ function Card({
         {`<insert image>`}
       </div>
       <div className="mt-4 font-medium">{title}</div>
-      <div className="mt-2 text-sm text-neutral-500">{description}</div>
+      <div className="mt-1 text-sm text-neutral-500">{description}</div>
     </div>
   )
 }
