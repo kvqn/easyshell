@@ -39,7 +39,7 @@ export default function RootLayout({
       </head>
       <body className="flex h-screen flex-col font-geist dark:bg-neutral-900">
         <ClientSideProviders>
-          <ThemeProvider attribute="class" defaultTheme="light">
+          <ThemeProvider attribute="class" defaultTheme="dark">
             <SessionProvider>
               <Toaster />
               <TooltipProvider>

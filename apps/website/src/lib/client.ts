@@ -11,7 +11,7 @@ export function useTheme() {
   }
 
   const theme: "light" | "dark" =
-    _theme === "dark" || _theme === "light" ? _theme : "light"
+    _theme === "dark" || _theme === "light" ? _theme : "dark"
 
   return {
     theme: theme,
