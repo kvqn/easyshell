@@ -2,9 +2,9 @@ import { Footer } from "./_components/footer"
 
 import Link from "next/link"
 import { BiCustomize } from "react-icons/bi"
-import { ImTerminal } from "react-icons/im"
 import { IoSpeedometerOutline } from "react-icons/io5"
 import { PiTarget } from "react-icons/pi"
+import { SiGnometerminal } from "react-icons/si"
 import { TbChevronsDown } from "react-icons/tb"
 
 export default function HomePage() {
@@ -44,7 +44,7 @@ export default function HomePage() {
       <div className="mt-auto flex flex-wrap justify-around gap-8 px-8 py-16">
         <Card
           image={
-            <ImTerminal className="size-2/3 text-neutral-800 dark:text-neutral-200" />
+            <SiGnometerminal className="size-[60%] text-neutral-800 dark:text-neutral-200" />
           }
           title="Live Terminal"
           description="Practice your skills on a terminal without leaving your browser."
