@@ -1,7 +1,10 @@
 import { Footer } from "./_components/footer"
 
 import Link from "next/link"
-import { PiTarget, PiTargetDuotone } from "react-icons/pi"
+import { BiCustomize } from "react-icons/bi"
+import { ImTerminal } from "react-icons/im"
+import { IoSpeedometerOutline } from "react-icons/io5"
+import { PiTarget } from "react-icons/pi"
 import { TbChevronsDown } from "react-icons/tb"
 
 export default function HomePage() {
@@ -38,22 +41,34 @@ export default function HomePage() {
           <PiTarget className="text-xl" />
         </Link>
       </div>
-      <div className="mt-auto mb-auto flex flex-wrap justify-around gap-8 px-8 py-16">
+      <div className="mt-auto flex flex-wrap justify-around gap-8 px-8 py-16">
         <Card
+          image={
+            <ImTerminal className="size-2/3 text-neutral-800 dark:text-neutral-200" />
+          }
           title="Live Terminal"
           description="Practice your skills on a terminal without leaving your browser."
         />
         <Card
+          image={
+            <IoSpeedometerOutline className="size-2/3 text-neutral-800 dark:text-neutral-200" />
+          }
           title="Varying Difficulty"
           description="Choose from a range of challenges, from beginner to advanced."
         />
         <Card
+          image={
+            <BiCustomize className="size-2/3 text-neutral-800 dark:text-neutral-200" />
+          }
           title="Customizable"
           description="Customize your experience with themes, fonts, and more."
         />
       </div>
+      <div className="mb-16 font-clash-display text-3xl">
+        more stuff to come ...
+      </div>
       <div
-        className="w-full bg-neutral-100/70 px-8 py-16 dark:bg-neutral-800/60"
+        className="mt-auto w-full bg-neutral-100/70 px-8 py-16 dark:bg-neutral-800/60"
         id="disclaimer"
       >
         <div className="mx-auto w-fit">
@@ -91,17 +106,19 @@ function Card({
   title,
   description,
 }: {
-  image?: string
+  image?: React.ReactNode
   title: string
   description: string
 }) {
   return (
-    <div className="max-w-80 rounded-xl border bg-neutral-50 p-4 shadow dark:bg-neutral-950/50">
+    <div className="max-w-80 rounded-xl border bg-neutral-50 p-4 shadow md:max-w-60 xl:max-w-80 dark:bg-neutral-950/50">
       <div className="flex aspect-square items-center justify-center rounded-md bg-neutral-200 font-clash-display dark:bg-neutral-800/30">
-        {`<insert image>`}
+        {image ?? "<insert_image>"}
       </div>
-      <div className="mt-4 font-medium">{title}</div>
-      <div className="mt-1 text-sm text-neutral-500">{description}</div>
+      <div className="mt-4 text-sm font-medium md:text-base">{title}</div>
+      <div className="mt-1 text-sm text-neutral-500 md:text-base">
+        {description}
+      </div>
     </div>
   )
 }
