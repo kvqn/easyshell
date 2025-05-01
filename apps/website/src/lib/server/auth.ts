@@ -298,7 +298,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       async sendVerificationRequest(params) {
         const { identifier, url } = params
         await resend.emails.send({
-          from: "no-reply@easyshell.xyz",
+          from: "no-reply@easyshell.sh",
           to: identifier,
           subject: `Sign-In to EasyShell`,
           react: MagicLink({ url }),

@@ -1,6 +1,6 @@
 # Overview
 
-The website for [easyshell.xyz](https://easyshell.xyz) is made using [Next.js 15](https://nextjs.org/blog/next-15) and deployed on [Cloudflare Pages](https://pages.cloudflare.com/) using [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages).
+The website for [easyshell.sh](https://easyshell.sh) is made using [Next.js 15](https://nextjs.org/blog/next-15) and deployed on [Cloudflare Pages](https://pages.cloudflare.com/) using [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages).
 
 Also Refer - [tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [react-icons](https://react-icons.github.io/react-icons/)
 
