@@ -1,6 +1,6 @@
 # easyshell - overview
 
-**easyshell** is a platform for trying, learning and mastering shell commands. See it for yourself - [easyshell.xyz](https://easyshell.xyz).
+**easyshell** is a platform for trying, learning and mastering shell commands. See it for yourself - [easyshell.sh](https://easyshell.sh).
 
 ## Quick Links
 
@@ -26,7 +26,7 @@ There are a few microservices that work together to make the platform work.
 
 - #### Website
 
-  Frontend for [easyshell.xyz](https://easyshell.xyz). See [Website](apps/website/README.md) for more information.
+  Frontend for [easyshell.sh](https://easyshell.sh). See [Website](apps/website/README.md) for more information.
 
 - #### Session Manager
 

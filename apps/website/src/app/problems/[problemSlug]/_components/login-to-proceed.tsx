@@ -11,7 +11,7 @@ export function LoginToProceed() {
     <div className="my-auto flex h-full w-full flex-grow items-center justify-center">
       <div className="flex max-w-80 flex-col items-center justify-center rounded-xl border p-4 shadow">
         <div className="mb-4 text-center text-neutral-600 dark:text-neutral-400">
-          Interacting with this part of the webstie requires you to log in.
+          Interacting with this part of the website requires you to log in.
         </div>
         <Link href={`/login?callback=${pathname}`} className="w-full">
           <Button className="w-full px-8">Login to Proceed</Button>

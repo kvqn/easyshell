@@ -26,7 +26,7 @@ export function LoginForm({ callback }: { callback: string }) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 rounded-xl border p-8 shadow-xl">
       <div>
-        <h1 className="text-center text-2xl font-semibold">easyshell.xyz</h1>
+        <h1 className="text-center text-2xl font-semibold">easyshell.sh</h1>
         <h2 className="text-center font-semibold text-gray-500">Login</h2>
       </div>
       <div className="w-full px-8 py-4">

@@ -5,6 +5,6 @@
   "pages_build_output_dir": ".vercel/output/static",
   "vars": {
     "APP": "website",
-    "NEXTAUTH_URL": "https://easyshell.xyz",
+    "NEXTAUTH_URL": "https://easyshell.sh",
   },
 }
