@@ -23,6 +23,7 @@ This app Requires the following environment variables. See [Environment Variable
 - `DRIZZLE_PROXY_URL`
 - `DRIZZLE_PROXY_TOKEN`
 - `SESSION_MANAGER_URL`
+- `SESSION_MANAGER_TOKEN`
 
 ## Scripts
 

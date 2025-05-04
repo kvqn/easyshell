@@ -9,6 +9,7 @@ It creates and destroys containers for problem testcases as required by the webs
 The following environment variables are required to run this service. See [Environment Variables](../../README.md#environment-variables) for more information.
 
 - `DOCKER_REGISTRY`
+- `TOKEN`
 
 ## Scripts
 

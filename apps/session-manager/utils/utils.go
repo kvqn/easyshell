@@ -10,6 +10,7 @@ import (
 
 var DockerRegistry string
 var WorkingDir string
+var Token string
 
 func Init() {
 	DockerRegistry = os.Getenv("DOCKER_REGISTRY")
@@ -27,6 +28,11 @@ func Init() {
 
 	Mkdirp(WorkingDir)
 	Mkdirp(path.Join(WorkingDir, "sessions"))
+
+	Token = os.Getenv("TOKEN")
+	if len(Token) == 0 {
+		panic("TOKEN must be set")
+	}
 }
 
 func init() {
