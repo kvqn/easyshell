@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os/exec"
+	"session-manager/utils"
 )
 
 type requestBody struct {
@@ -16,6 +17,11 @@ type responseBody struct {
 }
 
 func Handler(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("Authorization") != "Bearer "+utils.Token {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
 	if r.Method != "POST" {
 		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
 		return

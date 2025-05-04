@@ -111,6 +111,10 @@ Token for the drizzle proxy.
 
 URL of the session manager. For cloudflare deployment, this cannot be a fixed IP address.
 
+#### `SESSION_MANAGER_TOKEN`
+
+Token for the session manager. This is required for the website to communicate with the session manager.
+
 #### `NEXTAUTH_URL`
 
 #### `NEXTAUTH_SECRET`

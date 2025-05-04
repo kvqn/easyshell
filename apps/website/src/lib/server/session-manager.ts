@@ -209,6 +209,9 @@ export async function sessionManagerExec({
   try {
     resp = await fetch(`${env.SESSION_MANAGER_URL}/exec`, {
       method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.SESSION_MANAGER_TOKEN}`,
+      },
       body: JSON.stringify({
         container_name: containerName,
         command,
@@ -286,6 +289,9 @@ const SessionManagerIsRunningResponseSchema = z.object({
 export async function sessionManagerIsRunning(containerName: string) {
   const resp = await fetch(`${env.SESSION_MANAGER_URL}/is-running`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.SESSION_MANAGER_TOKEN}`,
+    },
     body: JSON.stringify({
       container_name: containerName,
     }),
@@ -305,6 +311,9 @@ export async function sessionManagerCreate(args: {
 }) {
   const resp = await fetch(`${env.SESSION_MANAGER_URL}/create`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.SESSION_MANAGER_TOKEN}`,
+    },
     body: JSON.stringify(args),
   })
   if (!resp.ok) {
@@ -315,6 +324,9 @@ export async function sessionManagerCreate(args: {
 export async function sessionManagerKill(containerName: string) {
   const resp = await fetch(`${env.SESSION_MANAGER_URL}/kill`, {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.SESSION_MANAGER_TOKEN}`,
+    },
     body: JSON.stringify({
       container_name: containerName,
     }),
