@@ -3,7 +3,7 @@ name: test problem (mdx-no-more)
 on:
   pull_request:
     paths:
-      - "packages/problems/mdx-no-more/**"
+      - "packages/problems/data/problems/mdx-no-more/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

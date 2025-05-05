@@ -3,7 +3,7 @@ name: test problem (post-with-token)
 on:
   pull_request:
     paths:
-      - "packages/problems/post-with-token/**"
+      - "packages/problems/data/problems/post-with-token/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

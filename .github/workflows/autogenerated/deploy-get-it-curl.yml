@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/problems/get-it-curl/**"
+      - "packages/problems/data/problems/get-it-curl/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

@@ -3,7 +3,7 @@ name: test problem (wipe-that-folder)
 on:
   pull_request:
     paths:
-      - "packages/problems/wipe-that-folder/**"
+      - "packages/problems/data/problems/wipe-that-folder/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

@@ -3,7 +3,7 @@ name: test problem (post-it)
 on:
   pull_request:
     paths:
-      - "packages/problems/post-it/**"
+      - "packages/problems/data/problems/post-it/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

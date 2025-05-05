@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/problems/grep-version/**"
+      - "packages/problems/data/problems/grep-version/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

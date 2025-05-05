@@ -3,7 +3,7 @@ name: test problem (rm-that-file)
 on:
   pull_request:
     paths:
-      - "packages/problems/rm-that-file/**"
+      - "packages/problems/data/problems/rm-that-file/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

@@ -3,7 +3,7 @@ name: test problem (bulk-move)
 on:
   pull_request:
     paths:
-      - "packages/problems/bulk-move/**"
+      - "packages/problems/data/problems/bulk-move/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

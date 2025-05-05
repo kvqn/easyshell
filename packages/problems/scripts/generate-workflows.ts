@@ -14,7 +14,7 @@ name: test problem (${problemSlug})
 on:
   pull_request:
     paths:
-      - "packages/problems/${problemSlug}/**"
+      - "packages/problems/data/problems/${problemSlug}/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"
@@ -45,7 +45,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/problems/${problemSlug}/**"
+      - "packages/problems/data/problems/${problemSlug}/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

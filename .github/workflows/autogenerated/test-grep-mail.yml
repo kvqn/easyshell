@@ -3,7 +3,7 @@ name: test problem (grep-mail)
 on:
   pull_request:
     paths:
-      - "packages/problems/grep-mail/**"
+      - "packages/problems/data/problems/grep-mail/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

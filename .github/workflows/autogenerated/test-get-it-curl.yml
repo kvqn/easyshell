@@ -3,7 +3,7 @@ name: test problem (get-it-curl)
 on:
   pull_request:
     paths:
-      - "packages/problems/get-it-curl/**"
+      - "packages/problems/data/problems/get-it-curl/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

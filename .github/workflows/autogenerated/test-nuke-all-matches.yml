@@ -3,7 +3,7 @@ name: test problem (nuke-all-matches)
 on:
   pull_request:
     paths:
-      - "packages/problems/nuke-all-matches/**"
+      - "packages/problems/data/problems/nuke-all-matches/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

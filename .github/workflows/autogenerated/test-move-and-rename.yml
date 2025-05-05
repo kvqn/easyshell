@@ -3,7 +3,7 @@ name: test problem (move-and-rename)
 on:
   pull_request:
     paths:
-      - "packages/problems/move-and-rename/**"
+      - "packages/problems/data/problems/move-and-rename/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

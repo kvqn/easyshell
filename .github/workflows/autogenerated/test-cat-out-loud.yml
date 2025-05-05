@@ -3,7 +3,7 @@ name: test problem (cat-out-loud)
 on:
   pull_request:
     paths:
-      - "packages/problems/cat-out-loud/**"
+      - "packages/problems/data/problems/cat-out-loud/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/problems/wipe-that-folder/**"
+      - "packages/problems/data/problems/wipe-that-folder/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

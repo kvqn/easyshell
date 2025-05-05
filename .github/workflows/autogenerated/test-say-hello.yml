@@ -3,7 +3,7 @@ name: test problem (say-hello)
 on:
   pull_request:
     paths:
-      - "packages/problems/say-hello/**"
+      - "packages/problems/data/problems/say-hello/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"

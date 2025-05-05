@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - "packages/problems/move-that-file/**"
+      - "packages/problems/data/problems/move-that-file/**"
       - "packages/env/**"
       - "packages/utils/**"
       - "packages/queue-processor/**"
