@@ -1,0 +1,7 @@
+happy
+grumpy
+ecstatic
+zen
+confused
+melancholy
+
