@@ -1,0 +1,4 @@
+# Requirements for moodring
+
+re
+random
