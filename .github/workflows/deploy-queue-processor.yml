@@ -10,8 +10,6 @@ on:
 
 jobs:
   registry-push-queue-processor:
-    needs:
-      - test-tsc
     concurrency:
       group: push-queue-processor
       cancel-in-progress: false

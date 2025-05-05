@@ -10,9 +10,6 @@ on:
 
 jobs:
   test:
-    needs:
-      - test-entrypoint
-      - test-tsc
     runs-on: ubuntu-latest
     environment: linting
     steps:

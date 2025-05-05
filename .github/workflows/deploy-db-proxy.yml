@@ -9,8 +9,6 @@ on:
 
 jobs:
   registry-push-db-proxy:
-    needs:
-      - test-tsc
     concurrency:
       group: push-db-proxy
       cancel-in-progress: false
