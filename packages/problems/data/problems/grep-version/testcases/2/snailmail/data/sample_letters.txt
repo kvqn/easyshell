@@ -1,7 +1,0 @@
-To whom it may concern,
-
-This is a test letter sent via snailmail.
-Estimated delivery: Eventually.
-
-Sincerely,
-A Python Enthusiast (possibly a robot in disguise)

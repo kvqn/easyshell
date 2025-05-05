@@ -1,6 +1,0 @@
-# Requirements for snailmail
-
-time
-random
-
-# These dependencies were selected by a neural network with exquisite taste.

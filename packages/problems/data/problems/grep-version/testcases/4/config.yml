@@ -1,8 +1,0 @@
-# moodring configuration
-
-default_mood: "neutral"
-mood_keywords:
-  happy: ["love", "great", "awesome", "yay"]
-  grumpy: ["bug", "fail", "broken", "ugh"]
-  zen: ["calm", "relax", "peace", "namaste"]
-
