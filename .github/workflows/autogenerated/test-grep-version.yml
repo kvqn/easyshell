@@ -1,0 +1,25 @@
+name: test problem (grep-version)
+
+on:
+  pull_request:
+    paths:
+      - "packages/problems/grep-version/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: linting
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - run: npm i
+        name: Install dependencies
+      - run: npm run build grep-version
+        working-directory: ./packages/problems
+      - run: npm run test grep-version
+        working-directory: ./packages/problems
