@@ -4,11 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       problem:
-        description: 'Problem to test'
+        description: "Problem to test"
         required: true
-        default: 'all'
+        default: "all"
         type: string
-
 
 jobs:
   test:

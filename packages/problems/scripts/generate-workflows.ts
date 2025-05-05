@@ -18,6 +18,9 @@ on:
 
 jobs:
   test:
+    needs:
+      - test-entrypoint
+      - test-tsc
     runs-on: ubuntu-latest
     environment: linting
     steps:
@@ -50,6 +53,9 @@ concurrency:
 
 jobs:
   deploy:
+    needs:
+      - test-entrypoint
+      - test-tsc
     environment: deployment
     runs-on: ubuntu-latest
     steps:

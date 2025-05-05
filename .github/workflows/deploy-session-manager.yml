@@ -1,0 +1,41 @@
+name: deploy session-manager
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/session-manager/**"
+  workflow_dispatch:
+
+jobs:
+  registry-push-session-manager:
+    needs:
+      - test-session-manager
+    concurrency:
+      group: push-session-manager
+      cancel-in-progress: false
+    environment: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - uses: actions/checkout@v4
+      - run: docker build -t ${{ secrets.DOCKER_REGISTRY }}/session-manager:latest -f ./apps/session-manager/Dockerfile ./apps/session-manager
+      - run: docker push ${{ secrets.DOCKER_REGISTRY }}/session-manager:latest
+
+  deploy-vps:
+    needs:
+      - registry-push-session-manager
+    concurrency:
+      group: deploy-vps
+      cancel-in-progress: false
+    environment: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make .ssh folder
+        run: mkdir -p ~/.ssh
+      - name: Write SSH private key
+        run: echo '${{ secrets.SSH_PRIVATE_KEY }}' > ~/.ssh/id_rsa
+      - name: Set permissions for SSH private key
+        run: chmod 400 ~/.ssh/id_rsa
+      - name: SSH into server
+        run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} ${{ secrets.SSH_COMMAND }}

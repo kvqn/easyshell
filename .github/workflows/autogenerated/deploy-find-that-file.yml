@@ -12,6 +12,9 @@ concurrency:
 
 jobs:
   deploy:
+    needs:
+      - test-entrypoint
+      - test-tsc
     environment: deployment
     runs-on: ubuntu-latest
     steps:
