@@ -10,7 +10,7 @@ on:
         type: string
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     environment: deployment
     steps:
