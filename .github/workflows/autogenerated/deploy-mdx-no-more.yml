@@ -5,6 +5,9 @@ on:
       - main
     paths:
       - "packages/problems/mdx-no-more/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
 
 concurrency:
   group: deploy-mdx-no-more

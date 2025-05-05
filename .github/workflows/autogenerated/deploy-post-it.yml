@@ -5,6 +5,9 @@ on:
       - main
     paths:
       - "packages/problems/post-it/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
 
 concurrency:
   group: deploy-post-it

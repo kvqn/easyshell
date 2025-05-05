@@ -15,6 +15,9 @@ on:
   pull_request:
     paths:
       - "packages/problems/${problemSlug}/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
 
 jobs:
   test:
@@ -46,6 +49,9 @@ on:
       - main
     paths:
       - "packages/problems/${problemSlug}/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
 
 concurrency:
   group: deploy-${problemSlug}
