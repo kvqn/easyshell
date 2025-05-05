@@ -317,14 +317,19 @@ async function _runSubmissionTest(
   input: string,
   pass: boolean,
 ): Promise<string | undefined> {
-  const { passed } = await runSubmissionAndGetOutput({
+  const { passed, output } = await runSubmissionAndGetOutput({
     problemSlug: slug,
     testcaseId: testcase,
     input,
     suffix: `test-${randomBytes(8).toString("hex")}`,
   })
-  if (passed !== pass)
+  if (passed !== pass) {
+    if (process.env.DEBUG_STDOUT)
+      console.debug(`output (${slug}-${testcase} stdout): ${output.stdout}`)
+    if (process.env.DEBUG_FS)
+      console.debug(`output (${slug}-${testcase} fs): ${output.fs}`)
     return `expected to ${pass ? "pass" : "fail"} with input: ${input}`
+  }
 }
 
 await main()
