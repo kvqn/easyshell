@@ -25,7 +25,7 @@ on:
       - "**/*.json"
 
 jobs:
-  test:
+  test-tsc:
     runs-on: ubuntu-latest
     environment: linting
     steps:

@@ -1,0 +1,37 @@
+name: deploy problem (rm-that-file)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/problems/rm-that-file/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
+
+concurrency:
+  group: deploy-rm-that-file
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+      - uses: actions/checkout@v4
+      - run: npm i
+      - run: npm run build rm-that-file
+        name: build problem
+        working-directory: ./packages/problems
+      - run: npm run test rm-that-file
+        name: test problem
+        working-directory: ./packages/problems
+      - run: npm run build rm-that-file
+        name: push problem
+        working-directory: ./packages/problems
+        env:
+          DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}

@@ -1,13 +1,12 @@
-name: Test Problems
+name: test problem (cat-out-loud)
 
 on:
-  workflow_dispatch:
-    inputs:
-      problem:
-        description: "Problem to test"
-        required: true
-        default: "all"
-        type: string
+  pull_request:
+    paths:
+      - "packages/problems/cat-out-loud/**"
+      - "packages/env/**"
+      - "packages/utils/**"
+      - "packages/queue-processor/**"
 
 jobs:
   test:
@@ -20,7 +19,7 @@ jobs:
           node-version: 22.14.0
       - run: npm i
         name: Install dependencies
-      - run: npm run build ${{ inputs.problem }}
+      - run: npm run build cat-out-loud
         working-directory: ./packages/problems
-      - run: npm run test ${{ inputs.problem }}
+      - run: npm run test cat-out-loud
         working-directory: ./packages/problems
