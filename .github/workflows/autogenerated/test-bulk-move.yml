@@ -1,14 +1,9 @@
-name: Test Problems
+name: test problem (bulk-move)
 
 on:
-  workflow_dispatch:
-    inputs:
-      problem:
-        description: 'Problem to test'
-        required: true
-        default: 'all'
-        type: string
-
+  pull_request:
+    paths:
+      - "packages/problems/bulk-move/**"
 
 jobs:
   test:
@@ -21,7 +16,7 @@ jobs:
           node-version: 22.14.0
       - run: npm i
         name: Install dependencies
-      - run: npm run build ${{ inputs.problem }}
+      - run: npm run build bulk-move
         working-directory: ./packages/problems
-      - run: npm run test ${{ inputs.problem }}
+      - run: npm run test bulk-move
         working-directory: ./packages/problems

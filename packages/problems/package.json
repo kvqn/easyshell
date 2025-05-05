@@ -7,6 +7,7 @@
     "build": "APP=script tsx ./scripts/build.ts",
     "cache:queue-processor": "APP=script tsx ./scripts/cache-queue-processor.ts",
     "cache:website": "APP=script tsx ./scripts/cache-website.ts",
+    "generate-workflows": "APP=script tsx ./scripts/generate-workflows.ts",
     "new": "APP=script tsx ./scripts/new.ts",
     "test": "npm run cache:queue-processor && APP=script tsx ./scripts/test.ts"
   },

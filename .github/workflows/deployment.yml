@@ -10,30 +10,6 @@ concurrency:
 
 jobs:
   # =========================== Pushing to Registry ============================
-
-  registry-push-problems:
-    environment: deployment
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login ${{ secrets.DOCKER_REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.14.0
-      - uses: actions/checkout@v4
-      - run: npm i
-      - run: npm run build all
-        name: build problems
-        working-directory: ./packages/problems
-      - run: docker network create easyshell
-      - run: npm run test all
-        name: test problems
-        working-directory: ./packages/problems
-      - run: npm run build all
-        name: push problems
-        working-directory: ./packages/problems
-        env:
-          DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-
   registry-push-session-manager:
     environment: deployment
     runs-on: ubuntu-latest
@@ -67,7 +43,6 @@ jobs:
 
   deploy-vps:
     needs:
-      - registry-push-problems
       - registry-push-queue-processor
       - registry-push-session-manager
       - registry-push-db-proxy
