@@ -1,9 +1,14 @@
+import { cn } from "@/lib/utils"
+
 import Link from "next/link"
 
-export function Footer() {
+export function Footer({ className }: { className?: string }) {
   return (
     <div
-      className="w-full border-t border-neutral-200 bg-neutral-100 px-4 py-2 text-center text-xs text-neutral-500 sm:text-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400"
+      className={cn(
+        "w-full border-t border-neutral-200 bg-neutral-100 px-4 py-2 text-center text-xs text-neutral-500 sm:text-sm dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400",
+        className,
+      )}
       id="footer"
     >
       {`Built by `}
