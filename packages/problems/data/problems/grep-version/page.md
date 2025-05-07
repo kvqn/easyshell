@@ -10,9 +10,13 @@ Your CI/CD pipeline needs to know the version of your Python package. The versio
 
 3. Print only the version string (no extra text, no quotes).
 
-> Note: There will be only one `__about__.py` file in the project directory tree.
+# Constraints
 
-> Note: The version will always be defined in the format `__version__ = "X.Y.Z"` (X, Y, Z are numeric values which can be of different length)
+- There will be only one `__about__.py` file in the project directory tree.
+
+- The version will always be defined in the format `__version__ = "X.Y.Z"` (X, Y, Z are numeric values which can be of different length)
+
+- There are no other variables or strings in the file that match this pattern.
 
 # Example
 
