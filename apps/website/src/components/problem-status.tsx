@@ -5,7 +5,7 @@ import { EasyTooltip } from "./ui/tooltip"
 import { FaCircleCheck } from "react-icons/fa6"
 import { GrInProgress } from "react-icons/gr"
 
-function ProblemSolved() {
+function ProblemSolvedWithTooltip() {
   return (
     <EasyTooltip tip="Solved">
       <div>
@@ -15,7 +15,7 @@ function ProblemSolved() {
   )
 }
 
-function ProblemAttempted() {
+function ProblemAttemptedWithTooltip() {
   return (
     <EasyTooltip tip="Attempted">
       <div>
@@ -25,13 +25,29 @@ function ProblemAttempted() {
   )
 }
 
-export function ProblemStatus({ status }: { status?: "attempted" | "solved" }) {
-  if (status === "attempted") {
-    return <ProblemAttempted />
+function ProblemSolvedWithoutTooltip() {
+  return <FaCircleCheck className="inline text-green-500" />
+}
+
+function ProblemAttemptedWithoutTooltip() {
+  return <GrInProgress className="inline text-yellow-500" />
+}
+
+export function ProblemStatus({
+  status,
+  tooltip = true,
+}: {
+  status?: "attempted" | "solved"
+  tooltip?: boolean
+}) {
+  if (tooltip) {
+    if (status === "attempted") return <ProblemAttemptedWithTooltip />
+    if (status === "solved") return <ProblemSolvedWithTooltip />
   }
-  if (status === "solved") {
-    return <ProblemSolved />
-  }
+
+  if (status === "attempted") return <ProblemAttemptedWithoutTooltip />
+  if (status === "solved") return <ProblemSolvedWithoutTooltip />
+
   return null
 }
 
