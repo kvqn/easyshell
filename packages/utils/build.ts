@@ -1,7 +1,10 @@
 // ====================================================
 // Utility exports that are available during build time
+// (can also be used in problem configs)
 // ====================================================
 import type { FsType } from "@easyshell/problems/schema"
+
+import { strToDate } from "."
 
 import { $ } from "execa"
 import { readdir } from "fs/promises"
@@ -21,6 +24,7 @@ if (!_PROJECT_ROOT) {
 
 export const PROJECT_ROOT = _PROJECT_ROOT
 export const PROBLEMS_DIR = `${PROJECT_ROOT}/packages/problems/data/problems`
+export const WIKI_DIR = `${PROJECT_ROOT}/packages/problems/data/wiki`
 
 export async function getFs(path: string): Promise<FsType> {
   const files = await readdir(path, { recursive: true })
@@ -34,4 +38,30 @@ export async function getFs(path: string): Promise<FsType> {
 
 export function testcaseDir(problemSlug: string, testcaseId: number) {
   return `${PROBLEMS_DIR}/${problemSlug}/testcases/${testcaseId}`
+}
+
+/**
+ * Get the last modified date of a file.
+ * Tries to use git. Uses stat as fallback.
+ * Git will fail if file is not tracked or git is not installed.
+ * Stat will fail if file does not exist.
+ */
+export async function lastModified(
+  path: string,
+  fallback = true,
+): Promise<Date> {
+  try {
+    const result = await $`git log -1 --format="%aI" -- ${path}`
+    const date = strToDate(result.stdout)
+    if (!date) {
+      throw new Error("Invalid date")
+    }
+    return date
+  } catch {
+    if (fallback) {
+      const statResult = await stat(path)
+      return statResult.mtime
+    }
+    throw new Error("Git failed. Fallback is disabled.")
+  }
 }

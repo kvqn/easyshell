@@ -37,6 +37,12 @@ export function Navbar() {
       >
         Problems
       </Link>
+      <Link
+        href="/wiki"
+        className="mt-1 hidden text-neutral-500 transition-colors hover:text-black md:block dark:hover:text-white"
+      >
+        Wiki
+      </Link>
       <div className="ml-auto">
         <Options />
       </div>

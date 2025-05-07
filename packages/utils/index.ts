@@ -28,3 +28,13 @@ export async function neverThrow<T, E = Error>(
 export async function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
+
+/**
+ * Tries to convert string to date
+ * If it fails, returns null
+ */
+export function strToDate(date: string): Date | null {
+  const parsedDate = new Date(date)
+  if (isNaN(parsedDate.getTime())) return null
+  return parsedDate
+}

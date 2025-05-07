@@ -1,3 +1,7 @@
+// =====================================================
+// Problem utilities to be used in scripts at build time
+// TODO: remove unused functions
+// =====================================================
 import { PROBLEMS_DIR } from "@easyshell/utils/build"
 
 import { ProblemConfigSchema } from "./schema"

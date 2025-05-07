@@ -2,9 +2,10 @@ import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
 import { neverThrow } from "@easyshell/utils"
-import { PROBLEMS_DIR } from "@easyshell/utils/build"
+import { PROBLEMS_DIR, WIKI_DIR } from "@easyshell/utils/build"
 
 import { SeriesList } from "../data/series"
+import { wiki_pages } from "../data/wiki"
 import {
   RunParallelStuff,
   Task,
@@ -13,6 +14,7 @@ import {
 } from "./_utils"
 
 import { randomBytes } from "crypto"
+import { readFile } from "fs/promises"
 
 type Test = {
   name: string
@@ -132,7 +134,8 @@ function TestTreeToTests(tree: TestTree): Array<Test> {
 
 async function base_tests(): Promise<Array<Test>> {
   const tree: TestTree = {
-    tests: [
+    tests: [],
+    children: [
       {
         name: "assert problems dir exists",
         callable: async () => {
@@ -180,7 +183,6 @@ async function base_tests(): Promise<Array<Test>> {
             )}`
         },
       },
-
       {
         name: "(unique problem ids)",
         callable: async () => {
@@ -207,6 +209,58 @@ async function base_tests(): Promise<Array<Test>> {
               .join("; ")}`
           }
         },
+      },
+      {
+        tests: [
+          {
+            name: "assert wiki index.ts exists",
+            callable: async () => {
+              const { error } = await neverThrow(
+                assertFileExists(`${WIKI_DIR}/index.ts`),
+              )
+              if (error) return error.message
+            },
+          },
+          {
+            name: "assert wiki pages exists",
+            callable: async () => {
+              const { error } = await neverThrow(
+                assertDirExists(`${WIKI_DIR}/pages`),
+              )
+              if (error) return error.message
+            },
+          },
+        ],
+        children: wiki_pages.map((page) => ({
+          tests: [
+            {
+              name: `(wiki ${page.slug}) assert valid body`,
+              callable: async () => {
+                const body_path = `${WIKI_DIR}/pages/${page.slug}.mdx`
+                const { error } = await neverThrow(assertFileExists(body_path))
+                if (error) return error.message
+
+                const text = await readFile(body_path, { encoding: "utf-8" })
+                if (text.trim().length === 0) return "body is empty"
+              },
+            },
+            {
+              name: `(wiki ${page.slug}) assert valid title`,
+              callable: async () => {
+                if (page.title.length === 0) return "title is empty"
+              },
+            },
+            {
+              name: `(wiki ${page.slug}) assert valid type`,
+              callable: async () => {
+                if (page.type === "editorial") {
+                  if (!(await getProblems()).includes(page.slug))
+                    return "corresponding problem does not exist for editorial"
+                }
+              },
+            },
+          ],
+        })),
       },
     ],
   }
