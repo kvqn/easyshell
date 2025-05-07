@@ -1,7 +1,9 @@
 import type { MDXComponents } from "mdx/types"
 
 export const customComponents: MDXComponents = {
-  h1: ({ children }) => <h1 className="mt-6 text-xl font-bold">{children}</h1>,
+  h1: ({ children }) => (
+    <h1 className="mt-6 text-xl font-bold first:mt-0">{children}</h1>
+  ),
   p: ({ children }) => (
     <p className="text-md my-2 dark:text-neutral-400">{children}</p>
   ),

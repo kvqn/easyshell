@@ -1,11 +1,8 @@
 import { Footer } from "@/app/_components/footer"
-import { ProblemStatus } from "@/components/problem-status"
 import { Card } from "@/components/ui/card"
-import { auth } from "@/lib/server/auth"
-import { getProblemDifficulty, getProblemStatus } from "@/lib/server/problems"
 import { getWikiPages } from "@/lib/server/wiki"
-import { cn } from "@/lib/utils"
 
+import moment from "moment"
 import Link from "next/link"
 
 export const metadata = {
@@ -15,7 +12,6 @@ export const metadata = {
 
 export default async function Page() {
   const pages = await getWikiPages()
-  const userId = (await auth())?.user.id
 
   return (
     <div className="flex h-full flex-col items-center gap-8">
@@ -31,7 +27,7 @@ export default async function Page() {
       </div>
       <div className="flex w-2/3 flex-col">
         {pages.map((page) => (
-          <WikiPageCard key={page.slug} page={page} userId={userId} />
+          <WikiPageCard key={page.slug} page={page} />
         ))}
       </div>
       <Footer className="mt-auto" />
@@ -41,14 +37,16 @@ export default async function Page() {
 
 function WikiPageCard({
   page,
-  userId,
 }: {
   page: Awaited<ReturnType<typeof getWikiPages>>[number]
-  userId?: string
 }) {
   if (page.type === "editorial") {
     return (
-      <WikiEditorialCard title={page.title} slug={page.slug} userId={userId} />
+      <WikiEditorialCard
+        title={page.title}
+        slug={page.slug}
+        lastEdited={page.lastEdited}
+      />
     )
   }
   return null
@@ -56,42 +54,21 @@ function WikiPageCard({
 
 async function WikiEditorialCard({
   title,
+  lastEdited,
   slug,
-  userId,
 }: {
   title: string
+  lastEdited: Date
   slug: string
-  userId?: string
 }) {
-  const status = userId ? await getProblemStatus(slug, userId) : undefined
-  const difficulty = await getProblemDifficulty(slug)
   return (
     <Link href={`/wiki/${slug}`}>
-      <Card className="flex w-full flex-col gap-4 border p-4">
-        <div className="font-clash-display text-2xl font-semibold">{title}</div>
-        <div className="ml-auto flex items-center gap-2">
-          <div className="text-sm text-neutral-600 dark:text-neutral-400">
-            Editorial for
-          </div>
-          <div
-            className={cn(
-              "flex items-center gap-2 rounded-md border px-2 py-1 shadow-xs",
-              {
-                "bg-green-100": difficulty === "easy",
-                "border-orange-400 bg-orange-100 shadow-orange-400 dark:border-orange-600 dark:bg-orange-900 dark:shadow-orange-600":
-                  difficulty === "medium",
-              },
-            )}
-          >
-            <Link
-              href={`/problems/${slug}`}
-              className={cn("font-geist-mono text-xs font-medium", {
-                "text-orange-600 dark:text-orange-400": difficulty === "medium",
-              })}
-            >
-              {slug}
-            </Link>
-            <ProblemStatus status={status} />
+      <Card className="flex w-full flex-col gap-4 border p-4 transition-colors hover:bg-neutral-100/60 dark:hover:bg-neutral-950/60">
+        <div className="flex flex-col justify-center">
+          <div className="font-clash-display text-4xl font-bold">{title}</div>
+          <div className="flex justify-between font-clash-display text-neutral-500">
+            <div>{moment(lastEdited).format("MMMM Do YYYY")}</div>
+            <div>{"EDITORIAL"}</div>
           </div>
         </div>
       </Card>

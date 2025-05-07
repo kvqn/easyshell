@@ -83,7 +83,8 @@ export async function SpoilerWarning({
       <span className="font-clash-display text-neutral-700 dark:text-neutral-300">
         {`This wiki page contains spoilers for the problem `}
       </span>
-      <span
+      <Link
+        href={`/problems/${slug}`}
         className={cn("ml-1 w-fit rounded-md border px-2 py-1 shadow-xs", {
           "bg-green-100": difficulty === "easy",
           "border-orange-400 bg-orange-100 shadow-orange-400 dark:border-orange-600 dark:bg-orange-900 dark:shadow-orange-600":
@@ -98,7 +99,7 @@ export async function SpoilerWarning({
           {slug}
         </span>
         <ProblemStatus status={status} />
-      </span>
+      </Link>
     </div>
   )
 }

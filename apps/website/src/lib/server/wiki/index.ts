@@ -15,12 +15,13 @@ const DataSchema = z.record(
 const parsedData = DataSchema.parse(data)
 
 export async function getWikiPages(): Promise<
-  Array<{ slug: string; title: string; type: "editorial" }>
+  Array<{ slug: string; title: string; type: "editorial"; lastEdited: Date }>
 > {
   return Object.keys(parsedData).map((slug) => ({
     slug,
     title: parsedData[slug]!.title,
     type: parsedData[slug]!.type,
+    lastEdited: parsedData[slug]!.lastEdited,
   }))
 }
 
