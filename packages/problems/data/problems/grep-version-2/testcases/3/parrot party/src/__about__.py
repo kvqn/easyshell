@@ -2,7 +2,7 @@
 
 # Older version __version__ = "0.1.0"
 # Dated 6.7.24
-__version__ = "10.0.10"
+__version__ ='10.0.10'
 __author__ = "Definitely a Human (wink)"
 __license__ = "Squawkware License"
 

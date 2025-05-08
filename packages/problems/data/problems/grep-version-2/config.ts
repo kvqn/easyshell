@@ -21,15 +21,16 @@ async function testcaseConfig({
   if (!file) throw Error(`__about__.py not found in ${testcase_dir}`)
 
   const text = (await readFile(join(testcase_dir, file))).toString()
-  const matches = /^[^#'"]?\s*__version__\s*=\s*['"](.*)['"]/.exec(text)
-  console.log(matches)
+  const regex = /^[^#'"]?\s*__version__\s*=\s*['"](.*)['"]/gm
+  const matches = Array.from(text.matchAll(regex))
   if (!matches) throw Error(`__version__ not found in ${file}`)
-  const version = matches[1]
+  const version = matches[matches.length - 1]?.[1]
   if (!version) throw Error(`__version__ not found in ${file}`)
 
   return {
     id: id,
     public: isPublic,
+    expected_stdout: version,
   }
 }
 
@@ -45,12 +46,28 @@ const config: ProblemConfig = {
       id: 1,
       isPublic: true,
     }),
+    await testcaseConfig({
+      id: 2,
+      isPublic: true,
+    }),
+    await testcaseConfig({
+      id: 3,
+      isPublic: false,
+    }),
+    await testcaseConfig({
+      id: 4,
+      isPublic: false,
+    }),
+    await testcaseConfig({
+      id: 5,
+      isPublic: false,
+    }),
   ],
   tests: [
     {
       testcase: "all",
       pass: true,
-      input: `cat "$(find -name __about__.py)" | grep -oP '^[^#'"]?\s*__version__\s*=\s*['"](.*)['"]`,
+      input: `cat "$(find -name __about__.py)" | grep -oP '^[^#'\\''"]?\\s*__version__\\s*=\\s*['\\''"]\\K.*(?=['\\''"])' | tail -n 1`,
     },
   ],
 }
