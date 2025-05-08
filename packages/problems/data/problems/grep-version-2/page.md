@@ -45,6 +45,8 @@ After this debacle, you decide to add some constraints to your script to make it
 
 - Your project does not make use of any multi-line strings (`"""` or `'''`) so you don't have to worry about `__version__` being declared in multi-line strings.
 
+- The version can follow any format, example - `"1.0.0"`, `1.0.0`, `1.0.0-alpha`, `1.0.0-rc.1`, `1.0.0+build.1`, `1.0.0-alpha+001`, etc.
+
 # Example
 
 File: `__about__.py`

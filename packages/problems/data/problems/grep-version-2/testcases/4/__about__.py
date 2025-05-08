@@ -2,7 +2,7 @@
 
 "__version__ = '10.2.7'"
 
-__version__ = "10.2.7"
+__version__ = "10.2.7-alpha"
 __author__ = "AI & Associates"
 __license__ = "Moodware License"
 
