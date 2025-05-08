@@ -1,3 +1,5 @@
+import { auth } from "@/lib/server/auth"
+import { getProblemDifficulty, getProblemStatus } from "@/lib/server/problems"
 import { cn } from "@/lib/utils"
 
 import { ProblemStatus } from "./problem-status"
@@ -7,15 +9,15 @@ import Link from "next/link"
 
 export async function ProblemLink({
   slug,
-  status,
-  difficulty,
   className,
 }: {
   slug: string
-  status?: "attempted" | "solved"
-  difficulty: "easy" | "medium" | "hard"
   className?: string
 }) {
+  const userId = (await auth())?.user.id
+  const difficulty = await getProblemDifficulty(slug)
+  const status = userId ? await getProblemStatus(slug, userId) : undefined
+
   return (
     <EasyTooltip
       tip={
@@ -38,13 +40,13 @@ export async function ProblemLink({
           className,
         )}
       >
-        <div
+        <span
           className={cn("inline font-geist-mono text-xs font-medium", {
             "text-orange-600 dark:text-orange-400": difficulty === "medium",
           })}
         >
           {slug}
-        </div>
+        </span>
         <ProblemStatus status={status} tooltip={false} />
       </Link>
     </EasyTooltip>

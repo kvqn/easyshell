@@ -8,4 +8,9 @@ export const wiki_pages: Array<{
     title: "Grep Version",
     type: "editorial",
   },
+  {
+    slug: "grep-version-2",
+    title: "Grep Version 2",
+    type: "editorial",
+  },
 ]

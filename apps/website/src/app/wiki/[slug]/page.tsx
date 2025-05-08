@@ -1,15 +1,10 @@
 import { Footer } from "@/app/_components/footer"
 import { ProblemLink } from "@/components/problem-link"
-import { ProblemStatus } from "@/components/problem-status"
-import { auth } from "@/lib/server/auth"
-import { getProblemDifficulty, getProblemStatus } from "@/lib/server/problems"
 import { getWikiFull, getWikiMetadata } from "@/lib/server/wiki"
-import { cn } from "@/lib/utils"
 
 import { Markdown } from "./_components/markdown"
 
 import moment from "moment"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 
 export async function generateMetadata({
@@ -41,8 +36,6 @@ export default async function Page({
   const metadata = await getWikiFull(slug)
   if (!metadata) notFound()
 
-  const userId = (await auth())?.user.id
-
   return (
     <>
       <div className="mx-auto flex w-[95%] flex-col md:w-[90%] lg:w-2/3">
@@ -55,9 +48,7 @@ export default async function Page({
             <div>{metadata.type === "editorial" ? "EDITORIAL" : null}</div>
           </div>
         </div>
-        {metadata.type === "editorial" ? (
-          <SpoilerWarning slug={slug} userId={userId} />
-        ) : null}
+        {metadata.type === "editorial" ? <SpoilerWarning slug={slug} /> : null}
         <div>
           <Markdown source={metadata.body} />
         </div>
@@ -67,15 +58,7 @@ export default async function Page({
   )
 }
 
-export async function SpoilerWarning({
-  slug,
-  userId,
-}: {
-  slug: string
-  userId?: string
-}) {
-  const difficulty = await getProblemDifficulty(slug)
-  const status = userId ? await getProblemStatus(slug, userId) : undefined
+export async function SpoilerWarning({ slug }: { slug: string }) {
   return (
     <div className="mb-4 bg-neutral-100 px-4 py-2 text-center dark:bg-neutral-800">
       <span className="font-clash-display font-semibold text-neutral-700 dark:text-neutral-300">
@@ -84,7 +67,7 @@ export async function SpoilerWarning({
       <span className="font-clash-display text-neutral-700 dark:text-neutral-300">
         {`This wiki page contains spoilers for the problem `}
       </span>
-      <ProblemLink slug={slug} status={status} difficulty={difficulty} />
+      <ProblemLink slug={slug} />
     </div>
   )
 }
