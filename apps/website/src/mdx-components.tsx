@@ -29,12 +29,11 @@ export const customComponents: MDXComponents = {
       </>
     )
   },
-  ol: ({ children }) => (
-    <ol className="text-md my-2 ml-4 list-outside list-decimal">{children}</ol>
-  ),
   li: ({ children }) => (
     <li className="my-1 dark:text-neutral-400">{children}</li>
   ),
+  ul: ({ children }) => <ul className="list-disc pl-4">{children}</ul>,
+  ol: ({ children }) => <ol className="list-decimal pl-4">{children}</ol>,
   blockquote: ({ children }) => (
     <blockquote className="my-2 border-l-4 border-neutral-500 bg-neutral-100 p-1 pl-2 text-sm dark:bg-neutral-800">
       {children}
