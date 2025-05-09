@@ -1,4 +1,4 @@
-import { Footer } from "@/app/_components/footer"
+import { Footer } from "@/components/footer"
 import { ProblemLink } from "@/components/problem-link/server"
 import { getWikiFull, getWikiMetadata } from "@/lib/server/wiki"
 
