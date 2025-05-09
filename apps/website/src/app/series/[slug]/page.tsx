@@ -1,10 +1,9 @@
-import { SeriesList } from "@easyshell/problems/data/series"
-
 import { Back } from "@/components/back"
 import { Problems } from "@/components/problems"
 import { auth } from "@/lib/server/auth"
 import { getPublicProblemInfo } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
+import { getSeries } from "@/lib/server/series"
 
 import { notFound } from "next/navigation"
 
@@ -14,7 +13,7 @@ export default async function Page({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const series = SeriesList.find((s) => s.slug === slug)
+  const series = await getSeries(slug)
   if (!series) {
     notFound()
   }

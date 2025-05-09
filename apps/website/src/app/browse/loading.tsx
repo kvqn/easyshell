@@ -1,9 +1,11 @@
-import { SeriesList } from "@easyshell/problems/data/series"
+import { getAllSeries } from "@/lib/server/series"
 
 import { ProblemListSkeleton } from "./_components/problems"
 import { SeriesCardSkeleton } from "./_components/series"
 
-export default function Page() {
+export default async function Page() {
+  const allSeries = await getAllSeries()
+
   return (
     <div className="flex flex-col">
       <div className="font-clash-display text-2xl font-semibold">Series</div>
@@ -11,7 +13,7 @@ export default function Page() {
         Curated list of problems to master specific topics.
       </div>
       <div className="mt-4 flex gap-4">
-        {SeriesList.map((series) => (
+        {allSeries.map((series) => (
           <SeriesCardSkeleton key={series.slug} series={series} />
         ))}
       </div>

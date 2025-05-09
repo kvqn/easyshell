@@ -5,6 +5,7 @@ import {
   getPublicProblemInfo,
 } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
+import { getAllSeries } from "@/lib/server/series"
 
 import { ProblemList } from "./_components/problems"
 import { SeriesCarousel } from "./_components/series"
@@ -32,6 +33,7 @@ export default async function Page() {
     )
   ).sort((a, b) => a.id - b.id)
   const tags = await getAllTags()
+  const allSeries = await getAllSeries()
 
   return (
     <div className="flex flex-col">
@@ -39,7 +41,10 @@ export default async function Page() {
       <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
         Curated list of problems to master specific topics.
       </div>
-      <SeriesCarousel submission_stats={submission_stats} />
+      <SeriesCarousel
+        submission_stats={submission_stats}
+        allSeries={allSeries}
+      />
       <ProblemList problems={problems} tags={tags} />
     </div>
   )

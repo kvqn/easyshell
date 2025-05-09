@@ -1,7 +1,5 @@
 "use client"
 
-import { SeriesList } from "@easyshell/problems/data/series"
-
 import { TextBackground } from "@/components/backgrounds/text-background"
 import {
   Carousel,
@@ -13,6 +11,7 @@ import {
 } from "@/components/ui/carousel"
 import { Progress } from "@/components/ui/progress"
 import type { getUserSubmissionStats } from "@/lib/server/queries"
+import type { getAllSeries } from "@/lib/server/series"
 import { cn } from "@/lib/utils"
 
 import Autoplay from "embla-carousel-autoplay"
@@ -21,8 +20,10 @@ import { useEffect, useState } from "react"
 
 export function SeriesCarousel({
   submission_stats,
+  allSeries,
 }: {
   submission_stats: Awaited<ReturnType<typeof getUserSubmissionStats>> | null
+  allSeries: Awaited<ReturnType<typeof getAllSeries>>
 }) {
   const [emblaApi, setEmblaApi] = useState<CarouselApi>()
 
@@ -64,7 +65,7 @@ export function SeriesCarousel({
       ]}
     >
       <CarouselContent className="pb-6">
-        {SeriesList.map((series) => (
+        {allSeries.map((series) => (
           <CarouselItem key={series.slug} className="basis-auto">
             <SeriesCard
               series={series}
@@ -97,7 +98,7 @@ function SeriesCard({
   series,
   num_solved,
 }: {
-  series: (typeof SeriesList)[number]
+  series: Awaited<ReturnType<typeof getAllSeries>>[number]
   num_solved: number
 }) {
   const progress = Math.round((num_solved * 100) / series.problems.length)
@@ -130,7 +131,7 @@ function SeriesCard({
 export function SeriesCardSkeleton({
   series,
 }: {
-  series: (typeof SeriesList)[number]
+  series: Awaited<ReturnType<typeof getAllSeries>>[number]
 }) {
   return (
     <Link
