@@ -1,4 +1,5 @@
 import { auth } from "@/lib/server/auth"
+import { getUserBookmarks } from "@/lib/server/bookmarks"
 import {
   getAllTags,
   getProblems,
@@ -7,6 +8,7 @@ import {
 import { getUserSubmissionStats } from "@/lib/server/queries"
 import { getAllSeries } from "@/lib/server/series"
 
+import { Bookmarks } from "./_components/bookmarks"
 import { ProblemList } from "./_components/problems"
 import { SeriesCarousel } from "./_components/series"
 
@@ -35,16 +37,25 @@ export default async function Page() {
   const tags = await getAllTags()
   const allSeries = await getAllSeries()
 
+  const user_bookmarks = user ? await getUserBookmarks(user.id) : []
+
   return (
     <div className="flex flex-col">
-      <div className="font-clash-display text-2xl font-semibold">Series</div>
-      <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
-        Curated list of problems to master specific topics.
+      <div className="flex gap-4">
+        <div className="flex flex-col">
+          <div className="font-clash-display text-2xl font-semibold">
+            Series
+          </div>
+          <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
+            Curated list of problems to master specific topics.
+          </div>
+          <SeriesCarousel
+            submission_stats={submission_stats}
+            allSeries={allSeries}
+          />
+        </div>
+        <Bookmarks bookmarks={user_bookmarks} loggedIn={!!user} />
       </div>
-      <SeriesCarousel
-        submission_stats={submission_stats}
-        allSeries={allSeries}
-      />
       <ProblemList problems={problems} tags={tags} />
     </div>
   )
