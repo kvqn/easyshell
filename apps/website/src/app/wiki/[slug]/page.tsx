@@ -1,5 +1,5 @@
 import { Footer } from "@/app/_components/footer"
-import { ProblemLink } from "@/components/problem-link"
+import { ProblemLink } from "@/components/problem-link/server"
 import { getWikiFull, getWikiMetadata } from "@/lib/server/wiki"
 
 import { Markdown } from "./_components/markdown"

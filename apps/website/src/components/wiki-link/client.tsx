@@ -1,19 +1,30 @@
-import { getWikiMetadata } from "@/lib/server/wiki"
-import { cn } from "@/lib/utils"
+"use client"
 
-import { EasyTooltip } from "./ui/tooltip"
+import { EasyTooltip } from "@/components/ui/tooltip"
+import { getWikiMetadata } from "@/lib/server/actions/get-wiki-metadata"
+import { cn } from "@/lib/utils"
 
 import moment from "moment"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
-export async function WikiLink({
+export function WikiLink({
   slug,
   className,
 }: {
   slug: string
   className?: string
 }) {
-  const metadata = await getWikiMetadata(slug)
+  // const metadata = await getWikiMetadata(slug)
+
+  const [metadata, setMetadata] =
+    useState<Awaited<ReturnType<typeof getWikiMetadata>>>(null)
+
+  useEffect(() => {
+    void (async () => {
+      setMetadata(await getWikiMetadata(slug))
+    })()
+  }, [slug])
 
   return (
     <EasyTooltip

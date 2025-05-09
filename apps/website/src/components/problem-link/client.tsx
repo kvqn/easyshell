@@ -1,22 +1,34 @@
-import { auth } from "@/lib/server/auth"
-import { getProblemDifficulty, getProblemStatus } from "@/lib/server/problems"
+"use client"
+
+import { ProblemStatus } from "@/components/problem-status"
+import { EasyTooltip } from "@/components/ui/tooltip"
+import { getProblemDifficulty } from "@/lib/server/actions/get-problem-difficulty"
+import { getProblemStatus } from "@/lib/server/actions/get-problem-status"
 import { cn } from "@/lib/utils"
 
-import { ProblemStatus } from "./problem-status"
-import { EasyTooltip } from "./ui/tooltip"
-
 import Link from "next/link"
+import { useEffect, useState } from "react"
 
-export async function ProblemLink({
+export function ProblemLink({
   slug,
   className,
 }: {
   slug: string
   className?: string
 }) {
-  const userId = (await auth())?.user.id
-  const difficulty = await getProblemDifficulty(slug)
-  const status = userId ? await getProblemStatus(slug, userId) : undefined
+  const [difficulty, setDifficulty] = useState<
+    "easy" | "medium" | "hard" | undefined
+  >(undefined)
+  const [status, setStatus] = useState<"solved" | "attempted" | undefined>(
+    undefined,
+  )
+
+  useEffect(() => {
+    void (async () => {
+      setDifficulty(await getProblemDifficulty(slug))
+      setStatus(await getProblemStatus(slug))
+    })()
+  }, [slug])
 
   return (
     <EasyTooltip
