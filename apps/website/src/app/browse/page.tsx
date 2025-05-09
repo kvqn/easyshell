@@ -6,7 +6,8 @@ import {
 } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 
-import { ProblemList, SeriesCarousel } from "./client"
+import { ProblemList } from "./_components/problems"
+import { SeriesCarousel } from "./_components/series"
 
 export const metadata = {
   title: "easyshell - browse",
