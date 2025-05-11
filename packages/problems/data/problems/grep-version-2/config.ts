@@ -69,6 +69,11 @@ const config: ProblemConfig = {
       pass: true,
       input: `cat "$(find -name __about__.py)" | grep -oP '^[^#'\\''"]?\\s*__version__\\s*=\\s*['\\''"]\\K.*(?=['\\''"])' | tail -n 1`,
     },
+    {
+      testcase: "all",
+      pass: true,
+      input: `cat "$(find . -name __about__.py)" | grep -P '^\\s*__version__\\s*=\\s*.*' | tail -n 1 | grep -oP '(?<=["'\\''])(.*)(?=["'\\''])'`,
+    },
   ],
 }
 
