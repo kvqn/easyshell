@@ -25,7 +25,7 @@ export default async function Page() {
           Wiki
         </h1>
       </div>
-      <div className="flex w-2/3 flex-col">
+      <div className="flex w-2/3 flex-col gap-4">
         {pages.map((page) => (
           <WikiPageCard key={page.slug} page={page} />
         ))}

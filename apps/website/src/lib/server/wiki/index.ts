@@ -17,12 +17,16 @@ const parsedData = DataSchema.parse(data)
 export async function getWikiPages(): Promise<
   Array<{ slug: string; title: string; type: "editorial"; lastEdited: Date }>
 > {
-  return Object.keys(parsedData).map((slug) => ({
+  const pages = Object.keys(parsedData).map((slug) => ({
     slug,
     title: parsedData[slug]!.title,
     type: parsedData[slug]!.type,
     lastEdited: parsedData[slug]!.lastEdited,
   }))
+
+  pages.sort((a, b) => b.lastEdited.getTime() - a.lastEdited.getTime())
+
+  return pages
 }
 
 export async function getWikiMetadata(slug: string) {
