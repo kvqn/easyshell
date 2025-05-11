@@ -73,26 +73,32 @@ export function EasyTooltip({
   children,
   contentClassName,
   arrowClassName,
+  dontInterceptClick,
 }: {
   tip?: React.ReactNode
   children: React.ReactNode
   contentClassName?: string
   arrowClassName?: string
+  dontInterceptClick?: boolean
 }) {
   return (
     <Tooltip open={tip === undefined ? false : undefined}>
       <TooltipTrigger
-        onClick={(e) => {
-          e.preventDefault()
-        }}
+        onClick={
+          dontInterceptClick
+            ? undefined
+            : (e) => {
+                e.preventDefault()
+              }
+        }
         asChild
       >
         {children}
       </TooltipTrigger>
       <TooltipContent
-        onPointerDownOutside={(e) => {
-          e.preventDefault()
-        }}
+        onPointerDownOutside={
+          dontInterceptClick ? undefined : (e) => e.preventDefault()
+        }
         className={cn(
           "text-neutral-400 dark:text-neutral-600",
           contentClassName,

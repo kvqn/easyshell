@@ -16,6 +16,7 @@ export function WikiLinkBase({
 }) {
   return (
     <EasyTooltip
+      dontInterceptClick
       tip={
         metadata ? (
           <div className="flex flex-col justify-center">
@@ -33,11 +34,11 @@ export function WikiLinkBase({
       <Link
         href={`/problems/${slug}`}
         className={cn(
-          "ml-1 inline w-fit space-x-1 rounded-md border bg-neutral-100 px-2 py-1 whitespace-nowrap shadow-xs",
+          "ml-1 inline w-fit space-x-1 rounded-md border bg-neutral-100 px-2 py-1 whitespace-nowrap shadow-xs dark:bg-neutral-800",
           className,
         )}
       >
-        <span className="font-clash-display text-xs font-medium text-neutral-400">
+        <span className="font-clash-display text-xs font-semibold text-neutral-400 dark:text-neutral-500">
           WIKI
         </span>
         <span className={cn("inline font-geist-mono text-xs font-medium", {})}>

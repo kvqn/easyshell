@@ -17,6 +17,7 @@ export function ProblemLinkBase({
 }) {
   return (
     <EasyTooltip
+      dontInterceptClick
       tip={
         status === "solved"
           ? "Solved"
