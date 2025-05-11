@@ -170,21 +170,23 @@ async function BookmarkedProblemExpanded({ id }: { id: number }) {
 async function AttemptedProblem({ slug }: { slug: string }) {
   const { id, title } = await getPublicProblemInfo(slug)
   return (
-    <div className="flex items-center rounded-md border px-2 py-1 shadow hover:bg-neutral-100 dark:hover:bg-neutral-800/50">
-      <div>
+    <Link
+      href={`/problems/${slug}`}
+      className="flex items-center rounded-md border py-1 shadow hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
+    >
+      <div className="px-1">
         <AlternativeProblemStatus
           status="attempted"
           className="size-6 dark:text-neutral-500"
-          showTooltip
         />
       </div>
       <div className="overflow-hidden text-sm overflow-ellipsis whitespace-nowrap dark:text-neutral-200">
         {title}
       </div>
-      <div className="ml-auto font-clash-display text-sm font-medium text-neutral-300 dark:text-neutral-700">
+      <div className="ml-auto pr-2 font-clash-display text-sm font-medium text-neutral-300 dark:text-neutral-700">
         #{id}
       </div>
-    </div>
+    </Link>
   )
 }
 
