@@ -5,12 +5,12 @@ import { useTheme } from "@/lib/client"
 
 import { PiMoon, PiMoonDuotone, PiSun, PiSunDuotone } from "react-icons/pi"
 
-export function ThemeToggle() {
+export function ThemeToggle({ text = false }: { text?: boolean }) {
   const { theme, setTheme } = useTheme()
   return (
     <Button
       variant="outline"
-      className="group w-fit"
+      className="group w-fit space-x-4"
       onClick={() => {
         if (theme === "light") setTheme("dark")
         else setTheme("light")
@@ -29,6 +29,9 @@ export function ThemeToggle() {
           </>
         )}
       </div>
+      {text ? (
+        <div>{theme === "light" ? "Light Mode" : "Dark Mode"}</div>
+      ) : null}
     </Button>
   )
 }

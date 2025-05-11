@@ -105,7 +105,7 @@ export function SettingsNameImage({
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-4">
-          <div className="group relative h-20 w-20 cursor-pointer overflow-hidden rounded-full">
+          <div className="group relative min-h-20 min-w-20 cursor-pointer overflow-hidden rounded-full">
             <Avatar className="absolute h-full w-full transition-all group-hover:blur-xs">
               <AvatarImage src={image ? URL.createObjectURL(image) : _image} />
               <AvatarFallback>{username[0]}</AvatarFallback>
@@ -132,7 +132,7 @@ export function SettingsNameImage({
             />
           </div>
           <div className="flex grow flex-wrap items-center justify-center gap-4">
-            <div className="flex min-w-80 grow flex-col">
+            <div className="flex grow flex-col">
               <label htmlFor="name" className="font-semibold">
                 Name
               </label>
@@ -150,7 +150,7 @@ export function SettingsNameImage({
                 )}
               </div>
             </div>
-            <div className="flex min-w-80 grow flex-col">
+            <div className="flex grow flex-col">
               <label htmlFor="username" className="font-semibold">
                 Username
               </label>
