@@ -1,6 +1,5 @@
 import { Toaster } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { getPathname } from "@/lib/server/utils"
 import "@/styles/globals.css"
 
 import { Navbar } from "./_components/navbar"
@@ -23,7 +22,6 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const pathname = getPathname()
   return (
     <html
       lang="en"

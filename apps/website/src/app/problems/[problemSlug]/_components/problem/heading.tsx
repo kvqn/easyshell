@@ -1,5 +1,4 @@
 import { AlternativeProblemStatus } from "@/components/problem-status"
-import { EasyTooltip } from "@/components/ui/tooltip"
 import { auth } from "@/lib/server/auth"
 import {
   getProblemDifficulty,
