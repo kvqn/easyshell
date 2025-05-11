@@ -87,7 +87,9 @@ function AlternativeProblemSolvedWithTooltip({
 }) {
   return (
     <EasyTooltip tip="Solved">
-      <AlternativeProblemSolvedWithoutTooltip className={className} />
+      <div>
+        <AlternativeProblemSolvedWithoutTooltip className={className} />
+      </div>
     </EasyTooltip>
   )
 }
@@ -107,12 +109,18 @@ function AlternativeProblemAttemptedWithTooltip({
 }) {
   return (
     <EasyTooltip tip="Attempted">
-      <AlternativeProblemAttemptedWithoutTooltip className={className} />
+      <div>
+        <AlternativeProblemAttemptedWithoutTooltip className={className} />
+      </div>
     </EasyTooltip>
   )
 }
 
-function AlternativeProblemNotAttempted({ className }: { className?: string }) {
+function AlternativeProblemNotAttemptedWithoutTooltip({
+  className,
+}: {
+  className?: string
+}) {
   return <TbCircleDotted className={cn("text-2xl", className)} />
 }
 
@@ -123,30 +131,41 @@ function AlternativeProblemNotAttemptedWithTooltip({
 }) {
   return (
     <EasyTooltip tip="Not Attempted">
-      <AlternativeProblemNotAttempted className={className} />
+      <div>
+        <AlternativeProblemNotAttemptedWithoutTooltip className={className} />
+      </div>
     </EasyTooltip>
   )
 }
 
 export function AlternativeProblemStatus({
   status,
-  tooltip = true,
   className,
+  showTooltip = false,
+  showNotAttempted = false,
 }: {
   status?: "attempted" | "solved"
-  tooltip?: boolean
   className?: string
+  showTooltip?: boolean
+  showNotAttempted?: boolean
 }) {
-  if (tooltip) {
+  console.log("showTooltip", showTooltip)
+  if (showTooltip) {
     if (status === "solved")
       return <AlternativeProblemSolvedWithTooltip className={className} />
     if (status === "attempted")
       return <AlternativeProblemAttemptedWithTooltip className={className} />
-    return <AlternativeProblemNotAttemptedWithTooltip className={className} />
+    if (showNotAttempted)
+      return <AlternativeProblemNotAttemptedWithTooltip className={className} />
+    return null
   }
   if (status === "solved")
     return <AlternativeProblemSolvedWithoutTooltip className={className} />
   if (status === "attempted")
     return <AlternativeProblemAttemptedWithoutTooltip className={className} />
-  return <AlternativeProblemNotAttempted className={className} />
+  if (showNotAttempted)
+    return (
+      <AlternativeProblemNotAttemptedWithoutTooltip className={className} />
+    )
+  return null
 }

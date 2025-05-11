@@ -1,6 +1,6 @@
 import type { getPublicProblemInfo } from "@/lib/server/problems"
 
-import { ProblemDifficulty, ProblemStatus } from "./problem-status"
+import { AlternativeProblemStatus, ProblemDifficulty } from "./problem-status"
 import { Badge } from "./ui/badge"
 
 import Link from "next/link"
@@ -76,7 +76,7 @@ function Problem({
         )}
       </div>
       <div className="hidden w-20 items-center justify-center lg:flex">
-        <ProblemStatus status={info.status} />
+        <AlternativeProblemStatus status={info.status} showTooltip />
       </div>
     </Link>
   )

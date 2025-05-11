@@ -1,4 +1,4 @@
-import { ProblemStatus } from "@/components/problem-status"
+import { AlternativeProblemStatus } from "@/components/problem-status"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { auth } from "@/lib/server/auth"
 import { getProblemDifficulty, getProblemStatus } from "@/lib/server/problems"
@@ -46,7 +46,12 @@ export async function ProblemLink({
         >
           {slug}
         </span>
-        <ProblemStatus status={status} tooltip={false} />
+        <AlternativeProblemStatus
+          status={status}
+          className={cn("inline size-5", {
+            "text-orange-600 dark:text-orange-400": difficulty === "medium",
+          })}
+        />
       </Link>
     </EasyTooltip>
   )

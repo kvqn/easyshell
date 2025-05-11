@@ -16,7 +16,6 @@ import { min } from "@/lib/utils"
 
 import Link from "next/link"
 import { PiBookmarkSimpleDuotone } from "react-icons/pi"
-import { TbProgress } from "react-icons/tb"
 
 export async function RecentActivity({
   bookmarks,
@@ -164,7 +163,11 @@ async function AttemptedProblem({ slug }: { slug: string }) {
   return (
     <div className="flex items-center rounded-md border px-2 py-1 shadow hover:bg-neutral-100 dark:hover:bg-neutral-800/50">
       <div>
-        <TbProgress className="size-6 dark:text-neutral-500" />
+        <AlternativeProblemStatus
+          status="attempted"
+          className="size-6 dark:text-neutral-500"
+          showTooltip
+        />
       </div>
       <div className="overflow-hidden text-sm overflow-ellipsis whitespace-nowrap dark:text-neutral-200">
         {title}
@@ -184,6 +187,7 @@ async function AttemptedProblemExpanded({ slug }: { slug: string }) {
         <AlternativeProblemStatus
           status="attempted"
           className="size-6 dark:text-neutral-500"
+          showTooltip
         />
       </div>
       <Link
