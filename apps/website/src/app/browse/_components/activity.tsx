@@ -33,6 +33,11 @@ export async function RecentActivity({
   const bookmarks_end = min(4, bookmarks.length)
   const attempted_end = min(4 - bookmarks_end, attempted.length)
 
+  const hidden_items =
+    bookmarks.length +
+    attempted.length -
+    min(5, bookmarks.length + attempted.length)
+
   return (
     <div className="w-60">
       <div className="font-clash-display text-2xl font-semibold">
@@ -55,7 +60,11 @@ export async function RecentActivity({
           </>
         )}
         <Expand
-          text={`See ${bookmarks.length - 4} more items`}
+          text={
+            hidden_items === 0
+              ? `See more info`
+              : `See ${hidden_items} more items`
+          }
           bookmarks={bookmarks}
           attempted={attempted}
         />
