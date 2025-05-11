@@ -1,5 +1,17 @@
+import { DesktopContainer, MobileContainer } from "@/components/media"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import {
   Popover,
   PopoverContent,
@@ -44,7 +56,12 @@ export function Navbar() {
         Wiki
       </Link>
       <div className="ml-auto">
-        <Options />
+        <DesktopContainer>
+          <Options />
+        </DesktopContainer>
+        <MobileContainer>
+          <NavigationDrawer />
+        </MobileContainer>
       </div>
     </div>
   )
@@ -98,9 +115,8 @@ async function User() {
             <p>{user.username}</p>
           </Button>
         </Link>
-
         <Link href="/logout" className="mt-2 w-full">
-          <Button variant="outline" className="w-full">
+          <Button variant="destructive" className="w-full">
             Logout
           </Button>
         </Link>
@@ -115,6 +131,72 @@ async function User() {
       <Link href="/login" className="mt-2 w-full">
         <Button className="w-full">Login</Button>
       </Link>
+    </div>
+  )
+}
+
+function NavigationDrawer() {
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline" className="p-2">
+          <HamburgerMenuIcon width="1.5rem" height="1.5rem" />
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <NavigationMenu />
+      </DrawerContent>
+    </Drawer>
+  )
+}
+
+function NavigationMenuItem({ name, href }: { name: string; href: string }) {
+  return (
+    <Link
+      href={href}
+      className="group flex items-center justify-between rounded-md border px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+    >
+      <div className="text-neutral-700 transition-colors group-hover:text-black dark:text-neutral-300 dark:group-hover:text-white">
+        {name}
+      </div>
+      <div className="text-sm text-neutral-400 group-hover:text-neutral-500 dark:text-neutral-700">
+        {href}
+      </div>
+    </Link>
+  )
+}
+
+function NavigationMenu() {
+  return (
+    <div className="mx-auto w-[90%] pt-4 pb-8">
+      <div className="mb-4 text-center font-clash-display text-xl font-medium">
+        About You
+      </div>
+      <div className="flex w-full flex-col gap-2">
+        <div className="flex justify-between gap-2 *:grow">
+          <Link href="/settings">
+            <Button
+              variant="outline"
+              className="group flex w-full items-center justify-center gap-4"
+            >
+              <div className="relative size-4">
+                <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+                <PiGearDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+              </div>
+              <div>Settings</div>
+            </Button>
+          </Link>
+          <ThemeToggle text />
+        </div>
+        <User />
+      </div>
+      <div className="my-4 text-center font-clash-display text-xl font-medium">
+        Navigation Menu
+      </div>
+      <div className="flex w-full flex-col gap-2">
+        <NavigationMenuItem name="Problems" href="/problems" />
+        <NavigationMenuItem name="Wiki" href="/wiki" />
+      </div>
     </div>
   )
 }
