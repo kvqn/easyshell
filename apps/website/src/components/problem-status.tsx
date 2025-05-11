@@ -149,7 +149,6 @@ export function AlternativeProblemStatus({
   showTooltip?: boolean
   showNotAttempted?: boolean
 }) {
-  console.log("showTooltip", showTooltip)
   if (showTooltip) {
     if (status === "solved")
       return <AlternativeProblemSolvedWithTooltip className={className} />

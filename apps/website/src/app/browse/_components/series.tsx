@@ -34,7 +34,6 @@ export function SeriesCarousel({
     if (!emblaApi) return
     function updateScrollStatus() {
       if (!emblaApi) return
-      console.log("updateScrollStatus")
       setCanScrollNext(emblaApi.canScrollNext())
       setCanScrollPrev(emblaApi.canScrollPrev())
     }
