@@ -39,8 +39,8 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Grep Version 2",
   description: "Extract version number from your project",
-  difficulty: "medium",
-  tags: ["Basics"],
+  difficulty: "hard",
+  tags: ["grep", "find", "tail"],
   testcases: [
     await testcaseConfig({
       id: 1,
