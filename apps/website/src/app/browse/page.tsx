@@ -8,7 +8,7 @@ import {
 import { getUserSubmissionStats } from "@/lib/server/queries"
 import { getAllSeries } from "@/lib/server/series"
 
-import { Bookmarks } from "./_components/bookmarks"
+import { RecentActivity } from "./_components/activity"
 import { ProblemList } from "./_components/problems"
 import { SeriesCarousel } from "./_components/series"
 
@@ -38,11 +38,16 @@ export default async function Page() {
   const allSeries = await getAllSeries()
 
   const user_bookmarks = user ? await getUserBookmarks(user.id) : []
+  const user_attempted = submission_stats
+    ? Object.keys(submission_stats.problems).filter(
+        (slug) => submission_stats.problems[slug] === "attempted",
+      )
+    : []
 
   return (
     <div className="flex flex-col">
       <div className="flex gap-4">
-        <div className="flex flex-col">
+        <div className="flex grow flex-col">
           <div className="font-clash-display text-2xl font-semibold">
             Series
           </div>
@@ -54,7 +59,11 @@ export default async function Page() {
             allSeries={allSeries}
           />
         </div>
-        <Bookmarks bookmarks={user_bookmarks} loggedIn={!!user} />
+        <RecentActivity
+          bookmarks={user_bookmarks}
+          loggedIn={!!user}
+          attempted={user_attempted}
+        />
       </div>
       <ProblemList problems={problems} tags={tags} />
     </div>
