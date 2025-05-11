@@ -1,3 +1,4 @@
+import { AlternativeProblemStatus } from "@/components/problem-status"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { auth } from "@/lib/server/auth"
 import {
@@ -9,10 +10,6 @@ import { isProblemBookmarked } from "@/lib/server/queries"
 import { cn } from "@/lib/utils"
 
 import { ProblemBookmark } from "./bookmark"
-
-import { IoIosCheckmarkCircleOutline } from "react-icons/io"
-import { TbProgress } from "react-icons/tb"
-import { TbCircleDotted } from "react-icons/tb"
 
 export async function ProblemHeading({ slug }: { slug: string }) {
   const session = await auth()
@@ -44,19 +41,11 @@ export async function ProblemHeading({ slug }: { slug: string }) {
           <p className="font-mono text-sm text-neutral-500">{slug}</p>
         </div>
         <div className="flex items-center">
-          {status === "solved" ? (
-            <EasyTooltip tip="Solved">
-              <IoIosCheckmarkCircleOutline className="text-2xl" />
-            </EasyTooltip>
-          ) : status === "attempted" ? (
-            <EasyTooltip tip="Attempted">
-              <TbProgress className="text-2xl" />
-            </EasyTooltip>
-          ) : (
-            <EasyTooltip tip="Not Attempted">
-              <TbCircleDotted className="text-2xl" />
-            </EasyTooltip>
-          )}
+          <AlternativeProblemStatus
+            status={status}
+            showNotAttempted
+            showTooltip
+          />
           <ProblemBookmark isBookmarked={isBookmarked} problemId={id} />
         </div>
       </div>

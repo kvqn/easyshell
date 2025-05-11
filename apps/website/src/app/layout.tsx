@@ -24,7 +24,6 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const pathname = getPathname()
-  console.log("pathname", pathname)
   return (
     <html
       lang="en"

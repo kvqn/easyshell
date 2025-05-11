@@ -1,6 +1,6 @@
 "use client"
 
-import { ProblemStatus } from "@/components/problem-status"
+import { AlternativeProblemStatus } from "@/components/problem-status"
 import { EasyTooltip } from "@/components/ui/tooltip"
 import { getProblemDifficulty } from "@/lib/server/actions/get-problem-difficulty"
 import { getProblemStatus } from "@/lib/server/actions/get-problem-status"
@@ -59,7 +59,12 @@ export function ProblemLink({
         >
           {slug}
         </span>
-        <ProblemStatus status={status} tooltip={false} />
+        <AlternativeProblemStatus
+          status={status}
+          className={cn("inline size-5", {
+            "text-orange-600 dark:text-orange-400": difficulty === "medium",
+          })}
+        />
       </Link>
     </EasyTooltip>
   )

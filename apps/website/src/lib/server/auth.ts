@@ -73,7 +73,6 @@ export async function isNameValid(
  * It also checks for uniqueness, i.e. if the name already exists, a unique suffix is added.
  */
 async function generateValidUsername(username: string): Promise<string> {
-  console.log("generateValidUsername", username)
   let newUsername = ""
   for (const char of username) {
     if (/[a-zA-Z0-9_-]/.test(char)) {
@@ -95,12 +94,10 @@ async function generateValidUsername(username: string): Promise<string> {
       throw new Error("loop limit exceeded")
     }
     const newUsernameWithSuffix = newUsername + (suffix > 0 ? `-${suffix}` : "")
-    console.log("newUsernameWithSuffix", newUsernameWithSuffix)
     const exists = await isUsernameValid({
       username: newUsernameWithSuffix,
       checkUnique: true,
     })
-    console.log("exists", exists)
     if (exists.valid) {
       newUsername = newUsernameWithSuffix
       break
@@ -134,7 +131,6 @@ async function generateAnonymousName(): Promise<string> {
  * Attempts to fix missing fields for user. Safe to use on a good user.
  */
 async function fixUser(userId: string) {
-  console.log("fixUser", userId)
   const user = (
     await db.select().from(users).where(eq(users.id, userId)).limit(1)
   )[0]!

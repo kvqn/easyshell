@@ -11,9 +11,11 @@ import { toast } from "sonner"
 export function ProblemBookmark({
   problemId,
   isBookmarked,
+  className,
 }: {
   problemId: number
   isBookmarked: boolean
+  className?: string
 }) {
   const [bookmarked, setBookmarked] = useState(isBookmarked)
   const [inBetween, setInBetween] = useState(false)
@@ -57,7 +59,7 @@ export function ProblemBookmark({
         className="group relative h-fit w-fit cursor-pointer"
         onClick={handle}
       >
-        <PiBookmarkSimple className="text-3xl" />
+        <PiBookmarkSimple className={cn("text-3xl", className)} />
         <PiBookmarkSimpleDuotone
           className={cn(
             "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity",
@@ -67,6 +69,7 @@ export function ProblemBookmark({
               "opacity-75": inBetween && !bookmarked,
               "opacity-100": bookmarked,
             },
+            className,
           )}
         />
       </div>

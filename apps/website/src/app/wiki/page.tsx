@@ -1,4 +1,4 @@
-import { Footer } from "@/app/_components/footer"
+import { Footer } from "@/components/footer"
 import { Card } from "@/components/ui/card"
 import { getWikiPages } from "@/lib/server/wiki"
 

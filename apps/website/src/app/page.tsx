@@ -1,4 +1,4 @@
-import { Footer } from "./_components/footer"
+import { Footer } from "@/components/footer"
 
 import Link from "next/link"
 import { BiCustomize } from "react-icons/bi"
