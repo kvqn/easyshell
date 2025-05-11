@@ -1,15 +1,10 @@
 import { DesktopContainer, MobileContainer } from "@/components/media"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
 import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import {
@@ -98,28 +93,37 @@ function Options() {
   )
 }
 
-async function User() {
+async function User({ drawer }: { drawer?: boolean }) {
   const user = (await auth())?.user
+  const LinkWrapper = drawer
+    ? ({ children }: { children: React.ReactNode }) => (
+        <DrawerClose asChild>{children}</DrawerClose>
+      )
+    : ({ children }: { children: React.ReactNode }) => <>{children}</>
   if (user)
     return (
       <div className="flex w-full flex-col">
-        <Link href={`/profile/${user.username}`}>
-          <Button
-            variant="outline"
-            className="flex w-full gap-1 rounded-md border px-2 py-2"
-          >
-            <Avatar className="mr-1.5 h-6 w-6">
-              <AvatarImage src={user.image ?? ""} />
-              <AvatarFallback>{user.username[0]}</AvatarFallback>
-            </Avatar>
-            <p>{user.username}</p>
-          </Button>
-        </Link>
-        <Link href="/logout" className="mt-2 w-full">
-          <Button variant="destructive" className="w-full">
-            Logout
-          </Button>
-        </Link>
+        <LinkWrapper>
+          <Link href={`/profile/${user.username}`}>
+            <Button
+              variant="outline"
+              className="flex w-full gap-1 rounded-md border px-2 py-2"
+            >
+              <Avatar className="mr-1.5 h-6 w-6">
+                <AvatarImage src={user.image ?? ""} />
+                <AvatarFallback>{user.username[0]}</AvatarFallback>
+              </Avatar>
+              <p>{user.username}</p>
+            </Button>
+          </Link>
+        </LinkWrapper>
+        <LinkWrapper>
+          <Link href="/logout" className="mt-2 w-full">
+            <Button variant="destructive" className="w-full">
+              Logout
+            </Button>
+          </Link>
+        </LinkWrapper>
       </div>
     )
 
@@ -152,17 +156,19 @@ function NavigationDrawer() {
 
 function NavigationMenuItem({ name, href }: { name: string; href: string }) {
   return (
-    <Link
-      href={href}
-      className="group flex items-center justify-between rounded-md border px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
-    >
-      <div className="text-neutral-700 transition-colors group-hover:text-black dark:text-neutral-300 dark:group-hover:text-white">
-        {name}
-      </div>
-      <div className="text-sm text-neutral-400 group-hover:text-neutral-500 dark:text-neutral-700">
-        {href}
-      </div>
-    </Link>
+    <DrawerClose asChild>
+      <Link
+        href={href}
+        className="group flex items-center justify-between rounded-md border px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+      >
+        <div className="text-neutral-700 transition-colors group-hover:text-black dark:text-neutral-300 dark:group-hover:text-white">
+          {name}
+        </div>
+        <div className="text-sm text-neutral-400 group-hover:text-neutral-500 dark:text-neutral-700">
+          {href}
+        </div>
+      </Link>
+    </DrawerClose>
   )
 }
 
@@ -174,21 +180,23 @@ function NavigationMenu() {
       </div>
       <div className="flex w-full flex-col gap-2">
         <div className="flex justify-between gap-2 *:grow">
-          <Link href="/settings">
-            <Button
-              variant="outline"
-              className="group flex w-full items-center justify-center gap-4"
-            >
-              <div className="relative size-4">
-                <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-                <PiGearDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
-              </div>
-              <div>Settings</div>
-            </Button>
-          </Link>
+          <DrawerClose asChild>
+            <Link href="/settings">
+              <Button
+                variant="outline"
+                className="group flex w-full items-center justify-center gap-4"
+              >
+                <div className="relative size-4">
+                  <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+                  <PiGearDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+                </div>
+                <div>Settings</div>
+              </Button>
+            </Link>
+          </DrawerClose>
           <ThemeToggle text />
         </div>
-        <User />
+        <User drawer />
       </div>
       <div className="my-4 text-center font-clash-display text-xl font-medium">
         Navigation Menu
