@@ -39,7 +39,7 @@ export async function RecentActivity({
     min(5, bookmarks.length + attempted.length)
 
   return (
-    <div className="w-60">
+    <div className="min-w-60">
       <div className="font-clash-display text-2xl font-semibold">
         Recent Activity
       </div>

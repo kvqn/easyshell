@@ -46,8 +46,8 @@ export default async function Page() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-4">
-        <div className="flex grow flex-col">
+      <div className="flex flex-col-reverse gap-4 md:flex-row">
+        <div className="flex grow flex-col overflow-hidden">
           <div className="font-clash-display text-2xl font-semibold">
             Series
           </div>
