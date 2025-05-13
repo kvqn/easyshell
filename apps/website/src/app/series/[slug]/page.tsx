@@ -1,7 +1,4 @@
-import {
-  AlternativeProblemStatus,
-  ProblemDifficulty,
-} from "@/components/problem-status"
+import { AlternativeProblemStatus } from "@/components/problem-status"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { auth } from "@/lib/server/auth"
@@ -13,7 +10,20 @@ import { cn } from "@/lib/utils"
 
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { PiPlay, PiPlayDuotone } from "react-icons/pi"
+import { PiPlayDuotone } from "react-icons/pi"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+  const series = await getSeries(slug)
+  return {
+    title: `series - ${slug}`,
+    description: series?.description,
+  }
+}
 
 export default async function Page({
   params,
