@@ -11,15 +11,7 @@ export function Footer({ className }: { className?: string }) {
       )}
       id="footer"
     >
-      {`Built by `}
-      <Link
-        href="https://x.com/kvqn_dev"
-        className="inline underline underline-offset-2"
-        target="_blank"
-      >
-        Guneet
-      </Link>
-      {`. Source code on `}
+      {`Source code on `}
       <Link
         href="https://github.com/kvqn/easyshell"
         className="inline underline underline-offset-2"
