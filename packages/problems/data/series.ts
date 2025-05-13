@@ -3,35 +3,61 @@ export const SeriesList: Array<{
   name: string
   image: string
   description: string
-  problems: Array<string>
+  sections: Array<{
+    title: string
+    description: string
+    problems: Array<string>
+  }>
 }> = [
-  {
-    slug: "basics",
-    name: "Basics",
-    problems: ["say-hello", "cat-out-loud"],
-    description: "Learn the basics of using the terminal.",
-    image: "",
-  },
   {
     slug: "file-management",
     name: "File Management",
-    problems: [
-      "find-that-file",
-      "move-that-file",
-      "move-and-rename",
-      "bulk-move",
-      "rm-that-file",
-      "wipe-that-folder",
-      "nuke-all-matches",
-    ],
     description: "Manage your files, the way it was intended.",
     image: "",
+    sections: [
+      {
+        title: "Locating Files",
+        description: "When locating files, `find` is your best friend.",
+        problems: ["find-that-file"],
+      },
+      {
+        title: "Moving And Renaming",
+        description:
+          "From the perspective of your computer, these are the same thing. Try out the following problems to get a feel for how to move and rename files.",
+        problems: ["move-that-file", "move-and-rename", "bulk-move"],
+      },
+
+      {
+        title: "Removing Files",
+        description:
+          "Removing files is a dangerous operation. Make sure you know what you're doing before you do it.",
+        problems: [
+          "rm-that-file",
+          "wipe-that-folder",
+          "nuke-all-matches",
+          "mdx-no-more",
+        ],
+      },
+    ],
   },
   {
-    slug: "networking",
-    name: "Networking",
-    problems: ["get-it-curl", "post-it", "post-with-token"],
-    description: "Download, upload, make some requests, do some queries.",
+    slug: "parsing",
+    description: "Turn raw data into something useful.",
+    name: "Parsing",
     image: "",
+    sections: [
+      {
+        title: "Parsing JSON",
+        description:
+          "Many tools and network requests respond using JSON. Learn how to take some JSON output and turn it into something useful.",
+        problems: ["get-it-curl", "post-it", "post-with-token"],
+      },
+      {
+        title: "Regular Expressions with GREP",
+        description:
+          "When you don't have a JSON output, you have to parse it yourself. There are many tools for this and `grep` is one of them.",
+        problems: ["grep-mail", "grep-version", "grep-version-2"],
+      },
+    ],
   },
 ]

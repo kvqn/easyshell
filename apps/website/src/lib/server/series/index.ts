@@ -8,7 +8,13 @@ const DataSchema = z.array(
     name: z.string(),
     image: z.string(),
     description: z.string(),
-    problems: z.array(z.string()),
+    sections: z.array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        problems: z.array(z.string()),
+      }),
+    ),
   }),
 )
 
@@ -20,7 +26,9 @@ export async function getAllSeries() {
 
 export async function getSeriesForProblem(problemSlug: string) {
   const series = parsedData
-    .filter((s) => s.problems.includes(problemSlug))
+    .filter((s) =>
+      s.sections.some((section) => section.problems.includes(problemSlug)),
+    )
     .map((s) => ({
       slug: s.slug,
       name: s.name,

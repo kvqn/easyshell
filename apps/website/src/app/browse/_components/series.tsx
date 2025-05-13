@@ -69,11 +69,17 @@ export function SeriesCarousel({
             <SeriesCard
               series={series}
               num_solved={
-                series.problems.filter((p) =>
-                  submission_stats
-                    ? submission_stats.problems[p] === "solved"
-                    : false,
-                ).length
+                new Set(
+                  series.sections
+                    .map((s) =>
+                      s.problems.filter((p) =>
+                        submission_stats
+                          ? submission_stats.problems[p] === "solved"
+                          : false,
+                      ),
+                    )
+                    .flat(),
+                ).size
               }
             />
           </CarouselItem>
@@ -100,7 +106,10 @@ function SeriesCard({
   series: Awaited<ReturnType<typeof getAllSeries>>[number]
   num_solved: number
 }) {
-  const progress = Math.round((num_solved * 100) / series.problems.length)
+  const progress = Math.round(
+    (num_solved * 100) /
+      new Set(series.sections.map((s) => s.problems).flat()).size,
+  )
   return (
     <Link
       href={`/series/${series.slug}`}
