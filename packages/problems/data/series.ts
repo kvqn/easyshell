@@ -40,11 +40,24 @@ export const SeriesList: Array<{
       },
     ],
   },
-  // {
-  //   slug: "networking",
-  //   name: "Networking",
-  //   problems: ["get-it-curl", "post-it", "post-with-token"],
-  //   description: "Download, upload, make some requests, do some queries.",
-  //   image: "",
-  // },
+  {
+    slug: "parsing",
+    description: "Turn raw data into something useful.",
+    name: "Parsing",
+    image: "",
+    sections: [
+      {
+        title: "Parsing JSON",
+        description:
+          "Many tools and network requests respond using JSON. Learn how to take some JSON output and turn it into something useful.",
+        problems: ["get-it-curl", "post-it", "post-with-token"],
+      },
+      {
+        title: "Regular Expressions with GREP",
+        description:
+          "When you don't have a JSON output, you have to parse it yourself. There are many tools for this and `grep` is one of them.",
+        problems: ["grep-mail", "grep-version", "grep-version-2"],
+      },
+    ],
+  },
 ]

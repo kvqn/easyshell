@@ -2,11 +2,13 @@ import {
   AlternativeProblemStatus,
   ProblemDifficulty,
 } from "@/components/problem-status"
+import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { auth } from "@/lib/server/auth"
 import { getProblemStatus, getPublicProblemInfo } from "@/lib/server/problems"
 import { getUserSubmissionStats } from "@/lib/server/queries"
 import { getSeries } from "@/lib/server/series"
+import { getPathname } from "@/lib/server/utils"
 import { cn } from "@/lib/utils"
 
 import Link from "next/link"
@@ -31,38 +33,61 @@ export default async function Page({
   )
 
   return (
-    <div className="flex gap-8">
-      <div className="flex flex-col">
-        <div className="mt-10 font-clash-display text-4xl font-bold">
-          {series.name}
-        </div>
-        <div className="mb-10 font-clash-display text-2xl">
-          {series.description}
-        </div>
-        <div className="flex flex-col gap-4">
-          {series.sections.map((section) => (
-            <div key={section.title}>
-              <div className="font-clash-display text-2xl font-semibold">
-                {section.title}
+    <div className="flex flex-col">
+      <div className="mt-10 font-clash-display text-4xl font-bold">
+        {series.name}
+      </div>
+      <div className="mb-10 font-clash-display text-2xl">
+        {series.description}
+      </div>
+      <div className="flex flex-col-reverse gap-8 md:flex-row">
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-4">
+            {series.sections.map((section) => (
+              <div key={section.title}>
+                <div className="font-clash-display text-2xl font-semibold">
+                  {section.title}
+                </div>
+                <div className="dark:text-neutral-200">
+                  {section.description}
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 p-2">
+                  {section.problems.map((p) => (
+                    <Problem key={p} slug={p} userId={userId} />
+                  ))}
+                </div>
               </div>
-              <div className="dark:text-neutral-200">{section.description}</div>
-              <div className="flex flex-col items-center justify-center gap-2 p-2">
-                {section.problems.map((p) => (
-                  <Problem key={p} slug={p} userId={userId} />
-                ))}
+            ))}
+          </div>
+        </div>
+        <div className="mx-auto h-fit min-w-60 rounded-xl border px-6 py-4">
+          {userId ? (
+            <ProgressColumn userId={userId} problems={problems} />
+          ) : (
+            <div>
+              <div className="text-center font-clash-display text-2xl font-semibold">
+                Progress
+              </div>
+              <div className="rounded-xl border p-4 shadow-lg">
+                <div className="rounded-md border p-2 text-center text-sm whitespace-nowrap text-neutral-600 dark:text-neutral-400">
+                  Log in see your progress
+                </div>
+                <LoginButton />
               </div>
             </div>
-          ))}
+          )}
         </div>
       </div>
-      <div className="h-fit w-80 rounded-xl border px-8 py-4">
-        {userId ? (
-          <ProgressColumn userId={userId} problems={problems} />
-        ) : (
-          <div>You need to log in</div>
-        )}
-      </div>
     </div>
+  )
+}
+
+async function LoginButton() {
+  const pathname = getPathname()
+  return (
+    <Link href={`/login?callback=${pathname}`}>
+      <Button className="mt-2 w-full py-2">Login</Button>
+    </Link>
   )
 }
 
@@ -78,7 +103,7 @@ async function ProgressColumn({
     (p) => submission_stats.problems[p] === "solved",
   ).length
   const total = problems.length
-  const progress = (num_solved * 100) / total
+  const progress = Math.round((num_solved * 100) / total)
   const next_problem = problems.find(
     (p) => submission_stats.problems[p] !== "solved",
   )
@@ -88,44 +113,56 @@ async function ProgressColumn({
     : null
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="font-clash-display text-2xl font-semibold">Progress</div>
-      <Progress
-        value={progress}
-        className="my-2 bg-emerald-100 *:bg-emerald-600 dark:bg-emerald-950 dark:*:bg-emerald-800"
-      />
-      <div className="flex w-full items-center justify-between">
-        <div className="rounded-full border px-2 font-geist-mono text-sm whitespace-nowrap dark:border-emerald-500/20 dark:bg-emerald-700/20">
-          {num_solved}/{total}
+    <div className="flex flex-row items-center justify-between gap-20 md:flex-col md:gap-4">
+      <div className="flex w-full flex-col">
+        <div className="text-center font-clash-display text-2xl font-semibold">
+          Progress
         </div>
-        <div className="rounded-full border px-2 font-geist-mono text-sm whitespace-nowrap dark:border-emerald-500/20 dark:bg-emerald-700/20">
-          {progress} %
+        <Progress
+          value={progress}
+          className="my-2 bg-emerald-100 *:bg-emerald-600 dark:bg-emerald-950 dark:*:bg-emerald-800"
+        />
+        <div className="flex w-full items-center justify-between">
+          <div className="rounded-full border px-2 font-geist-mono text-sm whitespace-nowrap dark:border-emerald-500/20 dark:bg-emerald-700/20">
+            {num_solved}/{total}
+          </div>
+          <div className="rounded-full border px-2 font-geist-mono text-sm whitespace-nowrap dark:border-emerald-500/20 dark:bg-emerald-700/20">
+            {progress} %
+          </div>
         </div>
       </div>
       {next_problem_info && (
-        <>
-          <div className="mt-4 font-clash-display font-semibold">
+        <div className="flex w-full flex-col">
+          <div className="text-center font-clash-display font-semibold">
             {progress === 0 ? `Start Your Journey :` : `Next Up :`}
           </div>
           <Link
             href={`/problems/${next_problem_info.slug}`}
             className={cn(
-              "mt-2 flex w-full justify-between rounded-md border px-4 py-2 transition-colors",
+              "mt-2 flex w-full justify-between gap-4 rounded-xl border px-4 py-2 transition-colors",
               {
                 "border-emerald-700/50 hover:border-emerald-700":
                   next_problem_info.difficulty === "easy",
+                "border-yellow-700/50 hover:border-yellow-700":
+                  next_problem_info.difficulty === "medium",
+                "border-rose-700/50 hover:border-rose-700":
+                  next_problem_info.difficulty === "hard",
               },
               {
                 "bg-emerald-500/10 hover:bg-emerald-500/15":
                   next_problem_info.difficulty === "easy",
+                "bg-yellow-500/10 hover:bg-yellow-500/15":
+                  next_problem_info.difficulty === "medium",
+                "bg-rose-500/10 hover:bg-rose-500/15":
+                  next_problem_info.difficulty === "hard",
               },
             )}
           >
             <div className="flex flex-col justify-between">
-              <div className="font-clash-display font-medium">
+              <div className="font-clash-display font-medium whitespace-nowrap">
                 {next_problem_info.title}
               </div>
-              <div className="font-geist-mono text-xs">
+              <div className="font-geist-mono text-xs whitespace-nowrap">
                 {next_problem_info.slug}
               </div>
             </div>
@@ -144,7 +181,7 @@ async function ProgressColumn({
               </span>
             </div>
           </Link>
-        </>
+        </div>
       )}
     </div>
   )
@@ -162,6 +199,8 @@ async function Problem({ slug, userId }: { slug: string; userId?: string }) {
         "relative border border-b-4",
         {
           "border-green-600/40 dark:border-green-400/40": difficulty === "easy",
+          "border-yellow-600/40 dark:border-amber-400/40":
+            difficulty === "medium",
           "border-red-600/40 dark:border-rose-400/40": difficulty === "hard",
         },
       )}
@@ -173,7 +212,7 @@ async function Problem({ slug, userId }: { slug: string; userId?: string }) {
           {
             "from-emerald-100 via-emerald-50 dark:from-emerald-500/20 dark:via-emerald-300/10":
               difficulty === "easy",
-            "from-orange-100 via-orange-50 dark:from-orange-500/20 dark:via-orange-300/10":
+            "from-yellow-100 via-yellow-50 dark:from-yellow-500/20 dark:via-yellow-300/10":
               difficulty === "medium",
             "from-rose-100 via-rose-50 dark:from-rose-500/20 dark:via-rose-300/10":
               difficulty === "hard",
