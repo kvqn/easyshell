@@ -68,8 +68,8 @@ export default async function Page({
               <div className="text-center font-clash-display text-2xl font-semibold">
                 Progress
               </div>
-              <div className="rounded-xl border p-4 shadow-lg">
-                <div className="rounded-md border p-2 text-center text-sm whitespace-nowrap text-neutral-600 dark:text-neutral-400">
+              <div className="mt-2 rounded-xl border p-4 shadow-lg">
+                <div className="rounded-md border p-2 text-center text-sm text-neutral-600 dark:text-neutral-400">
                   Log in see your progress
                 </div>
                 <LoginButton />

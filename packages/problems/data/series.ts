@@ -12,7 +12,7 @@ export const SeriesList: Array<{
   {
     slug: "file-management",
     name: "File Management",
-    description: "Manage your files, the way it was intended.",
+    description: "Manage your files without leaving the terminal.",
     image: "",
     sections: [
       {
