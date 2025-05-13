@@ -2,7 +2,7 @@ import { env } from "@easyshell/env"
 import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { runSubmissionAndGetOutput } from "@easyshell/queue-processor/utils"
 import { neverThrow } from "@easyshell/utils"
-import { PROBLEMS_DIR, PROJECT_ROOT, WIKI_DIR } from "@easyshell/utils/build"
+import { PROBLEMS_DIR, WIKI_DIR } from "@easyshell/utils/build"
 
 import { SeriesList } from "../data/series"
 import { wiki_pages } from "../data/wiki"
@@ -155,11 +155,12 @@ async function base_tests(): Promise<Array<Test>> {
 
           const problems = await getProblems()
           for (const series of SeriesList) {
-            if (new Set(series.problems).size !== series.problems.length) {
+            const problems = series.sections.map((s) => s.problems).flat()
+            if (new Set(problems).size !== problems.length) {
               return `(series: ${series.slug}) duplicate problem slugs`
             }
 
-            for (const problemSlug of series.problems) {
+            for (const problemSlug of problems) {
               if (!problems.includes(problemSlug))
                 return `(series: ${series.slug}) problem slug ${problemSlug} not found`
             }
