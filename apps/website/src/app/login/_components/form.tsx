@@ -32,17 +32,17 @@ export function LoginForm({ callback }: { callback: string }) {
       <div className="w-full px-8 py-4">
         <Card className="flex w-full flex-col gap-4 p-4">
           <Button
-            className="group flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
+            className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
             variant="secondary"
             onClick={async () => {
-              await signIn("discord", { callbackUrl: callback })
+              await signIn("google", { callbackUrl: callback })
             }}
           >
             <div className="relative h-8 w-6">
-              <PiDiscordLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-              <PiDiscordLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+              <PiGoogleLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+              <PiGoogleLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
-            <p className="grow text-center">Login with Discord</p>
+            <p className="grow text-center">Login with Google</p>
           </Button>
           <Button
             className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
@@ -58,17 +58,17 @@ export function LoginForm({ callback }: { callback: string }) {
             <p className="grow text-center">Login with GitHub</p>
           </Button>
           <Button
-            className="group flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
+            className="group flex items-center gap-4 hover:bg-gray-200 dark:hover:bg-neutral-200 dark:hover:text-black"
             variant="secondary"
             onClick={async () => {
-              await signIn("google", { callbackUrl: callback })
+              await signIn("discord", { callbackUrl: callback })
             }}
           >
             <div className="relative h-8 w-6">
-              <PiGoogleLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
-              <PiGoogleLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
+              <PiDiscordLogo className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
+              <PiDiscordLogoDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
-            <p className="grow text-center">Login with Google</p>
+            <p className="grow text-center">Login with Discord</p>
           </Button>
         </Card>
       </div>
