@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "title": "Men's Casual T-Shirt",
+  "category": "clothing",
+  "price": 19.99,
+  "description": "A comfortable t-shirt for men, made from 100% cotton.",
+  "brand": "FashionBrand",
+  "size": ["Small", "Medium", "Large", "XL"],
+  "color": ["Red", "Blue", "Black"],
+  "rating": 4.2,
+  "stock": 80
+}

@@ -411,7 +411,9 @@ async function _runSubmissionTest(
     if (process.env.DEBUG_STDOUT)
       console.debug(`output (${slug}-${testcase} stdout): ${output.stdout}`)
     if (process.env.DEBUG_FS)
-      console.debug(`output (${slug}-${testcase} fs): ${output.fs}`)
+      console.debug(
+        `output (${slug}-${testcase} fs): ${JSON.stringify(output.fs)}`,
+      )
     return `expected to ${pass ? "pass" : "fail"} with input: ${input}`
   }
 }

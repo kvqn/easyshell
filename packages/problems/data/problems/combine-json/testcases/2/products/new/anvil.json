@@ -1,0 +1,11 @@
+{
+  "id": 5,
+  "title": "Executive Anvil",
+  "category": "tools",
+  "price": 119.99,
+  "description": "Sleeker than ACME's Classic Anvil, perfect for business travelers.",
+  "brand": "ACME",
+  "sku": "0446310786",
+  "rating": 4.4,
+  "stock": 15
+}
