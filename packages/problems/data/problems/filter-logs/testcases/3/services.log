@@ -1,0 +1,5 @@
+{"timestamp":"2025-05-16T16:20:00Z","service":"authentication","level":"error","info":{"error_code":401,"message":"Unauthorized access"}}
+{"timestamp":"2025-05-16T16:20:05Z","service":"authentication","level":"warning","info":"Session expired"}
+{"timestamp":"2025-05-16T16:20:10Z","service":"authentication","level":"info","info":{"message":"Password changed"}}
+{"timestamp":"2025-05-16T16:20:15Z","service":"payment","level":"error","info":"Insufficient funds"}
+{"timestamp":"2025-05-16T16:20:20Z","service":"authentication","level":"warning","info":{"ip":"10.10.10.10","message":"Unusual device detected"}}
