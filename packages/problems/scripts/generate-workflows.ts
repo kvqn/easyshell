@@ -42,7 +42,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
-      - run: npm i
+      - run: npm ci
         name: Install dependencies
       - run: npm run build ${problemSlug}
         working-directory: ./packages/problems
@@ -78,7 +78,7 @@ jobs:
         with:
           node-version: 22.14.0
       - uses: actions/checkout@v4
-      - run: npm i
+      - run: npm ci
       - run: npm run build ${problemSlug}
         name: build problem
         working-directory: ./packages/problems

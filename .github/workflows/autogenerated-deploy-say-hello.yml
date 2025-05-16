@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22.14.0
       - uses: actions/checkout@v4
-      - run: npm i
+      - run: npm ci
       - run: npm run build say-hello
         name: build problem
         working-directory: ./packages/problems

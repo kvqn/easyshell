@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
-      - run: npm i
+      - run: npm ci
         name: Install dependencies
       - run: npm run cache:website
         working-directory: ./packages/problems
