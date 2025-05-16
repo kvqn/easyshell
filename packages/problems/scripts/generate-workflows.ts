@@ -73,7 +73,12 @@ jobs:
     environment: deployment
     runs-on: ubuntu-latest
     steps:
-      - run: echo '\${{ secrets.DOCKER_PASSWORD }}' | docker login \${{ secrets.DOCKER_REGISTRY }} -u \${{ secrets.DOCKER_USERNAME }} --password-stdin
+      - name: docker login
+        uses: docker/login-action@v3
+        with:
+          registry: \${{ secrets.DOCKER_REGISTRY }}
+          username: \${{ secrets.DOCKER_USERNAME }}
+          password: \${{ secrets.DOCKER_PASSWORD }}
       - uses: actions/setup-node@v4
         with:
           node-version: 22.14.0
