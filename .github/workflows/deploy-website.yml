@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 22.14.0
       - uses: actions/checkout@v4
-      - run: npm install
+      - run: npm ci
       - run: npm run cache:website
         working-directory: ./packages/problems
       - run: npm run deploy

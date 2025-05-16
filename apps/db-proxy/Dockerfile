@@ -4,7 +4,7 @@ WORKDIR /src
 
 COPY . .
 
-RUN npm i
+RUN npm ci
 
 WORKDIR /src/apps/db-proxy
 

@@ -5,7 +5,7 @@ WORKDIR /src
 
 COPY . .
 
-RUN npm i
+RUN npm ci
 
 WORKDIR /src/apps/queue-processor
 
