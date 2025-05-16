@@ -126,10 +126,10 @@ async function loop() {
   while (true) {
     const item = await getQueueItem()
     if (!item) {
-      await sleep(5000)
+      await sleep(1000)
       continue
     }
-    await processQueueItem(item)
+    processQueueItem(item)
   }
 }
 
