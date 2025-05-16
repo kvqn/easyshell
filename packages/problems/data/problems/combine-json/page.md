@@ -7,4 +7,4 @@ You have a bunch of product JSON files inside the `products/` folder. Each file 
 1. Find all the JSON files in the `products` directory.
 2. Combine the contents of these JSON files into a single JSON array.
 3. Sort the array by `id` in ascending order.
-4. Save the array to a new file called `products.json` in the home directory.
+4. Save the array to a new file called `products.json` in the current directory.
