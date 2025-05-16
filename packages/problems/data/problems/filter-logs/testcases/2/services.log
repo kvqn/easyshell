@@ -1,0 +1,5 @@
+{"timestamp":"2025-05-16T14:10:10Z","service":"authentication","level":"warning","info":{"message":"Password attempt limit reached"}}
+{"timestamp":"2025-05-16T14:10:12Z","service":"authentication","level":"error","info":"Account locked due to suspicious activity"}
+{"timestamp":"2025-05-16T14:10:15Z","service":"authentication","level":"info","info":"User logged out"}
+{"timestamp":"2025-05-16T14:10:18Z","service":"api","level":"error","info":"Endpoint not found"}
+{"timestamp":"2025-05-16T14:10:20Z","service":"authentication","level":"warning","info":{"ip":"192.168.1.1","message":"Multiple failed logins"}}

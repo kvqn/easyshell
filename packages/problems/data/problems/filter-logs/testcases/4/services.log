@@ -1,0 +1,48 @@
+{"timestamp":"2025-05-16T10:00:01Z","service":"authentication","level":"info","info":"User login attempt"}
+{"timestamp":"2025-05-16T10:00:03Z","service":"authentication","level":"warning","info":{"message":"Suspicious login location","ip":"10.0.0.2"}}
+{"timestamp":"2025-05-16T10:00:05Z","service":"payment","level":"error","info":"Payment gateway timeout"}
+{"timestamp":"2025-05-16T10:00:07Z","service":"authentication","level":"error","info":"JWT validation failed: invalid signature"}
+{"timestamp":"2025-05-16T10:00:09Z","service":"database","level":"info","info":"Connection pool established"}
+{"timestamp":"2025-05-16T10:01:10Z","service":"authentication","level":"warning","info":{"message":"Password attempt limit reached"}}
+{"timestamp":"2025-05-16T10:01:12Z","service":"authentication","level":"error","info":"Account locked due to suspicious activity"}
+{"timestamp":"2025-05-16T10:01:15Z","service":"authentication","level":"info","info":"User logged out"}
+{"timestamp":"2025-05-16T10:01:18Z","service":"api","level":"error","info":"Endpoint not found"}
+{"timestamp":"2025-05-16T10:01:20Z","service":"authentication","level":"warning","info":{"ip":"192.168.1.1","message":"Multiple failed logins"}}
+{"timestamp":"2025-05-16T10:02:00Z","service":"payment","level":"error","info":"Card declined"}
+{"timestamp":"2025-05-16T10:02:02Z","service":"api","level":"warning","info":"Deprecated endpoint used"}
+{"timestamp":"2025-05-16T10:02:05Z","service":"database","level":"info","info":"Backup completed"}
+{"timestamp":"2025-05-16T10:03:00Z","service":"authentication","level":"error","info":{"error_code":401,"message":"Unauthorized access"}}
+{"timestamp":"2025-05-16T10:03:05Z","service":"authentication","level":"warning","info":"Session expired"}
+{"timestamp":"2025-05-16T10:03:10Z","service":"authentication","level":"info","info":{"message":"Password changed"}}
+{"timestamp":"2025-05-16T10:03:15Z","service":"payment","level":"error","info":"Insufficient funds"}
+{"timestamp":"2025-05-16T10:03:20Z","service":"authentication","level":"warning","info":{"ip":"10.10.10.10","message":"Unusual device detected"}}
+{"timestamp":"2025-05-16T10:04:00Z","service":"authentication","level":"error","info":"JWT validation failed: expired token"}
+{"timestamp":"2025-05-16T10:04:05Z","service":"authentication","level":"warning","info":{"message":"Rate limit exceeded","ip":"203.0.113.42"}}
+{"timestamp":"2025-05-16T10:04:10Z","service":"payment","level":"info","info":"Payment processed"}
+{"timestamp":"2025-05-16T10:04:15Z","service":"authentication","level":"info","info":"User registration successful"}
+{"timestamp":"2025-05-16T10:04:20Z","service":"authentication","level":"error","info":{"message":"Database unavailable during login"}}
+{"timestamp":"2025-05-16T10:04:25Z","service":"authentication","level":"warning","info":"Token refresh failed"}
+{"timestamp":"2025-05-16T10:04:30Z","service":"database","level":"info","info":"Read replica lag detected"}
+{"timestamp":"2025-05-16T10:04:35Z","service":"authentication","level":"error","info":"Unexpected null in credentials"}
+{"timestamp":"2025-05-16T10:04:40Z","service":"authentication","level":"warning","info":{"message":"User session hijack attempt"}}
+{"timestamp":"2025-05-16T10:04:45Z","service":"payment","level":"warning","info":"Retrying payment"}
+{"timestamp":"2025-05-16T10:04:50Z","service":"authentication","level":"info","info":"User password reset"}
+{"timestamp":"2025-05-16T10:04:55Z","service":"authentication","level":"error","info":{"message":"LDAP server unreachable"}}
+{"timestamp":"2025-05-16T10:05:00Z","service":"authentication","level":"warning","info":"Unusual login time"}
+{"timestamp":"2025-05-16T10:05:05Z","service":"authentication","level":"error","info":"Session store write failed"}
+{"timestamp":"2025-05-16T10:05:10Z","service":"api","level":"info","info":"API key generated"}
+{"timestamp":"2025-05-16T10:05:15Z","service":"authentication","level":"warning","info":{"message":"Deprecated auth method used"}}
+{"timestamp":"2025-05-16T10:05:20Z","service":"authentication","level":"error","info":"Token signature mismatch"}
+{"timestamp":"2025-05-16T10:05:25Z","service":"authentication","level":"warning","info":"Failed login from blacklisted IP"}
+{"timestamp":"2025-05-16T10:05:30Z","service":"authentication","level":"error","info":{"message":"Redis cache unavailable"}}
+{"timestamp":"2025-05-16T10:05:35Z","service":"database","level":"error","info":"Primary node down"}
+{"timestamp":"2025-05-16T10:05:40Z","service":"authentication","level":"warning","info":"User account flagged for review"}
+{"timestamp":"2025-05-16T10:05:45Z","service":"authentication","level":"error","info":"OAuth handshake failed"}
+{"timestamp":"2025-05-16T10:05:50Z","service":"payment","level":"info","info":"Refund issued"}
+{"timestamp":"2025-05-16T10:05:55Z","service":"authentication","level":"warning","info":{"message":"Multiple accounts linked to same email"}}
+{"timestamp":"2025-05-16T10:06:00Z","service":"authentication","level":"error","info":"Invalid MFA code"}
+{"timestamp":"2025-05-16T10:06:05Z","service":"authentication","level":"warning","info":"Unverified device login attempt"}
+{"timestamp":"2025-05-16T10:06:10Z","service":"authentication","level":"error","info":{"message":"User data corruption detected"}}
+{"timestamp":"2025-05-16T10:06:15Z","service":"authentication","level":"warning","info":"Legacy API token used"}
+{"timestamp":"2025-05-16T10:06:20Z","service":"authentication","level":"error","info":"Password hash mismatch"}
+{"timestamp":"2025-05-16T10:06:25Z","service":"authentication","level":"warning","info":{"message":"Login from TOR network"}}

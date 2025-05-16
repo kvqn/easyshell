@@ -1,0 +1,5 @@
+{"timestamp":"2025-05-16T13:00:01Z","service":"authentication","level":"info","info":"User login attempt"}
+{"timestamp":"2025-05-16T13:00:03Z","service":"authentication","level":"warning","info":{"message":"Suspicious login location","ip":"10.0.0.2"}}
+{"timestamp":"2025-05-16T13:00:05Z","service":"payment","level":"error","info":"Payment gateway timeout"}
+{"timestamp":"2025-05-16T13:00:07Z","service":"authentication","level":"error","info":"JWT validation failed: invalid signature"}
+{"timestamp":"2025-05-16T13:00:09Z","service":"database","level":"info","info":"Connection pool established"}
