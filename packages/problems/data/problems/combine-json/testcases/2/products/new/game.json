@@ -1,0 +1,11 @@
+{
+  "id": 4,
+  "title": "Example Board Game",
+  "category": "toys-games",
+  "price": 29.99,
+  "description": "An exciting board game for 2-6 players.",
+  "brand": "GameBrand",
+  "material": ["Cardboard", "Plastic"],
+  "rating": 4.7,
+  "stock": 60
+}
