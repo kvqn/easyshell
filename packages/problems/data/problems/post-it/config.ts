@@ -42,7 +42,7 @@ const config: ProblemConfig = {
   slug: "post-it",
   title: "Make a Post Request",
   description: `Good job on fetching the most recent post! Now, let's make a post of our own.`,
-  difficulty: "easy",
+  difficulty: "medium",
   tags: ["curl", "jq"],
   testcases: [
     await testcaseConfig({

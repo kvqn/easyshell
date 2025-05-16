@@ -34,8 +34,8 @@ const config: ProblemConfig = {
   slug: SLUG,
   title: "Combine multiple JSON files",
   description: `Combine a pie of product JSONs.`,
-  difficulty: "easy",
-  tags: ["jq", "find"],
+  difficulty: "medium",
+  tags: ["jq", "find", "xargs", "cat"],
   testcases: [
     await testcaseConfig({
       id: 1,
