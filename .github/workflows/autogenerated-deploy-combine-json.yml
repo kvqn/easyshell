@@ -35,7 +35,7 @@ jobs:
       - run: npm run test combine-json
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build combine-json
+      - run: npm run push combine-json
         name: push problem
         working-directory: ./packages/problems
         env:

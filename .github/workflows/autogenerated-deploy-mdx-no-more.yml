@@ -35,7 +35,7 @@ jobs:
       - run: npm run test mdx-no-more
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build mdx-no-more
+      - run: npm run push mdx-no-more
         name: push problem
         working-directory: ./packages/problems
         env:

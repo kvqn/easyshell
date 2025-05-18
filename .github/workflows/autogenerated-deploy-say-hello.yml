@@ -35,7 +35,7 @@ jobs:
       - run: npm run test say-hello
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build say-hello
+      - run: npm run push say-hello
         name: push problem
         working-directory: ./packages/problems
         env:

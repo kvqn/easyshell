@@ -90,7 +90,7 @@ jobs:
       - run: npm run test ${problemSlug}
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build ${problemSlug}
+      - run: npm run push ${problemSlug}
         name: push problem
         working-directory: ./packages/problems
         env:

@@ -35,7 +35,7 @@ jobs:
       - run: npm run test grep-version
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build grep-version
+      - run: npm run push grep-version
         name: push problem
         working-directory: ./packages/problems
         env:

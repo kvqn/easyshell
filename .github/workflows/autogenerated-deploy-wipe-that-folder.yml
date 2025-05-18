@@ -35,7 +35,7 @@ jobs:
       - run: npm run test wipe-that-folder
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build wipe-that-folder
+      - run: npm run push wipe-that-folder
         name: push problem
         working-directory: ./packages/problems
         env:
