@@ -4,13 +4,6 @@ import { getProblemInfo, getProblems } from "@easyshell/problems"
 import { RunParallelStuff, Task } from "./_utils"
 
 import { $ } from "execa"
-import { mkdir } from "fs/promises"
-import { rm } from "fs/promises"
-
-const WORKING_DIR = `${env.WORKING_DIR}/build`
-await mkdir(WORKING_DIR, { recursive: true })
-
-await rm(WORKING_DIR, { recursive: true, force: true })
 
 async function dockerPush(tag: string) {
   if (env.DOCKER_REGISTRY === "") return

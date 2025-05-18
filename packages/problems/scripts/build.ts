@@ -12,8 +12,6 @@ import { rm } from "fs/promises"
 import { stat } from "fs/promises"
 
 const WORKING_DIR = `${env.WORKING_DIR}/build`
-await mkdir(WORKING_DIR, { recursive: true })
-
 await rm(WORKING_DIR, { recursive: true, force: true })
 
 async function dockerBuild({ tag, dir }: { tag: string; dir: string }) {
