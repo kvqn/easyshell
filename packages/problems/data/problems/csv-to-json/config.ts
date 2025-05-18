@@ -30,9 +30,9 @@ const config: ProblemConfig = {
   id: 22,
   slug: SLUG,
   title: "CSV to JSON",
-  description: `description`,
-  difficulty: "easy",
-  tags: ["Basics"],
+  description: `Extract a CSV column and convert it to JSON.`,
+  difficulty: "medium",
+  tags: ["tail", "jq", "cut", "awk"],
   testcases: [
     await testcaseConfig({
       id: 1,
