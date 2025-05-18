@@ -31,7 +31,7 @@ async function main() {
   const args = process.argv.slice(2)
   if (args.length === 0) {
     console.error(
-      "Provide a problem slug to push. Provide 'all' to build all problems.",
+      "Provide a problem slug to push. Provide 'all' to push all problems.",
     )
     process.exit(1)
   }

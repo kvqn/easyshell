@@ -44,8 +44,6 @@ FROM alpine:3.21 AS base
 
 RUN apk add zip jq curl grep
 
-EXPOSE 8080
-
 COPY --from=build /bin/entrypoint /entrypoint
 `,
   )
