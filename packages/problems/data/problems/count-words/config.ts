@@ -26,7 +26,7 @@ async function testcaseConfig({
 }
 
 const config: ProblemConfig = {
-  id: 20,
+  id: 21,
   slug: SLUG,
   title: "Count Words",
   description: `Count the number of words in a file.`,
