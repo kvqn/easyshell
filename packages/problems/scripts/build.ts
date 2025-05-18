@@ -142,7 +142,7 @@ ENTRYPOINT ["/entrypoint"]
       name: `build-${tag}`,
       callable: async () => {
         await dockerBuild({
-          tag: `${env.DOCKER_REGISTRY}${tag}`,
+          tag: tag,
           dir: IMAGE_DIR,
         })
         return "done"
