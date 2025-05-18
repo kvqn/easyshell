@@ -46,15 +46,7 @@ export const env = createEnv({
 
     ...(process.env.APP === "script"
       ? {
-          PARALLEL_LIMIT_BUILD: z
-            .string()
-            .optional()
-            .transform((v) => (v ? parseInt(v) : 5)),
-          PARALLEL_LIMIT_PUSH: z
-            .string()
-            .optional()
-            .transform((v) => (v ? parseInt(v) : 5)),
-          PARALLEL_LIMIT_TEST: z
+          PARALLEL_LIMIT: z
             .string()
             .optional()
             .transform((v) => (v ? parseInt(v) : 5)),

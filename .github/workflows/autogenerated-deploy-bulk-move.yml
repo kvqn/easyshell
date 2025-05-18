@@ -35,7 +35,7 @@ jobs:
       - run: npm run test bulk-move
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build bulk-move
+      - run: npm run push bulk-move
         name: push problem
         working-directory: ./packages/problems
         env:

@@ -35,7 +35,7 @@ jobs:
       - run: npm run test get-it-curl
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build get-it-curl
+      - run: npm run push get-it-curl
         name: push problem
         working-directory: ./packages/problems
         env:

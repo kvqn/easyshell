@@ -35,7 +35,7 @@ jobs:
       - run: npm run test move-that-file
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build move-that-file
+      - run: npm run push move-that-file
         name: push problem
         working-directory: ./packages/problems
         env:

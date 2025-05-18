@@ -35,7 +35,7 @@ jobs:
       - run: npm run test grep-mail
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build grep-mail
+      - run: npm run push grep-mail
         name: push problem
         working-directory: ./packages/problems
         env:

@@ -32,7 +32,7 @@ jobs:
       - run: npm run test ${{ inputs.problem }}
         name: test
         working-directory: ./packages/problems
-      - run: npm run build ${{ inputs.problem }}
+      - run: npm run push ${{ inputs.problem }}
         name: push
         working-directory: ./packages/problems
         env:

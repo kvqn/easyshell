@@ -35,7 +35,7 @@ jobs:
       - run: npm run test move-and-rename
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build move-and-rename
+      - run: npm run push move-and-rename
         name: push problem
         working-directory: ./packages/problems
         env:

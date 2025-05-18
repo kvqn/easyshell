@@ -35,7 +35,7 @@ jobs:
       - run: npm run test post-with-token
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build post-with-token
+      - run: npm run push post-with-token
         name: push problem
         working-directory: ./packages/problems
         env:

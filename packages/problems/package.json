@@ -9,6 +9,7 @@
     "cache:website": "APP=script tsx ./scripts/cache-website.ts",
     "generate-workflows": "APP=script tsx ./scripts/generate-workflows.ts",
     "new": "APP=script tsx ./scripts/new.ts",
+    "push": "APP=script tsx ./scripts/push.ts",
     "test": "npm run cache:queue-processor && APP=script tsx ./scripts/test.ts"
   },
   "dependencies": {

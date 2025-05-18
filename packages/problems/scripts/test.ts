@@ -87,7 +87,7 @@ async function main() {
 
   await RunParallelStuff({
     tasks,
-    parallel_limit: env.PARALLEL_LIMIT_TEST,
+    parallel_limit: env.PARALLEL_LIMIT,
   })
 
   const endedAt = new Date()

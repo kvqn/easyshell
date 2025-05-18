@@ -35,7 +35,7 @@ jobs:
       - run: npm run test cat-out-loud
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build cat-out-loud
+      - run: npm run push cat-out-loud
         name: push problem
         working-directory: ./packages/problems
         env:

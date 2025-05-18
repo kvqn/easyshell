@@ -35,7 +35,7 @@ jobs:
       - run: npm run test nuke-all-matches
         name: test problem
         working-directory: ./packages/problems
-      - run: npm run build nuke-all-matches
+      - run: npm run push nuke-all-matches
         name: push problem
         working-directory: ./packages/problems
         env:
