@@ -193,7 +193,7 @@ async function main() {
   console.log()
   await RunParallelStuff({
     tasks: build_tasks,
-    parallel_limit: env.PARALLEL_LIMIT_BUILD,
+    parallel_limit: env.PARALLEL_LIMIT,
   })
   console.log(
     "================================================================================",
