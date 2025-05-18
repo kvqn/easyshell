@@ -1,0 +1,2 @@
+Shell scripting is fun!
+Let's count some words.
