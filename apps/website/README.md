@@ -4,7 +4,7 @@ The website for [easyshell.sh](https://easyshell.sh) is made using [Next.js 15](
 
 Also Refer - [tailwind](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [react-icons](https://react-icons.github.io/react-icons/)
 
-The website has no context of `docker` and so it uses other microservices for session and submission management. See [Session Manager](../session-manager/README.md) and [Queue Processor](../queue-processor/README.md) for more information. Also see [Architecture](../../README.md#architecture) for a more high-level overview.
+The website has no context of `docker` and so it uses other microservices for session and submission management. See [Session Manager](../session-manager/README.md) and [Queue Processor](../submission-manager/README.md) for more information. Also see [Architecture](../../README.md#architecture) for a more high-level overview.
 
 Before running the server, you need to first build the problems cache using [`problems:build-pkg`](../../README.md#problemsbuild-pkg) script.
 

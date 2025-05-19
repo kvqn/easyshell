@@ -8,7 +8,7 @@ import { writeFile } from "fs/promises"
 import { readFile } from "fs/promises"
 import { z } from "zod"
 
-export const WORKING_DIR = `${env.WORKING_DIR}/queue-processor`
+export const WORKING_DIR = `${env.WORKING_DIR}/submission-manager`
 
 mkdir(`${WORKING_DIR}/inputs`, { recursive: true }, (err) => {
   if (err) throw err

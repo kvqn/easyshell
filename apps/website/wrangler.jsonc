@@ -7,4 +7,7 @@
     "APP": "website",
     "NEXTAUTH_URL": "https://easyshell.sh",
   },
+  "dev": {
+    "port": 3000,
+  },
 }

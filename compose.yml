@@ -3,18 +3,18 @@ networks:
     external: true
 
 services:
-  queue-processor:
+  submission-manager:
     build:
       context: .
-      dockerfile: ./apps/queue-processor/Dockerfile
-    container_name: easyshell-dev-queue-processor
+      dockerfile: ./apps/submission-manager//Dockerfile
+    container_name: easyshell-dev-submission-manager
     volumes:
       - /tmp/easyshell:/tmp/easyshell
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - easyshell
     environment:
-      APP: queue-processor
+      APP: submission-manager
       DATABASE_URL: ${DATABASE_URL}
   session-manager:
     build:

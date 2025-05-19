@@ -6,13 +6,13 @@ This is a typescript application that processes the submissions. It does not com
 
 Also see [entrypoint](../entrypoint/README.md) for more information about the problem containers themselves.
 
-Running the queue-processor requires the following environment variables. See [Environment Variables](../../README.md#environment-variables) for more information.
+Running the submission-manager requires the following environment variables. See [Environment Variables](../../README.md#environment-variables) for more information.
 
-- `APP` - It should be set to `queue-processor`.
+- `APP` - It should be set to `submission-manager`.
 - `DRIZZLE_PROXY_URL`
 - `DRIZZLE_PROXY_TOKEN`
 - `DOCKER_REGISTRY` - If not provided, the local images will be used.
-- `PROJECT_ROOT` - The root directory of the project. It is required if you are running the queue-processor outside of the git context.
+- `PROJECT_ROOT` - The root directory of the project. It is required if you are running the submission-manager outside of the git context.
 - `WORKING_DIR` - If not provided, `/tmp/easyshell` is used.
 
 ## Scripts
@@ -25,7 +25,7 @@ Run scripts using `npm run <script>`.
 
 ### `problems:cache`
 
-Caches problems for the queue-processor.
+Caches problems for the submission-manager.
 
 Might require the following environment variables.
 
@@ -38,4 +38,4 @@ Builds a single minified `.cjs` file using `esbuild`.
 
 ### `start`
 
-Starts the queue-processor.
+Starts the submission-manager.

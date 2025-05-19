@@ -12,4 +12,4 @@ Run the scripts using `npm run <script-name>`.
 - `test` - Test the problems. Pass the `SKIP_SUBMISSION_TESTS` environment variable to skip the submission tests (useful for checking only the config).
 - `new` - Create template for a new problem.
 - `cache:website` - Create the problems cache for the website.
-- `cache:queue-processor` - Create the problems cache for the queue processor.
+- `cache:submission-manager` - Create the problems cache for the queue processor.
