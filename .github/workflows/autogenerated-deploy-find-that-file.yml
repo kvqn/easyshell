@@ -7,7 +7,7 @@ on:
       - "packages/problems/data/problems/find-that-file/**"
       - "packages/env/**"
       - "packages/utils/**"
-      - "packages/queue-processor/**"
+      - "packages/submission-manager/**"
 
 concurrency:
   group: deploy-find-that-file
