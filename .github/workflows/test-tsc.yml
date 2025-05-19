@@ -37,7 +37,7 @@ jobs:
         name: Install dependencies
       - run: npm run cache:website
         working-directory: ./packages/problems
-      - run: npm run cache:queue-processor
+      - run: npm run cache:submission-manager
         working-directory: ./packages/problems
       - run: npm run lint:tsc
         name: Check TypeScript types

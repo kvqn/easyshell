@@ -10,7 +10,7 @@
     "packages/utils",
     "packages/env",
     "apps/website",
-    "apps/queue-processor",
+    "apps/submission-manager",
     "apps/db-proxy",
     "scripts"
   ],

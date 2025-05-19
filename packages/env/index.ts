@@ -6,14 +6,14 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"), // TODO: do we need this?
-    APP: z.enum(["website", "queue-processor", "script"]), // assert env.APP for correct types
+    APP: z.enum(["website", "submission-manager", "script"]), // assert env.APP for correct types
     DOCKER_REGISTRY: z
       .string()
       .optional()
       .transform((v) => (v ? v + "/" : "")),
     WORKING_DIR: z.string().default("/tmp/easyshell"),
 
-    ...(process.env.APP === "queue-processor"
+    ...(process.env.APP === "submission-manager"
       ? {
           DRIZZLE_PROXY_URL: z.string().url(),
           DRIZZLE_PROXY_TOKEN: z.string(),

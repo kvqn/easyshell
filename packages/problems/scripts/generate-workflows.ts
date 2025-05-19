@@ -31,7 +31,7 @@ on:
       - "packages/problems/data/problems/${problemSlug}/**"
       - "packages/env/**"
       - "packages/utils/**"
-      - "packages/queue-processor/**"
+      - "packages/submission-manager/**"
 
 jobs:
   test:
@@ -62,7 +62,7 @@ on:
       - "packages/problems/data/problems/${problemSlug}/**"
       - "packages/env/**"
       - "packages/utils/**"
-      - "packages/queue-processor/**"
+      - "packages/submission-manager/**"
 
 concurrency:
   group: deploy-${problemSlug}

@@ -7,7 +7,7 @@
 - [Overview](#easyshell---overview)
   - [Architecture and Features](#architecture-and-features)
     - [Website](apps/website/README.md)
-    - [Queue Processor](apps/queue-processor/README.md)
+    - [Queue Processor](apps/submission-manager/README.md)
     - [Session Manager](apps/session-manager/README.md)
     - [Entrypoint](apps/entrypoint/README.md)
 - [Development Guide](#development-guide)
@@ -34,7 +34,7 @@ There are a few microservices that work together to make the platform work.
 
 - #### Queue Processor
 
-  Processes the submissions. See [Queue Processor](apps/queue-processor/README.md) for more information.
+  Processes the submissions. See [Queue Processor](apps/submission-manager/README.md) for more information.
 
 - #### Entrypoint
 
@@ -79,7 +79,7 @@ The following environment variables might be required
 #### `APP`
 
 This is a helper variable that is used to determine which environment variables to load and verify.
-Possible values are - `queue-processor`, `website` and `script`.
+Possible values are - `submission-manager`, `website` and `script`.
 
 #### `PROJECT_ROOT`
 
@@ -138,7 +138,7 @@ These are the [NextAuth](https://authjs.dev) configuration variables. These are 
 Many scripts have been defined in the [package.json](package.json).
 This section will go over these scripts and the additional steps or environment variables required for their execution.
 
-Also see [Next.js Scripts](apps/website/README.md#scripts), [Queue Processor Scripts](apps/queue-processor/README.md#scripts) and [Script Scripts](apps/script/README.md#scripts) for more information.
+Also see [Next.js Scripts](apps/website/README.md#scripts), [Queue Processor Scripts](apps/submission-manager/README.md#scripts) and [Script Scripts](apps/script/README.md#scripts) for more information.
 
 - [`lint:tsc`](#linttsc)
 - [`lint:next`](#lintnext)
@@ -189,7 +189,7 @@ Test the problem images using tests defined in the problem configs.
 
 Might require the following environment variables.
 
-- `APP` - This is required and should be set to `queue-processor`. Already set in [package.json].
+- `APP` - This is required and should be set to `submission-manager`. Already set in [package.json].
 - `PROJECT_ROOT` might need to be defined if the script is not run from within the git repository.
 
 #### `problems:build`
@@ -207,13 +207,13 @@ Might require the following environment variables.
 
 Calls [`problems:cache`](./apps/website/README.md#problemscache) in [website](./apps/website/README.md) app.
 
-#### `problems:cache:queue-processor`
+#### `problems:cache:submission-manager`
 
-Calls [`problems:cache`](./apps/queue-processor/README.md#problemscache) in [queue-processor](./apps/queue-processor/README.md) app.
+Calls [`problems:cache`](./apps/submission-manager/README.md#problemscache) in [submission-manager](./apps/submission-manager/README.md) app.
 
 #### `problems:cache`
 
-Calls both [`problems:cache:website`](#problemscachewebsite) and [`problems:cache:queue-processor`](#problemscachequeue-processor).
+Calls both [`problems:cache:website`](#problemscachewebsite) and [`problems:cache:submission-manager`](#problemscachesubmission-manager).
 
 ### Problems
 
