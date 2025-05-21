@@ -1,5 +1,4 @@
 import autocannon, { Options, Request } from "autocannon"
-import { randomUUID } from "crypto"
 import { execa } from "execa"
 import { existsSync, mkdirSync } from "fs"
 import { writeFile } from "fs/promises"
