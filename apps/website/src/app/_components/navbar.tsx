@@ -66,7 +66,7 @@ function Options() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" className="p-2">
+        <Button variant="outline" className="p-2" aria-label="Options">
           <HamburgerMenuIcon width="1.5rem" height="1.5rem" />
         </Button>
       </PopoverTrigger>
@@ -77,6 +77,7 @@ function Options() {
               <Button
                 variant="outline"
                 className="group flex w-full items-center justify-center"
+                aria-label="Settings"
               >
                 <div className="relative size-4">
                   <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
@@ -108,6 +109,7 @@ async function User({ drawer }: { drawer?: boolean }) {
             <Button
               variant="outline"
               className="flex w-full gap-1 rounded-md border px-2 py-2"
+              aria-label="User Profile"
             >
               <Avatar className="mr-1.5 h-6 w-6">
                 <AvatarImage src={user.image ?? ""} />
@@ -119,7 +121,11 @@ async function User({ drawer }: { drawer?: boolean }) {
         </LinkWrapper>
         <LinkWrapper>
           <Link href="/logout" className="mt-2 w-full">
-            <Button variant="destructive" className="w-full">
+            <Button
+              variant="destructive"
+              className="w-full"
+              aria-label="Logout"
+            >
               Logout
             </Button>
           </Link>
@@ -133,7 +139,9 @@ async function User({ drawer }: { drawer?: boolean }) {
         Not logged in
       </p>
       <Link href="/login" className="mt-2 w-full">
-        <Button className="w-full">Login</Button>
+        <Button className="w-full" aria-label="Login">
+          Login
+        </Button>
       </Link>
     </div>
   )
@@ -143,7 +151,7 @@ function NavigationDrawer() {
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="p-2">
+        <Button variant="outline" className="p-2" aria-label="Options">
           <HamburgerMenuIcon width="1.5rem" height="1.5rem" />
         </Button>
       </DrawerTrigger>
@@ -185,6 +193,7 @@ function NavigationMenu() {
               <Button
                 variant="outline"
                 className="group flex w-full items-center justify-center gap-4"
+                aria-label="Settings"
               >
                 <div className="relative size-4">
                   <PiGear className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl transition-opacity group-hover:opacity-0" />
