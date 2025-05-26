@@ -1,5 +1,6 @@
 "use client"
 
+import { BadgeButton } from "@/components/badge-button"
 import { BadgeCheckbox } from "@/components/badge-checkbox"
 import { DesktopContainer, MobileContainer } from "@/components/media"
 import { Problems } from "@/components/problems"
@@ -11,8 +12,15 @@ import type { getPublicProblemInfo } from "@/lib/server/problems"
 import { cn } from "@/lib/utils"
 
 import { useEffect, useState } from "react"
-import { PiMagnifyingGlass } from "react-icons/pi"
+import {
+  PiCaretDown,
+  PiCaretUp,
+  PiMagnifyingGlass,
+  PiMinus,
+} from "react-icons/pi"
 import { PiFunnelDuotone } from "react-icons/pi"
+
+const difficulties = ["easy", "medium", "hard"] as const
 
 export function ProblemList({
   problems,
@@ -39,37 +47,64 @@ export function ProblemList({
     showTags: false,
   })
 
+  const [sortOptions, setSortOptions] = useState<{
+    id: "asc" | "desc"
+    difficulty?: "asc" | "desc"
+  }>({
+    id: "asc",
+    difficulty: undefined,
+  })
+
   const [filteredProblems, setFilteredProblems] = useState(problems)
 
   useEffect(() => {
     setFilteredProblems(
-      problems.filter(
-        (problem) =>
-          (problem.slug
-            .toLowerCase()
-            .replaceAll("-", "")
-            .includes(
-              filter.search
-                .toLowerCase()
-                .replaceAll("-", "")
-                .replaceAll(" ", ""),
-            ) ||
-            problem.title
+      problems
+        .filter(
+          (problem) =>
+            (problem.slug
               .toLowerCase()
-              .replaceAll(" ", "")
+              .replaceAll("-", "")
               .includes(
                 filter.search
                   .toLowerCase()
                   .replaceAll("-", "")
                   .replaceAll(" ", ""),
-              )) &&
-          filter.difficulty[problem.difficulty] &&
-          problem.tags.some((tag) => filter.tags.has(tag)),
-      ),
+              ) ||
+              problem.title
+                .toLowerCase()
+                .replaceAll(" ", "")
+                .includes(
+                  filter.search
+                    .toLowerCase()
+                    .replaceAll("-", "")
+                    .replaceAll(" ", ""),
+                )) &&
+            filter.difficulty[problem.difficulty] &&
+            problem.tags.some((tag) => filter.tags.has(tag)),
+        )
+        .sort((a, b) => {
+          if (
+            sortOptions.difficulty === "asc" &&
+            a.difficulty !== b.difficulty
+          ) {
+            return (
+              difficulties.indexOf(a.difficulty) -
+              difficulties.indexOf(b.difficulty)
+            )
+          } else if (
+            sortOptions.difficulty === "desc" &&
+            a.difficulty !== b.difficulty
+          ) {
+            return (
+              difficulties.indexOf(b.difficulty) -
+              difficulties.indexOf(a.difficulty)
+            )
+          }
+          return sortOptions.id === "asc" ? a.id - b.id : b.id - a.id
+        }),
     )
-  }, [filter, problems])
-
-  const difficulties = ["easy", "medium", "hard"] as const
+  }, [filter, problems, sortOptions])
 
   const filtersComponent = (
     <div className="flex w-60 flex-col gap-4">
@@ -104,6 +139,54 @@ export function ProblemList({
           >
             Show Tags
           </BadgeCheckbox>
+        </div>
+      </Card>
+      <Card className="px-4 py-2">
+        <div className="text-center text-sm font-semibold text-neutral-400">
+          SORT BY
+        </div>
+        <div className="my-2 flex items-center justify-center gap-2">
+          <BadgeButton
+            className="flex grow gap-2"
+            onClick={() => {
+              setSortOptions((prev) => ({
+                ...prev,
+                id: prev.id === "asc" ? "desc" : "asc",
+              }))
+            }}
+          >
+            {sortOptions.id === "asc" ? (
+              <PiCaretDown />
+            ) : sortOptions.id === "desc" ? (
+              <PiCaretUp />
+            ) : (
+              <PiMinus />
+            )}
+            <div className="grow text-center">ID</div>
+          </BadgeButton>
+          <BadgeButton
+            className="flex grow gap-2"
+            onClick={() => {
+              setSortOptions((prev) => ({
+                ...prev,
+                difficulty:
+                  prev.difficulty === "asc"
+                    ? "desc"
+                    : prev.difficulty === "desc"
+                      ? undefined
+                      : "asc",
+              }))
+            }}
+          >
+            {sortOptions.difficulty === "asc" ? (
+              <PiCaretDown />
+            ) : sortOptions.difficulty === "desc" ? (
+              <PiCaretUp />
+            ) : (
+              <PiMinus />
+            )}
+            <div className="grow text-center">Difficulty</div>
+          </BadgeButton>
         </div>
       </Card>
       <Card className="px-4 py-2">
