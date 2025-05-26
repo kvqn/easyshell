@@ -36,6 +36,7 @@ export async function RunParallelStuff({
 }) {
   const task_name_set = new Set<string>(Array.from(tasks, (task) => task.name))
   if (task_name_set.size !== tasks.length) {
+    console.error(tasks.map((task) => task.name))
     throw Error("Task names must be unique")
   }
 
