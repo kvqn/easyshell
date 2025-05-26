@@ -1,4 +1,5 @@
 import { ProblemBookmark } from "@/app/problems/[problemSlug]/_components/problem/bookmark"
+import { DesktopContainer } from "@/components/media"
 import { AlternativeProblemStatus } from "@/components/problem-status"
 import {
   Dialog,
@@ -27,7 +28,21 @@ export async function RecentActivity({
   loggedIn: boolean
 }) {
   if (!loggedIn) {
-    return null
+    return (
+      <DesktopContainer className="h-fit w-fit">
+        <div className="min-w-60">
+          <div className="font-clash-display text-2xl font-semibold">
+            Recent Activity
+          </div>
+          <div className="mb-4 font-clash-display text-sm text-neutral-500 md:text-base">
+            Pick up where you left off
+          </div>
+          <div className="flex h-40 w-60 items-center justify-center rounded-2xl border border-dashed border-neutral-400 p-4 text-sm text-neutral-500 dark:border-neutral-600">
+            Login to see your activity
+          </div>
+        </div>
+      </DesktopContainer>
+    )
   }
 
   const bookmarks_end = min(4, bookmarks.length)
