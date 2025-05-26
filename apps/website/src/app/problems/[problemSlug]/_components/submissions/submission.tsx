@@ -52,8 +52,6 @@ export function Submission({ submissionId }: { submissionId: number }) {
     })()
   }, [submissionId])
 
-  if (!info) return <div>loading</div>
-
   if (selectedTestcaseId)
     return (
       <div className="h-full">
@@ -61,6 +59,8 @@ export function Submission({ submissionId }: { submissionId: number }) {
         <Testcase submissionId={submissionId} testcaseId={selectedTestcaseId} />
       </div>
     )
+
+  if (!info) return <SubmissionSkeleton />
 
   return (
     <div>
@@ -155,7 +155,7 @@ function Testcase({
     })()
   }, [testcaseId, submissionId])
 
-  if (!info) return <div>Loading...</div>
+  if (!info) return <TestcaseSkeleton />
 
   return (
     <div className={cn("flex h-full flex-col gap-4")}>
@@ -202,6 +202,46 @@ function Diff({ expected, actual }: { expected: string; actual: string }) {
         <div className="mt-2 rounded-md p-2 font-geist-mono text-sm dark:bg-neutral-800">
           {actual}
         </div>
+      </div>
+    </div>
+  )
+}
+
+function SubmissionSkeleton() {
+  const pathname = usePathname()
+  return (
+    <div>
+      <Back href={`${pathname}?tab=submissions`} />
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col items-center">
+          <h2 className="text-2xl font-bold">Loading</h2>
+          <div className="h-4 w-20 animate-pulse rounded-full text-xs text-neutral-400" />
+        </div>
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
+          <div className="flex items-end justify-between">
+            <div className="text-xl font-semibold">Input</div>
+            <div className="group relative h-4 w-4 cursor-pointer">
+              <PiCopySimple className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 transition-opacity group-hover:opacity-0" />
+              <PiCopySimpleDuotone className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100" />
+            </div>
+          </div>
+          <div className="h-8 animate-pulse rounded-md border bg-neutral-200 dark:bg-neutral-800" />
+        </div>
+        <div className="flex flex-col gap-2 rounded-xl border p-8 shadow dark:bg-neutral-900">
+          <div className="text-xl font-semibold">Testcases</div>
+          <div className="flex h-20 animate-pulse bg-neutral-200 dark:bg-neutral-800" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function TestcaseSkeleton() {
+  return (
+    <div className={cn("flex h-full flex-col gap-4")}>
+      <div className="flex flex-col items-center gap-0">
+        <h1 className="text-center text-xl font-bold">Loading Testcase</h1>
+        <h2 className="mt-2 h-6 w-20 animate-pulse rounded-full bg-neutral-200 dark:bg-neutral-800" />
       </div>
     </div>
   )
