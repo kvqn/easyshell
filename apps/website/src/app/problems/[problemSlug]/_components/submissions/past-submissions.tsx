@@ -1,9 +1,13 @@
+"use client"
+
 import type { getUserSubmissions } from "@/lib/server/queries"
-import { cn } from "@/lib/utils"
+import { cn, sleep } from "@/lib/utils"
 
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 import { FaCheck, FaXmark } from "react-icons/fa6"
 import { ImSpinner3 } from "react-icons/im"
 
@@ -14,6 +18,19 @@ export function PastSubmissions({
   problemSlug: string
   pastSubmissions: Awaited<ReturnType<typeof getUserSubmissions>>
 }) {
+  const router = useRouter()
+
+  useEffect(() => {
+    void (async () => {
+      if (
+        pastSubmissions.some((submission) => submission.status === "running")
+      ) {
+        await sleep(1000)
+        router.refresh()
+      }
+    })
+  }, [pastSubmissions, router])
+
   if (pastSubmissions.length === 0)
     return (
       <div className="flex flex-col items-center justify-center">

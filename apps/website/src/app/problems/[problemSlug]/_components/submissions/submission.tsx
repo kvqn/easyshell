@@ -193,13 +193,13 @@ function Diff({ expected, actual }: { expected: string; actual: string }) {
     <div className="flex gap-4">
       <div className="w-full">
         <div className="font-medium">Expected</div>
-        <div className="mt-2 rounded-md p-2 font-geist-mono text-sm dark:bg-neutral-800">
+        <div className="mt-2 overflow-x-auto rounded-md p-2 font-geist-mono text-sm whitespace-pre dark:bg-neutral-800">
           {expected}
         </div>
       </div>
       <div className="w-full">
         <div className="font-medium">Actual</div>
-        <div className="mt-2 rounded-md p-2 font-geist-mono text-sm dark:bg-neutral-800">
+        <div className="mt-2 overflow-x-auto rounded-md p-2 font-geist-mono text-sm whitespace-pre dark:bg-neutral-800">
           {actual}
         </div>
       </div>
