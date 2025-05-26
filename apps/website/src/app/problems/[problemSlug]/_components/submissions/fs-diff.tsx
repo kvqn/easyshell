@@ -146,7 +146,7 @@ export function FsDiff({
             </button>
           </EasyTooltip>
         </div>
-        <div className="p-4">
+        <div className="overflow-x-auto p-4">
           <p className="font-geist-mono text-sm whitespace-pre">
             {diff.map((token, idx) => (
               <span
