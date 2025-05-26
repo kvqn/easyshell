@@ -252,8 +252,8 @@ function evalComment(
   actual?: string | null,
 ): "" | "*" | "?" | "!" {
   let comment: "" | "*" | "?" | "!" = ""
-  if (expected) {
-    if (actual) {
+  if (expected !== undefined && expected !== null) {
+    if (actual !== undefined && actual !== null) {
       if (expected !== actual) comment = "*"
     } else comment = "!"
   } else comment = "?"
