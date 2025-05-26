@@ -11,6 +11,8 @@ import { diffChars } from "diff"
 import { useState } from "react"
 import {
   PiAsterisk,
+  PiCaretLeft,
+  PiCaretRight,
   PiCheck,
   PiExclamationMark,
   PiQuestionMark,
@@ -37,7 +39,7 @@ export function FsDiff({
       <Container
         setTab={setTab}
         tab={tab}
-        files={files.length}
+        files={files}
         selectedFile={selectedFile}
       >
         <div className="flex flex-col gap-1">
@@ -60,7 +62,7 @@ export function FsDiff({
       <Container
         setTab={setTab}
         tab={tab}
-        files={files.length}
+        files={files}
         selectedFile={selectedFile}
       >
         <div className="flex h-full flex-col items-center justify-center">
@@ -95,17 +97,54 @@ export function FsDiff({
       break
   }
 
+  const nextFile =
+    files.indexOf(selectedFile) === files.length - 1
+      ? null
+      : files[files.indexOf(selectedFile) + 1]
+
+  const prevFile =
+    files.indexOf(selectedFile) === 0
+      ? null
+      : files[files.indexOf(selectedFile) - 1]
+
   return (
     <Container
       setTab={setTab}
       tab={tab}
-      files={files.length}
+      files={files}
       selectedFile={selectedFile}
     >
-      <div className="divide-y rounded-md border">
-        <div className="flex py-1 text-sm dark:bg-neutral-800">
-          <p className="px-4 font-geist-mono font-semibold">{selectedFile}</p>
-          <p className="border-l border-neutral-200 px-4">{heading}</p>
+      <div className="divide-y overflow-hidden rounded-md border">
+        <div className="group flex items-center dark:bg-neutral-800">
+          <EasyTooltip tip={prevFile ?? undefined}>
+            <button
+              className="flex h-7 w-8 cursor-pointer items-center justify-center disabled:cursor-not-allowed dark:bg-black dark:hover:bg-neutral-900"
+              disabled={!prevFile}
+              onClick={() => {
+                if (prevFile) setSelectedFile(prevFile)
+              }}
+            >
+              <PiCaretLeft />
+            </button>
+          </EasyTooltip>
+          <FileComment comment={comment} />
+          <div className="h-full border-l px-2 py-1 font-mono text-sm">
+            {selectedFile}
+          </div>
+          <p className="ml-2 border-l border-neutral-200 px-4 text-sm dark:border-neutral-700 dark:text-neutral-300">
+            {heading}
+          </p>
+          <EasyTooltip tip={nextFile ?? undefined}>
+            <button
+              className="ml-auto flex h-7 w-8 cursor-pointer items-center justify-center disabled:cursor-not-allowed dark:bg-black dark:hover:bg-neutral-900"
+              disabled={!nextFile}
+              onClick={() => {
+                if (nextFile) setSelectedFile(nextFile)
+              }}
+            >
+              <PiCaretRight />
+            </button>
+          </EasyTooltip>
         </div>
         <div className="p-4">
           <p className="font-geist-mono text-sm whitespace-pre">
@@ -139,7 +178,7 @@ function Container({
   children: React.ReactNode
   setTab: SetState<"files" | "diff">
   tab: "files" | "diff"
-  files: number
+  files: Array<string>
   selectedFile: string | null
 }) {
   return (
@@ -174,9 +213,15 @@ function Container({
             />
           </Button>
           <div className="flex h-10 grow items-center gap-2 rounded-md border border-neutral-300 bg-neutral-100 px-4 dark:border-neutral-700 dark:bg-black">
-            <span>{files} files </span>
+            <span>{files.length} files </span>
             {tab === "diff" && selectedFile ? (
-              <span>(viewing {selectedFile})</span>
+              <span>
+                <span>( viewing </span>
+                <span className="font-geist-mono">
+                  {files.indexOf(selectedFile) + 1}/{files.length}
+                </span>
+                <span> )</span>
+              </span>
             ) : null}
           </div>
         </div>
