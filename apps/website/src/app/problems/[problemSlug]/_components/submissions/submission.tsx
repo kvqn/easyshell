@@ -1,12 +1,11 @@
 "use client"
 
-import type { FsType } from "@easyshell/problems/schema"
-
 import { Back } from "@/components/back"
-import { Card } from "@/components/ui/card"
 import { getSubmissionInfo } from "@/lib/server/actions/get-submission-info"
 import { getTestcaseInfo } from "@/lib/server/actions/get-testcase-info"
 import { cn, sleep } from "@/lib/utils"
+
+import { FsDiff } from "./fs-diff"
 
 import moment from "moment"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
@@ -205,17 +204,5 @@ function Diff({ expected, actual }: { expected: string; actual: string }) {
         </div>
       </div>
     </div>
-  )
-}
-
-function FsDiff({ expected, actual }: { expected: FsType; actual: FsType }) {
-  // const files = new Set<string>()
-  // for (const key in expected) files.add(key)
-  // for (const key in actual) files.add(key)
-
-  return (
-    <Card className="p-4">
-      <div className="text-center">File System Diffs are comming soon!</div>
-    </Card>
   )
 }
