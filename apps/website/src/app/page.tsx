@@ -65,7 +65,7 @@ export default function HomePage() {
         />
       </div>
       <div className="mb-16 font-clash-display text-3xl">
-        more stuff to come ...
+        more features to come ...
       </div>
       <div
         className="mt-auto w-full bg-neutral-100/70 px-8 py-16 dark:bg-neutral-800/60"

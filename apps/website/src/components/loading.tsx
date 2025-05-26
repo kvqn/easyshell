@@ -10,7 +10,7 @@ export function Loading() {
         </div>
       </div>
       <div className="font-clash-display text-4xl font-bold text-neutral-700 dark:text-neutral-300">
-        <span>Loading your stuff</span>
+        <span>Loading problem</span>
       </div>
     </div>
   )
