@@ -174,7 +174,7 @@ function Testcase({
       </div>
       {info.expected_stdout !== undefined ? (
         <div className="flex flex-col gap-2 rounded-xl border p-8 shadow">
-          <div className="text-lg font-semibold">Stdout</div>
+          <div className="text-center text-lg font-semibold">Stdout</div>
           <Diff expected={info.expected_stdout} actual={info.stdout} />
         </div>
       ) : null}

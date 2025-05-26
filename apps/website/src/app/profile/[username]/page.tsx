@@ -206,7 +206,7 @@ export default async function Page({
         </Card>
       </div>
       <div className="mt-8 font-clash-display text-3xl font-semibold">
-        Recently Solved
+        Recent Submissions
       </div>
       <div className="flex flex-col gap-2">
         {recentlySolved.map((rs) => (
