@@ -27,6 +27,7 @@ export function ProblemLinkBase({
       }
     >
       <Link
+        prefetch={true}
         href={`/problems/${slug}`}
         className={cn(
           "ml-1 inline w-fit space-x-1 rounded-md border px-2 py-1 whitespace-nowrap shadow-xs",

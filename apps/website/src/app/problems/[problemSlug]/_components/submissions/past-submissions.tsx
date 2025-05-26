@@ -41,6 +41,7 @@ export function PastSubmissions({
       <h3 className="text-center font-semibold">Past Submissions</h3>
       {pastSubmissions.map((submission, idx) => (
         <Link
+          prefetch={true}
           key={submission.id}
           href={`/problems/${problemSlug}?tab=submissions&submission=${submission.id}`}
           className={cn(

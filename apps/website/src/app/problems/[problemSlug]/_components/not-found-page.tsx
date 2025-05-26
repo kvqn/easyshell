@@ -28,6 +28,7 @@ export function ProblemNotFound() {
         {`I don't think a problem like that exists here`}
       </h2>
       <Link
+        prefetch={true}
         href="/browse"
         className="transition-transform hover:scale-105"
         aria-label="Go back to browse problems"

@@ -53,6 +53,7 @@ function Problem({
     <Link
       href={`/problems/${info.slug}`}
       className="group flex cursor-pointer divide-x text-xs transition-all *:p-2 hover:bg-gray-100 lg:text-base dark:bg-neutral-950 dark:opacity-75 dark:hover:bg-black dark:hover:opacity-100"
+      prefetch={true}
     >
       <div className="flex min-w-10 items-center justify-center font-geist-mono lg:w-20">
         {info.id}

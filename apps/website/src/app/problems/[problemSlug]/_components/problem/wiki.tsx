@@ -33,6 +33,7 @@ function WikiPage({
 }) {
   return (
     <Link
+      prefetch={true}
       href={`/wiki/${page.slug}`}
       className="flex flex-col rounded-md border bg-neutral-100 p-2 shadow transition-colors hover:bg-neutral-200/80 dark:bg-neutral-800 dark:hover:bg-neutral-700/50"
     >

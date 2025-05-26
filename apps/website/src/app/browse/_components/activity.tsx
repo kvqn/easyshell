@@ -139,6 +139,7 @@ async function BookmarkedProblem({ id }: { id: number }) {
   const { title } = await getPublicProblemInfo(slug)
   return (
     <Link
+      prefetch={true}
       href={`/problems/${slug}`}
       className="flex items-center rounded-md border py-1 shadow hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
     >
@@ -217,6 +218,7 @@ async function AttemptedProblemExpanded({ slug }: { slug: string }) {
         />
       </div>
       <Link
+        prefetch={true}
         href={`/problems/${slug}`}
         className="flex h-full grow items-center px-2 py-1 hover:bg-neutral-100 dark:hover:bg-neutral-800/50"
       >

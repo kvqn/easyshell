@@ -22,7 +22,7 @@ import { PiGear, PiGearDuotone } from "react-icons/pi"
 
 function Logo() {
   return (
-    <Link className="text-2xl" href="/">
+    <Link className="text-2xl" href="/" prefetch={true}>
       <div className="relative flex">
         <span className="font-bold">easy</span>
         <span className="font-bold text-green-500">shell</span>
@@ -41,12 +41,14 @@ export function Navbar() {
       <Link
         href="/problems"
         className="mt-1 hidden text-neutral-500 transition-colors hover:text-black md:block dark:hover:text-white"
+        prefetch={true}
       >
         Problems
       </Link>
       <Link
         href="/wiki"
         className="mt-1 hidden text-neutral-500 transition-colors hover:text-black md:block dark:hover:text-white"
+        prefetch={true}
       >
         Wiki
       </Link>
@@ -73,7 +75,7 @@ function Options() {
       <PopoverContent className="w-full">
         <div className="flex w-full flex-col gap-2">
           <div className="flex justify-between gap-2 *:grow">
-            <Link href="/settings">
+            <Link href="/settings" prefetch={true}>
               <Button
                 variant="outline"
                 className="group flex w-full items-center justify-center"
@@ -105,7 +107,7 @@ async function User({ drawer }: { drawer?: boolean }) {
     return (
       <div className="flex w-full flex-col">
         <LinkWrapper>
-          <Link href={`/profile/${user.username}`}>
+          <Link href={`/profile/${user.username}`} prefetch={true}>
             <Button
               variant="outline"
               className="flex w-full gap-1 rounded-md border px-2 py-2"
@@ -120,7 +122,7 @@ async function User({ drawer }: { drawer?: boolean }) {
           </Link>
         </LinkWrapper>
         <LinkWrapper>
-          <Link href="/logout" className="mt-2 w-full">
+          <Link href="/logout" className="mt-2 w-full" prefetch={true}>
             <Button
               variant="destructive"
               className="w-full"
@@ -138,7 +140,7 @@ async function User({ drawer }: { drawer?: boolean }) {
       <p className="rounded-md border px-4 py-2 text-neutral-500">
         Not logged in
       </p>
-      <Link href="/login" className="mt-2 w-full">
+      <Link href="/login" className="mt-2 w-full" prefetch={true}>
         <Button className="w-full" aria-label="Login">
           Login
         </Button>
@@ -168,6 +170,7 @@ function NavigationMenuItem({ name, href }: { name: string; href: string }) {
       <Link
         href={href}
         className="group flex items-center justify-between rounded-md border px-4 py-2 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+        prefetch={true}
       >
         <div className="text-neutral-700 transition-colors group-hover:text-black dark:text-neutral-300 dark:group-hover:text-white">
           {name}
@@ -189,7 +192,7 @@ function NavigationMenu() {
       <div className="flex w-full flex-col gap-2">
         <div className="flex justify-between gap-2 *:grow">
           <DrawerClose asChild>
-            <Link href="/settings">
+            <Link href="/settings" prefetch={true}>
               <Button
                 variant="outline"
                 className="group flex w-full items-center justify-center gap-4"

@@ -62,7 +62,7 @@ async function WikiEditorialCard({
   slug: string
 }) {
   return (
-    <Link href={`/wiki/${slug}`}>
+    <Link href={`/wiki/${slug}`} prefetch={true}>
       <Card className="flex w-full flex-col gap-4 border p-4 transition-colors hover:bg-neutral-100/60 dark:hover:bg-neutral-950/60">
         <div className="flex flex-col justify-center">
           <div className="font-clash-display text-4xl font-bold">{title}</div>

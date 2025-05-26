@@ -26,7 +26,7 @@ export async function ProblemAbout({ slug }: { slug: string }) {
 
             <div className="flex items-center gap-4 border-l border-neutral-300 px-4 pt-1 pb-2 dark:border-neutral-700">
               {series.map((s) => (
-                <Link key={s.slug} href={`/series/${s.slug}`}>
+                <Link key={s.slug} href={`/series/${s.slug}`} prefetch={true}>
                   <Badge>{s.name}</Badge>
                 </Link>
               ))}

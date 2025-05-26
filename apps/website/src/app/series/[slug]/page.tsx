@@ -95,7 +95,7 @@ export default async function Page({
 async function LoginButton() {
   const pathname = getPathname()
   return (
-    <Link href={`/login?callback=${pathname}`}>
+    <Link href={`/login?callback=${pathname}`} prefetch={true}>
       <Button className="mt-2 w-full py-2">Login</Button>
     </Link>
   )
@@ -147,6 +147,7 @@ async function ProgressColumn({
             {progress === 0 ? `Start Your Journey :` : `Next Up :`}
           </div>
           <Link
+            prefetch={true}
             href={`/problems/${next_problem_info.slug}`}
             className={cn(
               "mt-2 flex w-full justify-between gap-4 rounded-xl border px-4 py-2 transition-colors",
@@ -203,6 +204,7 @@ async function Problem({ slug, userId }: { slug: string; userId?: string }) {
 
   return (
     <Link
+      prefetch={true}
       href={`/problems/${slug}`}
       className={cn(
         "group flex w-120 items-center justify-between overflow-hidden rounded-xl px-4 py-2 shadow",

@@ -12,7 +12,7 @@ export function LogoutForm() {
       <h2 className="text-lg font-semibold">{`You're about to log out`}</h2>
       <h3 className="text-sm text-neutral-400">{`Are you sure you want to log out?`}</h3>
       <div className="mt-4 flex gap-2 *:*:w-full *:grow">
-        <Link href="/">
+        <Link href="/" prefetch={true}>
           <Button variant={"secondary"}>Cancel</Button>
         </Link>
         <Button
