@@ -73,6 +73,12 @@ jobs:
     environment: deployment
     runs-on: ubuntu-latest
     steps:
+      - name: tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: \${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: \${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
       - name: docker login
         uses: docker/login-action@v3
         with:
